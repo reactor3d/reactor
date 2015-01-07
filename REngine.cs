@@ -24,6 +24,16 @@ namespace Reactor
 
         internal RViewport _viewport;
         internal static RGame RGame;
+
+        public REngine()
+        {
+            RLog.Init();
+        }
+
+        ~REngine()
+        {
+            RLog.Dispose();
+        }
         public static void CheckGLError()
         {
             ErrorCode error = GL.GetError();
@@ -204,7 +214,12 @@ namespace Reactor
 
         public void SetViewport(RViewport viewport)
         {
+            _viewport = viewport;
+        }
 
+        public RViewport GetViewport()
+        {
+            return _viewport;
         }
         public bool Dispose()
         {

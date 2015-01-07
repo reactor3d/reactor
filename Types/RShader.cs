@@ -34,10 +34,10 @@ namespace Reactor.Types
         List<RShaderEffect> effects = new List<RShaderEffect>(6);
 
 
-        public void Load(string vertSource, string fragSource)
+        public void Load(string vertSource, string fragSource, string[] defines)
         {
-            effects[(int)RShaderEffectType.VERTEX] = new RShaderEffect(vertSource, (int)RShaderEffectType.VERTEX);
-            effects[(int)RShaderEffectType.FRAGMENT] = new RShaderEffect(vertSource, (int)RShaderEffectType.FRAGMENT);
+            effects[(int)RShaderEffectType.VERTEX] = new RShaderEffect(vertSource, (int)RShaderEffectType.VERTEX, defines);
+            effects[(int)RShaderEffectType.FRAGMENT] = new RShaderEffect(vertSource, (int)RShaderEffectType.FRAGMENT, defines);
             Id = GL.CreateProgram();
             foreach (RShaderEffect effect in effects)
             {

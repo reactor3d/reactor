@@ -12,10 +12,14 @@ namespace Reactor.Types
         public string EffectSource;
         public RShaderEffectType Type;
 
-        public RShaderEffect(string source, int type)
+        public RShaderEffect(string source, int type, string[] defines)
         {
             Type = (RShaderEffectType)type;
-            EffectSource = source;
+            StringBuilder defineSource = new StringBuilder();
+            foreach(string define in defines){
+                defineSource.AppendFormat("#{0};\r\n", define);
+            }
+            EffectSource = defineSource.ToString() + source;
             switch (type)
             {
                 case ((int)RShaderEffectType.GEOMETRY):

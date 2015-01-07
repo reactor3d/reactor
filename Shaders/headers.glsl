@@ -1,6 +1,18 @@
 ﻿// common vertex format for all mesh's
-in vec4 position;
-in vec4 normal;
-in vec4 binormal;
-in vec4 tangent;
-in vec2 texCoord;
+
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
+#ifdef ANIM
+  #ifndef EX
+  #define EX
+  #endif
+
+  layout(location = 6) in int boneIndex;
+  layout(location = 5) in vec4 weight;
+  #ifdef EX
+  layout(location = 3) vec3 binormal;
+  layout(location = 4) vec3 tangent;
+  #endif
+#endif
+
