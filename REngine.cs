@@ -21,13 +21,13 @@ namespace Reactor
         public RScene Scene { get { return RScene.Instance; } }
         public RTextures Textures { get { return RTextures.Instance; } }
         public RMaterials Materials { get { return RMaterials.Instance; } }
-
+        public RInput Input { get { return RInput.Instance; } }
         public RViewport Viewport { get { return _viewport; } }
 
         internal RViewport _viewport;
         internal static RGame RGame;
         internal static string RootPath;
-        public REngine()
+        private REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Init();
@@ -166,23 +166,38 @@ namespace Reactor
                 RLog.Info("Picture Box Renderer Initialized.");
                 return true;
             } catch(Exception e) {
+                RLog.Error(e);
                 return false;
             }
 
         }
 
+        public bool InitGameWindow(int width, int height, RWindowStyle windowStyle)
+        {
+            RDisplayMode mode = new RDisplayMode(width, height, -1, RSurfaceFormat.Color);
+            return InitGameWindow(mode, windowStyle);
+        }
         public bool InitGameWindow(RDisplayMode displayMode)
+        {
+            return InitGameWindow(displayMode, RWindowStyle.Normal);
+        }
+        public bool InitGameWindow(RDisplayMode displayMode, RWindowStyle windowStyle)
         {
             try
             {
                 GameWindowRenderControl control = new GameWindowRenderControl();
                 control.GameWindow = RGame.GameWindow;
                 control.GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
+                if(windowStyle == RWindowStyle.Borderless)
+                    control.GameWindow.WindowBorder = WindowBorder.Hidden;
+                control.GameWindow.X = 0;
+                control.GameWindow.Y = 0;
                 _renderControl = control;
                 RLog.Info(GetGLInfo());
                 RLog.Info("Game Window Renderer Initialized.");
                 return true;
             } catch(Exception e) {
+                RLog.Error(e);
                 return false;
             }
         }
@@ -197,6 +212,7 @@ namespace Reactor
                 RLog.Info("Dummy Non-Renderer Initialized.");
                 return true;
             } catch(Exception e) {
+                RLog.Error(e);
                 return false;
             }
         }
@@ -278,6 +294,15 @@ namespace Reactor
         public EngineGLException(string message)
             : base(message)
         {
+        }
+    }
+
+    public class ReactorException : Exception
+    {
+        public ReactorException(string message, Exception baseException)
+            : base(message, baseException)
+        {
+
         }
     }
 

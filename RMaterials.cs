@@ -11,6 +11,10 @@ namespace Reactor
     {
         internal static Dictionary<string, RMaterial> materials = new Dictionary<string, RMaterial>();
 
+        private RMaterials()
+        {
+
+        }
         public RMaterial CreateMaterial(string name)
         {
             if (!materials.ContainsKey(name))

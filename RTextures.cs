@@ -4,5 +4,9 @@ namespace Reactor
 {
     public class RTextures : RSingleton<RTextures>
     {
+        private RTextures()
+        {
+
+        }
     }
 }

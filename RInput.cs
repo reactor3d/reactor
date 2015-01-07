@@ -1,5 +1,5 @@
 ﻿//
-// Test.cs
+// RInput.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -23,36 +23,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using NUnit.Framework;
 using System;
 using Reactor.Types;
-using Reactor;
 
-namespace Tests
+namespace Reactor
 {
-    [TestFixture()]
-    public class RShaderTests
+    public class RInput : RSingleton<RInput>
     {
-        string vert = " struct v2f { vec4 position; vec4 color; vec2 texCoord; }\r\n\r\nv2f vs(){ v2f output; output.position = position; output.color = vec4(1.0f, 1.0f, 1.0f, 1.0f); output.texCoord = texCoord; return output; }";
-        string frag = " out vec4 output; in v2f input; void fs(){ output = input.color; }";
-
-        RShader shader;
-        REngine engine = new REngine();
-        [SetUp]
-        public void Setup()
-        {
-            engine.Init();
-            shader = new RShader();
-            shader.Load(vert, frag, null);
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            shader.Dispose();
-        }
-        [Test()]
-        public void LoadShadersAndLinkThem()
+        private RInput()
         {
         }
     }

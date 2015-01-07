@@ -30,45 +30,64 @@ namespace Reactor
     internal static class RLog
     {
         internal static StreamWriter Writer;
+        internal static object mutex = new object();
 
         internal static void Init()
         {
             #if DEBUG
-            Writer = new StreamWriter(new FileStream(REngine.RootPath+"/debug.log", FileMode.OpenOrCreate));
+            lock(mutex)
+            {
+                Writer = new StreamWriter(new FileStream(REngine.RootPath+"/debug.log", FileMode.OpenOrCreate));
+            }
             #endif
         }
 
         internal static void Dispose()
         {
             #if DEBUG
-            Writer.Close();
+            if(Writer != null){
+                Writer.Close();
+                Writer.Dispose();
+            }
             #endif
         }
 
         internal static void Info(string message)
         {
             #if DEBUG
-            string output = String.Format("{0}-{1}: {2}", "INFO", DateTime.Now.ToString(), message);
-            Writer.WriteLineAsync(output);
-            Console.WriteLine(output);
+            lock(mutex)
+            {
+                string output = String.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
+                if(Writer!=null)
+                    Writer.WriteLineAsync(output);
+                Console.WriteLine(output);
+            }
             #endif
         }
 
         internal static void Warn(string message)
         {
             #if DEBUG
-            string output = String.Format("{0}-{1}: {2}", "WARN", DateTime.Now.ToString(), message);
-            Writer.WriteLineAsync(output);
-            Console.WriteLine(output);
+            lock(mutex)
+            {
+                string output = String.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
+                if(Writer!=null)
+                    Writer.WriteLineAsync(output);
+                Console.WriteLine(output);
+            }
             #endif
         }
 
         internal static void Error(string message)
         {
             #if DEBUG
-            string output = String.Format("{0}-{1}: {2}", "ERROR", DateTime.Now.ToString(), message);
-            Writer.WriteLineAsync(output);
-            Console.WriteLine(output);
+            lock(mutex)
+            {
+                string output = String.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
+                if(Writer!=null)
+                    Writer.WriteLineAsync(output);
+                Console.WriteLine(output);
+            }
             #endif
         }
 
@@ -81,9 +100,13 @@ namespace Reactor
         internal static void Debug(string message)
         {
             #if DEBUG
-            string output = String.Format("{0}-{1}: {2}", "DEBUG", DateTime.Now.ToString(), message);
-            Writer.WriteLineAsync(output);
-            Console.WriteLine(output);
+            lock(mutex)
+            {
+                string output = String.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
+                if(Writer!=null)
+                    Writer.WriteLineAsync(output);
+                Console.WriteLine(output);
+            }
             #endif
         }
     }

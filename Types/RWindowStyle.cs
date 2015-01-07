@@ -1,5 +1,5 @@
 ﻿//
-// Game.cs
+// RWindowStyle.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -24,48 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using Reactor;
-using Reactor.Types;
-using Reactor.Math;
 
-namespace MonoMac
+namespace Reactor.Types
 {
-    public class Game : RGame
+    public enum RWindowStyle
     {
-        public Game()
-        {
-        }
-
-        public override void Init()
-        {
-            Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
-
-        }
-
-        public override void Render()
-        {
-            Engine.Clear();
-
-            Engine.Present();
-        }
-
-        public override void Update()
-        {
-
-        }
-
-        public override void Dispose()
-        {
-            Engine.Dispose();
-        }
-
-        public override void Resized(int Width, int Height)
-        {
-            RViewport viewport = Engine.GetViewport();
-            viewport.Width = Width;
-            viewport.Height = Height;
-            Engine.SetViewport(viewport);
-        }
+        Normal,
+        Borderless
     }
 }
 
