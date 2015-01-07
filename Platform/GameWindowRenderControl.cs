@@ -12,6 +12,7 @@ namespace Reactor.Platform
         public GameWindow GameWindow { get; internal set; }
         public override void Init()
         {
+
         }
 
         public override void Destroy()

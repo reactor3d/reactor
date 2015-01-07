@@ -1,5 +1,5 @@
 ﻿//
-// RGameWindow.cs
+// DummyRenderControl.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -23,22 +23,46 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using OpenTK;
+
 using OpenTK.Graphics;
+using OpenTK.Platform;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Reactor
+namespace Reactor.Platform
 {
-    public class RGameWindow : GameWindow
+    public class DummyRenderControl : RenderControl
     {
-
-
-        public RGameWindow():base(800,600, GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
-
+        public DummyRenderControl()
+        {
         }
 
-        public RGameWindow(int width, int height):base(width, height,GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
+        public override void Init()
+        {
+            WindowInfo = OpenTK.Platform.Utilities.CreateDummyWindowInfo();
+            Context = new GraphicsContext(GraphicsMode.Default, WindowInfo, 3, 2, GraphicsContextFlags.ForwardCompatible);
+            Context.MakeCurrent(WindowInfo);
+            //Load OpenGL function entry points into OpenTK.
+            Context.LoadAll();
+        }
 
+        public override void MakeCurrent()
+        {
+            Context.MakeCurrent(WindowInfo);
+        }
+
+        public override void SwapBuffers()
+        {
+            Context.SwapBuffers();
+        }
+
+        public override void Destroy()
+        {
+            Context.Dispose();
+            WindowInfo.Dispose();
         }
     }
 }

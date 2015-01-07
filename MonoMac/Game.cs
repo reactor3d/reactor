@@ -1,5 +1,5 @@
 ﻿//
-// RGameWindow.cs
+// Game.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -24,21 +24,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using OpenTK;
-using OpenTK.Graphics;
+using Reactor;
 
-namespace Reactor
+namespace MonoMac
 {
-    public class RGameWindow : GameWindow
+    public class Game : RGame
     {
+        public Game()
+        {
+        }
 
-
-        public RGameWindow():base(800,600, GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
+        public override void Init()
+        {
+            Engine.InitGameWindow(Engine.CurrentDisplayMode);
 
         }
 
-        public RGameWindow(int width, int height):base(width, height,GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
+        public override void Render()
+        {
+            Engine.Clear();
 
+            Engine.Present();
+        }
+
+        public override void Update()
+        {
+
+        }
+
+        public override void Dispose()
+        {
+            Engine.Dispose();
+        }
+
+        public override void Resized(int Width, int Height)
+        {
+            RViewport viewport = Engine.GetViewport();
+            viewport.Width = Width;
+            viewport.Height = Height;
+            Engine.SetViewport(viewport);
         }
     }
 }

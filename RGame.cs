@@ -97,7 +97,7 @@ namespace Reactor
         /// <summary>
         /// Gets called when the underlying <see cref="RGameWindow"/> is resized;
         /// </summary>
-        public abstract void Resized();
+        public abstract void Resized(int Width, int Height);
 
         /// <summary>
         /// Run the game.  This starts the message pump and loops required to receive events in <see cref="Render"/> and <see cref="Update"/> 
@@ -106,12 +106,11 @@ namespace Reactor
         {
             Init();
             gameWindow.Run();
-            Dispose();
         }
 
         void GameWindow_Resize(object sender, EventArgs e)
         {
-            Resized();
+            Resized(GameWindow.Width, GameWindow.Height);
         }
 
         void GameWindow_UpdateFrame(object sender, FrameEventArgs e)

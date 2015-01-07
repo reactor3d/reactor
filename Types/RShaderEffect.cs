@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Reactor.Types
 {
-    public class RShaderEffect
+    public class RShaderEffect : IDisposable
     {
         public int Id { get; internal set; }
         public string EffectSource;
@@ -15,11 +15,20 @@ namespace Reactor.Types
         public RShaderEffect(string source, int type, string[] defines)
         {
             Type = (RShaderEffectType)type;
-            StringBuilder defineSource = new StringBuilder();
-            foreach(string define in defines){
-                defineSource.AppendFormat("#{0};\r\n", define);
+            if(Type == RShaderEffectType.VERTEX)
+            {
+                StringBuilder defineSource = new StringBuilder();
+                defineSource.Append("#version 330");
+                defineSource.Append(RShaderResources.Headers);
+                if(defines != null)
+                    foreach(string define in defines){
+                        defineSource.AppendFormat("#{0};\r\n", define);
+                    }
+                EffectSource = defineSource.ToString() + source;
+            } else {
+                EffectSource = source;
             }
-            EffectSource = defineSource.ToString() + source;
+
             switch (type)
             {
                 case ((int)RShaderEffectType.GEOMETRY):
@@ -76,5 +85,14 @@ namespace Reactor.Types
                 REngine.CheckGLError();
             }
         }
+
+        #region IDisposable implementation
+
+        public void Dispose()
+        {
+
+        }
+
+        #endregion
     }
 }

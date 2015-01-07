@@ -1,5 +1,5 @@
 ﻿//
-// RGameWindow.cs
+// Test.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -23,22 +23,37 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using NUnit.Framework;
 using System;
-using OpenTK;
-using OpenTK.Graphics;
+using Reactor.Types;
+using Reactor;
 
-namespace Reactor
+namespace Tests
 {
-    public class RGameWindow : GameWindow
+    [TestFixture()]
+    public class RShaderTests
     {
+        string vert = " struct v2f { vec4 position; vec4 color; vec2 texCoord; }\r\n\r\nv2f vs(){ v2f output; output.position = position; output.color = vec4(1.0f, 1.0f, 1.0f, 1.0f); output.texCoord = texCoord; return output; }";
+        string frag = " out vec4 output; in v2f input; void fs(){ output = input.color; }";
 
-
-        public RGameWindow():base(800,600, GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
-
+        RShader shader;
+        REngine engine = new REngine();
+        [SetUp]
+        public void Setup()
+        {
+            engine.Init();
+            shader = new RShader();
+            shader.Load(vert, frag, null);
         }
 
-        public RGameWindow(int width, int height):base(width, height,GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
-
+        [TearDown]
+        public void Teardown()
+        {
+            shader.Dispose();
+        }
+        [Test()]
+        public void LoadShadersAndLinkThem()
+        {
         }
     }
 }

@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
 
 namespace Reactor
 {
@@ -24,9 +26,10 @@ namespace Reactor
 
         internal RViewport _viewport;
         internal static RGame RGame;
-
+        internal static string RootPath;
         public REngine()
         {
+            RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Init();
         }
 
@@ -159,8 +162,8 @@ namespace Reactor
                 control.PictureBox = (PictureBox)PictureBox.FromHandle(handle);
                 control.Init();
                 _renderControl = control;
-
-                Console.WriteLine(RShaderResources.Headers);
+                RLog.Info(GetGLInfo());
+                RLog.Info("Picture Box Renderer Initialized.");
                 return true;
             } catch(Exception e) {
                 return false;
@@ -176,6 +179,22 @@ namespace Reactor
                 control.GameWindow = RGame.GameWindow;
                 control.GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
                 _renderControl = control;
+                RLog.Info(GetGLInfo());
+                RLog.Info("Game Window Renderer Initialized.");
+                return true;
+            } catch(Exception e) {
+                return false;
+            }
+        }
+
+        public bool Init()
+        {
+            try
+            {
+                _renderControl = new DummyRenderControl();
+                _renderControl.Init();
+                RLog.Info(GetGLInfo());
+                RLog.Info("Dummy Non-Renderer Initialized.");
                 return true;
             } catch(Exception e) {
                 return false;
@@ -193,6 +212,7 @@ namespace Reactor
                         (_renderControl as GameWindowRenderControl).GameWindow.WindowState = WindowState.Normal;
 
                     _renderControl.IsFullscreen = false;
+                    RLog.Info("No longer in fullscreen mode.");
                 }
                 else
                 {
@@ -202,12 +222,15 @@ namespace Reactor
                         (_renderControl as GameWindowRenderControl).GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
                         (_renderControl as GameWindowRenderControl).GameWindow.WindowState = WindowState.Fullscreen;
                         _renderControl.IsFullscreen = true;
+                        RLog.Info(String.Format("Fullscreen mode activated : {0}", displayMode));
                     }
                 }
                 return true;
             }
-            catch
+            catch(Exception e)
             {
+                RLog.Error("Error attempting to go fullscreen.");
+                RLog.Error(e);
                 return false;
             }
         }
@@ -221,18 +244,32 @@ namespace Reactor
         {
             return _viewport;
         }
+
         public bool Dispose()
         {
             try
             {
+                RLog.Info("Shutting down the engine.");
                 _renderControl.Destroy();
+                RLog.Info("Shutdown complete.\r\n\r\n\r\n\r\n");
                 return true;
             }
             catch (Exception e)
             {
+                RLog.Error("Error shutting down the engine.");
+                RLog.Error(e);
                 return false;
             }
-            
+
+        }
+
+        internal static string GetGLInfo() {
+            var version = GL.GetString(StringName.Version);
+            var vendor = GL.GetString(StringName.Vendor);
+            var renderer = GL.GetString(StringName.Renderer);
+            var glslVersion = GL.GetString(StringName.ShadingLanguageVersion);
+
+            return String.Format("Using OpenGL version {0} from {1}, renderer {2}, GLSL version {3}", version, vendor, renderer, glslVersion);
         }
     }
 

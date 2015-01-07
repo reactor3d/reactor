@@ -34,7 +34,7 @@ namespace Reactor
         internal static void Init()
         {
             #if DEBUG
-            Writer = new StreamWriter(new FileStream("./debug.log", FileMode.Create));
+            Writer = new StreamWriter(new FileStream(REngine.RootPath+"/debug.log", FileMode.OpenOrCreate));
             #endif
         }
 
@@ -48,28 +48,42 @@ namespace Reactor
         internal static void Info(string message)
         {
             #if DEBUG
-            Writer.WriteLineAsync("INFO: "+DateTime.Now.ToString() + " : "+message);
+            string output = String.Format("{0}-{1}: {2}", "INFO", DateTime.Now.ToString(), message);
+            Writer.WriteLineAsync(output);
+            Console.WriteLine(output);
             #endif
         }
 
         internal static void Warn(string message)
         {
             #if DEBUG
-            Writer.WriteLineAsync("WARN: "+DateTime.Now.ToString() + " : "+message);
+            string output = String.Format("{0}-{1}: {2}", "WARN", DateTime.Now.ToString(), message);
+            Writer.WriteLineAsync(output);
+            Console.WriteLine(output);
             #endif
         }
 
         internal static void Error(string message)
         {
             #if DEBUG
-            Writer.WriteLineAsync("ERROR: "+DateTime.Now.ToString() + " : "+message);
+            string output = String.Format("{0}-{1}: {2}", "ERROR", DateTime.Now.ToString(), message);
+            Writer.WriteLineAsync(output);
+            Console.WriteLine(output);
             #endif
+        }
+
+        internal static void Error(Exception e)
+        {
+            Error(e.Message);
+            Error(e.StackTrace);
         }
 
         internal static void Debug(string message)
         {
             #if DEBUG
-            Writer.WriteLineAsync("DEBUG: "+DateTime.Now.ToString() + " : "+message);
+            string output = String.Format("{0}-{1}: {2}", "DEBUG", DateTime.Now.ToString(), message);
+            Writer.WriteLineAsync(output);
+            Console.WriteLine(output);
             #endif
         }
     }

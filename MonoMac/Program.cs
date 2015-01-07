@@ -1,5 +1,5 @@
 ﻿//
-// RGameWindow.cs
+// Main.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -24,21 +24,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using OpenTK;
-using OpenTK.Graphics;
 
-namespace Reactor
+namespace MonoMac
 {
-    public class RGameWindow : GameWindow
+    public class Program
     {
-
-
-        public RGameWindow():base(800,600, GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
-
-        }
-
-        public RGameWindow(int width, int height):base(width, height,GraphicsMode.Default, "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 3, 2, GraphicsContextFlags.ForwardCompatible){
-
+        public static void Main(string[] args)
+        {
+            using(Game game = new Game())
+            {
+                game.Run();
+            }
         }
     }
 }

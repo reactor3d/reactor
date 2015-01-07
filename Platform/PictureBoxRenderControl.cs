@@ -17,8 +17,12 @@ namespace Reactor.Platform
         public override void Init()
         {
             IntPtr hWnd = PictureBox.Handle;
+            #if MACOSX
+            WindowInfo = OpenTK.Platofrm.Utilities.CreateMacOSWindowInfo(hWnd);
+            #else
             WindowInfo = OpenTK.Platform.Utilities.CreateWindowsWindowInfo(hWnd);
-            Context = new GraphicsContext(GraphicsMode.Default, WindowInfo);
+            #endif
+            Context = new GraphicsContext(GraphicsMode.Default, WindowInfo, 3, 2, GraphicsContextFlags.ForwardCompatible);
             Context.MakeCurrent(WindowInfo);
 
             //Load OpenGL function entry points into OpenTK.

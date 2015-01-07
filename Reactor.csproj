@@ -160,6 +160,7 @@
     <Compile Include="Utilities\ReflectionHelpers.cs" />
     <Compile Include="RGameWindow.cs" />
     <Compile Include="RLog.cs" />
+    <Compile Include="Platform\DummyRenderControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,33 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MonoMac/Program.cs">
+    <Files>
+      <File FileName="RGame.cs" Line="54" Column="54" />
+      <File FileName="RGameWindow.cs" Line="10" Column="10" />
+      <File FileName="Types/RShader.cs" Line="1" Column="1" />
+      <File FileName="Types/RShaderEffect.cs" Line="1" Column="1" />
+      <File FileName="REngine.cs" Line="31" Column="31" />
+      <File FileName="RLog.cs" Line="13" Column="13" />
+      <File FileName="Tests/RShaderTest.cs" Line="40" Column="40" />
+      <File FileName="Platform/DummyRenderControl.cs" Line="121" Column="121" />
+      <File FileName="Platform/RenderControl.cs" Line="1" Column="1" />
+      <File FileName="Platform/FormRenderControl.cs" Line="1" Column="1" />
+      <File FileName="Platform/PictureBoxRenderControl.cs" Line="121" Column="121" />
+      <File FileName="Platform/GameWindowRenderControl.cs" Line="13" Column="13" />
+      <File FileName="MonoMac/Program.cs" Line="25" Column="25" />
+      <File FileName="MonoMac/Game.cs" Line="49" Column="49" />
+    </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/greiser/Projects/reactor/REngine.cs" line="269" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reactor/Types/RShaderEffect.cs" line="41" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -183,7 +183,7 @@ namespace Reactor.Types
         {
             GL.UseProgram(0);
         }
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             if (GL.IsProgram(Id))
             {
