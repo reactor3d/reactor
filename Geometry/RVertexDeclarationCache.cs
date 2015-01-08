@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reactor.Types
+namespace Reactor.Geometry
 {
     internal class RVertexDeclarationCache<T>
         where T : struct, IVertexType

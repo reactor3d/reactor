@@ -667,9 +667,14 @@ namespace Reactor.Math
             value1.Z *= factor;
             return value1;
         }
-        static public implicit operator OpenTK.Vector4(Vector4 value)
+        public static implicit operator OpenTK.Vector4(Vector4 value)
         {
             return new OpenTK.Vector4(value.X, value.Y, value.Z, value.W);
+        }
+
+        public static implicit operator Vector4(OpenTK.Vector4 value)
+        {
+            return new Vector4(value.X, value.Y, value.Z, value.W);
         }
         #endregion Operators
     }

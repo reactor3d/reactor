@@ -257,6 +257,7 @@ namespace Reactor.Math
             return "{{Position:" + Position.ToString() + " Direction:" + Direction.ToString() + "}}";
         }
 
+
 		#endregion
     }
 }

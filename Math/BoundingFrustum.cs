@@ -152,7 +152,6 @@ namespace Reactor.Math
             {
                 var planeIntersectionType = default(PlaneIntersectionType);
 
-                // TODO: we might want to inline this for performance reasons
                 sphere.Intersects(ref this.planes[i], out planeIntersectionType);
                 switch (planeIntersectionType)
                 {

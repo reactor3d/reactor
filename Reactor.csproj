@@ -104,7 +104,6 @@
   <ItemGroup>
     <Compile Include="Platform\Threading.cs" />
     <Compile Include="Types\RViewport.cs" />
-    <Compile Include="Types\IVertexType.cs" />
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\BoundingFrustum.cs" />
     <Compile Include="Math\BoundingSphere.cs" />
@@ -150,12 +149,6 @@
     <Compile Include="Types\RTexture3D.cs" />
     <Compile Include="Types\RTextureLayer.cs" />
     <Compile Include="Types\RUpdateNode.cs" />
-    <Compile Include="Types\RVertexBuffer.cs" />
-    <Compile Include="Types\RVertexDeclaration.cs" />
-    <Compile Include="Types\RVertexDeclarationCache.cs" />
-    <Compile Include="Types\RVertexElement.cs" />
-    <Compile Include="Types\RVertexElementFormat.cs" />
-    <Compile Include="Types\RVertexElementUsage.cs" />
     <Compile Include="Utilities\Hash.cs" />
     <Compile Include="Utilities\ReflectionHelpers.cs" />
     <Compile Include="RGameWindow.cs" />
@@ -163,6 +156,15 @@
     <Compile Include="Platform\DummyRenderControl.cs" />
     <Compile Include="RInput.cs" />
     <Compile Include="Types\RWindowStyle.cs" />
+    <Compile Include="Geometry\IVertexType.cs" />
+    <Compile Include="Geometry\RVertexBuffer.cs" />
+    <Compile Include="Geometry\RVertexDeclaration.cs" />
+    <Compile Include="Geometry\RVertexDeclarationCache.cs" />
+    <Compile Include="Geometry\RVertexElement.cs" />
+    <Compile Include="Geometry\RVertexElementFormat.cs" />
+    <Compile Include="Geometry\RVertexElementUsage.cs" />
+    <Compile Include="Geometry\RBufferUsage.cs" />
+    <Compile Include="Geometry\RVertexDataOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -195,4 +197,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Geometry\" />
+  </ItemGroup>
 </Project>

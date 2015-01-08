@@ -602,6 +602,10 @@ namespace Reactor.Math
             return new OpenTK.Vector2(value.X, value.Y);
         }
 
+        public static implicit operator Vector2(OpenTK.Vector2 value){
+            return new Vector2(value.X, value.Y);
+        }
+
         #endregion Operators
     }
 }

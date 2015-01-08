@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Reactor.Types
+namespace Reactor.Geometry
 {
     public struct RVertexElement
     {
@@ -224,13 +224,12 @@ namespace Reactor.Types
                 case RVertexElementFormat.NormalizedShort4:
                     return VertexAttribPointerType.Short;
 
-#if MONOMAC || WINDOWS || LINUX
                case VertexElementFormat.HalfVector2:
                     return VertexAttribPointerType.HalfFloat;
 
                 case VertexElementFormat.HalfVector4:
                     return VertexAttribPointerType.HalfFloat;
-#endif
+
             }
 
             throw new ArgumentException();

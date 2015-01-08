@@ -15,6 +15,7 @@ namespace Reactor.Math
         /// <param name="point">The point to check with</param>
         /// <param name="plane">The plane to check against</param>
         /// <returns>Greater than zero if on the positive side, less than zero if on the negative size, 0 otherwise</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ClassifyPoint(ref Vector3 point, ref Plane plane)
         {
             return point.X * plane.Normal.X + point.Y * plane.Normal.Y + point.Z * plane.Normal.Z + plane.D;
@@ -26,6 +27,7 @@ namespace Reactor.Math
         /// <param name="point">The point to check</param>
         /// <param name="plane">The place to check</param>
         /// <returns>The perpendicular distance from the point to the plane</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float PerpendicularDistance(ref Vector3 point, ref Plane plane)
         {
             // dist = (ax + by + cz + d) / sqrt(a*a + b*b + c*c)

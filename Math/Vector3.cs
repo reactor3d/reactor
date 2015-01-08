@@ -862,9 +862,13 @@ namespace Reactor.Math
             return value;
         }
 
-        static public implicit operator OpenTK.Vector3(Vector3 value)
+        public static implicit operator OpenTK.Vector3(Vector3 value)
         {
             return new OpenTK.Vector3(value.X, value.Y, value.Z);
+        }
+
+        public static implicit operator Vector3(OpenTK.Vector3 value){
+            return new Vector3(value.X, value.Y, value.Z);
         }
         #endregion
     }

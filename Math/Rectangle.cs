@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
-
+using Drawing = System.Drawing;
 namespace Reactor.Math
 {
     /// <summary>
@@ -215,6 +215,15 @@ namespace Reactor.Math
         {
             return !(a == b);
         }
+
+        public static implicit operator Drawing.Rectangle(Rectangle value){
+            return new Drawing.Rectangle(value.X, value.Y, value.Width, value.Height);
+        }
+
+        public static implicit operator Rectangle(Drawing.Rectangle value){
+            return new Rectangle(value.X, value.Y, value.Width, value.Height);
+        }
+
 
         #endregion
 

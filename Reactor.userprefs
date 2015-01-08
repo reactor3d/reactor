@@ -1,49 +1,19 @@
-﻿<Properties>
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="1/8/2015 3:58:13 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Types/RColor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Geometry/RVertexElement.cs">
     <Files>
-      <File FileName="RGame.cs" Line="30" Column="30" />
-      <File FileName="RGameWindow.cs" Line="195" Column="195" />
-      <File FileName="Types/RShader.cs" Line="1" Column="1" />
-      <File FileName="Types/RShaderEffect.cs" Line="1" Column="1" />
-      <File FileName="REngine.cs" Line="60" Column="60" />
-      <File FileName="RLog.cs" Line="32" Column="32" />
-      <File FileName="Tests/RShaderTest.cs" Line="1" Column="1" />
-      <File FileName="Platform/DummyRenderControl.cs" Line="121" Column="121" />
-      <File FileName="Platform/RenderControl.cs" Line="1" Column="1" />
-      <File FileName="Platform/FormRenderControl.cs" Line="1" Column="1" />
-      <File FileName="Platform/PictureBoxRenderControl.cs" Line="121" Column="121" />
-      <File FileName="Platform/GameWindowRenderControl.cs" Line="13" Column="13" />
-      <File FileName="MonoMac/Program.cs" Line="19" Column="19" />
-      <File FileName="MonoMac/Game.cs" Line="1" Column="1" />
-      <File FileName="Types/RSingleton.cs" Line="1" Column="1" />
-      <File FileName="RInput.cs" Line="10" Column="10" />
-      <File FileName="RMaterials.cs" Line="53" Column="53" />
-      <File FileName="RScene.cs" Line="38" Column="38" />
-      <File FileName="RTextures.cs" Line="10" Column="10" />
-      <File FileName="Types/RWindowStyle.cs" Line="15" Column="15" />
-      <File FileName="Types/RColor.cs" Line="1" Column="1" />
+      <File FileName="Geometry/RVertexBuffer.cs" Line="9" Column="9" />
+      <File FileName="Geometry/RVertexDeclaration.cs" Line="27" Column="27" />
+      <File FileName="Types/RShader.cs" Line="50" Column="50" />
+      <File FileName="Geometry/RBufferUsage.cs" Line="22" Column="22" />
+      <File FileName="Geometry/RVertexDataOptions.cs" Line="24" Column="24" />
+      <File FileName="Geometry/RVertexElement.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="Tests" expanded="True">
-            <Node name="Tests" expanded="True">
-              <Node name="RShaderTests" expanded="True">
-                <Node name="LoadShadersAndLinkThem" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/greiser/Projects/reactor/Types/RShaderEffect.cs" line="41" column="1" />
       <Breakpoint file="/Users/greiser/Projects/reactor/Tests/RShaderTest.cs" line="45" column="1" />
-      <Breakpoint file="/Users/greiser/Projects/reactor/Types/RSingleton.cs" line="21" column="1" />
-      <Breakpoint file="/Users/greiser/Projects/reactor/Types/RSingleton.cs" line="15" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

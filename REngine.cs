@@ -27,6 +27,8 @@ namespace Reactor
         internal RViewport _viewport;
         internal static RGame RGame;
         internal static string RootPath;
+
+
         private REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);

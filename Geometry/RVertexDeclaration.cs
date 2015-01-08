@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Reactor.Types;
 
-namespace Reactor.Types
+namespace Reactor.Geometry
 {
     public class RVertexDeclaration
     {

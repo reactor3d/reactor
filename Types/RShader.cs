@@ -5,6 +5,9 @@ using Reactor.Math;
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
+using Reactor.Geometry;
+
+
 namespace Reactor.Types
 {
     public class RShader : IDisposable

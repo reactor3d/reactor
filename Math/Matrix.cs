@@ -1877,15 +1877,29 @@ namespace Reactor.Math
                 minor11 = (float)det11;
                 minor12 = (float)det12;
         }
-        static public implicit operator OpenTK.Matrix4(Matrix value)
+        #endregion Private Static Methods
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator OpenTK.Matrix4(Matrix value)
         {
             return new OpenTK.Matrix4(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
         }
-        #endregion Private Static Methods 
+ 
     
-        internal OpenTK.Matrix4 ToMatrix4()
+        public static implicit operator Matrix(OpenTK.Matrix4 value)
         {
-            return this;
+            return new Matrix(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
+        }
+
+        public static implicit operator OpenTK.Matrix4d(Matrix value)
+        {
+            return new OpenTK.Matrix4d(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
+        }
+
+
+        public static implicit operator Matrix(OpenTK.Matrix4d value)
+        {
+            return new Matrix((float)value.M11, (float)value.M12, (float)value.M13, (float)value.M14, (float)value.M21, (float)value.M22, (float)value.M23, (float)value.M24, (float)value.M31, (float)value.M32, (float)value.M33, (float)value.M34, (float)value.M41, (float)value.M42, (float)value.M43, (float)value.M44);
         }
     }
 }

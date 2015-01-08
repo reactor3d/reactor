@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Reactor.Types
+namespace Reactor.Geometry
 {
     public interface IVertexType
     {

@@ -788,6 +788,13 @@ namespace Reactor.Math
 		    quaternion2.W = -quaternion.W;
 		    return quaternion2;
         }
+        public static implicit operator OpenTK.Quaternion(Quaternion value){
+            return new OpenTK.Quaternion(value.X, value.Y, value.Z, value.W);
+        }
+
+        public static implicit operator Quaternion(OpenTK.Quaternion value){
+            return new Quaternion(value.X, value.Y, value.Z, value.W);
+        }
 
         internal string DebugDisplayString
         {
@@ -890,6 +897,7 @@ namespace Reactor.Math
 				Z = value.Z;
 			}
 		}
+       
 
 
     }
