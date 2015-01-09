@@ -127,7 +127,6 @@
     <Compile Include="RScene.cs" />
     <Compile Include="Types\RDisplayMode.cs" />
     <Compile Include="Types\RDisplayModes.cs" />
-    <Compile Include="Types\RIndexBuffer.cs" />
     <Compile Include="Types\RLightType.cs" />
     <Compile Include="Types\RMesh.cs" />
     <Compile Include="Types\RRenderNode.cs" />
@@ -165,6 +164,9 @@
     <Compile Include="Loaders\DDSLoader.cs" />
     <Compile Include="Loaders\GDILoader.cs" />
     <Compile Include="Loaders\TextureLoaderParameters.cs" />
+    <Compile Include="Types\RMeshBuilder.cs" />
+    <Compile Include="Geometry\RIndexBuffer.cs" />
+    <Compile Include="Geometry\RIndexElementSize.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

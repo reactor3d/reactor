@@ -6,19 +6,18 @@
 
     public class RSceneNode
     {
-        private List<RSceneNode> _children = new List<RSceneNode>();
+        public List<RSceneNode> Children { get; internal set; }
 
-        public List<RSceneNode> Children { get { return _children; } }
+        public RSceneNode Parent { get; internal set; }
 
-        private RSceneNode _parent;
-
-        public RSceneNode Parent { get { return _parent; } }
+        public string Name { get; set; }
 
         internal RSceneNode() { }
 
+
         public RSceneNode(RSceneNode parent)
         {
-            _parent = parent;
+            Parent = parent;
         }
 
     }
