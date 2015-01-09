@@ -41,7 +41,7 @@ namespace Reactor.Utilities
         /// Modified FNV Hash in C#
         /// http://stackoverflow.com/a/468084
         /// </remarks>
-        internal static int ComputeHash(Stream stream)
+        internal static int ComputeHash(ref Stream stream)
         {
             System.Diagnostics.Debug.Assert(stream.CanSeek);
 

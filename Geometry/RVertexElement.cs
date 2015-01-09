@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Reactor.Utilities;
+using System.IO;
 
 namespace Reactor.Geometry
 {
@@ -71,8 +73,9 @@ namespace Reactor.Geometry
 
         public override int GetHashCode()
         {
-            // TODO: Fix hashes
-            return 0;
+            Stream stream = new MemoryStream();
+            Serialization.WriteStruct<RVertexElement>(ref stream, (RVertexElement)this);
+            return Hash.ComputeHash(ref stream);
         }
 
         public override string ToString()

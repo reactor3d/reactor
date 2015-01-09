@@ -171,6 +171,7 @@
     <Compile Include="Loaders\MeshLoader.cs" />
     <Compile Include="Types\RMeshPart.cs" />
     <Compile Include="Types\RNode.cs" />
+    <Compile Include="Utilities\Serialization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
