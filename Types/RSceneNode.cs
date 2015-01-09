@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public class RSceneNode
+    public class RSceneNode : RNode
     {
         public List<RSceneNode> Children { get; internal set; }
 
@@ -19,6 +19,8 @@
         {
             Parent = parent;
         }
+
+
 
     }
 }

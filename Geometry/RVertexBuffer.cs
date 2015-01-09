@@ -11,7 +11,7 @@ namespace Reactor.Geometry
 {
     public class RVertexBuffer : IDisposable
     {
-        private int vbo;
+        int vbo;
 
         internal bool _isDynamic;
         internal bool IsDisposed;
@@ -22,6 +22,8 @@ namespace Reactor.Geometry
 
         protected RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage, bool dynamic)
         {
+            if(vertexDeclaration == null)
+                throw new ArgumentNullException("vertexDeclaration", "vertexDeclaration not set! was null.");
             this.VertexDeclaration = vertexDeclaration;
             this.VertexCount = vertexCount;
             this.BufferUsage = bufferUsage;
@@ -217,6 +219,16 @@ namespace Reactor.Geometry
             REngine.CheckGLError();
 
             dataHandle.Free();
+        }
+
+        internal void Bind()
+        {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+        }
+
+        internal void Unbind()
+        {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
         public void Dispose()

@@ -1,5 +1,5 @@
 ﻿//
-// RMeshBuilder.cs
+// RNode.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -27,9 +27,12 @@ using System;
 
 namespace Reactor.Types
 {
-    public class RMeshBuilder : RRenderNode
+    public class RNode
     {
-
+        internal static T Create<T>()
+        {
+            return (T)Activator.CreateInstance(typeof(T), true);
+        }
     }
 }
 

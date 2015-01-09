@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
+
 namespace Reactor.Math
 {
     [DebuggerDisplay("{DebugDisplayString,nq}")]
@@ -868,6 +869,16 @@ namespace Reactor.Math
         }
 
         public static implicit operator Vector3(OpenTK.Vector3 value){
+            return new Vector3(value.X, value.Y, value.Z);
+        }
+
+        public static implicit operator Assimp.Vector3D(Vector3 value)
+        {
+            return new Assimp.Vector3D(value.X, value.Y, value.Z);
+        }
+
+        public static implicit operator Vector3(Assimp.Vector3D value)
+        {
             return new Vector3(value.X, value.Y, value.Z);
         }
         #endregion

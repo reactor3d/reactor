@@ -167,6 +167,10 @@
     <Compile Include="Types\RMeshBuilder.cs" />
     <Compile Include="Geometry\RIndexBuffer.cs" />
     <Compile Include="Geometry\RIndexElementSize.cs" />
+    <Compile Include="Geometry\RVertexData.cs" />
+    <Compile Include="Loaders\MeshLoader.cs" />
+    <Compile Include="Types\RMeshPart.cs" />
+    <Compile Include="Types\RNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

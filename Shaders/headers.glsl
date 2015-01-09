@@ -11,7 +11,7 @@ layout(location = 2) in vec2 texCoord;
   layout(location = 6) in int boneIndex;
   layout(location = 5) in vec4 weight;
   #ifdef EX
-  layout(location = 3) vec3 binormal;
+  layout(location = 3) vec3 bitangent;
   layout(location = 4) vec3 tangent;
   #endif
 #endif

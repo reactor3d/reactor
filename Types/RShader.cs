@@ -52,12 +52,13 @@ namespace Reactor.Types
             GL.GetProgram(Id, GetProgramParameterName.LinkStatus, out linkStatus);
             if(linkStatus == (int)All.False){
                 var log = GL.GetProgramInfoLog(Id);
+                RLog.Error(log);
                 REngine.CheckGLError();
                 if (GL.IsProgram(Id))
                 {
                     GL.DeleteProgram(Id);
                     REngine.CheckGLError();
-                    Id = -1;
+                    Id = 0;
                 }
                 return;
             }
@@ -73,7 +74,7 @@ namespace Reactor.Types
                 StringBuilder name = new StringBuilder();
                 GL.GetActiveAttrib(Id, i, 4096, out length, out size, out type, name);
                 Attribute attrib = new Attribute();
-                attrib.name = name.ToString();
+                attrib.name = name.ToString().ToLower();  //ToLower() so that we can do matching with RVertexElementFormat's
                 attrib.index = i;
                 attrib.location = GL.GetAttribLocation(Id, attrib.name);
                 attrib.type = type;
@@ -167,11 +168,58 @@ namespace Reactor.Types
                 }
             }
         }
-        internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage, int p)
+        internal int GetAttribLocation(string name)
+        {
+            for(int i=0; i<_attributes.Length; i++){
+                if(_attributes[i].name == name){
+                    return _attributes[i].location;
+                }
+            }
+            return -1;
+        }
+        internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage)
+        {
+            string name = "";
+            switch(rVertexElementUsage)
+            {
+                case RVertexElementUsage.Position:
+                    name = "position";
+                    break;
+                case RVertexElementUsage.Color:
+                    name = "color";
+                    break;
+                case RVertexElementUsage.Normal:
+                    name = "normal";
+                    break;
+                case RVertexElementUsage.Bitangent:
+                    name = "bitangent";
+                    break;
+                case RVertexElementUsage.Tangent:
+                    name = "tangent";
+                    break;
+                case RVertexElementUsage.TextureCoordinate:
+                    name = "texcoord";
+                    break;
+                case RVertexElementUsage.BlendIndices:
+                    name = "blendindices";
+                    break;
+                case RVertexElementUsage.BlendWeight:
+                    name = "blendweight";
+                    break;
+                case RVertexElementUsage.TessellateFactor:
+                    name = "tessellatefactor";
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    break;
+            }
+            return GetAttribLocation(name);
+        }
+        internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage, int usageIndex)
         {
             int size;
             ActiveAttribType type;
-            string name = GL.GetActiveAttrib(Id, p, out size, out type);
+            string name = GL.GetActiveAttrib(Id, usageIndex, out size, out type);
             return GL.GetAttribLocation(Id, name);
         }
         internal void Bind()
@@ -186,6 +234,8 @@ namespace Reactor.Types
         {
             GL.UseProgram(0);
         }
+
+
         public void Dispose()
         {
             if (GL.IsProgram(Id))

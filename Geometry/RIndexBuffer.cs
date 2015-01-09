@@ -214,7 +214,34 @@ namespace Reactor.Geometry
                 REngine.CheckGLError();
             }
         }
+        internal int GetElementCountArray(PrimitiveType primitiveType, int primitiveCount)
+        {
+            //TODO: Overview the calculation
+            switch (primitiveType)
+            {
+                case PrimitiveType.Points:
+                    return primitiveCount;
+                case PrimitiveType.Lines:
+                    return primitiveCount * 2;
+                case PrimitiveType.LineStrip:
+                    return primitiveCount + 1;
+                case PrimitiveType.Triangles:
+                    return primitiveCount * 3;
+                case PrimitiveType.TriangleStrip:
+                    return 3 + (primitiveCount - 1); // ???
+            }
 
+            throw new NotSupportedException();
+        }
+
+        internal void Bind()
+        {
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
+        }
+        internal void Unbind()
+        {
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+        }
         #region IDisposable implementation
 
         public void Dispose()

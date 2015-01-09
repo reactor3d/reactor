@@ -41,7 +41,7 @@ namespace Reactor
         }
         public RMesh CreateMesh(string name, RSceneNode parent)
         {
-            RMesh mesh = new RMesh();
+            RMesh mesh = (RMesh)Activator.CreateInstance(typeof(RMesh), true);
             mesh.Name = name;
             mesh.Children = new List<RSceneNode>();
             mesh.Parent = parent;
@@ -55,7 +55,7 @@ namespace Reactor
         }
         public RMeshBuilder CreateMeshBuilder(string name, RSceneNode parent)
         {
-            RMeshBuilder mesh = new RMeshBuilder();
+            RMeshBuilder mesh = (RMeshBuilder)Activator.CreateInstance(typeof(RMeshBuilder), true);
             mesh.Name = name;
             mesh.Children = new List<RSceneNode>();
             mesh.Parent = parent;

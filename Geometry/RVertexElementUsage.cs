@@ -11,7 +11,7 @@ namespace Reactor.Geometry
         Color,
         TextureCoordinate,
         Normal,
-        Binormal,
+        Bitangent,
         Tangent,
         BlendIndices,
         BlendWeight,

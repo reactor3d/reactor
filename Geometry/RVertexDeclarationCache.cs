@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 namespace Reactor.Geometry
 {
     internal class RVertexDeclarationCache<T>
-        where T : struct, IVertexType
+        where T : IVertexType
     {
-        static private RVertexDeclaration _cached;
+        static RVertexDeclaration _cached;
 
         static public RVertexDeclaration VertexDeclaration
         {
             get
             {
                 if (_cached == null)
-                    _cached = RVertexDeclaration.FromType(typeof(T));
+                {
+                    _cached = (Activator.CreateInstance(typeof(T)) as IVertexType).VertexDeclaration;
+                    if(_cached == null)
+                        throw new NullReferenceException("RVertexDeclarationCache was unable to get a VertexDeclaration for an uncached IVertexType!");
+                }
 
                 return _cached;
             }

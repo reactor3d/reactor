@@ -67,7 +67,7 @@ namespace Reactor.Geometry
         /// <summary>
         /// Vertex attribute information for a particular shader/vertex declaration combination.
         /// </summary>
-        class RVertexDeclarationAttributeInfo
+        internal class RVertexDeclarationAttributeInfo
         {
             internal bool[] EnabledAttributes;
 
@@ -127,15 +127,18 @@ namespace Reactor.Geometry
             return max;
         }
 
-        /// <summary>
-        /// Returns the VertexDeclaration for Type.
-        /// </summary>
-        /// <param name="vertexType">A value type which implements the IVertexType interface.</param>
-        /// <returns>The VertexDeclaration.</returns>
-        /// <remarks>
-        /// Prefer to use VertexDeclarationCache when the declaration lookup
-        /// can be performed with a templated type.
-        /// </remarks>
+        public RVertexElement[] GetVertexElements()
+        {
+            return (RVertexElement[])_elements.Clone();
+        }
+
+        public int VertexStride
+        {
+            get
+            {
+                return _vertexStride;
+            }
+        }
         internal static RVertexDeclaration FromType(Type vertexType)
         {
             if (vertexType == null)
@@ -159,19 +162,6 @@ namespace Reactor.Geometry
             }
 
             return vertexDeclaration;
-        }
-
-        public RVertexElement[] GetVertexElements()
-        {
-            return (RVertexElement[])_elements.Clone();
-        }
-
-        public int VertexStride
-        {
-            get
-            {
-                return _vertexStride;
-            }
         }
     }
 }
