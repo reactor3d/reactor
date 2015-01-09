@@ -224,10 +224,10 @@ namespace Reactor.Geometry
                 case RVertexElementFormat.NormalizedShort4:
                     return VertexAttribPointerType.Short;
 
-               case VertexElementFormat.HalfVector2:
+                case RVertexElementFormat.HalfVector2:
                     return VertexAttribPointerType.HalfFloat;
 
-                case VertexElementFormat.HalfVector4:
+                case RVertexElementFormat.HalfVector4:
                     return VertexAttribPointerType.HalfFloat;
 
             }
