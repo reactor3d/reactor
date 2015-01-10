@@ -46,7 +46,10 @@ namespace Reactor
 {
     static class ImageGDI
     {
-
+        public static void LoadFromData( byte[] data, out uint texturehandle, out TextureTarget dimension)
+        {
+            throw new NotImplementedException("Loading uncompressed textures from memory isn't yet supported");
+        }
         public static void LoadFromDisk( string filename, out uint texturehandle, out TextureTarget dimension )
         {
             dimension = (TextureTarget) 0;

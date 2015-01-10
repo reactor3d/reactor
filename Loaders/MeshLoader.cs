@@ -113,12 +113,6 @@ namespace Reactor.Loaders
                     rmeshpart.IndexBuffer = ibuffer;
                     rmesh.Parts.Add(rmeshpart);
 
-                    if(scene.HasTextures){
-                        foreach(EmbeddedTexture t in scene.Textures)
-                        {
-
-                        }
-                    }
 
 
                 }

@@ -18,12 +18,59 @@ namespace Reactor.Types
         bool bound;
         TextureTarget textureTarget;
 
+        internal void LoadFromData(byte[] data, string name, bool isCompressed)
+        {
+            if(isCompressed)
+            {
+                try
+                {
+                    ImageDDS.LoadFromData( data, name, out Id, out textureTarget );
+
+                }catch(Exception e){
+                    RLog.Error("Error loading texture for: "+name);
+                    RLog.Error(e.Message);
+                    RLog.Error(e);
+                }
+            }
+            else
+            {
+                try
+                {
+                    ImageGDI.LoadFromData( data, out Id, out textureTarget );
+                }catch(Exception e){
+                    RLog.Error("Error loading texture for: "+name);
+                    RLog.Error(e.Message);
+                    RLog.Error(e);
+                }
+            }
+            if ( Id == 0 || textureTarget == 0)
+            {
+                RLog.Error("Error generating OpenGL texture for: "+name);
+
+            }
+
+            // load succeeded, Texture can be used.
+            Bind();
+            GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
+            int MipMapCount;
+            GL.GetTexParameter( textureTarget, GetTextureParameter.TextureMaxLevel, out MipMapCount );
+            if ( MipMapCount == 0 ) // if no MipMaps are present, use linear Filter
+                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
+            else // MipMaps are present, use trilinear Filter
+                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
+            int height, width;
+            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureHeight, out height);
+            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWidth, out width);
+            Bounds = new Rectangle(0, 0, width, height);
+            RLog.Info("Texture loaded for: "+name);
+        }
         internal void LoadFromDisk(string filename)
         {
             if(Path.GetExtension(filename).ToLower() == "dds"){
                 try
                 {
                     ImageDDS.LoadFromDisk( filename, out Id, out textureTarget );
+
                 }catch(Exception e){
                     RLog.Error("Error loading texture from: "+filename);
                     RLog.Error(e.Message);
@@ -55,7 +102,10 @@ namespace Reactor.Types
                 GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
             else // MipMaps are present, use trilinear Filter
                 GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
-
+            int height, width;
+            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureHeight, out height);
+            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWidth, out width);
+            Bounds = new Rectangle(0, 0, width, height);
             RLog.Info("Texture loaded from: "+filename);
         }
 

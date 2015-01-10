@@ -204,16 +204,23 @@ namespace Reactor
         #endif
         #endregion Private Members
 
+        public static void LoadFromDisk(string filename, out uint texturehandle, out TextureTarget dimension)
+        {
+            byte[] data;
+            data = File.ReadAllBytes( @filename );
+            LoadFromData(data, filename, out texturehandle, out dimension);
+        }
         /// <summary>
         /// This function will generate, bind and fill a Texture Object with a DXT1/3/5 compressed Texture in .dds Format.
         /// MipMaps below 4x4 Pixel Size are discarded, because DXTn's smallest unit is a 4x4 block of Pixel data.
         /// It will set correct MipMap parameters, Filtering, Wrapping and EnvMode for the Texture. 
         /// The only call inside this function affecting OpenGL State is GL.BindTexture();
         /// </summary>
-        /// <param name="filename">The name of the file you wish to load, including path and file extension.</param>
+        /// <param name="data">The data of the file you wish to load.</param>
+        /// <param name="filename">The name of the file including path and extention.</param> 
         /// <param name="texturehandle">0 if invalid, otherwise a Texture Object usable with GL.BindTexture().</param>
         /// <param name="dimension">0 if invalid, will output what was loaded (typically Texture1D/2D/3D or Cubemap)</param>
-        public static void LoadFromDisk( string filename, out uint texturehandle, out TextureTarget dimension )
+        public static void LoadFromData( byte[] data, string filename, out uint texturehandle, out TextureTarget dimension )
         {
             #region Prep data
             // invalidate whatever it was before
@@ -229,16 +236,16 @@ namespace Reactor
             _BytesForMainSurface = 0;
             _BytesPerBlock = 0;
             _PixelInternalFormat = PixelInternalFormat.Rgba8;
-            byte[] _RawDataFromFile;
+
             #endregion
 
             #region Try
             try // Exceptions will be thrown if any Problem occurs while working on the file. 
             {
-                _RawDataFromFile = File.ReadAllBytes( @filename );
+
 
                 #region Translate Header to less cryptic representation
-                ConvertDX9Header( ref _RawDataFromFile ); // The first 128 Bytes of the file is non-image data
+                ConvertDX9Header( ref data ); // The first 128 Bytes of the file is non-image data
 
                 // start by checking if all forced flags are present. Flags indicate valid fields, but aren't written by every tool .....
                 if ( idString != "DDS " || // magic key
@@ -378,7 +385,7 @@ namespace Reactor
                             byte[] RawDataOfSurface = new byte[SurfaceSizeInBytes];
                             if ( !TextureLoaderParameters.FlipImages )
                             { // no changes to the image, copy as is
-                                Array.Copy( _RawDataFromFile, Cursor, RawDataOfSurface, 0, SurfaceSizeInBytes );
+                                Array.Copy( data, Cursor, RawDataOfSurface, 0, SurfaceSizeInBytes );
                             } else
                             {  // Turn the blocks upside down and the rows aswell, done in a single pass through all blocks
                                 for ( int sourceColumn = 0 ; sourceColumn < BlocksPerColumn ; sourceColumn++ )
@@ -393,54 +400,54 @@ namespace Reactor
                                         {
                                             case (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext:
                                                 // Color only
-                                                RawDataOfSurface[target + 0] = _RawDataFromFile[source + 0];
-                                                RawDataOfSurface[target + 1] = _RawDataFromFile[source + 1];
-                                                RawDataOfSurface[target + 2] = _RawDataFromFile[source + 2];
-                                                RawDataOfSurface[target + 3] = _RawDataFromFile[source + 3];
-                                                RawDataOfSurface[target + 4] = _RawDataFromFile[source + 7];
-                                                RawDataOfSurface[target + 5] = _RawDataFromFile[source + 6];
-                                                RawDataOfSurface[target + 6] = _RawDataFromFile[source + 5];
-                                                RawDataOfSurface[target + 7] = _RawDataFromFile[source + 4];
+                                                RawDataOfSurface[target + 0] = data[source + 0];
+                                                RawDataOfSurface[target + 1] = data[source + 1];
+                                                RawDataOfSurface[target + 2] = data[source + 2];
+                                                RawDataOfSurface[target + 3] = data[source + 3];
+                                                RawDataOfSurface[target + 4] = data[source + 7];
+                                                RawDataOfSurface[target + 5] = data[source + 6];
+                                                RawDataOfSurface[target + 6] = data[source + 5];
+                                                RawDataOfSurface[target + 7] = data[source + 4];
                                                 break;
                                             case (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext:
                                                 // Alpha
-                                                RawDataOfSurface[target + 0] = _RawDataFromFile[source + 6];
-                                                RawDataOfSurface[target + 1] = _RawDataFromFile[source + 7];
-                                                RawDataOfSurface[target + 2] = _RawDataFromFile[source + 4];
-                                                RawDataOfSurface[target + 3] = _RawDataFromFile[source + 5];
-                                                RawDataOfSurface[target + 4] = _RawDataFromFile[source + 2];
-                                                RawDataOfSurface[target + 5] = _RawDataFromFile[source + 3];
-                                                RawDataOfSurface[target + 6] = _RawDataFromFile[source + 0];
-                                                RawDataOfSurface[target + 7] = _RawDataFromFile[source + 1];
+                                                RawDataOfSurface[target + 0] = data[source + 6];
+                                                RawDataOfSurface[target + 1] = data[source + 7];
+                                                RawDataOfSurface[target + 2] = data[source + 4];
+                                                RawDataOfSurface[target + 3] = data[source + 5];
+                                                RawDataOfSurface[target + 4] = data[source + 2];
+                                                RawDataOfSurface[target + 5] = data[source + 3];
+                                                RawDataOfSurface[target + 6] = data[source + 0];
+                                                RawDataOfSurface[target + 7] = data[source + 1];
 
                                                 // Color
-                                                RawDataOfSurface[target + 8] = _RawDataFromFile[source + 8];
-                                                RawDataOfSurface[target + 9] = _RawDataFromFile[source + 9];
-                                                RawDataOfSurface[target + 10] = _RawDataFromFile[source + 10];
-                                                RawDataOfSurface[target + 11] = _RawDataFromFile[source + 11];
-                                                RawDataOfSurface[target + 12] = _RawDataFromFile[source + 15];
-                                                RawDataOfSurface[target + 13] = _RawDataFromFile[source + 14];
-                                                RawDataOfSurface[target + 14] = _RawDataFromFile[source + 13];
-                                                RawDataOfSurface[target + 15] = _RawDataFromFile[source + 12];
+                                                RawDataOfSurface[target + 8] = data[source + 8];
+                                                RawDataOfSurface[target + 9] = data[source + 9];
+                                                RawDataOfSurface[target + 10] = data[source + 10];
+                                                RawDataOfSurface[target + 11] = data[source + 11];
+                                                RawDataOfSurface[target + 12] = data[source + 15];
+                                                RawDataOfSurface[target + 13] = data[source + 14];
+                                                RawDataOfSurface[target + 14] = data[source + 13];
+                                                RawDataOfSurface[target + 15] = data[source + 12];
                                                 break;
                                             case (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext:
                                                 // Alpha, the first 2 bytes remain 
-                                                RawDataOfSurface[target + 0] = _RawDataFromFile[source + 0];
-                                                RawDataOfSurface[target + 1] = _RawDataFromFile[source + 1];
+                                                RawDataOfSurface[target + 0] = data[source + 0];
+                                                RawDataOfSurface[target + 1] = data[source + 1];
 
                                                 // extract 3 bits each and flip them
-                                                GetBytesFromUInt24( ref RawDataOfSurface, (uint) target + 5, FlipUInt24( GetUInt24( ref _RawDataFromFile, (uint) source + 2 ) ) );
-                                                GetBytesFromUInt24( ref RawDataOfSurface, (uint) target + 2, FlipUInt24( GetUInt24( ref _RawDataFromFile, (uint) source + 5 ) ) );
+                                                GetBytesFromUInt24( ref RawDataOfSurface, (uint) target + 5, FlipUInt24( GetUInt24( ref data, (uint) source + 2 ) ) );
+                                                GetBytesFromUInt24( ref RawDataOfSurface, (uint) target + 2, FlipUInt24( GetUInt24( ref data, (uint) source + 5 ) ) );
 
                                                 // Color
-                                                RawDataOfSurface[target + 8] = _RawDataFromFile[source + 8];
-                                                RawDataOfSurface[target + 9] = _RawDataFromFile[source + 9];
-                                                RawDataOfSurface[target + 10] = _RawDataFromFile[source + 10];
-                                                RawDataOfSurface[target + 11] = _RawDataFromFile[source + 11];
-                                                RawDataOfSurface[target + 12] = _RawDataFromFile[source + 15];
-                                                RawDataOfSurface[target + 13] = _RawDataFromFile[source + 14];
-                                                RawDataOfSurface[target + 14] = _RawDataFromFile[source + 13];
-                                                RawDataOfSurface[target + 15] = _RawDataFromFile[source + 12];
+                                                RawDataOfSurface[target + 8] = data[source + 8];
+                                                RawDataOfSurface[target + 9] = data[source + 9];
+                                                RawDataOfSurface[target + 10] = data[source + 10];
+                                                RawDataOfSurface[target + 11] = data[source + 11];
+                                                RawDataOfSurface[target + 12] = data[source + 15];
+                                                RawDataOfSurface[target + 13] = data[source + 14];
+                                                RawDataOfSurface[target + 14] = data[source + 13];
+                                                RawDataOfSurface[target + 15] = data[source + 12];
                                                 break;
                                             default:
                                                 throw new ArgumentException( "ERROR: Should have never arrived here! Bad _PixelInternalFormat! Should have been dealt with much earlier." );
@@ -568,7 +575,7 @@ namespace Reactor
                 // return; // failure
             } finally
             {
-                _RawDataFromFile = null; // clarity, not really needed
+                data = null; // clarity, not really needed
             }
             #endregion Try
         }
