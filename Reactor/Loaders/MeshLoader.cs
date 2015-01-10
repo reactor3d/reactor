@@ -31,6 +31,7 @@ using Reactor.Geometry;
 using Reactor.Math;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml;
 
 namespace Reactor.Loaders
 {
@@ -38,9 +39,12 @@ namespace Reactor.Loaders
     {
         public static void LoadSource(this RMesh rmesh, string filename)
         {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filename);
             Assimp.Configs.MultithreadingConfig mtConfig = new Assimp.Configs.MultithreadingConfig(-1);
             AssimpContext context = new AssimpContext();
             context.SetConfig(mtConfig);
+
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.RemoveRedundantMaterials | PostProcessSteps.JoinIdenticalVertices);
 

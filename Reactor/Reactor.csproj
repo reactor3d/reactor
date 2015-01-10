@@ -101,7 +101,7 @@
       <HintPath>packages\OpenTKWithOpenAL.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="AssimpNet">
-      <HintPath>..\..\..\Downloads\MonoGame-Dependencies-master\assimp\AssimpNet.dll</HintPath>
+      <HintPath>..\ThirdParty\assimp\AssimpNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
