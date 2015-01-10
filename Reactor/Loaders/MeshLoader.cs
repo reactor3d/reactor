@@ -26,6 +26,7 @@
 using System;
 using Reactor.Types;
 using Assimp;
+
 using Reactor.Geometry;
 using Reactor.Math;
 using System.Collections.Generic;
@@ -35,10 +36,13 @@ namespace Reactor.Loaders
 {
     static class MeshLoader
     {
-        public static void Load(this RMesh rmesh, string filename)
+        public static void LoadSource(this RMesh rmesh, string filename)
         {
+            Assimp.Configs.MultithreadingConfig mtConfig = new Assimp.Configs.MultithreadingConfig(-1);
             AssimpContext context = new AssimpContext();
-            Scene scene = context.ImportFile(filename);
+            context.SetConfig(mtConfig);
+            int platform = (int)Environment.OSVersion.Platform;
+            Scene scene = context.ImportFile(filename,PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.RemoveRedundantMaterials | PostProcessSteps.JoinIdenticalVertices);
 
             if(scene.HasMeshes)
             {

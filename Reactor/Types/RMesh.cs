@@ -22,7 +22,7 @@ namespace Reactor.Types
 
         public void LoadSourceModel(string filename)
         {
-            this.Load(filename);
+            this.LoadSource(filename);
         }
     }
 }
