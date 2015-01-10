@@ -296,13 +296,12 @@ namespace Reactor.Geometry
                 case RVertexElementFormat.NormalizedShort4:
                     return ColorPointerType.UnsignedShort;
 
-#if MONOMAC
                 case RVertexElementFormat.HalfVector2:
                     return ColorPointerType.HalfFloat;
 
                 case RVertexElementFormat.HalfVector4:
                     return ColorPointerType.HalfFloat;
-#endif
+
             }
 
             throw new ArgumentException();
@@ -342,13 +341,11 @@ namespace Reactor.Geometry
                 case RVertexElementFormat.NormalizedShort4:
                     return NormalPointerType.Short;
 
-#if MONOMAC
                 case RVertexElementFormat.HalfVector2:
                     return NormalPointerType.HalfFloat;
 
                 case RVertexElementFormat.HalfVector4:
                     return NormalPointerType.HalfFloat;
-#endif
             }
 
             throw new ArgumentException();
