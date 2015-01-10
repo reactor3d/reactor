@@ -31,7 +31,7 @@ namespace Reactor.Geometry
 
                 foreach (var ve in _elements)
                 {
-                    var attributeLocation = shader.GetAttribLocation(ve.VertexElementUsage, ve.UsageIndex);
+                    var attributeLocation = shader.GetAttribLocation(ve.VertexElementUsage);
                     
                     if (attributeLocation >= 0)
                     {
@@ -53,6 +53,7 @@ namespace Reactor.Geometry
             // Apply the vertex attribute info
             foreach (var element in attrInfo.Elements)
             {
+
                 GL.VertexAttribPointer(element.AttributeLocation,
                     element.NumberOfElements,
                     element.VertexAttribPointerType,

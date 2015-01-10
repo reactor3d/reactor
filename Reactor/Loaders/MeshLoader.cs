@@ -46,7 +46,7 @@ namespace Reactor.Loaders
             context.SetConfig(mtConfig);
 
             int platform = (int)Environment.OSVersion.Platform;
-            Scene scene = context.ImportFile(filename,PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.RemoveRedundantMaterials | PostProcessSteps.JoinIdenticalVertices);
+            Scene scene = context.ImportFile(filename,PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.RemoveRedundantMaterials | PostProcessSteps.JoinIdenticalVertices | PostProcessSteps.GenerateUVCoords);
 
             if(scene.HasMeshes)
             {
@@ -84,6 +84,10 @@ namespace Reactor.Loaders
                             texCoords.Add(new Vector2(tex.X, tex.Y));
                         }
                     }
+                    else
+                    {
+                        texCoords.AddRange(new Vector2[mesh.VertexCount]);
+                    }
                     if( mesh.HasTangentBasis)
                     {
                         foreach(Vector3D b in mesh.BiTangents)
@@ -97,7 +101,10 @@ namespace Reactor.Loaders
                     } else {
                         Vector3[] t;
                         Vector3[] b;
-                        CalculateTangents(verticies, indicesList, normals, texCoords, out t, out b);
+                        if(mesh.HasTextureCoords(0))
+                            CalculateTangents(verticies, indicesList, normals, texCoords, out t, out b);
+                        else
+                            t = b = new Vector3[mesh.VertexCount];
                         tangents.AddRange(t);
                         bitangents.AddRange(b);
                     }
@@ -113,7 +120,9 @@ namespace Reactor.Loaders
                                 texCoords[i]
                             );
                         }
-                        vbuffer.SetData<RVertexData>(data);
+
+                    vbuffer.SetData<RVertexData>(data);
+
                         
 
                     rmeshpart.VertexBuffer = vbuffer;

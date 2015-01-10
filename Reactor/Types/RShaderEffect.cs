@@ -15,20 +15,19 @@ namespace Reactor.Types
         public RShaderEffect(string source, int type, string[] defines)
         {
             Type = (RShaderEffectType)type;
-            if(Type == RShaderEffectType.VERTEX)
-            {
+
                 StringBuilder defineSource = new StringBuilder();
-                defineSource.Append("#version 330");
-                defineSource.Append(RShaderResources.Headers);
+                defineSource.Append("#version 330\r\n");
+
                 if(defines != null)
                     foreach(string define in defines){
                         defineSource.AppendFormat("#{0};\r\n", define);
                     }
-                EffectSource = defineSource.ToString() + source;
-            } else {
-                EffectSource = source;
-            }
+            //if(Type == RShaderEffectType.VERTEX)
+                //defineSource.Append(RShaderResources.Headers);
+            EffectSource = defineSource.ToString() + source;
 
+            RLog.Info(EffectSource);
             switch (type)
             {
                 case ((int)RShaderEffectType.GEOMETRY):
@@ -65,6 +64,7 @@ namespace Reactor.Types
             if (compile_status == (int)All.False)
             {
                 var log = GL.GetShaderInfoLog(Id);
+                RLog.Error(log);
                 REngine.CheckGLError();
                 if (GL.IsShader(Id))
                 {

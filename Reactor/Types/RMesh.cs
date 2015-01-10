@@ -24,5 +24,13 @@ namespace Reactor.Types
         {
             this.LoadSource(filename);
         }
+
+        public override void Render()
+        {
+            foreach(RMeshPart part in Parts)
+            {
+                part.Draw(PrimitiveType.Triangles);
+            }
+        }
     }
 }

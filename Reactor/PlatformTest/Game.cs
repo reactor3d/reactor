@@ -1,5 +1,5 @@
 ﻿//
-// RNode.cs
+// Game.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -24,22 +24,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using Reactor;
+using Reactor.Types;
+using Reactor.Math;
 
-namespace Reactor.Types
+namespace PlatformTest
 {
-    public class RNode
+    public class Game : RGame
     {
-        internal static T Create<T>() where T : RNode
+        RMesh mesh;
+        public Game()
         {
-            try
-            {
-                return (T)Activator.CreateInstance(typeof(T), true);
-            }
-            catch(Exception e)
-            {
-                RLog.Error(e);
-            }
-            return null;
+        }
+
+        public override void Init()
+        {
+            Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
+            mesh = Engine.Scene.Create<RMesh>("test");
+            mesh.LoadSourceModel(Engine.FileSystem.GetFilePath("/meshes/test.dae"));
+            mesh.IsDrawable = true;
+            mesh.IsEnabled = true;
+
+        }
+
+        public override void Render()
+        {
+            Engine.Clear();
+
+            mesh.Render();
+            Engine.Present();
+        }
+
+        public override void Update()
+        {
+            mesh.Update();
+        }
+
+        public override void Dispose()
+        {
+            Engine.Dispose();
+        }
+
+        public override void Resized(int Width, int Height)
+        {
+            RViewport viewport = Engine.GetViewport();
+            viewport.Width = Width;
+            viewport.Height = Height;
+            Engine.SetViewport(viewport);
         }
     }
 }

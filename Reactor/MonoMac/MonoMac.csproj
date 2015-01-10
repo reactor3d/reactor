@@ -26,6 +26,7 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -89,7 +90,7 @@
     <Content Include="meshes\test.dae">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\ThirdParty\assimp\libassimp.dylib">
+    <Content Include="..\..\..\..\Downloads\assimp-3.1.1\lib\libassimp.3.1.1.dylib">
       <Link>libassimp.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

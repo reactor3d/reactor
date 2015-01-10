@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <UseMSBuildEngine>False</UseMSBuildEngine>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -174,15 +175,17 @@
     <Compile Include="Geometry\RIndexBuffer.cs" />
     <Compile Include="Geometry\RIndexElementSize.cs" />
     <Compile Include="Geometry\RVertexData.cs" />
-    <Compile Include="Loaders\MeshLoader.cs" />
     <Compile Include="Types\RMeshPart.cs" />
     <Compile Include="Types\RNode.cs" />
     <Compile Include="Utilities\Serialization.cs" />
     <Compile Include="RFileSystem.cs" />
+    <Compile Include="Loaders\MeshLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="Shaders\headers.glsl" />
+    <EmbeddedResource Include="Shaders\basicEffect.frag.glsl" />
+    <EmbeddedResource Include="Shaders\basicEffect.vert.glsl" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

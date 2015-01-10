@@ -34,6 +34,11 @@ namespace PlatformTest
             int platform = (int)Environment.OSVersion.Platform;
 
             Console.WriteLine("Platform: "+(PlatformID)platform);
+
+            using(Game game = new Game())
+            {
+                game.Run();
+            }
         }
     }
 }

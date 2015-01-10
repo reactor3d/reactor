@@ -36,6 +36,12 @@ namespace Reactor.Types
         internal RIndexBuffer<int> IndexBuffer { get; set; }
         internal RShader Shader { get; set; }
         internal List<uint> Textures { get; set; }
+
+        RMeshPart()
+        {
+            Shader = new RShader();
+            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
+        }
         internal void Draw(PrimitiveType primitiveType)
         {
             var shortIndices = IndexBuffer.IndexElementSize == RIndexElementSize.SixteenBits;
@@ -45,8 +51,8 @@ namespace Reactor.Types
             var indexElementCount = IndexBuffer.GetElementCountArray(primitiveType, VertexBuffer.VertexCount / 3);
 
             VertexBuffer.Bind();
-            IndexBuffer.Bind();
             VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
+            IndexBuffer.Bind();
             Shader.Bind();
             GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
             Shader.Unbind();

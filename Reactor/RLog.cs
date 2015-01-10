@@ -95,6 +95,8 @@ namespace Reactor
         {
             Error(e.Message);
             Error(e.StackTrace);
+            if(e.InnerException != null)
+                Error(e.InnerException);
         }
 
         internal static void Debug(string message)

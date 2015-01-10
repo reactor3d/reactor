@@ -13,7 +13,6 @@ namespace Reactor.Geometry
         internal int _offset;
         internal RVertexElementFormat _format;
         internal RVertexElementUsage _usage;
-        internal int _usageIndex;
 
         public int Offset
         {
@@ -51,22 +50,9 @@ namespace Reactor.Geometry
             }
         }
 
-        public int UsageIndex
-        {
-            get
-            {
-                return this._usageIndex;
-            }
-            set
-            {
-                this._usageIndex = value;
-            }
-        }
-
-        public RVertexElement(int offset, RVertexElementFormat elementFormat, RVertexElementUsage elementUsage, int usageIndex)
+        public RVertexElement(int offset, RVertexElementFormat elementFormat, RVertexElementUsage elementUsage)
         {
             this._offset = offset;
-            this._usageIndex = usageIndex;
             this._format = elementFormat;
             this._usage = elementUsage;
         }
@@ -80,7 +66,7 @@ namespace Reactor.Geometry
 
         public override string ToString()
         {
-            return "{{Offset:" + this.Offset + " Format:" + this.VertexElementFormat + " Usage:" + this.VertexElementUsage + " UsageIndex: " + this.UsageIndex + "}}";
+            return "{{Offset:" + this.Offset + " Format:" + this.VertexElementFormat + " Usage:" + this.VertexElementUsage + "}}";
         }
 
         public override bool Equals(object obj)
@@ -98,7 +84,7 @@ namespace Reactor.Geometry
 
         public static bool operator ==(RVertexElement left, RVertexElement right)
         {
-            return ((((left._offset == right._offset) && (left._usageIndex == right._usageIndex)) && (left._usage == right._usage)) && (left._format == right._format));
+            return ((((left._offset == right._offset)) && (left._usage == right._usage)) && (left._format == right._format));
         }
 
         public static bool operator !=(RVertexElement left, RVertexElement right)
@@ -391,6 +377,20 @@ namespace Reactor.Geometry
                     return 8;
             }
             return 0;
+        }
+        internal static string GetElementUsageName(RVertexElementUsage usage)
+        {
+            switch(usage)
+            {
+                case RVertexElementUsage.Position:
+                    return "position";
+                case RVertexElementUsage.Normal:
+                    return "normal";
+                case RVertexElementUsage.TextureCoordinate:
+                    return "texcoord";
+                default:
+                    return null;
+            }
         }
     }
 }

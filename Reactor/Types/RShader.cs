@@ -34,17 +34,18 @@ namespace Reactor.Types
         private readonly Dictionary<string, int> _uniformLocations = new Dictionary<string, int>();
         private readonly Dictionary<string, int> _attributeLocations = new Dictionary<string, int>();
         public int Id { get; internal set; }
-        List<RShaderEffect> effects = new List<RShaderEffect>(6);
+        RShaderEffect[] effects = new RShaderEffect[6];
 
 
         public void Load(string vertSource, string fragSource, string[] defines)
         {
             effects[(int)RShaderEffectType.VERTEX] = new RShaderEffect(vertSource, (int)RShaderEffectType.VERTEX, defines);
-            effects[(int)RShaderEffectType.FRAGMENT] = new RShaderEffect(vertSource, (int)RShaderEffectType.FRAGMENT, defines);
+            effects[(int)RShaderEffectType.FRAGMENT] = new RShaderEffect(fragSource, (int)RShaderEffectType.FRAGMENT, defines);
             Id = GL.CreateProgram();
             foreach (RShaderEffect effect in effects)
             {
-                GL.AttachShader(Id, effect.Id);
+                if(effect!=null)
+                    GL.AttachShader(Id, effect.Id);
             }
 
             GL.LinkProgram(Id);
@@ -256,5 +257,8 @@ namespace Reactor.Types
             return contents;
         }
         internal static string Headers = GetResourceString("Reactor.Shaders.headers.glsl");
+
+        internal static string BasicEffectVert = GetResourceString("Reactor.Shaders.basicEffect.vert.glsl");
+        internal static string BasicEffectFrag = GetResourceString("Reactor.Shaders.basicEffect.frag.glsl");
     }
 }
