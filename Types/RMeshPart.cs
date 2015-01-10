@@ -43,9 +43,10 @@ namespace Reactor.Types
             var indexElementSize = shortIndices ? 2 : 4;
             var indexOffsetInBytes = (IntPtr)(indexElementSize);
             var indexElementCount = IndexBuffer.GetElementCountArray(primitiveType, VertexBuffer.VertexCount / 3);
-            VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
+
             VertexBuffer.Bind();
             IndexBuffer.Bind();
+            VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
             Shader.Bind();
             GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
             Shader.Unbind();
