@@ -26,6 +26,21 @@ namespace Reactor.Types
             Shader = new RShader();
         }
 
+        public void SetTexture(int TextureLayer, RTexture texture)
+        {
+            Textures[TextureLayer] = texture;
+        }
+
+        public void SetTexture(RTextureLayer TextureLayer, RTexture texture)
+        {
+            Textures[(int)TextureLayer] = texture;
+        }
+
+        public void SetTexture(int TextureLayer, uint TextureId)
+        {
+            RTexture texture = RTextures.GetTexture(TextureId);
+            Textures[TextureLayer] = texture;
+        }
         //Needs to be set based on number of RMaterialLayer enum values!
         internal static int MAX_MATERIAL_LAYERS = 7;
     }

@@ -65,11 +65,11 @@ namespace Reactor.Loaders
 
                     foreach(Vector3D v in mesh.Vertices)
                     {
-                        verticies.Add(v);
+                        verticies.Add(new Vector3(v.X, v.Y, v.Z));
                     }
                     foreach(Vector3D n in mesh.Normals)
                     {
-                        normals.Add(n);
+                        normals.Add(new Vector3(n.X, n.Y, n.Z));
                     }
                     if (mesh.HasTextureCoords(0))
                     {
@@ -86,11 +86,11 @@ namespace Reactor.Loaders
                     {
                         foreach(Vector3D b in mesh.BiTangents)
                         {
-                            bitangents.Add(b);
+                            bitangents.Add(new Vector3(b.X, b.Y, b.Z));
                         }
                         foreach(Vector3D t in mesh.Tangents)
                         {
-                            tangents.Add(t);
+                            tangents.Add(new Vector3(t.X, t.Y, t.Z));
                         }
                     } else {
                         Vector3[] t;

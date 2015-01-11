@@ -49,18 +49,21 @@ namespace Reactor.Types
             var indexElementSize = shortIndices ? 2 : 4;
             var indexOffsetInBytes = (IntPtr)(indexElementSize);
             var indexElementCount = IndexBuffer.GetElementCountArray(primitiveType, VertexBuffer.VertexCount / 3);
-
-            VertexBuffer.Bind();
-            VertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
-            IndexBuffer.Bind();
             shader.Bind();
+            VertexBuffer.Bind();
+            IndexBuffer.Bind();
+            VertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
+            
+            
             shader.SetUniformValue("world", world);
             shader.SetUniformValue("view", REngine.camera.viewMatrix);
             shader.SetUniformValue("projection", REngine.camera.projMatrix);
+
             GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
-            shader.Unbind();
+            
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
+            shader.Unbind();
 
         }
         internal void SetTexture(uint texture, RTextureLayer layer)

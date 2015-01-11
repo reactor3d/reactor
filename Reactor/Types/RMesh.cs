@@ -32,7 +32,7 @@ namespace Reactor.Types
             foreach(RMeshPart part in Parts)
             {
                 
-                part.Draw(Shader, PrimitiveType.Triangles, this.ObjectMatrix);
+                part.Draw(Shader, PrimitiveType.Triangles, this.Matrix);
             }
         }
     }

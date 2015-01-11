@@ -326,6 +326,11 @@ namespace Reactor
             REngine.camera = camera;
         }
 
+        public RCamera GetCamera()
+        {
+            return REngine.camera;
+        }
+
         public bool Dispose()
         {
             try

@@ -1,4 +1,6 @@
-﻿//
+﻿using Reactor.Geometry;
+using Reactor.Math;
+//
 // RMeshBuilder.cs
 //
 // Author:
@@ -24,12 +26,267 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 
 namespace Reactor.Types
 {
     public class RMeshBuilder : RRenderNode
     {
+        #region Members
+        internal RMaterial _material;
+        
+        internal RVertexBuffer _buffer;
+        internal RIndexBuffer<int> _index;
+        
+        internal int vertCount = 0;
+        internal uint texture = 0;
+        #endregion
+        #region Methods
+        public RMeshBuilder()
+        {
+            this.Rotation = Vector3.Zero;
+            this.Position = Vector3.Zero;
 
+        }
+        
+        public void SetTexture(int layer, RTexture texture)
+        {
+            if (_material != null)
+                _material.SetTexture(layer, texture);
+            else
+            {
+                this.texture = texture.Id;
+            }
+
+        }
+        public void CreateBox(Vector3 Center, Vector3 Size, bool FlipNormals)
+        {
+
+            RVertexData[] vertices = new RVertexData[36];
+
+
+            // Calculate the position of the vertices on the top face.
+            Vector3 topLeftFront = Position + new Vector3(-1.0f, 1.0f, -1.0f) * Size;
+            Vector3 topLeftBack = Position + new Vector3(-1.0f, 1.0f, 1.0f) * Size;
+            Vector3 topRightFront = Position + new Vector3(1.0f, 1.0f, -1.0f) * Size;
+            Vector3 topRightBack = Position + new Vector3(1.0f, 1.0f, 1.0f) * Size;
+
+            // Calculate the position of the vertices on the bottom face.
+            Vector3 btmLeftFront = Position + new Vector3(-1.0f, -1.0f, -1.0f) * Size;
+            Vector3 btmLeftBack = Position + new Vector3(-1.0f, -1.0f, 1.0f) * Size;
+            Vector3 btmRightFront = Position + new Vector3(1.0f, -1.0f, -1.0f) * Size;
+            Vector3 btmRightBack = Position + new Vector3(1.0f, -1.0f, 1.0f) * Size;
+
+            // Normal vectors for each face (needed for lighting / display)
+            Vector3 normalFront = new Vector3(0.0f, 0.0f, -1.0f) * Size;
+            Vector3 normalBack = new Vector3(0.0f, 0.0f, 1.0f) * Size;
+            Vector3 normalTop = new Vector3(0.0f, 1.0f, 0.0f) * Size;
+            Vector3 normalBottom = new Vector3(0.0f, -1.0f, 0.0f) * Size;
+            Vector3 normalLeft = new Vector3(1.0f, 0.0f, 0.0f) * Size;
+            Vector3 normalRight = new Vector3(-1.0f, 0.0f, 0.0f) * Size;
+
+            // UV texture coordinates
+            Vector2 textureTopLeft = new Vector2(1.0f * Size.X, 0.0f * Size.Y);
+            Vector2 textureTopRight = new Vector2(0.0f * Size.X, 0.0f * Size.Y);
+            Vector2 textureBottomLeft = new Vector2(1.0f * Size.X, 1.0f * Size.Y);
+            Vector2 textureBottomRight = new Vector2(0.0f * Size.X, 1.0f * Size.Y);
+
+            // Add the vertices for the FRONT face.
+            vertices[0] = new RVertexData(topLeftFront, normalFront, Vector3.Zero, Vector3.Zero,textureTopLeft);
+            vertices[1] = new RVertexData(btmLeftFront, normalFront, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[2] = new RVertexData(topRightFront, normalFront, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[3] = new RVertexData(btmLeftFront, normalFront, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[4] = new RVertexData(btmRightFront, normalFront, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[5] = new RVertexData(topRightFront, normalFront, Vector3.Zero, Vector3.Zero, textureTopRight);
+
+            // Add the vertices for the BACK face.
+            vertices[6] = new RVertexData(topLeftBack, normalBack, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[7] = new RVertexData(topRightBack, normalBack, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[8] = new RVertexData(btmLeftBack, normalBack, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[9] = new RVertexData(btmLeftBack, normalBack, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[10] = new RVertexData(topRightBack, normalBack, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[11] = new RVertexData(btmRightBack, normalBack, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+
+            // Add the vertices for the TOP face.
+            vertices[12] = new RVertexData(topLeftFront, normalTop, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[13] = new RVertexData(topRightBack, normalTop, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[14] = new RVertexData(topLeftBack, normalTop, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[15] = new RVertexData(topLeftFront, normalTop, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[16] = new RVertexData(topRightFront, normalTop, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[17] = new RVertexData(topRightBack, normalTop, Vector3.Zero, Vector3.Zero, textureTopRight);
+
+            // Add the vertices for the BOTTOM face. 
+            vertices[18] = new RVertexData(btmLeftFront, normalBottom, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[19] = new RVertexData(btmLeftBack, normalBottom, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[20] = new RVertexData(btmRightBack, normalBottom, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[21] = new RVertexData(btmLeftFront, normalBottom, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[22] = new RVertexData(btmRightBack, normalBottom, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[23] = new RVertexData(btmRightFront, normalBottom, Vector3.Zero, Vector3.Zero, textureTopRight);
+
+            // Add the vertices for the LEFT face.
+            vertices[24] = new RVertexData(topLeftFront, normalLeft, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[25] = new RVertexData(btmLeftBack, normalLeft, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[26] = new RVertexData(btmLeftFront, normalLeft, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[27] = new RVertexData(topLeftBack, normalLeft, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[28] = new RVertexData(btmLeftBack, normalLeft, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[29] = new RVertexData(topLeftFront, normalLeft, Vector3.Zero, Vector3.Zero, textureTopRight);
+
+            // Add the vertices for the RIGHT face. 
+            vertices[30] = new RVertexData(topRightFront, normalRight, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[31] = new RVertexData(btmRightFront, normalRight, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[32] = new RVertexData(btmRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[33] = new RVertexData(topRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[34] = new RVertexData(topRightFront, normalRight, Vector3.Zero, Vector3.Zero, textureTopLeft);
+            vertices[35] = new RVertexData(btmRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureBottomRight);
+
+            if (FlipNormals)
+            {
+                for (int i = 0; i < 36; i++)
+                {
+                    vertices[i].Normal *= -1.0f;
+                }
+            }
+            _buffer = new RVertexBuffer(typeof(RVertexData), vertices.Length,
+               RBufferUsage.WriteOnly);
+
+            _buffer.SetData<RVertexData>(vertices);
+            vertices = null;
+            vertCount = 36;
+
+        }
+
+        public void CreateSphere(Vector3 Center, float Radius, int Tessellation)
+        {
+            int Stacks = Tessellation;
+            int Slices = Tessellation * 2;
+
+            List<RVertexData> vertices = new List<RVertexData>();
+
+
+
+            float dphi = MathHelper.Pi / Stacks;
+            float dtheta = MathHelper.TwoPi / Slices;
+
+            int index = 0;
+            vertices.Add(new RVertexData(Vector3.Down * Radius, Vector3.Down, Vector3.Zero, Vector3.Zero, Vector2.Zero));
+            for (int i = 0; i < Stacks - 1; i++)
+            {
+                float latitude = ((i + 1) * MathHelper.Pi / Stacks) - MathHelper.PiOver2;
+
+                float dy = (float)System.Math.Sin(latitude);
+                float dxz = (float)System.Math.Cos(latitude);
+
+                // Create a single ring of vertices at this latitude.
+                for (int j = 0; j < Slices; j++)
+                {
+                    float longitude = j * MathHelper.TwoPi / Slices;
+
+                    float dx = (float)System.Math.Cos(longitude) * dxz;
+                    float dz = (float)System.Math.Sin(longitude) * dxz;
+
+
+                    Vector3 normal = new Vector3(dx, dy, dz);
+                    Vector3 position = normal * Radius;
+                    Vector2 tex = new Vector2(1.0f - ((float)j / (float)Slices - 1), (1.0f - ((float)(i) / (float)(Stacks - 1))));
+                    Vector3 tangent = Vector3.Cross(position, Vector3.UnitX);
+                    Vector3 binormal = Vector3.Cross(position, tangent);
+                    vertices.Add(new RVertexData(position, Vector3.Normalize(normal), binormal, tangent, tex));
+                }
+            }
+            vertices.Add(new RVertexData(Vector3.Up * Radius, Vector3.Up, Vector3.Zero, Vector3.Zero, Vector2.Zero));
+            vertCount = vertices.Count;
+            /*for (int x = 0; x < Stacks-1; x++)
+                for (int y = 0; y < Slices-1; y++)
+                {
+                    //Vector3 normal = Vector3.Normalize(vertices[y * Stacks + x].position);
+                    //Normal.Normalize();
+                    //vertices[y * Stacks + x].texture = new Vector2(((float)x) / (float)Slices, ((float)y) / (float)Stacks);
+                    // Tangent Data.
+                    RVERTEXFORMAT v = vertices[y * Stacks + x];
+                    if (x != 0 && x < Slices - 1)
+                        v.tangent = vertices[y * Stacks + x - 1].position - vertices[y * Stacks + x + 1].position;
+                    else
+                        if (x == 0)
+                            v.tangent = vertices[y * Stacks + x].position - vertices[y * Stacks + x+1].position;
+                        else
+                            v.tangent = vertices[y * Stacks + x - 1].position - vertices[y * Stacks + x].position;
+
+                    // Bi Normal Data.
+                    if (y != 0 && y < Stacks - 1)
+                        v.binormal = vertices[(y - 1) * Stacks + x].position - vertices[(y + 1) * Stacks + x].position;
+                    else
+                        if (y == 0)
+                            v.binormal = vertices[y * Stacks + x].position - vertices[(y + 1) * Stacks + x].position;
+                        else
+                            v.binormal = vertices[(y - 1) * Stacks + x].position - vertices[y * Stacks + x].position;
+
+                    //vertices[y * Stacks + x].normal = normal;
+                    //vertices[y * Stacks + x].normal.Normalize();
+                    vertices[y * Stacks + x] = v;
+                    
+                }*/
+            List<int> indices = new List<int>();
+            for (int i = 0; i < Slices; i++)
+            {
+                indices.Add(0);
+                indices.Add(1 + (i + 1) % Slices);
+                indices.Add(1 + i);
+            }
+
+            // Fill the sphere body with triangles joining each pair of latitude rings.
+            for (int i = 0; i < Stacks - 2; i++)
+            {
+                for (int j = 0; j < Slices; j++)
+                {
+                    int nextI = i + 1;
+                    int nextJ = (j + 1) % Slices;
+
+                    indices.Add(1 + i * Slices + j);
+                    indices.Add(1 + i * Slices + nextJ);
+                    indices.Add(1 + nextI * Slices + j);
+
+                    indices.Add(1 + i * Slices + nextJ);
+                    indices.Add(1 + nextI * Slices + nextJ);
+                    indices.Add(1 + nextI * Slices + j);
+                }
+            }
+
+            // Create a fan connecting the top vertex to the top latitude ring.
+            for (int i = 0; i < Slices; i++)
+            {
+                indices.Add(vertices.Count - 1);
+                indices.Add(vertices.Count - 2 - (i + 1) % Slices);
+                indices.Add(vertices.Count - 2 - i);
+            }
+
+            _buffer = new RVertexBuffer(typeof(RVertexData), vertices.Count,
+                RBufferUsage.WriteOnly);
+
+            _buffer.SetData<RVertexData>(vertices.ToArray());
+            //vertCount = vertices.Length;
+            vertices = null;
+
+            _index = new RIndexBuffer<int>(indices.Count, RBufferUsage.WriteOnly);
+            _index.SetData<int>(indices.ToArray());
+            indices = null;
+
+
+        }
+
+        public override void Render()
+        {
+            
+        }
+        
+        public void Dispose()
+        {
+            _buffer.Dispose();
+            _index.Dispose();
+
+        }
+
+
+        #endregion
     }
 }
 

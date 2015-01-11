@@ -516,7 +516,7 @@ namespace Reactor
         public bool InView(RRenderNode node)
         {
             BoundingFrustum frus = new BoundingFrustum(viewMatrix * projMatrix);
-            if (frus.Contains(node.ObjectMatrix.Translation) != ContainmentType.Disjoint)
+            if (frus.Contains(node.Position) != ContainmentType.Disjoint)
                 return true;
             else
                 return false;
@@ -527,7 +527,7 @@ namespace Reactor
             BoundingSphere sphere = new BoundingSphere();
             foreach (RMeshPart mesh in node.Parts)
                 sphere = BoundingSphere.CreateMerged(sphere, mesh.BoundingSphere);
-            sphere.Center = node.ObjectMatrix.Translation;
+            sphere.Center = node.Position;
             if (frus.Contains(sphere) != ContainmentType.Disjoint)
                 return true;
             else

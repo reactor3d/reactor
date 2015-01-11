@@ -872,15 +872,7 @@ namespace Reactor.Math
             return new Vector3(value.X, value.Y, value.Z);
         }
 
-        public static implicit operator Assimp.Vector3D(Vector3 value)
-        {
-            return new Assimp.Vector3D(value.X, value.Y, value.Z);
-        }
-
-        public static implicit operator Vector3(Assimp.Vector3D value)
-        {
-            return new Vector3(value.X, value.Y, value.Z);
-        }
+        
         #endregion
     }
 }
