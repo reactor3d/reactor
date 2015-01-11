@@ -87,11 +87,11 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="meshes\test.dae">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\..\..\Downloads\assimp-3.1.1\lib\libassimp.3.1.1.dylib">
       <Link>libassimp.dylib</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="meshes\bunny.x">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

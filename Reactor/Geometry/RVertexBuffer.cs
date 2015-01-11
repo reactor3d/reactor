@@ -12,7 +12,7 @@ namespace Reactor.Geometry
     public class RVertexBuffer : IDisposable
     {
         int vbo;
-
+        int vao;
         internal bool _isDynamic;
         internal bool IsDisposed;
 
@@ -20,7 +20,7 @@ namespace Reactor.Geometry
         public RVertexDeclaration VertexDeclaration { get; private set; }
         public RBufferUsage BufferUsage { get; private set; }
 
-        protected RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage, bool dynamic)
+        public RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage, bool dynamic)
         {
             if(vertexDeclaration == null)
                 throw new ArgumentNullException("vertexDeclaration", "vertexDeclaration not set! was null.");
@@ -31,6 +31,12 @@ namespace Reactor.Geometry
             _isDynamic = dynamic;
 
             Threading.BlockOnUIThread(GenerateIfRequired);
+        }
+
+        public RVertexBuffer(Type type, int vertexCount, RBufferUsage bufferUsage, bool dynamic) :
+        this(RVertexDeclaration.FromType(type), vertexCount, bufferUsage, dynamic)
+        {
+
         }
 
         public RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage) :
@@ -128,10 +134,13 @@ namespace Reactor.Geometry
         /// </summary>
         void GenerateIfRequired()
         {
+
             if (vbo == 0)
             {
-                //GLExt.Oes.GenVertexArrays(1, out this.vao);
-                //GLExt.Oes.BindVertexArray(this.vao);
+                GL.GenVertexArrays(1, out this.vao);
+                REngine.CheckGLError();
+                GL.BindVertexArray(this.vao);
+                REngine.CheckGLError();
 
                 GL.GenBuffers(1, out this.vbo);
 
@@ -146,7 +155,19 @@ namespace Reactor.Geometry
         }
 
 
+        internal void BindVertexArray()
+        {
+            GenerateIfRequired();
+            REngine.CheckGLError();
+            GL.BindVertexArray(vao);
+            REngine.CheckGLError();
+        }
 
+        internal void UnbindVertexArray()
+        {
+            GL.BindVertexArray(0);
+            REngine.CheckGLError();
+        }
         private void GetBufferData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct
         {
             GL.BindBuffer (BufferTarget.ArrayBuffer, vbo);

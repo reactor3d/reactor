@@ -41,12 +41,16 @@ namespace Reactor
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Init();
-            camera = new RCamera();
+
             _stopWatch = new Stopwatch();
             _fpsTimer = new Timer();
             _fpsTimer.Interval = 1000;
             _fpsTimer.Tick += _fpsTimer_Tick;
             _fpsTimer.Start();
+
+            _viewport = new RViewport(0,0,800,600);
+            camera = new RCamera(RCamera.RCameraProjectionType.Perspective);
+
         }
 
         void _fpsTimer_Tick(object sender, EventArgs e)
@@ -197,14 +201,9 @@ namespace Reactor
             else
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            camera.UpdateProjectionMatrix();
 
-            GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 p = camera.projMatrix;
-            GL.LoadMatrix(ref p);
 
-            GL.MatrixMode(MatrixMode.Modelview);
-            Matrix4 o = Matrix.Identity;
-            GL.LoadMatrix(ref o);
             
         }
 

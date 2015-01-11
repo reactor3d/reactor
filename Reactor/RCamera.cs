@@ -26,171 +26,16 @@ using System;
 using System.Collections.Generic;
 using Reactor.Math;
 using Reactor.Types;
+using OpenTK.Graphics.OpenGL;
+
+
 namespace Reactor
 {
-    /// <remarks>
-    /// Interface for a general purpose 3D camera. The default XNA right handed
-    /// coordinate system is assumed. All angles are measured in degrees. The
-    /// default position of the camera is at the world origin. The default
-    /// camera orientation is looking straight down the world negative Z axis.
-    /// </remarks>
-    public interface ICamera
+
+
+    public class RCamera : RCameraNode, IDisposable
     {
-        #region Public Methods
-
-        /// <summary>
-        /// Builds a look at style viewing matrix using the camera's current
-        /// world position, and its current local y axis.
-        /// </summary>
-        /// <param name="target">The target position to look at.</param>
-        void LookAt(Vector3 target);
-
-        /// <summary>
-        /// Builds a look at style viewing matrix.
-        /// </summary>
-
-        /// <param name="target">The target position to look at.</param>
-        /// <param name="up">The up direction.</param>
-        void LookAt(Vector3 eye, Vector3 target, Vector3 up);
-
-        /// <summary>
-        /// Moves the camera by dx world units to the left or right; dy
-        /// world units upwards or downwards; and dz world units forwards
-        /// or backwards.
-        /// </summary>
-        /// <param name="dx">Distance to move left or right.</param>
-        /// <param name="dy">Distance to move up or down.</param>
-        /// <param name="dz">Distance to move forwards or backwards.</param>
-        void Move(float dx, float dy, float dz);
-
-        /// <summary>
-        /// Moves the camera the specified distance in the specified direction.
-        /// </summary>
-        /// <param name="direction">Direction to move.</param>
-        /// <param name="distance">How far to move.</param>
-        void Move(Vector3 direction, Vector3 distance);
-
-        /// <summary>
-        /// Rotates the camera. Positive angles specify counter clockwise
-        /// rotations when looking down the axis of rotation towards the
-        /// origin.
-        /// </summary>
-        /// <param name="headingDegrees">Y axis rotation in degrees.</param>
-        /// <param name="pitchDegrees">X axis rotation in degrees.</param>
-        /// <param name="rollDegrees">Z axis rotation in degrees.</param>
-        void Rotate(float headingDegrees, float pitchDegrees, float rollDegrees);
-
-        /// <summary>
-        /// Zooms the camera. This method functions differently depending on
-        /// the camera's current behavior. When the camera is orbiting this
-        /// method will move the camera closer to or further away from the
-        /// orbit target. For the other camera behaviors this method will
-        /// change the camera's horizontal field of view.
-        /// </summary>
-        ///
-        /// <param name="zoom">
-        /// When orbiting this parameter is how far to move the camera.
-        /// For the other behaviors this parameter is the new horizontal
-        /// field of view.
-        /// </param>
-        /// 
-        /// <param name="minZoom">
-        /// When orbiting this parameter is the min allowed zoom distance to
-        /// the orbit target. For the other behaviors this parameter is the
-        /// min allowed horizontal field of view.
-        /// </param>
-        /// 
-        /// <param name="maxZoom">
-        /// When orbiting this parameter is the max allowed zoom distance to
-        /// the orbit target. For the other behaviors this parameter is the max
-        /// allowed horizontal field of view.
-        /// </param>
-        void Zoom(float zoom, float minZoom, float maxZoom);
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Property to get and set the camera's orientation.
-        /// </summary>
-        Quaternion Orientation
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Property to get and set the camera's position.
-        /// </summary>
-        Vector3 Position
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Property to get the camera's perspective projection matrix.
-        /// </summary>
-        Matrix Projection
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Property to get the camera's viewing direction.
-        /// </summary>
-        Vector3 ViewDirection
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Property to get the camera's view matrix.
-        /// </summary>
-        Matrix View
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Property to get the camera's concatenated view-projection matrix.
-        /// </summary>
-        Matrix ViewProjectionMatrix
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Property to get the camera's local x axis.
-        /// </summary>
-        Vector3 XAxis
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Property to get the camera's local y axis.
-        /// </summary>
-        Vector3 YAxis
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Property to get the camera's local z axis.
-        /// </summary>
-        Vector3 ZAxis
-        {
-            get;
-        }
-
-        #endregion
-    }
-
-    public class RCamera : RCameraNode, ICamera, IDisposable
-    {
-        public enum Behavior
+        public enum RCameraBehavior
         {
             FirstPerson,
             Spectator,
@@ -199,7 +44,13 @@ namespace Reactor
             Free
         };
 
-        public const float DEFAULT_FOVX = 90.0f;
+        public enum RCameraProjectionType
+        {
+            Orthographic,
+            Perspective
+        }
+
+        public const float DEFAULT_FOVX = 50.0f;
         public const float DEFAULT_ZNEAR = 0.1f;
         public const float DEFAULT_ZFAR = 1000.0f;
 
@@ -213,7 +64,8 @@ namespace Reactor
         private static Vector3 WORLD_Y_AXIS = new Vector3(0.0f, 1.0f, 0.0f);
         private static Vector3 WORLD_Z_AXIS = new Vector3(0.0f, 0.0f, 1.0f);
 
-        private Behavior behavior;
+        private RCameraBehavior behavior;
+        private RCameraProjectionType projectionType;
         private bool preferTargetYAxisOrbiting;
 
         private float fovx;
@@ -234,7 +86,6 @@ namespace Reactor
         private Vector3 zAxis;
         internal Vector3 viewDir;
 
-        internal Quaternion orientation;
 
         private Quaternion savedOrientation;
         private Vector3 savedEye;
@@ -247,9 +98,12 @@ namespace Reactor
         /// have a flight behavior, and will be initially positioned at the
         /// world origin looking down the world negative z axis.
         /// </summary>
-        public RCamera()
+        public RCamera():this(RCameraProjectionType.Perspective){}
+
+        public RCamera(RCameraProjectionType projectionType)
         {
-            behavior = Behavior.Flight;
+            this.projectionType = projectionType;
+            behavior = RCameraBehavior.Flight;
             preferTargetYAxisOrbiting = true;
 
             fovx = DEFAULT_FOVX;
@@ -269,23 +123,40 @@ namespace Reactor
             yAxis = Vector3.UnitY;
             zAxis = Vector3.UnitZ;
 
-            orientation = Quaternion.Identity;
+            quaternion = Quaternion.Identity;
             View = Matrix.Identity;
 
             savedEye = eye;
-            savedOrientation = orientation;
+            savedOrientation = quaternion;
             savedAccumPitchDegrees = 0.0f;
+
+            OnUpdate += (o, e) => { UpdateViewMatrix(); };
+            IsEnabled = true;
         }
 
         public void Dispose()
         {
 
         }
+
+        internal void UpdateProjectionMatrix()
+        {
+            if(projectionType == RCameraProjectionType.Perspective)
+                Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovx), REngine.Instance.CurrentDisplayMode.AspectRatio, znear, zfar);
+            else
+            {
+                RViewport viewport = REngine.Instance._viewport;
+                Projection = Matrix.CreateOrthographic(viewport.Width, viewport.Height, znear, zfar);
+            }
+
+            REngine.CheckGLError();
+        }
+         
         /// <summary>
         /// Builds a look at style viewing matrix.
         /// </summary>
         /// <param name="target">The target position to look at.</param>
-        public void LookAt(Vector3 target)
+        public new void LookAt(Vector3 target)
         {
             LookAt(eye, target, yAxis);
         }
@@ -341,11 +212,11 @@ namespace Reactor
             viewMatrix.M44 = 1.0f;
 
             accumPitchDegrees = MathHelper.ToDegrees((float)System.Math.Asin(viewMatrix.M23));
-            Quaternion.CreateFromRotationMatrix(ref viewMatrix, out orientation);
+            Quaternion.CreateFromRotationMatrix(ref viewMatrix, out quaternion);
 
-            Pitch = MathHelper.ToDegrees(orientation.X);
-            Heading = MathHelper.ToDegrees(orientation.Y);
-            Roll = MathHelper.ToDegrees(orientation.Z);
+            Pitch = MathHelper.ToDegrees(quaternion.X);
+            Heading = MathHelper.ToDegrees(quaternion.Y);
+            Roll = MathHelper.ToDegrees(quaternion.Z);
 
         }
 
@@ -357,9 +228,9 @@ namespace Reactor
         /// <param name="dx">Distance to move left or right.</param>
         /// <param name="dy">Distance to move up or down.</param>
         /// <param name="dz">Distance to move forwards or backwards.</param>
-        public void Move(float dx, float dy, float dz)
+        public new void Move(float dx, float dy, float dz)
         {
-            if (behavior == Behavior.Orbit)
+            if (behavior == RCameraBehavior.Orbit)
             {
                 // Orbiting camera is always positioned relative to the target
                 // position. See UpdateViewMatrix().
@@ -368,7 +239,7 @@ namespace Reactor
 
             Vector3 forwards;
 
-            if (behavior == Behavior.FirstPerson)
+            if (behavior == RCameraBehavior.FirstPerson)
             {
                 // Calculate the forwards direction. Can't just use the
                 // camera's view direction as doing so will cause the camera to
@@ -386,7 +257,7 @@ namespace Reactor
             eye += WORLD_Y_AXIS * dy;
             eye += forwards * dz;
 
-            Position = eye;
+            position = eye;
         }
 
         /// <summary>
@@ -396,7 +267,7 @@ namespace Reactor
         /// <param name="distance">How far to move.</param>
         public void Move(Vector3 direction, Vector3 distance)
         {
-            if (behavior == Behavior.Orbit)
+            if (behavior == RCameraBehavior.Orbit)
             {
                 // Orbiting camera is always positioned relative to the target
                 // position. See UpdateViewMatrix().
@@ -468,20 +339,20 @@ namespace Reactor
 
             switch (behavior)
             {
-                case Behavior.FirstPerson:
-                case Behavior.Spectator:
+                case RCameraBehavior.FirstPerson:
+                case RCameraBehavior.Spectator:
                     RotateFirstPerson(headingDegrees, pitchDegrees);
                     break;
 
-                case Behavior.Flight:
+                case RCameraBehavior.Flight:
                     RotateFlight(headingDegrees, pitchDegrees, rollDegrees);
                     break;
 
-                case Behavior.Orbit:
+                case RCameraBehavior.Orbit:
                     RotateOrbit(headingDegrees, pitchDegrees, rollDegrees);
                     break;
 
-                case Behavior.Free:
+                case RCameraBehavior.Free:
                     RotateFlight(headingDegrees, pitchDegrees, rollDegrees);
                     break;
                 default:
@@ -516,7 +387,7 @@ namespace Reactor
         public bool InView(RRenderNode node)
         {
             BoundingFrustum frus = new BoundingFrustum(viewMatrix * projMatrix);
-            if (frus.Contains(node.Position) != ContainmentType.Disjoint)
+            if (frus.Contains(node.position) != ContainmentType.Disjoint)
                 return true;
             else
                 return false;
@@ -527,7 +398,7 @@ namespace Reactor
             BoundingSphere sphere = new BoundingSphere();
             foreach (RMeshPart mesh in node.Parts)
                 sphere = BoundingSphere.CreateMerged(sphere, mesh.BoundingSphere);
-            sphere.Center = node.Position;
+            sphere.Center = node.position;
             if (frus.Contains(sphere) != ContainmentType.Disjoint)
                 return true;
             else
@@ -554,9 +425,9 @@ namespace Reactor
         /// </summary>
         public void UndoRoll()
         {
-            if (behavior == Behavior.Orbit)
+            if (behavior == RCameraBehavior.Orbit)
                 LookAt(eye, target, targetYAxis);
-            else if (behavior != Behavior.FirstPerson)
+            else if (behavior != RCameraBehavior.FirstPerson)
                 LookAt(eye, eye + viewDir, WORLD_Y_AXIS);
         }
         public void LevelRoll()
@@ -590,7 +461,7 @@ namespace Reactor
         /// </param>
         public void Zoom(float zoom, float minZoom, float maxZoom)
         {
-            if (behavior == Behavior.Orbit)
+            if (behavior == RCameraBehavior.Orbit)
             {
                 Vector3 offset = eye - target;
 
@@ -617,9 +488,9 @@ namespace Reactor
         /// Change to a new camera behavior.
         /// </summary>
         /// <param name="newBehavior">The new camera behavior.</param>
-        private void ChangeBehavior(Behavior newBehavior)
+        private void ChangeBehavior(RCameraBehavior newBehavior)
         {
-            Behavior prevBehavior = behavior;
+            RCameraBehavior prevBehavior = behavior;
 
             if (prevBehavior == newBehavior)
                 return;
@@ -628,21 +499,21 @@ namespace Reactor
 
             switch (newBehavior)
             {
-                case Behavior.FirstPerson:
+                case RCameraBehavior.FirstPerson:
                     switch (prevBehavior)
                     {
-                        case Behavior.Free:
-                        case Behavior.Flight:
-                        case Behavior.Spectator:
+                        case RCameraBehavior.Free:
+                        case RCameraBehavior.Flight:
+                        case RCameraBehavior.Spectator:
                             eye.Y = firstPersonYOffset;
                             UpdateViewMatrix();
                             break;
 
-                        case Behavior.Orbit:
+                        case RCameraBehavior.Orbit:
                             eye.X = savedEye.X;
                             eye.Z = savedEye.Z;
                             eye.Y = firstPersonYOffset;
-                            orientation = savedOrientation;
+                            quaternion = savedOrientation;
                             accumPitchDegrees = savedAccumPitchDegrees;
                             UpdateViewMatrix();
                             break;
@@ -654,19 +525,19 @@ namespace Reactor
                     UndoRoll();
                     break;
 
-                case Behavior.Spectator:
+                case RCameraBehavior.Spectator:
                     switch (prevBehavior)
                     {
-                        case Behavior.Free:
+                        case RCameraBehavior.Free:
                             UpdateViewMatrix();
                             break;
-                        case Behavior.Flight:
+                        case RCameraBehavior.Flight:
                             UpdateViewMatrix();
                             break;
 
-                        case Behavior.Orbit:
+                        case RCameraBehavior.Orbit:
                             eye = savedEye;
-                            orientation = savedOrientation;
+                            quaternion = savedOrientation;
                             accumPitchDegrees = savedAccumPitchDegrees;
                             UpdateViewMatrix();
                             break;
@@ -678,11 +549,11 @@ namespace Reactor
                     UndoRoll();
                     break;
 
-                case Behavior.Flight:
-                    if (prevBehavior == Behavior.Orbit)
+                case RCameraBehavior.Flight:
+                    if (prevBehavior == RCameraBehavior.Orbit)
                     {
                         eye = savedEye;
-                        orientation = savedOrientation;
+                        quaternion = savedOrientation;
                         accumPitchDegrees = savedAccumPitchDegrees;
                         UpdateViewMatrix();
                     }
@@ -693,12 +564,12 @@ namespace Reactor
                     }
                     break;
 
-                case Behavior.Orbit:
-                    if (prevBehavior == Behavior.FirstPerson)
+                case RCameraBehavior.Orbit:
+                    if (prevBehavior == RCameraBehavior.FirstPerson)
                         firstPersonYOffset = eye.Y;
 
                     savedEye = eye;
-                    savedOrientation = orientation;
+                    savedOrientation = quaternion;
                     savedAccumPitchDegrees = accumPitchDegrees;
 
                     targetYAxis = yAxis;
@@ -707,11 +578,11 @@ namespace Reactor
 
                     LookAt(newEye, eye, targetYAxis);
                     break;
-                case Behavior.Free:
-                    if (prevBehavior == Behavior.Orbit)
+                case RCameraBehavior.Free:
+                    if (prevBehavior == RCameraBehavior.Orbit)
                     {
                         eye = savedEye;
-                        orientation = savedOrientation;
+                        quaternion = savedOrientation;
                         accumPitchDegrees = savedAccumPitchDegrees;
                         UpdateViewMatrix();
                     }
@@ -746,9 +617,9 @@ namespace Reactor
             // First person and spectator behaviors don't allow rolling.
             // Negate any rolling that might be encoded in the new orientation.
 
-            orientation = newOrientation;
+            quaternion = newOrientation;
 
-            if (behavior == Behavior.FirstPerson || behavior == Behavior.Spectator)
+            if (behavior == RCameraBehavior.FirstPerson || behavior == RCameraBehavior.Spectator)
                 LookAt(eye, eye + Vector3.Negate(zAxis), WORLD_Y_AXIS);
 
             UpdateViewMatrix();
@@ -784,14 +655,14 @@ namespace Reactor
             if (heading != 0.0f)
             {
                 Quaternion.CreateFromAxisAngle(ref WORLD_Y_AXIS, heading, out rotation);
-                Quaternion.Concatenate(ref rotation, ref orientation, out orientation);
+                Quaternion.Concatenate(ref rotation, ref quaternion, out quaternion);
             }
 
             // Rotate the camera about its local X axis.
             if (pitch != 0.0f)
             {
                 Quaternion.CreateFromAxisAngle(ref WORLD_X_AXIS, pitch, out rotation);
-                Quaternion.Concatenate(ref orientation, ref rotation, out orientation);
+                Quaternion.Concatenate(ref quaternion, ref rotation, out quaternion);
             }
         }
 
@@ -819,7 +690,7 @@ namespace Reactor
             float roll = MathHelper.ToRadians(rollDegrees);
 
             Quaternion rotation = Quaternion.CreateFromYawPitchRoll(heading, pitch, roll);
-            Quaternion.Concatenate(ref orientation, ref rotation, out orientation);
+            Quaternion.Concatenate(ref quaternion, ref rotation, out quaternion);
             UpdateViewMatrix();
         }
         public void SetClipPlanes(float znear, float zfar)
@@ -851,20 +722,20 @@ namespace Reactor
                 if (heading != 0.0f)
                 {
                     Quaternion.CreateFromAxisAngle(ref targetYAxis, heading, out rotation);
-                    Quaternion.Concatenate(ref rotation, ref orientation, out orientation);
+                    Quaternion.Concatenate(ref rotation, ref quaternion, out quaternion);
                 }
 
                 if (pitch != 0.0f)
                 {
                     Quaternion.CreateFromAxisAngle(ref WORLD_X_AXIS, pitch, out rotation);
-                    Quaternion.Concatenate(ref orientation, ref rotation, out orientation);
+                    Quaternion.Concatenate(ref quaternion, ref rotation, out quaternion);
                 }
             }
             else
             {
                 float roll = MathHelper.ToRadians(rollDegrees);
                 Quaternion rotation = Quaternion.CreateFromYawPitchRoll(heading, pitch, roll);
-                Quaternion.Concatenate(ref orientation, ref rotation, out orientation);
+                Quaternion.Concatenate(ref quaternion, ref rotation, out quaternion);
             }
         }
 
@@ -873,7 +744,7 @@ namespace Reactor
         /// </summary>
         private void UpdateViewMatrix()
         {
-            Matrix.CreateFromQuaternion(ref orientation, out viewMatrix);
+            Matrix.CreateFromQuaternion(ref quaternion, out viewMatrix);
 
             xAxis.X = viewMatrix.M11;
             xAxis.Y = viewMatrix.M21;
@@ -887,7 +758,7 @@ namespace Reactor
             zAxis.Y = viewMatrix.M23;
             zAxis.Z = viewMatrix.M33;
 
-            if (behavior == Behavior.Orbit)
+            if (behavior == RCameraBehavior.Orbit)
             {
                 // Calculate the new camera position based on the current
                 // orientation. The camera must always maintain the same
@@ -914,7 +785,7 @@ namespace Reactor
         /// <summary>
         /// Property to get and set the camera's behavior.
         /// </summary>
-        public Behavior CurrentBehavior
+        public RCameraBehavior CurrentBehavior
         {
             get { return behavior; }
             set { ChangeBehavior(value); }
@@ -969,29 +840,12 @@ namespace Reactor
             get { return target; }
             set { target = value; }
         }
-
-        /// <summary>
-        /// Property to get and set the camera orientation.
-        /// </summary>
-        public Quaternion Orientation
-        {
-            get { return orientation; }
-            set { ChangeOrientation(value); }
-        }
+            
 
         /// <summary>
         /// Property to get and set the camera position.
         /// </summary>
-        public Vector3 Position
-        {
-            get { return eye; }
 
-            set
-            {
-                eye = value;
-                UpdateViewMatrix();
-            }
-        }
 
         /// <summary>
         /// Property to get and set the flag to force the camera

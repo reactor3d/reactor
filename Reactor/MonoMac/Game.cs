@@ -33,6 +33,7 @@ namespace MonoMac
     public class Game : RGame
     {
         RMesh mesh;
+        RCamera camera;
         public Game()
         {
         }
@@ -40,10 +41,16 @@ namespace MonoMac
         public override void Init()
         {
             Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
+            camera = Engine.GetCamera();
+            camera.SetPosition(Vector3.Zero);
+            camera.LookAt(Vector3.Forward * -10f);
+            camera.Update();
             mesh = Engine.Scene.Create<RMesh>("test");
-            mesh.LoadSourceModel(Engine.FileSystem.GetFilePath("/meshes/test.dae"));
+            mesh.LoadSourceModel(Engine.FileSystem.GetFilePath("/meshes/bunny.x"));
             mesh.IsDrawable = true;
             mesh.IsEnabled = true;
+            //mesh.SetScale(0.0001f);
+            mesh.Update();
 
         }
 
@@ -58,6 +65,7 @@ namespace MonoMac
         public override void Update()
         {
             mesh.Update();
+            camera.Update();
         }
 
         public override void Dispose()

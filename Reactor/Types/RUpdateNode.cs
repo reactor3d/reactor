@@ -22,100 +22,134 @@ namespace Reactor.Types
                     OnUpdate(this, null);
             }
         }
-        internal Vector3 Position = Vector3.Zero;
-        internal Vector3 Rotation = Vector3.Zero;
-        internal Matrix Matrix = Matrix.Identity;
-        internal Quaternion Quaternion = Quaternion.CreateFromRotationMatrix(Matrix.Identity);
-        internal Vector3 Scale = Vector3.One;
+        internal Vector3 position = Vector3.Zero;
+        internal Vector3 rotation = Vector3.Zero;
+        internal Matrix matrix = Matrix.Identity;
+        internal Quaternion quaternion = Quaternion.CreateFromRotationMatrix(Matrix.Identity);
+        internal Vector3 scale = Vector3.One;
+
+        public Vector3 Position { get { return position; } set { position = value; UpdateMatrix(); } }
+        public Vector3 Rotation { get { return rotation; } set { rotation = value; UpdateMatrix();} }
+        public Matrix Matrix { get { return matrix; } set { matrix = value; UpdateMatrix();} }
+        public Quaternion Quaternion { get { return quaternion; } set { quaternion = value; UpdateMatrix();} }
+        public Vector3 Scale { get { return scale; } set { scale = value; } }
+
         void UpdateMatrix()
         {
-            Rotation = Quaternion.Xyz;
-            Matrix = Matrix.Identity * Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Quaternion) * Matrix.CreateTranslation(Position);
+            rotation = quaternion.Xyz;
+            matrix = Matrix.Identity * Matrix.CreateScale(scale) * Matrix.CreateFromQuaternion(quaternion) * Matrix.CreateTranslation(position);
 
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Matrix GetRotationMatrix()
         {
-            return Quaternion.ToMatrix();
+            return quaternion.ToMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Quaternion GetRotation()
         {
-            return Quaternion;
+            return quaternion;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetRotationMatrix(ref Matrix matrix)
+        public void SetRotationMatrix(ref Matrix rotationMatrix)
         {
-            Matrix = matrix;
-            Matrix.Translation = Position;
-            Matrix.Decompose(out Scale, out Quaternion, out Position);
+            matrix = rotationMatrix;
+            matrix.Translation = position;
+            matrix.Decompose(out scale, out quaternion, out position);
             UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetRotation(ref Quaternion quaternion)
         {
-            Quaternion = quaternion;
+            this.quaternion = quaternion;
             UpdateMatrix();
             
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateX(float value)
         {
-            Quaternion.X += value;
+            quaternion.X += value;
             UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateY(float value)
         {
-            Quaternion.Y += value;
+            quaternion.Y += value;
             UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateZ(float value)
         {
-            Quaternion.Z += value;
+            quaternion.Z += value;
             UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rotate(Vector3 value)
         {
-            Quaternion.Xyz = Rotation;
+            rotation = value;
+            quaternion.Xyz = rotation;
             UpdateMatrix();
         }
 
         public void SetPosition(Vector3 value)
         {
-            Position = value;
+            position = value;
             UpdateMatrix();
         }
 
         public void SetPosition(float X, float Y, float Z)
         {
-            Position.X = X;
-            Position.Y = Y;
-            Position.Z = Z;
+            position.X = X;
+            position.Y = Y;
+            position.Z = Z;
             UpdateMatrix();
         }
 
+        public Vector3 GetPosition()
+        {
+            return position;
+        }
+
+        public void SetScale(Vector3 value)
+        {
+            scale = value;
+        }
+
+        public void SetScale(float value)
+        {
+            scale = new Vector3(value, value, value);
+        }
+
+        public void SetScale(float x, float y, float z)
+        {
+            scale.X = x;
+            scale.Y = y;
+            scale.Z = z;
+        }
+
+        public Vector3 GetScale()
+        {
+            return scale;
+        }
         public void Move(float X, float Y, float Z)
         {
-            Position.X += X;
-            Position.Y += Y;
-            Position.Z += Z;
+            position.X += X;
+            position.Y += Y;
+            position.Z += Z;
             UpdateMatrix();
         }
 
         public void Move(Vector3 dir)
         {
-            Position += dir;
+            position += dir;
             UpdateMatrix();
         }
         public void LookAt(Vector3 target)
         {
-            Matrix = Matrix.Identity * Matrix.CreateScale(Scale) * Matrix.CreateLookAt(Position, target, Vector3.UnitY);
-            Matrix.Translation = Position;
-            Matrix.Decompose(out Scale, out Quaternion, out Position);
-            Rotation = Quaternion.Xyz;
+            matrix = Matrix.Identity * Matrix.CreateScale(scale) * Matrix.CreateLookAt(position, target, Vector3.UnitY);
+            matrix.Translation = position;
+            matrix.Decompose(out scale, out quaternion, out position);
+            rotation = quaternion.Xyz;
 
         }
     }

@@ -92,52 +92,52 @@ namespace Reactor.Types
             Vector2 textureBottomRight = new Vector2(0.0f * Size.X, 1.0f * Size.Y);
 
             // Add the vertices for the FRONT face.
-            vertices[0] = new RVertexData(topLeftFront, normalFront, Vector3.Zero, Vector3.Zero,textureTopLeft);
-            vertices[1] = new RVertexData(btmLeftFront, normalFront, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[2] = new RVertexData(topRightFront, normalFront, Vector3.Zero, Vector3.Zero, textureTopRight);
-            vertices[3] = new RVertexData(btmLeftFront, normalFront, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[4] = new RVertexData(btmRightFront, normalFront, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[5] = new RVertexData(topRightFront, normalFront, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[0] = new RVertexData(topLeftFront, normalFront, textureTopLeft);
+            vertices[1] = new RVertexData(btmLeftFront, normalFront, textureBottomLeft);
+            vertices[2] = new RVertexData(topRightFront, normalFront, textureTopRight);
+            vertices[3] = new RVertexData(btmLeftFront, normalFront, textureBottomLeft);
+            vertices[4] = new RVertexData(btmRightFront, normalFront, textureBottomRight);
+            vertices[5] = new RVertexData(topRightFront, normalFront, textureTopRight);
 
             // Add the vertices for the BACK face.
-            vertices[6] = new RVertexData(topLeftBack, normalBack, Vector3.Zero, Vector3.Zero, textureTopRight);
-            vertices[7] = new RVertexData(topRightBack, normalBack, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[8] = new RVertexData(btmLeftBack, normalBack, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[9] = new RVertexData(btmLeftBack, normalBack, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[10] = new RVertexData(topRightBack, normalBack, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[11] = new RVertexData(btmRightBack, normalBack, Vector3.Zero, Vector3.Zero, textureBottomLeft);
+            vertices[6] = new RVertexData(topLeftBack, normalBack, textureTopRight);
+            vertices[7] = new RVertexData(topRightBack, normalBack, textureTopLeft);
+            vertices[8] = new RVertexData(btmLeftBack, normalBack, textureBottomRight);
+            vertices[9] = new RVertexData(btmLeftBack, normalBack, textureBottomRight);
+            vertices[10] = new RVertexData(topRightBack, normalBack, textureTopLeft);
+            vertices[11] = new RVertexData(btmRightBack, normalBack, textureBottomLeft);
 
             // Add the vertices for the TOP face.
-            vertices[12] = new RVertexData(topLeftFront, normalTop, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[13] = new RVertexData(topRightBack, normalTop, Vector3.Zero, Vector3.Zero, textureTopRight);
-            vertices[14] = new RVertexData(topLeftBack, normalTop, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[15] = new RVertexData(topLeftFront, normalTop, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[16] = new RVertexData(topRightFront, normalTop, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[17] = new RVertexData(topRightBack, normalTop, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[12] = new RVertexData(topLeftFront, normalTop, textureBottomLeft);
+            vertices[13] = new RVertexData(topRightBack, normalTop, textureTopRight);
+            vertices[14] = new RVertexData(topLeftBack, normalTop, textureTopLeft);
+            vertices[15] = new RVertexData(topLeftFront, normalTop, textureBottomLeft);
+            vertices[16] = new RVertexData(topRightFront, normalTop, textureBottomRight);
+            vertices[17] = new RVertexData(topRightBack, normalTop, textureTopRight);
 
             // Add the vertices for the BOTTOM face. 
-            vertices[18] = new RVertexData(btmLeftFront, normalBottom, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[19] = new RVertexData(btmLeftBack, normalBottom, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[20] = new RVertexData(btmRightBack, normalBottom, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[21] = new RVertexData(btmLeftFront, normalBottom, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[22] = new RVertexData(btmRightBack, normalBottom, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[23] = new RVertexData(btmRightFront, normalBottom, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[18] = new RVertexData(btmLeftFront, normalBottom, textureTopLeft);
+            vertices[19] = new RVertexData(btmLeftBack, normalBottom, textureBottomLeft);
+            vertices[20] = new RVertexData(btmRightBack, normalBottom, textureBottomRight);
+            vertices[21] = new RVertexData(btmLeftFront, normalBottom, textureTopLeft);
+            vertices[22] = new RVertexData(btmRightBack, normalBottom, textureBottomRight);
+            vertices[23] = new RVertexData(btmRightFront, normalBottom, textureTopRight);
 
             // Add the vertices for the LEFT face.
-            vertices[24] = new RVertexData(topLeftFront, normalLeft, Vector3.Zero, Vector3.Zero, textureTopRight);
-            vertices[25] = new RVertexData(btmLeftBack, normalLeft, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[26] = new RVertexData(btmLeftFront, normalLeft, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[27] = new RVertexData(topLeftBack, normalLeft, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[28] = new RVertexData(btmLeftBack, normalLeft, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[29] = new RVertexData(topLeftFront, normalLeft, Vector3.Zero, Vector3.Zero, textureTopRight);
+            vertices[24] = new RVertexData(topLeftFront, normalLeft, textureTopRight);
+            vertices[25] = new RVertexData(btmLeftBack, normalLeft, textureBottomLeft);
+            vertices[26] = new RVertexData(btmLeftFront, normalLeft, textureBottomRight);
+            vertices[27] = new RVertexData(topLeftBack, normalLeft, textureTopLeft);
+            vertices[28] = new RVertexData(btmLeftBack, normalLeft, textureBottomLeft);
+            vertices[29] = new RVertexData(topLeftFront, normalLeft, textureTopRight);
 
             // Add the vertices for the RIGHT face. 
-            vertices[30] = new RVertexData(topRightFront, normalRight, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[31] = new RVertexData(btmRightFront, normalRight, Vector3.Zero, Vector3.Zero, textureBottomLeft);
-            vertices[32] = new RVertexData(btmRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureBottomRight);
-            vertices[33] = new RVertexData(topRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureTopRight);
-            vertices[34] = new RVertexData(topRightFront, normalRight, Vector3.Zero, Vector3.Zero, textureTopLeft);
-            vertices[35] = new RVertexData(btmRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureBottomRight);
+            vertices[30] = new RVertexData(topRightFront, normalRight, textureTopLeft);
+            vertices[31] = new RVertexData(btmRightFront, normalRight, textureBottomLeft);
+            vertices[32] = new RVertexData(btmRightBack, normalRight, textureBottomRight);
+            vertices[33] = new RVertexData(topRightBack, normalRight, textureTopRight);
+            vertices[34] = new RVertexData(topRightFront, normalRight, textureTopLeft);
+            vertices[35] = new RVertexData(btmRightBack, normalRight, textureBottomRight);
 
             if (FlipNormals)
             {
@@ -168,7 +168,7 @@ namespace Reactor.Types
             float dtheta = MathHelper.TwoPi / Slices;
 
             int index = 0;
-            vertices.Add(new RVertexData(Vector3.Down * Radius, Vector3.Down, Vector3.Zero, Vector3.Zero, Vector2.Zero));
+            vertices.Add(new RVertexData(Vector3.Down * Radius, Vector3.Down, Vector2.Zero));
             for (int i = 0; i < Stacks - 1; i++)
             {
                 float latitude = ((i + 1) * MathHelper.Pi / Stacks) - MathHelper.PiOver2;
@@ -188,12 +188,12 @@ namespace Reactor.Types
                     Vector3 normal = new Vector3(dx, dy, dz);
                     Vector3 position = normal * Radius;
                     Vector2 tex = new Vector2(1.0f - ((float)j / (float)Slices - 1), (1.0f - ((float)(i) / (float)(Stacks - 1))));
-                    Vector3 tangent = Vector3.Cross(position, Vector3.UnitX);
-                    Vector3 binormal = Vector3.Cross(position, tangent);
-                    vertices.Add(new RVertexData(position, Vector3.Normalize(normal), binormal, tangent, tex));
+                    //Vector3 tangent = Vector3.Cross(position, Vector3.UnitX);
+                    //Vector3 binormal = Vector3.Cross(position, tangent);
+                    vertices.Add(new RVertexData(position, Vector3.Normalize(normal), tex));
                 }
             }
-            vertices.Add(new RVertexData(Vector3.Up * Radius, Vector3.Up, Vector3.Zero, Vector3.Zero, Vector2.Zero));
+            vertices.Add(new RVertexData(Vector3.Up * Radius, Vector3.Up, Vector2.Zero));
             vertCount = vertices.Count;
             /*for (int x = 0; x < Stacks-1; x++)
                 for (int y = 0; y < Slices-1; y++)
@@ -270,6 +270,7 @@ namespace Reactor.Types
             _index.SetData<int>(indices.ToArray());
             indices = null;
 
+            this.Position = Center;
 
         }
 

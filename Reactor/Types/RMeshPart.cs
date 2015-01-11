@@ -28,6 +28,7 @@ using Reactor.Geometry;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using Reactor.Math;
+using Reactor.Platform;
 
 namespace Reactor.Types
 {
@@ -44,14 +45,18 @@ namespace Reactor.Types
         }
         internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix world)
         {
+            Threading.EnsureUIThread();
+
             var shortIndices = IndexBuffer.IndexElementSize == RIndexElementSize.SixteenBits;
             var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
             var indexElementSize = shortIndices ? 2 : 4;
             var indexOffsetInBytes = (IntPtr)(indexElementSize);
             var indexElementCount = IndexBuffer.GetElementCountArray(primitiveType, VertexBuffer.VertexCount / 3);
-            shader.Bind();
+            var vertexOffset = (IntPtr)(VertexBuffer.VertexDeclaration.VertexStride * 0);
+            VertexBuffer.BindVertexArray();
             VertexBuffer.Bind();
             IndexBuffer.Bind();
+            shader.Bind();
             VertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
             
             
@@ -60,10 +65,11 @@ namespace Reactor.Types
             shader.SetUniformValue("projection", REngine.camera.projMatrix);
 
             GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
-            
+
+            shader.Unbind();
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
-            shader.Unbind();
+            VertexBuffer.UnbindVertexArray();
 
         }
         internal void SetTexture(uint texture, RTextureLayer layer)

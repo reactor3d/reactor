@@ -43,7 +43,14 @@ namespace Reactor.Loaders
             AssimpContext context = new AssimpContext();
 
             int platform = (int)Environment.OSVersion.Platform;
-            Scene scene = context.ImportFile(filename,PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.RemoveRedundantMaterials | PostProcessSteps.JoinIdenticalVertices | PostProcessSteps.GenerateUVCoords);
+            Scene scene = context.ImportFile(filename,
+                PostProcessSteps.FindInvalidData |
+                PostProcessSteps.GenerateSmoothNormals |
+                PostProcessSteps.RemoveRedundantMaterials |
+                PostProcessSteps.FindDegenerates |
+                PostProcessSteps.Triangulate |
+                PostProcessSteps.GenerateUVCoords |
+                PostProcessSteps.JoinIdenticalVertices);
 
             if(scene.HasMeshes)
             {
@@ -109,12 +116,12 @@ namespace Reactor.Loaders
                         data[i] = new RVertexData(
                             verticies[i],
                             normals[i],
-                            bitangents[i],
-                            tangents[i],
+                            //bitangents[i],
+                            //tangents[i],
                             texCoords[i]
                         );
                     }
-                    RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly);
+                    RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly, true);
 
                     
                     RIndexBuffer<int> ibuffer = new RIndexBuffer<int>(indices.Length, RBufferUsage.WriteOnly);

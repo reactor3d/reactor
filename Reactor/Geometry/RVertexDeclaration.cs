@@ -53,7 +53,8 @@ namespace Reactor.Geometry
             // Apply the vertex attribute info
             foreach (var element in attrInfo.Elements)
             {
-
+                GL.EnableVertexAttribArray(element.AttributeLocation);
+                REngine.CheckGLError();
                 GL.VertexAttribPointer(element.AttributeLocation,
                     element.NumberOfElements,
                     element.VertexAttribPointerType,

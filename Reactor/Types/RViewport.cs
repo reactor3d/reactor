@@ -35,7 +35,7 @@ namespace Reactor
 
         internal void Bind()
         {
-            GL.Viewport(X, Y, Width, Height);
+            GL.Viewport(0, 0, Width, Height);
         }
 
     }

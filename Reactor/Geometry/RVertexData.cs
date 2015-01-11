@@ -32,8 +32,6 @@ namespace Reactor.Geometry
     {
         public Vector3 Position;
         public Vector3 Normal;
-        public Vector3 Bitangent;
-        public Vector3 Tangent;
         public Vector2 TexCoord;
 
         private static readonly RVertexDeclaration VertexDeclaration;
@@ -46,12 +44,10 @@ namespace Reactor.Geometry
             }
         }
 
-        public RVertexData(Vector3 Position, Vector3 Normal, Vector3 Bitangent, Vector3 Tangent, Vector2 TexCoord)
+        public RVertexData(Vector3 Position, Vector3 Normal, Vector2 TexCoord)
         {
             this.Position = Position;
             this.Normal = Normal;
-            this.Bitangent = Bitangent;
-            this.Tangent = Tangent;
             this.TexCoord = TexCoord;
         }
 
@@ -61,9 +57,7 @@ namespace Reactor.Geometry
                 { 
                     new RVertexElement(0, RVertexElementFormat.Vector3, RVertexElementUsage.Position),
                     new RVertexElement(sizeof(float) * (3 * 1), RVertexElementFormat.Vector3, RVertexElementUsage.Normal),
-                    new RVertexElement(sizeof(float) * (3 * 2), RVertexElementFormat.Vector3, RVertexElementUsage.Bitangent),
-                    new RVertexElement(sizeof(float) * (3 * 3), RVertexElementFormat.Vector3, RVertexElementUsage.Tangent),
-                    new RVertexElement(sizeof(float) * (3 * 3) + (sizeof(float)*3), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
+                    new RVertexElement(sizeof(float) * (3 * 2), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
                 };
             RVertexDeclaration declaration = new RVertexDeclaration(elements);
             VertexDeclaration = declaration;

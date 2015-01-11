@@ -64,7 +64,8 @@ namespace Reactor.Types
                 return;
             }
 
-#if DEBUG
+#if DEBUG && WINDOWS
+            
             int status;
             GL.ValidateProgram(Id);
             GL.GetProgram(Id, GetProgramParameterName.ValidateStatus, out status);
@@ -110,7 +111,7 @@ namespace Reactor.Types
                 _uniformLocations.Add(uni.name, uni.location);
 
             }
-            GL.UseProgram(0);
+
         }
 
         public void SetUniformValue(string name, int value)
