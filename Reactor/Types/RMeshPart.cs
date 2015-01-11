@@ -27,6 +27,7 @@ using System;
 using Reactor.Geometry;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
+using Reactor.Math;
 
 namespace Reactor.Types
 {
@@ -34,15 +35,14 @@ namespace Reactor.Types
     {
         internal RVertexBuffer VertexBuffer { get; set; }
         internal RIndexBuffer<int> IndexBuffer { get; set; }
-        internal RShader Shader { get; set; }
         internal List<uint> Textures { get; set; }
-
+        public BoundingSphere BoundingSphere { get; set; }
+        public BoundingBox BoundingBox { get; set; }
         RMeshPart()
         {
-            Shader = new RShader();
-            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
+            
         }
-        internal void Draw(PrimitiveType primitiveType)
+        internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix world)
         {
             var shortIndices = IndexBuffer.IndexElementSize == RIndexElementSize.SixteenBits;
             var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
@@ -51,11 +51,14 @@ namespace Reactor.Types
             var indexElementCount = IndexBuffer.GetElementCountArray(primitiveType, VertexBuffer.VertexCount / 3);
 
             VertexBuffer.Bind();
-            VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
+            VertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
             IndexBuffer.Bind();
-            Shader.Bind();
+            shader.Bind();
+            shader.SetUniformValue("world", world);
+            shader.SetUniformValue("view", REngine.camera.viewMatrix);
+            shader.SetUniformValue("projection", REngine.camera.projMatrix);
             GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
-            Shader.Unbind();
+            shader.Unbind();
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
 

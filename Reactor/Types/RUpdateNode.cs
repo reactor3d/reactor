@@ -91,5 +91,19 @@ namespace Reactor.Types
             RotateY(value.Y);
             RotateZ(value.Z);
         }
+
+        public void SetPosition(Vector3 value)
+        {
+            Vector3 scale, translation;
+            Quaternion rotation;
+            ObjectMatrix.Decompose(out scale, out rotation, out translation);
+            translation = value;
+            ObjectMatrix = Matrix.CreateScale(scale) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(translation);
+        }
+
+        public void SetPosition(float X, float Y, float Z)
+        {
+            SetPosition(new Vector3(X, Y, Z));
+        }
     }
 }

@@ -10,6 +10,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using Reactor.Math;
+using System.Diagnostics;
 
 namespace Reactor
 {
@@ -17,7 +19,8 @@ namespace Reactor
     {
         private RDisplayModes _supportedDisplayModes;
         private RenderControl _renderControl;
-        
+        private Stopwatch _stopWatch;
+        private Timer _fpsTimer;
         public RScene Scene { get { return RScene.Instance; } }
         public RTextures Textures { get { return RTextures.Instance; } }
         public RMaterials Materials { get { return RMaterials.Instance; } }
@@ -27,17 +30,57 @@ namespace Reactor
         internal RViewport _viewport;
         internal static RGame RGame;
         internal static string RootPath;
+        internal static RCamera camera;
 
+        private long _elapsedMilliseconds = 0;
+        private long _lastMilliseconds = 0;
+        private float _lastFps = 0;
+        private float _fps = 0;
 
         private REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Init();
+            camera = new RCamera();
+            _stopWatch = new Stopwatch();
+            _fpsTimer = new Timer();
+            _fpsTimer.Interval = 1000;
+            _fpsTimer.Tick += _fpsTimer_Tick;
+            _fpsTimer.Start();
+        }
+
+        void _fpsTimer_Tick(object sender, EventArgs e)
+        {
+            _lastFps = (float)System.Math.Floor((_fps / (_lastMilliseconds)) * 1000.0f);
+            _fps = 0;
+            _lastMilliseconds = _stopWatch.ElapsedMilliseconds;
+            _stopWatch.Restart();
         }
 
         ~REngine()
         {
+            _fpsTimer.Tick -= _fpsTimer_Tick;
+            _fpsTimer.Stop();
             RLog.Dispose();
+        }
+
+        private void StartClock()
+        {
+            if (!_stopWatch.IsRunning){
+                _stopWatch.Start();
+            } 
+        }
+        internal void Tick(float t)
+        {
+            _fps += t;
+        }
+        public double GetFPS()
+        {
+            return _lastFps;
+        }
+        public long GetLastFrameTimeMS()
+        {
+            return _lastMilliseconds;
         }
         public static void CheckGLError()
         {
@@ -142,12 +185,26 @@ namespace Reactor
         }
         public void Clear(RColor color, bool onlyDepth)
         {
+            StartClock();
+            
+            
+            _viewport.Bind();
+            
             Reactor.Math.Vector4 clearColor = color.ToVector4();
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
             if (onlyDepth)
                 GL.Clear(ClearBufferMask.DepthBufferBit);
             else
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+
+            GL.MatrixMode(MatrixMode.Projection);
+            Matrix4 p = camera.projMatrix;
+            GL.LoadMatrix(ref p);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            Matrix4 o = Matrix.Identity;
+            GL.LoadMatrix(ref o);
             
         }
 
@@ -194,6 +251,7 @@ namespace Reactor
                     control.GameWindow.WindowBorder = WindowBorder.Hidden;
                 control.GameWindow.X = 0;
                 control.GameWindow.Y = 0;
+                control.Context = (GraphicsContext)control.GameWindow.Context;
                 _renderControl = control;
                 RLog.Info(GetGLInfo());
                 RLog.Info("Game Window Renderer Initialized.");
@@ -261,6 +319,11 @@ namespace Reactor
         public RViewport GetViewport()
         {
             return _viewport;
+        }
+
+        public void SetCamera(RCamera camera)
+        {
+            REngine.camera = camera;
         }
 
         public bool Dispose()

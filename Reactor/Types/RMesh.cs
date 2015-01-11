@@ -12,10 +12,12 @@ namespace Reactor.Types
 
         internal List<RMeshPart> Parts { get; set; }
 
-
+        internal RShader Shader { get; set; }
         RMesh()
         {
             Parts = new List<RMeshPart>();
+            Shader = new RShader();
+            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
         }
 
 
@@ -29,7 +31,8 @@ namespace Reactor.Types
         {
             foreach(RMeshPart part in Parts)
             {
-                part.Draw(PrimitiveType.Triangles);
+                
+                part.Draw(Shader, PrimitiveType.Triangles, this.ObjectMatrix);
             }
         }
     }

@@ -46,8 +46,13 @@ namespace Reactor
         {
             #if DEBUG
             if(Writer != null){
-                Writer.Close();
-                Writer.Dispose();
+                try
+                {
+                    Writer.Close();
+                    Writer.Dispose();
+                }
+                catch { }
+                
             }
             #endif
         }
@@ -60,7 +65,7 @@ namespace Reactor
                 string output = String.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
                 if(Writer!=null)
                     Writer.WriteLineAsync(output);
-                Console.WriteLine(output);
+                System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
         }
@@ -73,7 +78,7 @@ namespace Reactor
                 string output = String.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
                 if(Writer!=null)
                     Writer.WriteLineAsync(output);
-                Console.WriteLine(output);
+                System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
         }
@@ -86,7 +91,7 @@ namespace Reactor
                 string output = String.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
                 if(Writer!=null)
                     Writer.WriteLineAsync(output);
-                Console.WriteLine(output);
+                System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
         }
@@ -107,7 +112,7 @@ namespace Reactor
                 string output = String.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
                 if(Writer!=null)
                     Writer.WriteLineAsync(output);
-                Console.WriteLine(output);
+                System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
         }

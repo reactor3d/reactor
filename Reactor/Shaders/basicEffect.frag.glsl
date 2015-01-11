@@ -1,6 +1,5 @@
-﻿
-out vec4 color;
+﻿in vec2 texcoord;
 void main()
 {
-   color = vec4(1.0f,1.0f,1.0f,1.0f);
+   gl_FragColor = vec4(1.0f,1.0f,1.0f,1.0f);
 }

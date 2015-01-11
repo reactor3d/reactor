@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using System.Reflection;
 using Reactor.Math;
 using System;
@@ -64,8 +64,16 @@ namespace Reactor.Types
                 return;
             }
 
+#if DEBUG
+            int status;
+            GL.ValidateProgram(Id);
+            GL.GetProgram(Id, GetProgramParameterName.ValidateStatus, out status);
+            if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
+#endif
+            REngine.CheckGLError();
             int numAttributes;
             GL.GetProgram(Id, GetProgramParameterName.ActiveAttributes, out numAttributes);
+            REngine.CheckGLError();
             _attributes = new Attribute[numAttributes];
             for (int i = 0; i < numAttributes; i++)
             {
@@ -102,6 +110,7 @@ namespace Reactor.Types
                 _uniformLocations.Add(uni.name, uni.location);
 
             }
+            GL.UseProgram(0);
         }
 
         public void SetUniformValue(string name, int value)
@@ -176,7 +185,8 @@ namespace Reactor.Types
                     return _attributes[i].location;
                 }
             }
-            return -1;
+            return GL.GetAttribLocation(Id, name);
+
         }
         internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage)
         {

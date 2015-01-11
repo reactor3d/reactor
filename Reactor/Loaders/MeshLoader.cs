@@ -39,11 +39,8 @@ namespace Reactor.Loaders
     {
         public static void LoadSource(this RMesh rmesh, string filename)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(filename);
-            Assimp.Configs.MultithreadingConfig mtConfig = new Assimp.Configs.MultithreadingConfig(-1);
+
             AssimpContext context = new AssimpContext();
-            context.SetConfig(mtConfig);
 
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.RemoveRedundantMaterials | PostProcessSteps.JoinIdenticalVertices | PostProcessSteps.GenerateUVCoords);
@@ -62,11 +59,8 @@ namespace Reactor.Loaders
                     List<Vector3> tangents = new List<Vector3>();
                     List<Vector2> texCoords = new List<Vector2>();
 
-                    RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly);
 
                     int[] indices = mesh.GetIndices();
-                    RIndexBuffer<int> ibuffer = new RIndexBuffer<int>(indices.Length, RBufferUsage.WriteOnly);
-                    ibuffer.SetData<int>(indices);
                     List<int> indicesList = new List<int>(indices);
 
                     foreach(Vector3D v in mesh.Vertices)
@@ -109,18 +103,23 @@ namespace Reactor.Loaders
                         bitangents.AddRange(b);
                     }
 
-                        RVertexData[] data = new RVertexData[mesh.VertexCount];
-                        for(int i=0; i<mesh.VertexCount; i++)
-                        {
-                            data[i] = new RVertexData(
-                                verticies[i],
-                                normals[i],
-                                bitangents[i],
-                                tangents[i],
-                                texCoords[i]
-                            );
-                        }
+                    RVertexData[] data = new RVertexData[mesh.VertexCount];
+                    for(int i=0; i<mesh.VertexCount; i++)
+                    {
+                        data[i] = new RVertexData(
+                            verticies[i],
+                            normals[i],
+                            bitangents[i],
+                            tangents[i],
+                            texCoords[i]
+                        );
+                    }
+                    RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly);
 
+                    
+                    RIndexBuffer<int> ibuffer = new RIndexBuffer<int>(indices.Length, RBufferUsage.WriteOnly);
+                    ibuffer.SetData<int>(indices);
+                    
                     vbuffer.SetData<RVertexData>(data);
 
                         

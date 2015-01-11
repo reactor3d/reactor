@@ -14,13 +14,14 @@ namespace Reactor
         public int Y;
         public int Width;
         public int Height;
-
+        public float AspectRatio;
         public RViewport(int x, int y)
         {
             X = x;
             Y = y;
             Width = 800;
             Height = 600;
+            AspectRatio = (float)Width / (float)Height;
         }
 
         public RViewport(int x, int y, int width, int height)
@@ -29,6 +30,7 @@ namespace Reactor
             Y = y;
             Width = width;
             Height = height;
+            AspectRatio = (float)Width / (float)Height;
         }
 
         internal void Bind()
