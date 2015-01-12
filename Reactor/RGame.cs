@@ -48,12 +48,14 @@ namespace Reactor
         /// <summary>
         /// Override for Initialization code.  Override this and setup the engine in this block.
         /// </summary>
-        /// <example>
+        /// <example>Example of how to initialize the engine with a window of 800x600.
+        /// <code>
         /// public override void Init()
         /// {
         ///    Engine.InitGameWindow(800,600);
         ///    // TODO: Initialize more systems and load your content.
         /// }
+        /// </code>
         /// </example>
         public abstract void Init();
 
@@ -61,13 +63,15 @@ namespace Reactor
         /// <summary>
         /// Override for control over rendering.  This is always required.  This will be called everytime a frame needs to be rendered.
         /// </summary>
-        /// <example>
+        /// <example>Example render loop.  Clear must be called first, render anything you wish, then call Present() to swap the back buffer and show it on screen.
+        /// <code>
         /// public override void Render()
         /// {
         ///    Engine.Clear();
         ///    // TODO: Render your game objects or call Scene.RenderAll(); if you wish for the scene manager to attempt to render them all.
         ///    Engine.Present();
         /// }
+        /// </code>
         /// </example>
         public abstract void Render();
 
@@ -75,13 +79,14 @@ namespace Reactor
         /// Override for control over updating.  This is always required.  This will be called everytime a frame needs updating.
         /// This is also where you can check for input and things as well.
         /// </summary>
-        /// <example>
-        /// public override void Update()
+        /// <example>A typical update loop.  Anything your game needs to update should be called within this method.  If an object has an Update() method, it needs to be added somewhere within this method block flow.
+        /// <code>public override void Update()
         /// {
         ///    camera.Update();
         ///    mesh.Update();
         ///    //etc...
         /// }
+        /// </code>
         /// </example>
         public abstract void Update();
 
