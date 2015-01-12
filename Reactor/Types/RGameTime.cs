@@ -1,5 +1,5 @@
 ﻿//
-// RInput.cs
+// RGameTime.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -24,46 +24,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using Reactor.Types;
-using OpenTK.Input;
 
-namespace Reactor
+namespace Reactor.Types
 {
-    public class RInput : RSingleton<RInput>
-    {
 
-        RInput()
+        public class RGameTime
         {
+            public TimeSpan TotalGameTime { get; set; }
 
+            public TimeSpan ElapsedGameTime { get; set; }
+
+            public bool IsRunningSlowly { get; set; }
+
+            public RGameTime()
+            {
+                TotalGameTime = TimeSpan.Zero;
+                ElapsedGameTime = TimeSpan.Zero;
+                IsRunningSlowly = false;
+            }
+
+            public RGameTime(TimeSpan totalGameTime, TimeSpan elapsedGameTime)
+            {
+                TotalGameTime = totalGameTime;
+                ElapsedGameTime = elapsedGameTime;
+                IsRunningSlowly = false;
+            }
+
+            public RGameTime (TimeSpan totalRealTime, TimeSpan elapsedRealTime, bool isRunningSlowly)
+            {
+                TotalGameTime = totalRealTime;
+                ElapsedGameTime = elapsedRealTime;
+                IsRunningSlowly = isRunningSlowly;
+            }
         }
 
-        public bool IsKeyDown(RKey key)
-        {
-            return Keyboard.GetState().IsKeyDown((Key)key);
-        }
-
-        public bool IsKeyUp(RKey key)
-        {
-            return Keyboard.GetState().IsKeyUp((Key)key);
-        }
-
-        public void GetMouse(out int X, out int Y, out int Wheel)
-        {
-            MouseState state = Mouse.GetCursorState();
-            X = state.X;
-            Y = state.Y;
-            Wheel = state.Wheel;
-        }
-
-        public bool IsMouseButtonDown(MouseButton button)
-        {
-            return Mouse.GetState().IsButtonDown(button);
-        }
-
-        public bool IsMouseButtonUp(MouseButton button)
-        {
-            return Mouse.GetState().IsButtonUp(button);
-        }
-    }
 }
 

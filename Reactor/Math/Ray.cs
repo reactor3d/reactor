@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using OpenTK;
 
 namespace Reactor.Math
 {
@@ -198,7 +199,7 @@ namespace Reactor.Math
             // Find the vector between where the ray starts the the sphere's centre
             Vector3 difference = sphere.Center - this.Position;
 
-            float differenceLengthSquared = difference.LengthSquared();
+            float differenceLengthSquared = difference.LengthSquared;
             float sphereRadiusSquared = sphere.Radius * sphere.Radius;
 
             float distanceAlongRay;
@@ -241,16 +242,7 @@ namespace Reactor.Math
             return a.Equals(b);
         }
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Pos( ", this.Position.DebugDisplayString, " )  \r\n",
-                    "Dir( ", this.Direction.DebugDisplayString, " )"
-                );
-            }
-        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {

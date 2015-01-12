@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenTK;
 
 namespace Reactor.Math
 {
@@ -13,7 +14,7 @@ namespace Reactor.Math
     {
         #region Private Fields
 
-        private Matrix matrix;
+        private Matrix4 matrix;
         private readonly Vector3[] corners = new Vector3[CornerCount];
         private readonly Plane[] planes = new Plane[PlaneCount];
 
@@ -27,7 +28,7 @@ namespace Reactor.Math
 
         #region Public Constructors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BoundingFrustum(Matrix value)
+        public BoundingFrustum(Matrix4 value)
         {
             this.matrix = value;
             this.CreatePlanes();
@@ -39,7 +40,7 @@ namespace Reactor.Math
 
         #region Public Properties
 
-        public Matrix Matrix
+        public Matrix4 Matrix
         {
             get { return this.matrix; }
             set
@@ -273,20 +274,7 @@ namespace Reactor.Math
         }
         */
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Near( ", this.planes[0].DebugDisplayString, " )  \r\n",
-                    "Far( ", this.planes[1].DebugDisplayString, " )  \r\n",
-                    "Left( ", this.planes[2].DebugDisplayString, " )  \r\n",
-                    "Right( ", this.planes[3].DebugDisplayString, " )  \r\n",
-                    "Top( ", this.planes[4].DebugDisplayString, " )  \r\n",
-                    "Bottom( ", this.planes[5].DebugDisplayString, " )  "                  
-                    );
-            }
-        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {
@@ -380,7 +368,7 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void NormalizePlane(ref Plane p)
         {
-            float factor = 1f / p.Normal.Length();
+            float factor = 1f / p.Normal.Length;
             p.Normal.X *= factor;
             p.Normal.Y *= factor;
             p.Normal.Z *= factor;

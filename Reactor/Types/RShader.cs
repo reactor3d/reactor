@@ -6,6 +6,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using Reactor.Geometry;
+using OpenTK;
 
 
 namespace Reactor.Types
@@ -144,7 +145,7 @@ namespace Reactor.Types
             GL.Uniform4(GetUniformLocation(name), value);
             REngine.CheckGLError();
         }
-        public void SetUniformValue(string name, Matrix value)
+        public void SetUniformValue(string name, Matrix4 value)
         {
             OpenTK.Matrix4 matrix = value;
             GL.UniformMatrix4(GetUniformLocation(name), false, ref matrix);

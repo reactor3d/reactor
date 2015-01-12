@@ -229,6 +229,8 @@ namespace Reactor.Geometry
                     return primitiveCount * 3;
                 case PrimitiveType.TriangleStrip:
                     return 3 + (primitiveCount - 1); // ???
+                case PrimitiveType.Polygon:
+                    return primitiveCount * 4;
             }
 
             throw new NotSupportedException();

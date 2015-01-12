@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Platform\Threading.cs" />
-    <Compile Include="RCamera.cs" />
     <Compile Include="Types\RCameraNode.cs" />
     <Compile Include="Types\RViewport.cs" />
     <Compile Include="Math\BoundingBox.cs" />
@@ -115,16 +114,10 @@
     <Compile Include="Math\BoundingSphere.cs" />
     <Compile Include="Math\ContainmentType.cs" />
     <Compile Include="Math\MathHelper.cs" />
-    <Compile Include="Math\Matrix.cs" />
     <Compile Include="Math\Plane.cs" />
     <Compile Include="Math\PlaneIntersectionType.cs" />
     <Compile Include="Math\Point.cs" />
-    <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Ray.cs" />
-    <Compile Include="Math\Rectangle.cs" />
-    <Compile Include="Math\Vector2.cs" />
-    <Compile Include="Math\Vector3.cs" />
-    <Compile Include="Math\Vector4.cs" />
     <Compile Include="Platform\FormRenderControl.cs" />
     <Compile Include="Platform\GameWindowRenderControl.cs" />
     <Compile Include="Platform\PictureBoxRenderControl.cs" />
@@ -182,6 +175,10 @@
     <Compile Include="Utilities\Serialization.cs" />
     <Compile Include="RFileSystem.cs" />
     <Compile Include="Loaders\MeshLoader.cs" />
+    <Compile Include="Types\RKey.cs" />
+    <Compile Include="Types\RGameTime.cs" />
+    <Compile Include="RCamera.cs" />
+    <Compile Include="Math\Rectangle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

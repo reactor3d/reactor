@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using Reactor.Math;
+using OpenTK;
 
 namespace Reactor.Geometry
 {

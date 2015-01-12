@@ -32,11 +32,10 @@ namespace Reactor
         internal static string RootPath;
         internal static RCamera camera;
 
-        private long _elapsedMilliseconds = 0;
-        private long _lastMilliseconds = 0;
+
         private float _lastFps = 0;
         private float _fps = 0;
-
+        private TimeSpan lastFrameTime;
         private REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -49,15 +48,16 @@ namespace Reactor
             _fpsTimer.Start();
 
             _viewport = new RViewport(0,0,800,600);
-            camera = new RCamera(RCamera.RCameraProjectionType.Perspective);
+            camera = new RCamera();
+            lastFrameTime = new TimeSpan();
 
         }
 
         void _fpsTimer_Tick(object sender, EventArgs e)
         {
-            _lastFps = (float)System.Math.Floor((_fps / (_lastMilliseconds)) * 1000.0f);
+            _lastFps = (float)System.Math.Floor((_fps / (lastFrameTime.TotalMilliseconds)) * 1000.0f);
             _fps = 0;
-            _lastMilliseconds = _stopWatch.ElapsedMilliseconds;
+            lastFrameTime = _stopWatch.Elapsed;
             _stopWatch.Restart();
         }
 
@@ -82,9 +82,9 @@ namespace Reactor
         {
             return _lastFps;
         }
-        public long GetLastFrameTimeMS()
+        public float GetTime()
         {
-            return _lastMilliseconds;
+            return (float)REngine.RGame.GameWindow.UpdateTime * 1000.0f;
         }
         public static void CheckGLError()
         {
@@ -194,14 +194,14 @@ namespace Reactor
             
             _viewport.Bind();
             
-            Reactor.Math.Vector4 clearColor = color.ToVector4();
+            Vector4 clearColor = color.ToVector4();
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
             if (onlyDepth)
                 GL.Clear(ClearBufferMask.DepthBufferBit);
             else
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            camera.UpdateProjectionMatrix();
+            //camera.Update();
 
 
             

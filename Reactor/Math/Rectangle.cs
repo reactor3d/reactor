@@ -1,10 +1,13 @@
-
+﻿
 using System;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using Drawing = System.Drawing;
+using OpenTK;
+
+
 namespace Reactor.Math
 {
     /// <summary>
@@ -26,25 +29,25 @@ namespace Reactor.Math
         /// <summary>
         /// The x coordinate of the top-left corner of this <see cref="Rectangle"/>.
         /// </summary>
-        
+
         public int X;
 
         /// <summary>
         /// The y coordinate of the top-left corner of this <see cref="Rectangle"/>.
         /// </summary>
-        
+
         public int Y;
 
         /// <summary>
         /// The width of this <see cref="Rectangle"/>.
         /// </summary>
-        
+
         public int Width;
 
         /// <summary>
         /// The height of this <see cref="Rectangle"/>.
         /// </summary>
-        
+
         public int Height;
 
         #endregion
@@ -163,7 +166,7 @@ namespace Reactor.Math
                     this.Y, "  ",
                     this.Width, "  ",
                     this.Height
-                    );
+                );
             }
         }
 
@@ -341,9 +344,9 @@ namespace Reactor.Math
         public bool Intersects(Rectangle value)
         {
             return value.Left < Right &&
-                   Left < value.Right &&
-                   value.Top < Bottom &&
-                   Top < value.Bottom;
+                Left < value.Right &&
+                value.Top < Bottom &&
+                Top < value.Bottom;
         }
 
 
@@ -356,9 +359,9 @@ namespace Reactor.Math
         public void Intersects(ref Rectangle value, out bool result)
         {
             result = value.Left < Right &&
-                     Left < value.Right &&
-                     value.Top < Bottom &&
-                     Top < value.Bottom;
+                Left < value.Right &&
+                value.Top < Bottom &&
+                Top < value.Bottom;
         }
 
         /// <summary>
@@ -467,8 +470,8 @@ namespace Reactor.Math
             int x = System.Math.Min(value1.X, value2.X);
             int y = System.Math.Min(value1.Y, value2.Y);
             return new Rectangle(x, y,
-                                 System.Math.Max(value1.Right, value2.Right) - x,
-                                     System.Math.Max(value1.Bottom, value2.Bottom) - y);
+                System.Math.Max(value1.Right, value2.Right) - x,
+                System.Math.Max(value1.Bottom, value2.Bottom) - y);
         }
 
         /// <summary>
@@ -485,7 +488,7 @@ namespace Reactor.Math
             result.Width = System.Math.Max(value1.Right, value2.Right) - result.X;
             result.Height = System.Math.Max(value1.Bottom, value2.Bottom) - result.Y;
         }
-				
+
         #endregion
     }
 }

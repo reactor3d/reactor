@@ -1,5 +1,6 @@
 
 using System;
+using OpenTK;
 
 namespace Reactor.Math
 {
@@ -243,31 +244,58 @@ namespace Reactor.Math
         /// </summary>
         /// <param name="angle">The angle to reduce, in radians.</param>
         /// <returns>The new angle, in radians.</returns>
-	public static float WrapAngle(float angle)
-	{
-        angle = (float)System.Math.IEEERemainder((double)angle, 6.2831854820251465);
-	    if (angle <= -3.14159274f)
-	    {
-		angle += 6.28318548f;
-	    }
-	    else
-	    {
-		if (angle > 3.14159274f)
-		{
-		   angle -= 6.28318548f;
-		}
-	    }
-	    return angle;
-	}
+    	public static float WrapAngle(float angle)
+    	{
+            angle = (float)System.Math.IEEERemainder((double)angle, 6.2831854820251465);
+    	    if (angle <= -3.14159274f)
+    	    {
+    		angle += 6.28318548f;
+    	    }
+    	    else
+    	    {
+    		if (angle > 3.14159274f)
+    		{
+    		   angle -= 6.28318548f;
+    		}
+    	    }
+    	    return angle;
+    	}
 
- 	/// <summary>
-        /// Determines if value is powered by two.
-        /// </summary>
-        /// <param name="value">A value.</param>
-        /// <returns><c>true</c> if <c>value</c> is powered by two; otherwise <c>false</c>.</returns>
-	public static bool IsPowerOfTwo(int value)
-	{
-	     return (value > 0) && ((value & (value - 1)) == 0);
-	}
+     	/// <summary>
+            /// Determines if value is powered by two.
+            /// </summary>
+            /// <param name="value">A value.</param>
+            /// <returns><c>true</c> if <c>value</c> is powered by two; otherwise <c>false</c>.</returns>
+    	public static bool IsPowerOfTwo(int value)
+    	{
+    	     return (value > 0) && ((value & (value - 1)) == 0);
+    	}
+
+        public static float Distance(Vector3 vector1, Vector3 vector2)
+        {
+            float result;
+            DistanceSquared(ref vector1, ref vector2, out result);
+            return (float)System.Math.Sqrt(result);
+        }
+
+        public static void Distance(ref Vector3 value1, ref Vector3 value2, out float result)
+        {
+            DistanceSquared(ref value1, ref value2, out result);
+            result = (float)System.Math.Sqrt(result);
+        }
+
+        public static float DistanceSquared(Vector3 value1, Vector3 value2)
+        {
+            float result;
+            DistanceSquared(ref value1, ref value2, out result);
+            return result;
+        }
+
+        public static void DistanceSquared(ref Vector3 value1, ref Vector3 value2, out float result)
+        {
+            result = (value1.X - value2.X) * (value1.X - value2.X) +
+                (value1.Y - value2.Y) * (value1.Y - value2.Y) +
+                (value1.Z - value2.Z) * (value1.Z - value2.Z);
+        }
     }
 }

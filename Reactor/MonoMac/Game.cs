@@ -27,7 +27,7 @@ using System;
 using Reactor;
 using Reactor.Types;
 using Reactor.Math;
-
+using OpenTK;
 namespace MonoMac
 {
     public class Game : RGame
@@ -41,12 +41,14 @@ namespace MonoMac
         public override void Init()
         {
             Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
-            camera = Engine.GetCamera();
+            camera = new RCamera();
             camera.SetPosition(Vector3.Zero);
-            camera.LookAt(Vector3.Forward * -10f);
+            camera.LookAt(new Vector3(0, 0, -1f) * -10f);
+            camera.SetClipPlanes(0.001f, 100f);
             camera.Update();
+            Engine.SetCamera(camera);
             mesh = Engine.Scene.Create<RMesh>("test");
-            mesh.LoadSourceModel(Engine.FileSystem.GetFilePath("/meshes/bunny.x"));
+            mesh.LoadSourceModel("/meshes/bunny.x");
             mesh.IsDrawable = true;
             mesh.IsEnabled = true;
             //mesh.SetScale(0.0001f);
@@ -64,6 +66,15 @@ namespace MonoMac
 
         public override void Update()
         {
+
+            if(Engine.Input.IsKeyDown(RKey.A))
+                camera.RotateY(-1f * Engine.GetTime());
+            if(Engine.Input.IsKeyDown(RKey.D))
+                camera.RotateY(1f * Engine.GetTime());
+            if(Engine.Input.IsKeyDown(RKey.W))
+                camera.Move(camera.ViewDirection.Normalized() * -1f * Engine.GetTime());
+            if(Engine.Input.IsKeyDown(RKey.S))
+                camera.Move(camera.ViewDirection.Normalized() * 1f * Engine.GetTime());
             mesh.Update();
             camera.Update();
         }

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using OpenTK;
 
 namespace Reactor.Math
 {
@@ -508,16 +509,7 @@ namespace Reactor.Math
             return !a.Equals(b);
         }
         
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Min( ", this.Min.DebugDisplayString, " )  \r\n",
-                    "Max( ",this.Max.DebugDisplayString, " )"
-                    );
-            }
-        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {

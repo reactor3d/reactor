@@ -29,6 +29,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using Reactor.Math;
 using Reactor.Platform;
+using OpenTK;
 
 namespace Reactor.Types
 {
@@ -43,7 +44,7 @@ namespace Reactor.Types
         {
             
         }
-        internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix world)
+        internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix4 world)
         {
             Threading.EnsureUIThread();
 
@@ -59,10 +60,10 @@ namespace Reactor.Types
             shader.Bind();
             VertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
             
-            
+
             shader.SetUniformValue("world", world);
-            shader.SetUniformValue("view", REngine.camera.viewMatrix);
-            shader.SetUniformValue("projection", REngine.camera.projMatrix);
+            shader.SetUniformValue("view", REngine.camera.View);
+            shader.SetUniformValue("projection", REngine.camera.Projection);
 
             GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
 

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
+using OpenTK;
 
 namespace Reactor.Math
 {
@@ -39,7 +40,7 @@ namespace Reactor.Math
 
         #region Public Methods
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BoundingSphere Transform(Matrix matrix)
+        public BoundingSphere Transform(Matrix4 matrix)
         {
             BoundingSphere sphere = new BoundingSphere();
             sphere.Center = Vector3.Transform(this.Center, matrix);
@@ -47,7 +48,7 @@ namespace Reactor.Math
             return sphere;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Transform(ref Matrix matrix, out BoundingSphere result)
+        public void Transform(ref Matrix4 matrix, out BoundingSphere result)
         {
             result.Center = Vector3.Transform(this.Center, matrix);
             result.Radius = this.Radius * ((float)System.Math.Sqrt((double)System.Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), System.Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33)))));
@@ -133,7 +134,7 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ContainmentType Contains(BoundingSphere sphere)
         {
-            float val = Vector3.Distance(sphere.Center, Center);
+            float val = MathHelper.Distance(sphere.Center, Center);
 
             if (val > sphere.Radius + Radius)
                 return ContainmentType.Disjoint;
@@ -152,7 +153,7 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ContainmentType Contains(Vector3 point)
         {
-            float distance = Vector3.Distance(point, Center);
+            float distance = MathHelper.Distance(point, Center);
 
             if (distance > this.Radius)
                 return ContainmentType.Disjoint;
@@ -176,7 +177,7 @@ namespace Reactor.Math
                                          (box.Min.Z + box.Max.Z) / 2.0f);
 
             // Find the distance between the center and one of the corners of the box.
-            float radius = Vector3.Distance(center, box.Max);
+            float radius = MathHelper.Distance(center, box.Max);
 
             return new BoundingSphere(center, radius);
         }
@@ -228,9 +229,9 @@ namespace Reactor.Math
             if (numPoints == 0)
                 throw new ArgumentException("You should have at least one point in points.");
 
-            var sqDistX = Vector3.DistanceSquared(maxx, minx);
-            var sqDistY = Vector3.DistanceSquared(maxy, miny);
-            var sqDistZ = Vector3.DistanceSquared(maxz, minz);
+            var sqDistX = MathHelper.DistanceSquared(maxx, minx);
+            var sqDistY = MathHelper.DistanceSquared(maxy, miny);
+            var sqDistZ = MathHelper.DistanceSquared(maxz, minz);
 
             // Pick the pair of most distant points.
             var min = minx;
@@ -247,7 +248,7 @@ namespace Reactor.Math
             }
             
             var center = (min + max) * 0.5f;
-            var radius = Vector3.Distance(max, center);
+            var radius = MathHelper.Distance(max, center);
             if (float.IsInfinity(radius))
                 radius = 0;
             return new BoundingSphere(center, radius);
@@ -256,7 +257,7 @@ namespace Reactor.Math
         public static BoundingSphere CreateMerged(BoundingSphere original, BoundingSphere additional)
         {
             Vector3 ocenterToaCenter = Vector3.Subtract(additional.Center, original.Center);
-            float distance = ocenterToaCenter.Length();
+            float distance = ocenterToaCenter.Length;
             if (distance <= original.Radius + additional.Radius)//intersect
             {
                 if (distance <= original.Radius - additional.Radius)//original contain additional
@@ -268,7 +269,7 @@ namespace Reactor.Math
             //else find center of new sphere and radius
             float leftRadius = System.Math.Max(original.Radius - distance, additional.Radius);
             float Rightradius = System.Math.Max(original.Radius + distance, additional.Radius);
-            ocenterToaCenter = ocenterToaCenter + (((leftRadius - Rightradius) / (2 * ocenterToaCenter.Length())) * ocenterToaCenter);//oCenterToResultCenter
+            ocenterToaCenter = ocenterToaCenter + (((leftRadius - Rightradius) / (2 * ocenterToaCenter.Length)) * ocenterToaCenter);//oCenterToResultCenter
             
             BoundingSphere result = new BoundingSphere();
             result.Center = original.Center + ocenterToaCenter;
@@ -321,7 +322,7 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Intersects(BoundingSphere sphere)
         {
-            float val = Vector3.Distance(sphere.Center, Center);
+            float val = MathHelper.Distance(sphere.Center, Center);
 			if (val > sphere.Radius + Radius)
 				return false;
 			return true;
@@ -374,16 +375,7 @@ namespace Reactor.Math
             return !a.Equals(b);
         }
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Pos( ", this.Center.DebugDisplayString, " )  \r\n",
-                    "Radius( ", this.Radius.ToString(), " )"
-                    );
-            }
-        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {

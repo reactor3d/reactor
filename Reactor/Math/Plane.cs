@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using OpenTK;
 
 namespace Reactor.Math
 {
@@ -217,16 +218,7 @@ namespace Reactor.Math
             sphere.Intersects(ref this, out result);
         }
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    this.Normal.DebugDisplayString, "  ",
-                    this.D.ToString()
-                    );
-            }
-        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {

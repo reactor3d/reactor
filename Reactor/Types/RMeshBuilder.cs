@@ -27,6 +27,8 @@ using Reactor.Math;
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using OpenTK.Graphics.OpenGL;
+using OpenTK;
 
 namespace Reactor.Types
 {
@@ -34,19 +36,24 @@ namespace Reactor.Types
     {
         #region Members
         internal RMaterial _material;
-        
+
         internal RVertexBuffer _buffer;
         internal RIndexBuffer<int> _index;
         
         internal int vertCount = 0;
         internal uint texture = 0;
         #endregion
+
+        internal RShader Shader { get; set; }
+
         #region Methods
         public RMeshBuilder()
         {
-            this.Rotation = Vector3.Zero;
+            this.Scale = Vector3.One;
+            this.Rotation = Quaternion.Identity;
             this.Position = Vector3.Zero;
-
+            Shader = new RShader();
+            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
         }
         
         public void SetTexture(int layer, RTexture texture)
@@ -146,10 +153,10 @@ namespace Reactor.Types
                     vertices[i].Normal *= -1.0f;
                 }
             }
-            _buffer = new RVertexBuffer(typeof(RVertexData), vertices.Length,
+            VertexBuffer = new RVertexBuffer(typeof(RVertexData), vertices.Length,
                RBufferUsage.WriteOnly);
 
-            _buffer.SetData<RVertexData>(vertices);
+            VertexBuffer.SetData<RVertexData>(vertices);
             vertices = null;
             vertCount = 36;
 
@@ -164,14 +171,14 @@ namespace Reactor.Types
 
 
 
-            float dphi = MathHelper.Pi / Stacks;
-            float dtheta = MathHelper.TwoPi / Slices;
+            float dphi = Reactor.Math.MathHelper.Pi / Stacks;
+            float dtheta = Reactor.Math.MathHelper.TwoPi / Slices;
 
             int index = 0;
-            vertices.Add(new RVertexData(Vector3.Down * Radius, Vector3.Down, Vector2.Zero));
+            vertices.Add(new RVertexData(new Vector3(0, -1f, 0) * Radius, new Vector3(0, -1f, 0), Vector2.Zero));
             for (int i = 0; i < Stacks - 1; i++)
             {
-                float latitude = ((i + 1) * MathHelper.Pi / Stacks) - MathHelper.PiOver2;
+                float latitude = ((i + 1) * Reactor.Math.MathHelper.Pi / Stacks) - Reactor.Math.MathHelper.PiOver2;
 
                 float dy = (float)System.Math.Sin(latitude);
                 float dxz = (float)System.Math.Cos(latitude);
@@ -179,7 +186,7 @@ namespace Reactor.Types
                 // Create a single ring of vertices at this latitude.
                 for (int j = 0; j < Slices; j++)
                 {
-                    float longitude = j * MathHelper.TwoPi / Slices;
+                    float longitude = j * Reactor.Math.MathHelper.TwoPi / Slices;
 
                     float dx = (float)System.Math.Cos(longitude) * dxz;
                     float dz = (float)System.Math.Sin(longitude) * dxz;
@@ -193,7 +200,7 @@ namespace Reactor.Types
                     vertices.Add(new RVertexData(position, Vector3.Normalize(normal), tex));
                 }
             }
-            vertices.Add(new RVertexData(Vector3.Up * Radius, Vector3.Up, Vector2.Zero));
+            vertices.Add(new RVertexData(new Vector3(0, 1f, 0) * Radius, new Vector3(0, 1f, 0), Vector2.Zero));
             vertCount = vertices.Count;
             /*for (int x = 0; x < Stacks-1; x++)
                 for (int y = 0; y < Slices-1; y++)
@@ -225,7 +232,7 @@ namespace Reactor.Types
                     vertices[y * Stacks + x] = v;
                     
                 }*/
-            List<int> indices = new List<int>();
+            /*List<int> indices = new List<int>();
             for (int i = 0; i < Slices; i++)
             {
                 indices.Add(0);
@@ -257,18 +264,18 @@ namespace Reactor.Types
                 indices.Add(vertices.Count - 1);
                 indices.Add(vertices.Count - 2 - (i + 1) % Slices);
                 indices.Add(vertices.Count - 2 - i);
-            }
+            }*/
 
-            _buffer = new RVertexBuffer(typeof(RVertexData), vertices.Count,
+            VertexBuffer = new RVertexBuffer(typeof(RVertexData), vertices.Count,
                 RBufferUsage.WriteOnly);
 
-            _buffer.SetData<RVertexData>(vertices.ToArray());
+            VertexBuffer.SetData<RVertexData>(vertices.ToArray());
             //vertCount = vertices.Length;
             vertices = null;
 
-            _index = new RIndexBuffer<int>(indices.Count, RBufferUsage.WriteOnly);
-            _index.SetData<int>(indices.ToArray());
-            indices = null;
+            //_index = new RIndexBuffer<int>(indices.Count, RBufferUsage.WriteOnly);
+            //_index.SetData<int>(indices.ToArray());
+            //indices = null;
 
             this.Position = Center;
 
@@ -276,7 +283,55 @@ namespace Reactor.Types
 
         public override void Render()
         {
-            
+            GL.Enable(EnableCap.DepthTest);
+            REngine.CheckGLError();
+            GL.DepthMask(true);
+            REngine.CheckGLError();
+            GL.DepthFunc(DepthFunction.Less);
+            REngine.CheckGLError();
+
+
+            /*GL.Enable(EnableCap.CullFace);
+            REngine.CheckGLError();
+            GL.FrontFace(FrontFaceDirection.Ccw);
+            REngine.CheckGLError();
+            GL.CullFace(CullFaceMode.FrontAndBack);
+            REngine.CheckGLError();
+*/
+
+            var vertexOffset = (IntPtr)(VertexBuffer.VertexDeclaration.VertexStride * 0);
+            VertexBuffer.BindVertexArray();
+            VertexBuffer.Bind();
+
+            Shader.Bind();
+            VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
+
+
+            Shader.SetUniformValue("world", Matrix);
+            Shader.SetUniformValue("view", REngine.camera.View);
+            Shader.SetUniformValue("projection", REngine.camera.Projection);
+
+            if(_index != null)
+            {
+                _index.Bind();
+                var shortIndices = _index.IndexElementSize == RIndexElementSize.SixteenBits;
+                var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
+                var indexElementSize = shortIndices ? 2 : 4;
+                var indexOffsetInBytes = (IntPtr)(indexElementSize);
+                var indexElementCount = _index.GetElementCountArray(PrimitiveType.Triangles, VertexBuffer.VertexCount / 3);
+                GL.DrawElements(PrimitiveType.Triangles, indexElementCount, indexElementType, indexOffsetInBytes);
+                _index.Unbind();
+            }
+            else 
+            {
+                GL.DrawArrays(PrimitiveType.Triangles, 0, VertexBuffer.VertexCount);
+            }
+
+            Shader.Unbind();
+
+            VertexBuffer.Unbind();
+            VertexBuffer.UnbindVertexArray();
+
         }
         
         public void Dispose()

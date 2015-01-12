@@ -32,6 +32,7 @@ using Reactor.Math;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
+using OpenTK;
 
 namespace Reactor.Loaders
 {
@@ -45,12 +46,9 @@ namespace Reactor.Loaders
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,
                 PostProcessSteps.FindInvalidData |
-                PostProcessSteps.GenerateSmoothNormals |
                 PostProcessSteps.RemoveRedundantMaterials |
-                PostProcessSteps.FindDegenerates |
                 PostProcessSteps.Triangulate |
-                PostProcessSteps.GenerateUVCoords |
-                PostProcessSteps.JoinIdenticalVertices);
+                PostProcessSteps.GenerateUVCoords);
 
             if(scene.HasMeshes)
             {
@@ -60,72 +58,37 @@ namespace Reactor.Loaders
                         continue;
                     }
                     RMeshPart rmeshpart = RMeshPart.Create<RMeshPart>();
-                    List<Vector3> verticies = new List<Vector3>();
-                    List<Vector3> normals = new List<Vector3>();
-                    List<Vector3> bitangents = new List<Vector3>();
-                    List<Vector3> tangents = new List<Vector3>();
-                    List<Vector2> texCoords = new List<Vector2>();
-
-
-                    int[] indices = mesh.GetIndices();
-                    List<int> indicesList = new List<int>(indices);
-
-                    foreach(Vector3D v in mesh.Vertices)
-                    {
-                        verticies.Add(new Vector3(v.X, v.Y, v.Z));
-                    }
-                    foreach(Vector3D n in mesh.Normals)
-                    {
-                        normals.Add(new Vector3(n.X, n.Y, n.Z));
-                    }
-                    if (mesh.HasTextureCoords(0))
-                    {
-                        foreach(Vector3D tex in mesh.TextureCoordinateChannels[0])
-                        {
-                            texCoords.Add(new Vector2(tex.X, tex.Y));
-                        }
-                    }
-                    else
-                    {
-                        texCoords.AddRange(new Vector2[mesh.VertexCount]);
-                    }
-                    if( mesh.HasTangentBasis)
-                    {
-                        foreach(Vector3D b in mesh.BiTangents)
-                        {
-                            bitangents.Add(new Vector3(b.X, b.Y, b.Z));
-                        }
-                        foreach(Vector3D t in mesh.Tangents)
-                        {
-                            tangents.Add(new Vector3(t.X, t.Y, t.Z));
-                        }
-                    } else {
-                        Vector3[] t;
-                        Vector3[] b;
-                        if(mesh.HasTextureCoords(0))
-                            CalculateTangents(verticies, indicesList, normals, texCoords, out t, out b);
-                        else
-                            t = b = new Vector3[mesh.VertexCount];
-                        tangents.AddRange(t);
-                        bitangents.AddRange(b);
-                    }
-
                     RVertexData[] data = new RVertexData[mesh.VertexCount];
-                    for(int i=0; i<mesh.VertexCount; i++)
+
+                    List<int> indicesList = new List<int>();
+                    if(mesh.HasFaces)
                     {
-                        data[i] = new RVertexData(
-                            verticies[i],
-                            normals[i],
-                            //bitangents[i],
-                            //tangents[i],
-                            texCoords[i]
-                        );
+                        foreach(Face face in mesh.Faces)
+                        {
+                            indicesList.AddRange(face.Indices.ToArray());
+                            foreach(int index in face.Indices)
+                            {
+                                Vector3D p = mesh.Vertices[index];
+                                if(mesh.HasTextureCoords(0))
+                                {
+                                    Vector3D t = mesh.TextureCoordinateChannels[0][index];
+                                    data[index].TexCoord = new Vector2(t.X, t.Y);
+                                }
+
+                                data[index].Position = new Vector3(p.X, p.Y, p.Z);
+
+                            }
+                        }
                     }
+
+
+
+
                     RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly, true);
 
                     
-                    RIndexBuffer<int> ibuffer = new RIndexBuffer<int>(indices.Length, RBufferUsage.WriteOnly);
-                    ibuffer.SetData<int>(indices);
+                    RIndexBuffer<int> ibuffer = new RIndexBuffer<int>(indicesList.Count, RBufferUsage.WriteOnly);
+                    ibuffer.SetData<int>(indicesList.ToArray());
                     
                     vbuffer.SetData<RVertexData>(data);
 
@@ -240,10 +203,10 @@ namespace Reactor.Loaders
             {
                 var n = normals[i];
                 Debug.Assert(n.IsFinite(), "Bad normal!");
-                Debug.Assert(n.Length() >= 0.9999f, "Bad normal!");
+                Debug.Assert(n.Length >= 0.9999f, "Bad normal!");
 
                 var t = tan1[i];
-                if (t.LengthSquared() < float.Epsilon)
+                if (t.LengthSquared < float.Epsilon)
                 {
                     // TODO: Ideally we could spit out a warning to the
                     // content logging here!
@@ -255,7 +218,7 @@ namespace Reactor.Loaders
                     // a guess at something that may look ok.
 
                     t = Vector3.Cross(n, Vector3.UnitX);
-                    if (t.LengthSquared() < float.Epsilon)
+                    if (t.LengthSquared < float.Epsilon)
                         t = Vector3.Cross(n, Vector3.UnitY);
 
                     tangents[i] = Vector3.Normalize(t);
