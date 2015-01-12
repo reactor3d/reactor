@@ -5,7 +5,7 @@ Reactor is a graphics engine that runs on OpenTK and C#.  It targets Windows, Li
 ### What is this repository for? ###
 
 * Mainstream repository for the Reactor graphics engine
-* 0.0.1
+* 0.0.2
 
 ### How do I get set up? ###
 
