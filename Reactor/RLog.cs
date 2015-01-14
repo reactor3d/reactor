@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using System.IO;
+using System.Threading.Tasks;
 namespace Reactor
 {
     internal static class RLog
@@ -32,40 +33,26 @@ namespace Reactor
         internal static StreamWriter Writer;
         internal static object mutex = new object();
 
-        internal static void Init()
+        static void WriteLine(string output)
         {
-            #if DEBUG
+
             lock(mutex)
             {
-                Writer = new StreamWriter(new FileStream(REngine.RootPath+"/debug.log", FileMode.OpenOrCreate));
-                Writer.AutoFlush = true;
-            }
-            #endif
-        }
 
-        internal static void Dispose()
-        {
-            #if DEBUG
-            if(Writer != null){
-                try
-                {
-                    Writer.Close();
-                    Writer.Dispose();
-                }
-                catch { }
-                
+                Writer = new StreamWriter(new FileStream(REngine.RootPath + "/debug.log", FileMode.OpenOrCreate));
+                Writer.WriteLine(output);
+                Writer.Flush();
+                Writer.Close();
             }
-            #endif
         }
-
+        
         internal static void Info(string message)
         {
             #if DEBUG
             lock(mutex)
             {
                 string output = String.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
-                if(Writer!=null)
-                    Writer.WriteLineAsync(output);
+                WriteLine(output);
                 System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
@@ -77,8 +64,7 @@ namespace Reactor
             lock(mutex)
             {
                 string output = String.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
-                if(Writer!=null)
-                    Writer.WriteLineAsync(output);
+                WriteLine(output);
                 System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
@@ -90,8 +76,7 @@ namespace Reactor
             lock(mutex)
             {
                 string output = String.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
-                if(Writer!=null)
-                    Writer.WriteLineAsync(output);
+                WriteLine(output);
                 System.Diagnostics.Debug.WriteLine(output);
             }
             #endif
@@ -111,8 +96,7 @@ namespace Reactor
             lock(mutex)
             {
                 string output = String.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
-                if(Writer!=null)
-                    Writer.WriteLineAsync(output);
+                WriteLine(output);
                 System.Diagnostics.Debug.WriteLine(output);
             }
             #endif

@@ -49,7 +49,8 @@ namespace Reactor.Loaders
                 PostProcessSteps.GenerateSmoothNormals |
                 PostProcessSteps.RemoveRedundantMaterials |
                 PostProcessSteps.Triangulate |
-                PostProcessSteps.GenerateUVCoords);
+                PostProcessSteps.GenerateUVCoords |
+                PostProcessSteps.CalculateTangentSpace);
 
             if(scene.HasMeshes)
             {
@@ -62,6 +63,7 @@ namespace Reactor.Loaders
                     RVertexData[] data = new RVertexData[mesh.VertexCount];
 
                     List<int> indicesList = new List<int>();
+                    
                     if(mesh.HasFaces)
                     {
                         foreach(Face face in mesh.Faces)
@@ -70,6 +72,7 @@ namespace Reactor.Loaders
                             foreach(int index in face.Indices)
                             {
                                 Vector3D p = mesh.Vertices[index];
+                                data[index].Position = new Vector3(p.X, p.Y, p.Z);
                                 if(mesh.HasTextureCoords(0))
                                 {
                                     Vector3D t = mesh.TextureCoordinateChannels[0][index];
@@ -82,7 +85,15 @@ namespace Reactor.Loaders
                                     data[index].Normal = new Vector3(n.X, n.Y, n.Z);
                                 }
 
-                                data[index].Position = new Vector3(p.X, p.Y, p.Z);
+                                if(mesh.HasTangentBasis)
+                                {
+                                    Vector3D b = mesh.BiTangents[index];
+                                    Vector3D t = mesh.Tangents[index];
+                                    data[index].Bitangent = new Vector3(b.X, b.Y, b.Z);
+                                    data[index].Tangent = new Vector3(t.X, t.Y, t.Z);
+                                }
+
+                                
 
                             }
                         }

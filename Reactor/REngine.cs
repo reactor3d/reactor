@@ -40,7 +40,7 @@ namespace Reactor
         private REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            RLog.Init();
+            RLog.Info("Engine startup sequence activated.");
 
             _stopWatch = new Stopwatch();
             _fpsTimer = new Timer();
@@ -67,7 +67,7 @@ namespace Reactor
         {
             _fpsTimer.Tick -= _fpsTimer_Tick;
             _fpsTimer.Stop();
-            RLog.Dispose();
+            RLog.Info("Engine shutdown sequence activated.");
         }
 
         private void StartClock()

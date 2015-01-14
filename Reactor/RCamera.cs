@@ -47,7 +47,7 @@ namespace Reactor
         {
             Near = 1.0f;
             Far = 100.0f;
-            FieldOfView = MathHelper.ToRadians(70.0f);
+            FieldOfView = 70f;
             IsEnabled = true;
             OnUpdate += (sender, e) => {
                 //ViewDirection = Vector3.Transform(new Vector3(0, 0, -1f), GetRotation());
@@ -60,8 +60,8 @@ namespace Reactor
 
 
                 ViewDirection = new Vector3(viewMatrix.M31, viewMatrix.M32, viewMatrix.M33);
-
-                Projection = Matrix.CreatePerspectiveFieldOfView(FieldOfView, REngine.Instance._viewport.AspectRatio, Near, Far);
+                RViewport viewport = REngine.Instance._viewport;
+                projMatrix = Matrix.Identity * Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), viewport.AspectRatio, Near, Far);
             };
         }
 

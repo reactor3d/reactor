@@ -79,18 +79,23 @@ namespace Reactor.Types
 
         ~RShaderEffect()
         {
-            if (GL.IsShader(Id))
-            {
-                GL.DeleteShader(Id);
-                REngine.CheckGLError();
-            }
+            
+            
         }
 
         #region IDisposable implementation
 
         public void Dispose()
         {
-
+            try
+            {
+                if (GL.IsShader(Id))
+                {
+                    GL.DeleteShader(Id);
+                    REngine.CheckGLError();
+                }
+            }
+            catch { }
         }
 
         #endregion

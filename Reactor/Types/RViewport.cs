@@ -11,10 +11,10 @@ namespace Reactor
     [StructLayout(LayoutKind.Sequential)]
     public struct RViewport
     {
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
+        public float X;
+        public float Y;
+        public float Width;
+        public float Height;
         public float AspectRatio;
         public RViewport(int x, int y)
         {
@@ -31,12 +31,13 @@ namespace Reactor
             Y = y;
             Width = width;
             Height = height;
-            AspectRatio = (float)Width / (float)Height;
+            AspectRatio = Width / Height;
         }
 
         internal void Bind()
         {
-            GL.Viewport(0, 0, Width, Height);
+            AspectRatio = Width / Height;
+            GL.Viewport((int)0, (int)0, (int)Width, (int)Height);
         }
 
     }
