@@ -28,7 +28,7 @@ using System.IO;
 using System.Threading.Tasks;
 namespace Reactor
 {
-    internal static class RLog
+    public class RLog
     {
         internal static StreamWriter Writer;
         internal static object mutex = new object();
@@ -46,7 +46,7 @@ namespace Reactor
             }
         }
         
-        internal static void Info(string message)
+        public static void Info(string message)
         {
             #if DEBUG
             lock(mutex)
@@ -58,7 +58,7 @@ namespace Reactor
             #endif
         }
 
-        internal static void Warn(string message)
+        public static void Warn(string message)
         {
             #if DEBUG
             lock(mutex)
@@ -70,7 +70,7 @@ namespace Reactor
             #endif
         }
 
-        internal static void Error(string message)
+        public static void Error(string message)
         {
             #if DEBUG
             lock(mutex)
@@ -82,7 +82,7 @@ namespace Reactor
             #endif
         }
 
-        internal static void Error(Exception e)
+        public static void Error(Exception e)
         {
             Error(e.Message);
             Error(e.StackTrace);
@@ -90,7 +90,7 @@ namespace Reactor
                 Error(e.InnerException);
         }
 
-        internal static void Debug(string message)
+        public static void Debug(string message)
         {
             #if DEBUG
             lock(mutex)

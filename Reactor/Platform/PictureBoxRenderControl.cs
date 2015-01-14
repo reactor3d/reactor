@@ -27,6 +27,7 @@ namespace Reactor.Platform
 
             //Load OpenGL function entry points into OpenTK.
             Context.LoadAll();
+            Threading.WindowInfo = WindowInfo;
         }
 
         public override void SwapBuffers()

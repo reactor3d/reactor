@@ -28,6 +28,7 @@ namespace Reactor
         public RInput Input { get { return RInput.Instance; } }
         public RViewport Viewport { get { return _viewport; } }
         public RFileSystem FileSystem { get { return RFileSystem.Instance; } }
+        public RScreen Screen { get { return RScreen.Instance; } }
         internal RViewport _viewport;
         internal static RGame RGame;
         internal static string RootPath;
@@ -52,6 +53,7 @@ namespace Reactor
             camera = new RCamera();
             lastFrameTime = new TimeSpan();
             RShader.InitShaders();
+            Screen.Init();
 
         }
 

@@ -12,7 +12,7 @@ namespace Reactor.Platform
         public GameWindow GameWindow { get; internal set; }
         public override void Init()
         {
-
+            Threading.WindowInfo = GameWindow.WindowInfo;
         }
 
         public override void Destroy()
