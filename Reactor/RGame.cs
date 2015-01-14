@@ -91,7 +91,7 @@ namespace Reactor
         public abstract void Update();
 
         /// <summary>
-        /// Releases all resource used by the <see cref="Reactor.RGame"/> object.  This is where you would also remove any user loaded content.
+        /// Releases all resource used by the <see cref="RGame"/> object.  This is where you would also remove any user loaded content.
         /// </summary>
         /// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Reactor.RGame"/>. The
         /// <see cref="Dispose"/> method leaves the <see cref="Reactor.RGame"/> in an unusable state. After calling

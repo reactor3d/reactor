@@ -14,7 +14,7 @@ namespace Reactor.Math
     {
         #region Private Fields
 
-        private Matrix4 matrix;
+        private Matrix matrix;
         private readonly Vector3[] corners = new Vector3[CornerCount];
         private readonly Plane[] planes = new Plane[PlaneCount];
 
@@ -28,7 +28,7 @@ namespace Reactor.Math
 
         #region Public Constructors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BoundingFrustum(Matrix4 value)
+        public BoundingFrustum(Matrix value)
         {
             this.matrix = value;
             this.CreatePlanes();
@@ -40,7 +40,7 @@ namespace Reactor.Math
 
         #region Public Properties
 
-        public Matrix4 Matrix
+        public Matrix Matrix
         {
             get { return this.matrix; }
             set
@@ -368,7 +368,7 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void NormalizePlane(ref Plane p)
         {
-            float factor = 1f / p.Normal.Length;
+            float factor = 1f / p.Normal.Length();
             p.Normal.X *= factor;
             p.Normal.Y *= factor;
             p.Normal.Z *= factor;

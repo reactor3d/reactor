@@ -38,6 +38,7 @@ namespace Reactor
             lock(mutex)
             {
                 Writer = new StreamWriter(new FileStream(REngine.RootPath+"/debug.log", FileMode.OpenOrCreate));
+                Writer.AutoFlush = true;
             }
             #endif
         }

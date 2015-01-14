@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK;
 
 namespace Reactor.Types
 {
@@ -24,26 +23,28 @@ namespace Reactor.Types
             }
         }
         internal Vector3 position = Vector3.Zero;
-        internal Matrix4 matrix = Matrix4.Identity;
-        internal Quaternion rotation = Quaternion.FromMatrix(Matrix3.Identity);
+        internal Matrix matrix = Matrix.Identity;
+        internal Quaternion rotation = Quaternion.CreateFromRotationMatrix(Matrix.Identity);
         internal Vector3 scale = Vector3.One;
 
-        public Vector3 Position { get { return position; } set { position = value; UpdateMatrix(); } }
-        public Matrix4 Matrix { get { return matrix; } set { matrix = value; UpdateMatrix();} }
-        public Quaternion Rotation { get { return rotation; } set { rotation = value; UpdateMatrix();} }
+        public Vector3 Position { get { return position; } set { position = value; } }
+        public Matrix Matrix { get { return matrix; } set { matrix = value;} }
+        public Quaternion Rotation { get { return rotation; } set { rotation = value; } }
         public Vector3 Scale { get { return scale; } set { scale = value; } }
 
         void UpdateMatrix()
         {
-            rotation = Quaternion.FromAxisAngle(Vector3.UnitX, rotation.X) * Quaternion.FromAxisAngle(Vector3.UnitY, rotation.Y) * Quaternion.FromAxisAngle(Vector3.UnitZ, rotation.Z);
-            rotation.Normalize();
-            matrix *= Matrix4.Identity * Matrix4.CreateScale(scale) * Matrix4.CreateRotationX(rotation.X) * Matrix4.CreateRotationY(rotation.Y) * Matrix4.CreateRotationZ(rotation.Z) * Matrix4.CreateTranslation(position);
+            //rotation = Quaternion.FromAxisAngle(Vector3.UnitX, rotation.X) * Quaternion.FromAxisAngle(Vector3.UnitY, rotation.Y) * Quaternion.FromAxisAngle(Vector3.UnitZ, rotation.Z);
+            //rotation.Normalize();
+            matrix = BuildScalingMatrix(Matrix.Identity);
+            matrix = BuildRotationMatrix(matrix);
+            matrix = BuildPositionMatrix(matrix);
 
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Matrix3 GetRotationMatrix()
+        public Matrix GetRotationMatrix()
         {
-            return Matrix3.CreateFromQuaternion(rotation);
+            return rotation.ToMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Quaternion GetRotation()
@@ -51,12 +52,10 @@ namespace Reactor.Types
             return rotation;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetMatrix(ref Matrix4 Matrix)
+        public void SetMatrix(ref Matrix Matrix)
         {
             matrix = Matrix;
-            scale = matrix.ExtractScale();
-            rotation = matrix.ExtractRotation();
-            position = matrix.ExtractTranslation();
+            matrix.Decompose(out scale, out rotation, out position);
             //UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -69,20 +68,19 @@ namespace Reactor.Types
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateX(float value)
         {
-            rotation.X += Quaternion.FromAxisAngle(Vector3.UnitX, value).X;
+            Rotate(value, 0, 0);
             //UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateY(float value)
         {
-            rotation.Y += Quaternion.FromAxisAngle(Vector3.UnitY, value).Y;
+            Rotate(0, value, 0);
             //UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateZ(float value)
         {
-            rotation.Z += Quaternion.FromAxisAngle(Vector3.UnitZ, value).Z;
-            //UpdateMatrix();
+            Rotate(0, 0, value);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rotate(Quaternion value)
@@ -90,7 +88,17 @@ namespace Reactor.Types
             rotation = value;
             //UpdateMatrix();
         }
+        public void Rotate(float x, float y, float z)
+        {
+            float dx = MathHelper.ToRadians(x);
+            float dy = MathHelper.ToRadians(y);
+            float dz = MathHelper.ToRadians(z);
 
+            rotation.X += dx;
+            rotation.Y += dy;
+            rotation.Z += dz;
+            matrix *= Matrix.CreateFromQuaternion(rotation);
+        }
         public void SetPosition(Vector3 value)
         {
             position = value;
@@ -146,9 +154,27 @@ namespace Reactor.Types
         }
         public void LookAt(Vector3 target)
         {
-            matrix = Matrix4.Identity * Matrix4.CreateScale(scale) * Matrix4.LookAt(position, target, Vector3.UnitY);
+            matrix = Matrix.Identity * Matrix.CreateScale(scale) * Matrix.CreateLookAt(position, target, Vector3.UnitY);
             //UpdateMatrix();
 
+        }
+        internal Matrix BuildRotationMatrix(Matrix m)
+        {   
+            m *= Matrix.CreateRotationX(Rotation.X);
+            m *= Matrix.CreateRotationY(Rotation.Y);
+            m *= Matrix.CreateRotationZ(Rotation.Z);
+            return m;
+        }
+        internal Matrix BuildScalingMatrix(Matrix m)
+        {
+            m *= Matrix.CreateScale(Scale);
+            return m;
+        }
+        internal Matrix BuildPositionMatrix(Matrix m)
+        {
+            m *= Matrix.CreateTranslation(Position);
+            //_transforms[_model.Meshes[0].ParentBone.Index] = m;
+            return m;
         }
     }
 }

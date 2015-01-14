@@ -1,4 +1,4 @@
-﻿using OpenTK;
+﻿
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using Reactor.Platform;
@@ -12,6 +12,7 @@ using System.IO;
 using System.Reflection;
 using Reactor.Math;
 using System.Diagnostics;
+using OpenTK;
 
 namespace Reactor
 {
@@ -50,6 +51,7 @@ namespace Reactor
             _viewport = new RViewport(0,0,800,600);
             camera = new RCamera();
             lastFrameTime = new TimeSpan();
+            RShader.InitShaders();
 
         }
 
@@ -194,7 +196,7 @@ namespace Reactor
             
             _viewport.Bind();
             
-            Vector4 clearColor = color.ToVector4();
+            Reactor.Math.Vector4 clearColor = color.ToVector4();
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
             if (onlyDepth)
                 GL.Clear(ClearBufferMask.DepthBufferBit);

@@ -10,11 +10,11 @@ namespace Reactor.Types
 {
     public class RCameraNode : RUpdateNode
     {
-        internal Matrix4 viewMatrix;
-        internal Matrix4 projMatrix;
+        internal Matrix viewMatrix;
+        internal Matrix projMatrix;
 
-        public Matrix4 Projection { get { return projMatrix; } set { projMatrix = value; } }
+        public Matrix Projection { get { return projMatrix; } set { projMatrix = value; } }
 
-        public Matrix4 View { get { return viewMatrix; } set { viewMatrix = value; } }
+        public Matrix View { get { return viewMatrix; } set { viewMatrix = value; } }
     }
 }

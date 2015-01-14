@@ -28,7 +28,6 @@ using Reactor.Math;
 using System;
 using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
-using OpenTK;
 
 namespace Reactor.Types
 {
@@ -38,7 +37,7 @@ namespace Reactor.Types
         internal RMaterial _material;
 
         internal RVertexBuffer _buffer;
-        internal RIndexBuffer<int> _index;
+        internal RIndexBuffer _index;
         
         internal int vertCount = 0;
         internal uint texture = 0;
@@ -232,50 +231,51 @@ namespace Reactor.Types
                     vertices[y * Stacks + x] = v;
                     
                 }*/
-            /*List<int> indices = new List<int>();
+            List<ushort> indices = new List<ushort>();
             for (int i = 0; i < Slices; i++)
             {
                 indices.Add(0);
-                indices.Add(1 + (i + 1) % Slices);
-                indices.Add(1 + i);
+                indices.Add((ushort)(1 + (i + 1) % Slices));
+                indices.Add((ushort)(1 + i));
             }
 
             // Fill the sphere body with triangles joining each pair of latitude rings.
-            for (int i = 0; i < Stacks - 2; i++)
+            for (int i = 0; i < Stacks-2; i++)
             {
                 for (int j = 0; j < Slices; j++)
                 {
                     int nextI = i + 1;
                     int nextJ = (j + 1) % Slices;
 
-                    indices.Add(1 + i * Slices + j);
-                    indices.Add(1 + i * Slices + nextJ);
-                    indices.Add(1 + nextI * Slices + j);
+                    indices.Add((ushort)(1 + i * Slices + j));
+                    indices.Add((ushort)(1 + i * Slices + nextJ));
+                    indices.Add((ushort)(1 + nextI * Slices + j));
 
-                    indices.Add(1 + i * Slices + nextJ);
-                    indices.Add(1 + nextI * Slices + nextJ);
-                    indices.Add(1 + nextI * Slices + j);
+                    indices.Add((ushort)(1 + i * Slices + nextJ));
+                    indices.Add((ushort)(1 + nextI * Slices + nextJ));
+                    indices.Add((ushort)(1 + nextI * Slices + j));
                 }
             }
 
             // Create a fan connecting the top vertex to the top latitude ring.
             for (int i = 0; i < Slices; i++)
             {
-                indices.Add(vertices.Count - 1);
-                indices.Add(vertices.Count - 2 - (i + 1) % Slices);
-                indices.Add(vertices.Count - 2 - i);
-            }*/
+                indices.Add((ushort)(vertices.Count - 1));
+                indices.Add((ushort)(vertices.Count - 2 - (i + 1) % Slices));
+                indices.Add((ushort)(vertices.Count - 2 - i));
+            }
 
             VertexBuffer = new RVertexBuffer(typeof(RVertexData), vertices.Count,
-                RBufferUsage.WriteOnly);
+                RBufferUsage.None);
 
             VertexBuffer.SetData<RVertexData>(vertices.ToArray());
             //vertCount = vertices.Length;
             vertices = null;
 
-            //_index = new RIndexBuffer<int>(indices.Count, RBufferUsage.WriteOnly);
-            //_index.SetData<int>(indices.ToArray());
-            //indices = null;
+            _index = new RIndexBuffer(typeof(ushort), indices.Count, RBufferUsage.None, false);
+
+            _index.SetData(indices.ToArray());
+            indices = null;
 
             this.Position = Center;
 
@@ -290,16 +290,19 @@ namespace Reactor.Types
             GL.DepthFunc(DepthFunction.Less);
             REngine.CheckGLError();
 
-
-            /*GL.Enable(EnableCap.CullFace);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            REngine.CheckGLError();
+            GL.Disable(EnableCap.CullFace);
+            /*
+            GL.Enable(EnableCap.CullFace);
             REngine.CheckGLError();
             GL.FrontFace(FrontFaceDirection.Ccw);
             REngine.CheckGLError();
             GL.CullFace(CullFaceMode.FrontAndBack);
             REngine.CheckGLError();
-*/
+            */
 
-            var vertexOffset = (IntPtr)(VertexBuffer.VertexDeclaration.VertexStride * 0);
             VertexBuffer.BindVertexArray();
             VertexBuffer.Bind();
 
@@ -307,24 +310,30 @@ namespace Reactor.Types
             VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
 
 
-            Shader.SetUniformValue("world", Matrix);
+            Shader.SetUniformValue("world", Matrix.Identity);
             Shader.SetUniformValue("view", REngine.camera.View);
             Shader.SetUniformValue("projection", REngine.camera.Projection);
 
             if(_index != null)
             {
-                _index.Bind();
+
                 var shortIndices = _index.IndexElementSize == RIndexElementSize.SixteenBits;
                 var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
                 var indexElementSize = shortIndices ? 2 : 4;
                 var indexOffsetInBytes = (IntPtr)(indexElementSize);
-                var indexElementCount = _index.GetElementCountArray(PrimitiveType.Triangles, VertexBuffer.VertexCount / 3);
-                GL.DrawElements(PrimitiveType.Triangles, indexElementCount, indexElementType, indexOffsetInBytes);
+                var indexElementCount = _index.GetElementCountArray(PrimitiveType.Triangles, vertCount*2);
+                _index.Bind();
+                REngine.CheckGLError();
+                GL.DrawElements(PrimitiveType.TriangleStrip, _index.IndexCount, indexElementType, indexOffsetInBytes);
+                REngine.CheckGLError();
                 _index.Unbind();
+                REngine.CheckGLError();
             }
             else 
             {
+
                 GL.DrawArrays(PrimitiveType.Triangles, 0, VertexBuffer.VertexCount);
+                REngine.CheckGLError();
             }
 
             Shader.Unbind();

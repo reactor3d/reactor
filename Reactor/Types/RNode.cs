@@ -33,6 +33,7 @@ namespace Reactor.Types
         {
             try
             {
+                RLog.Info("Attempting to create a new node of type: "+typeof(T));
                 return (T)Activator.CreateInstance(typeof(T), true);
             }
             catch(Exception e)

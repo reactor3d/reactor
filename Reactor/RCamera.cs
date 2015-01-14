@@ -25,10 +25,16 @@
 // THE SOFTWARE.
 using System;
 using Reactor.Types;
-using OpenTK;
+using Reactor.Math;
+
 
 namespace Reactor
 {
+    /// <summary>
+    /// RCamera provides the cameras in the game.  This is only a very matrix Quaternion based camera, much like <see ref="RUpdateNode"> which is the basis of all moving things in Reactor.
+    /// This class can be inherited to provide specific camera operation funtionality.
+    /// Simply listen to the <see ref="OnUpdate"> event handler.
+    /// </summary>
     public class RCamera : RCameraNode
     {
         public Vector3 ViewDirection { get; set; }
@@ -41,20 +47,21 @@ namespace Reactor
         {
             Near = 1.0f;
             Far = 100.0f;
-            FieldOfView = MathHelper.DegreesToRadians(70.0f);
+            FieldOfView = MathHelper.ToRadians(70.0f);
             IsEnabled = true;
             OnUpdate += (sender, e) => {
                 //ViewDirection = Vector3.Transform(new Vector3(0, 0, -1f), GetRotation());
-                viewMatrix = new Matrix4(
-                    matrix.Column0.X, matrix.Column1.X, matrix.Column2.X, 0,
-                    matrix.Column0.Y, matrix.Column1.Y, matrix.Column2.Y, 0,
-                    matrix.Column0.Z, matrix.Column1.Z, matrix.Column2.Z, 0,
-                    Vector3.Dot(Position, matrix.Column0.Xyz), Vector3.Dot(Position, matrix.Column1.Xyz), Vector3.Dot(Position, matrix.Column2.Xyz), 1
+                viewMatrix = new Matrix(
+                    matrix.M11, matrix.M12, matrix.M13, 0,
+                    matrix.M21, matrix.M22, matrix.M23, 0,
+                    matrix.M31, matrix.M32, matrix.M33, 0,
+                    Vector3.Dot(Position, matrix.Right), Vector3.Dot(Position, matrix.Up), Vector3.Dot(Position, matrix.Forward), 1
                 );
 
-                ViewDirection = new Vector3(viewMatrix.M31, viewMatrix.M32, -viewMatrix.M33);
 
-                Projection = Matrix4.CreatePerspectiveFieldOfView(FieldOfView, REngine.Instance._viewport.AspectRatio, Near, Far);
+                ViewDirection = new Vector3(viewMatrix.M31, viewMatrix.M32, viewMatrix.M33);
+
+                Projection = Matrix.CreatePerspectiveFieldOfView(FieldOfView, REngine.Instance._viewport.AspectRatio, Near, Far);
             };
         }
 

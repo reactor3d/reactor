@@ -199,7 +199,7 @@ namespace Reactor.Math
             // Find the vector between where the ray starts the the sphere's centre
             Vector3 difference = sphere.Center - this.Position;
 
-            float differenceLengthSquared = difference.LengthSquared;
+            float differenceLengthSquared = difference.LengthSquared();
             float sphereRadiusSquared = sphere.Radius * sphere.Radius;
 
             float distanceAlongRay;

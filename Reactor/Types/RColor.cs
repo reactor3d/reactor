@@ -1,13 +1,8 @@
-// MIT License - Copyright (C) The Mono.Xna Team
-// This file is subject to the terms and conditions defined in
-// file 'LICENSE.txt', which is part of this source code package.
-
 using System;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 using Reactor.Math;
-using OpenTK;
 
 namespace Reactor.Types
 {

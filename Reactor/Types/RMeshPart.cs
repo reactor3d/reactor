@@ -36,7 +36,7 @@ namespace Reactor.Types
     internal class RMeshPart : RNode
     {
         internal RVertexBuffer VertexBuffer { get; set; }
-        internal RIndexBuffer<int> IndexBuffer { get; set; }
+        internal RIndexBuffer IndexBuffer { get; set; }
         internal List<uint> Textures { get; set; }
         public BoundingSphere BoundingSphere { get; set; }
         public BoundingBox BoundingBox { get; set; }
@@ -44,7 +44,7 @@ namespace Reactor.Types
         {
             
         }
-        internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix4 world)
+        internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix world)
         {
             Threading.EnsureUIThread();
 
@@ -65,7 +65,7 @@ namespace Reactor.Types
             shader.SetUniformValue("view", REngine.camera.View);
             shader.SetUniformValue("projection", REngine.camera.Projection);
 
-            GL.DrawElements(primitiveType, indexElementCount, indexElementType, indexOffsetInBytes);
+            GL.DrawElements(primitiveType, IndexBuffer.IndexCount, indexElementType, IntPtr.Zero);
 
             shader.Unbind();
             IndexBuffer.Unbind();

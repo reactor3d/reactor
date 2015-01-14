@@ -180,6 +180,17 @@
     <Compile Include="Types\RGameTime.cs" />
     <Compile Include="RCamera.cs" />
     <Compile Include="Math\Rectangle.cs" />
+    <Compile Include="Math\Curve.cs" />
+    <Compile Include="Math\CurveContinuity.cs" />
+    <Compile Include="Math\CurveKey.cs" />
+    <Compile Include="Math\CurveKeyCollection.cs" />
+    <Compile Include="Math\CurveLoopType.cs" />
+    <Compile Include="Math\CurveTangent.cs" />
+    <Compile Include="Math\Matrix.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vector4.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

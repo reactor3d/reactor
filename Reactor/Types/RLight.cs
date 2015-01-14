@@ -1,5 +1,4 @@
 ﻿using Reactor.Math;
-using OpenTK;
 
 namespace Reactor.Types
 {

@@ -27,7 +27,6 @@ using System;
 using Reactor;
 using Reactor.Types;
 using Reactor.Math;
-using OpenTK;
 namespace MonoMac
 {
     public class Game : RGame
@@ -42,9 +41,9 @@ namespace MonoMac
         {
             Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
             camera = new RCamera();
-            camera.SetPosition(Vector3.Zero);
-            camera.LookAt(new Vector3(0, 0, -1f) * -10f);
-            camera.SetClipPlanes(0.001f, 100f);
+            camera.SetPosition(Vector3.UnitZ * -10f);
+            camera.LookAt(new Vector3(0, 0, -1f) * 10f);
+            camera.SetClipPlanes(0.1f, 1000f);
             camera.Update();
             Engine.SetCamera(camera);
             mesh = Engine.Scene.Create<RMesh>("test");
@@ -68,13 +67,14 @@ namespace MonoMac
         {
 
             if(Engine.Input.IsKeyDown(RKey.A))
-                camera.RotateY(-1f * Engine.GetTime());
+                camera.RotateY(-5f * Engine.GetTime());
             if(Engine.Input.IsKeyDown(RKey.D))
-                camera.RotateY(1f * Engine.GetTime());
+                camera.RotateY(5f * Engine.GetTime());
             if(Engine.Input.IsKeyDown(RKey.W))
-                camera.Move(camera.ViewDirection.Normalized() * -1f * Engine.GetTime());
+                camera.Move(Vector3.Normalize(camera.ViewDirection) * -5f * Engine.GetTime());
             if(Engine.Input.IsKeyDown(RKey.S))
-                camera.Move(camera.ViewDirection.Normalized() * 1f * Engine.GetTime());
+                camera.Move(Vector3.Normalize(camera.ViewDirection) * 5f * Engine.GetTime());
+            mesh.RotateY(-0.1f);
             mesh.Update();
             camera.Update();
         }

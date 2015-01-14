@@ -40,7 +40,7 @@ namespace Reactor.Math
 
         #region Public Methods
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BoundingSphere Transform(Matrix4 matrix)
+        public BoundingSphere Transform(Matrix matrix)
         {
             BoundingSphere sphere = new BoundingSphere();
             sphere.Center = Vector3.Transform(this.Center, matrix);
@@ -48,7 +48,7 @@ namespace Reactor.Math
             return sphere;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Transform(ref Matrix4 matrix, out BoundingSphere result)
+        public void Transform(ref Matrix matrix, out BoundingSphere result)
         {
             result.Center = Vector3.Transform(this.Center, matrix);
             result.Radius = this.Radius * ((float)System.Math.Sqrt((double)System.Math.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), System.Math.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33)))));
@@ -257,7 +257,7 @@ namespace Reactor.Math
         public static BoundingSphere CreateMerged(BoundingSphere original, BoundingSphere additional)
         {
             Vector3 ocenterToaCenter = Vector3.Subtract(additional.Center, original.Center);
-            float distance = ocenterToaCenter.Length;
+            float distance = ocenterToaCenter.Length();
             if (distance <= original.Radius + additional.Radius)//intersect
             {
                 if (distance <= original.Radius - additional.Radius)//original contain additional
@@ -269,7 +269,7 @@ namespace Reactor.Math
             //else find center of new sphere and radius
             float leftRadius = System.Math.Max(original.Radius - distance, additional.Radius);
             float Rightradius = System.Math.Max(original.Radius + distance, additional.Radius);
-            ocenterToaCenter = ocenterToaCenter + (((leftRadius - Rightradius) / (2 * ocenterToaCenter.Length)) * ocenterToaCenter);//oCenterToResultCenter
+            ocenterToaCenter = ocenterToaCenter + (((leftRadius - Rightradius) / (2 * ocenterToaCenter.Length())) * ocenterToaCenter);//oCenterToResultCenter
             
             BoundingSphere result = new BoundingSphere();
             result.Center = original.Center + ocenterToaCenter;

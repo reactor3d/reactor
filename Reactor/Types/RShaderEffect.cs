@@ -27,7 +27,7 @@ namespace Reactor.Types
                 //defineSource.Append(RShaderResources.Headers);
             EffectSource = defineSource.ToString() + source;
 
-            RLog.Info(EffectSource);
+            //RLog.Info(EffectSource);
             switch (type)
             {
                 case ((int)RShaderEffectType.GEOMETRY):

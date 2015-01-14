@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Reactor.Loaders;
 using Reactor.Math;
-using OpenTK;
 
 
 namespace Reactor.Types
@@ -17,12 +16,11 @@ namespace Reactor.Types
         internal RShader Shader { get; set; }
         RMesh()
         {
-            this.Matrix = Matrix4.Identity;
+            this.Matrix = Matrix.Identity;
             this.Position = Vector3.Zero;
             this.Rotation = Quaternion.Identity;
             Parts = new List<RMeshPart>();
-            Shader = new RShader();
-            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
+            Shader = RShader.basicShader;
         }
 
         #region IDisposable implementation
@@ -52,14 +50,14 @@ namespace Reactor.Types
 
             GL.Enable(EnableCap.CullFace);
             REngine.CheckGLError();
-            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.FrontFace(FrontFaceDirection.Ccw);
             REngine.CheckGLError();
             GL.CullFace(CullFaceMode.Back);
             REngine.CheckGLError();
             foreach(RMeshPart part in Parts)
             {
                 
-                part.Draw(Shader, PrimitiveType.Polygon, this.Matrix);
+                part.Draw(Shader, PrimitiveType.Triangles, this.Matrix);
             }
         }
     }

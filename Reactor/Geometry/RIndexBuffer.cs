@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Reactor.Geometry
 {
-    public class RIndexBuffer<T> : IDisposable where T : struct
+    public class RIndexBuffer : IDisposable
     {
         bool _isDynamic;
         internal uint ibo;
@@ -17,12 +17,12 @@ namespace Reactor.Geometry
         public int IndexCount { get; private set; }
         public RIndexElementSize IndexElementSize { get; private set; }
 
-        protected RIndexBuffer(int indexCount, RBufferUsage usage, bool dynamic)
-            : this(SizeForType(typeof(T)), indexCount, usage, dynamic)
+        public RIndexBuffer(Type type, int indexCount, RBufferUsage usage, bool dynamic)
+            : this(SizeForType(type), indexCount, usage, dynamic)
         {
         }
 
-        protected RIndexBuffer(RIndexElementSize indexElementSize, int indexCount, RBufferUsage usage, bool dynamic)
+        public RIndexBuffer(RIndexElementSize indexElementSize, int indexCount, RBufferUsage usage, bool dynamic)
         {
             this.IndexElementSize = indexElementSize;   
             this.IndexCount = indexCount;
@@ -38,8 +38,8 @@ namespace Reactor.Geometry
         {
         }
 
-        public RIndexBuffer(int indexCount, RBufferUsage usage) :
-        this(SizeForType(typeof(T)), indexCount, usage, false)
+        public RIndexBuffer(Type type, int indexCount, RBufferUsage usage) :
+        this(SizeForType(type), indexCount, usage, false)
         {
         }
 
@@ -108,17 +108,17 @@ namespace Reactor.Geometry
 
         public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount) where T : struct
         {
-            SetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, RVertexDataOptions.None);
+            SetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, RVertexDataOptions.Discard);
         }
 
         public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
-            SetDataInternal<T>(0, data, startIndex, elementCount, RVertexDataOptions.None);
+            SetDataInternal<T>(0, data, startIndex, elementCount, RVertexDataOptions.Discard);
         }
 
         public void SetData<T>(T[] data) where T : struct
         {
-            SetDataInternal<T>(0, data, 0, data.Length, RVertexDataOptions.None);
+            SetDataInternal<T>(0, data, 0, data.Length, RVertexDataOptions.Discard);
         }
 
         protected void SetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, RVertexDataOptions options) where T : struct
@@ -190,9 +190,10 @@ namespace Reactor.Geometry
                 REngine.CheckGLError();
             }
 
-            GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)offsetInBytes, (IntPtr)sizeInBytes, dataPtr);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)bufferSize, dataPtr, _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
             REngine.CheckGLError();
-
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+            REngine.CheckGLError();
             dataHandle.Free();
         }
         /// <summary>

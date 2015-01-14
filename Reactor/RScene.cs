@@ -27,7 +27,7 @@ namespace Reactor
         public T Create<T>(string name) where T : RSceneNode
         {
             T node = RSceneNode.Create<T>();
-
+            RLog.Info("Created a new node named: "+name);
             return node;
         }
         public RMesh CreateMesh(string name)

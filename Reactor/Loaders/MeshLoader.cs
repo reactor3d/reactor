@@ -26,13 +26,12 @@
 using System;
 using Reactor.Types;
 using Assimp;
-
+using Reactor.Math;
 using Reactor.Geometry;
 using Reactor.Math;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
-using OpenTK;
 
 namespace Reactor.Loaders
 {
@@ -46,6 +45,8 @@ namespace Reactor.Loaders
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,
                 PostProcessSteps.FindInvalidData |
+                PostProcessSteps.FindDegenerates |
+                PostProcessSteps.GenerateSmoothNormals |
                 PostProcessSteps.RemoveRedundantMaterials |
                 PostProcessSteps.Triangulate |
                 PostProcessSteps.GenerateUVCoords);
@@ -75,6 +76,12 @@ namespace Reactor.Loaders
                                     data[index].TexCoord = new Vector2(t.X, t.Y);
                                 }
 
+                                if(mesh.HasNormals)
+                                {
+                                    Vector3D n = mesh.Normals[index];
+                                    data[index].Normal = new Vector3(n.X, n.Y, n.Z);
+                                }
+
                                 data[index].Position = new Vector3(p.X, p.Y, p.Z);
 
                             }
@@ -87,8 +94,8 @@ namespace Reactor.Loaders
                     RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly, true);
 
                     
-                    RIndexBuffer<int> ibuffer = new RIndexBuffer<int>(indicesList.Count, RBufferUsage.WriteOnly);
-                    ibuffer.SetData<int>(indicesList.ToArray());
+                    RIndexBuffer ibuffer = new RIndexBuffer(typeof(int), indicesList.Count, RBufferUsage.WriteOnly);
+                    ibuffer.SetData(indicesList.ToArray());
                     
                     vbuffer.SetData<RVertexData>(data);
 
@@ -203,10 +210,10 @@ namespace Reactor.Loaders
             {
                 var n = normals[i];
                 Debug.Assert(n.IsFinite(), "Bad normal!");
-                Debug.Assert(n.Length >= 0.9999f, "Bad normal!");
+                Debug.Assert(n.Length() >= 0.9999f, "Bad normal!");
 
                 var t = tan1[i];
-                if (t.LengthSquared < float.Epsilon)
+                if (t.LengthSquared() < float.Epsilon)
                 {
                     // TODO: Ideally we could spit out a warning to the
                     // content logging here!
@@ -218,7 +225,7 @@ namespace Reactor.Loaders
                     // a guess at something that may look ok.
 
                     t = Vector3.Cross(n, Vector3.UnitX);
-                    if (t.LengthSquared < float.Epsilon)
+                    if (t.LengthSquared() < float.Epsilon)
                         t = Vector3.Cross(n, Vector3.UnitY);
 
                     tangents[i] = Vector3.Normalize(t);
