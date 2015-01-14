@@ -1,0 +1,423 @@
+<Type Name="RVertexBuffer" FullName="Reactor.Geometry.RVertexBuffer">
+  <TypeSignature Language="C#" Value="public class RVertexBuffer : IDisposable" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RVertexBuffer extends System.Object implements class System.IDisposable" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RVertexBuffer (Reactor.Geometry.RVertexDeclaration vertexDeclaration, int vertexCount, Reactor.Geometry.RBufferUsage bufferUsage);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Reactor.Geometry.RVertexDeclaration vertexDeclaration, int32 vertexCount, valuetype Reactor.Geometry.RBufferUsage bufferUsage) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="vertexDeclaration" Type="Reactor.Geometry.RVertexDeclaration" />
+        <Parameter Name="vertexCount" Type="System.Int32" />
+        <Parameter Name="bufferUsage" Type="Reactor.Geometry.RBufferUsage" />
+      </Parameters>
+      <Docs>
+        <param name="vertexDeclaration">To be added.</param>
+        <param name="vertexCount">To be added.</param>
+        <param name="bufferUsage">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RVertexBuffer (Type type, int vertexCount, Reactor.Geometry.RBufferUsage bufferUsage);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, int32 vertexCount, valuetype Reactor.Geometry.RBufferUsage bufferUsage) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+        <Parameter Name="vertexCount" Type="System.Int32" />
+        <Parameter Name="bufferUsage" Type="Reactor.Geometry.RBufferUsage" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <param name="vertexCount">To be added.</param>
+        <param name="bufferUsage">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RVertexBuffer (Reactor.Geometry.RVertexDeclaration vertexDeclaration, int vertexCount, Reactor.Geometry.RBufferUsage bufferUsage, bool dynamic);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Reactor.Geometry.RVertexDeclaration vertexDeclaration, int32 vertexCount, valuetype Reactor.Geometry.RBufferUsage bufferUsage, bool dynamic) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="vertexDeclaration" Type="Reactor.Geometry.RVertexDeclaration" />
+        <Parameter Name="vertexCount" Type="System.Int32" />
+        <Parameter Name="bufferUsage" Type="Reactor.Geometry.RBufferUsage" />
+        <Parameter Name="dynamic" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="vertexDeclaration">To be added.</param>
+        <param name="vertexCount">To be added.</param>
+        <param name="bufferUsage">To be added.</param>
+        <param name="dynamic">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RVertexBuffer (Type type, int vertexCount, Reactor.Geometry.RBufferUsage bufferUsage, bool dynamic);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Type type, int32 vertexCount, valuetype Reactor.Geometry.RBufferUsage bufferUsage, bool dynamic) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+        <Parameter Name="vertexCount" Type="System.Int32" />
+        <Parameter Name="bufferUsage" Type="Reactor.Geometry.RBufferUsage" />
+        <Parameter Name="dynamic" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <param name="vertexCount">To be added.</param>
+        <param name="bufferUsage">To be added.</param>
+        <param name="dynamic">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BufferUsage">
+      <MemberSignature Language="C#" Value="public Reactor.Geometry.RBufferUsage BufferUsage { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Geometry.RBufferUsage BufferUsage" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RBufferUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Dispose() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetData&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public void GetData&lt;T&gt; (T[] data) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void GetData&lt;struct .ctor (class System.ValueType) T&gt;(!!T[] data) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="data" Type="T[]" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetData&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public void GetData&lt;T&gt; (T[] data, int startIndex, int elementCount) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void GetData&lt;struct .ctor (class System.ValueType) T&gt;(!!T[] data, int32 startIndex, int32 elementCount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="data" Type="T[]" />
+        <Parameter Name="startIndex" Type="System.Int32" />
+        <Parameter Name="elementCount" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="data">To be added.</param>
+        <param name="startIndex">To be added.</param>
+        <param name="elementCount">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetData&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public void GetData&lt;T&gt; (int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void GetData&lt;struct .ctor (class System.ValueType) T&gt;(int32 offsetInBytes, !!T[] data, int32 startIndex, int32 elementCount, int32 vertexStride) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="offsetInBytes" Type="System.Int32" />
+        <Parameter Name="data" Type="T[]" />
+        <Parameter Name="startIndex" Type="System.Int32" />
+        <Parameter Name="elementCount" Type="System.Int32" />
+        <Parameter Name="vertexStride" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="offsetInBytes">To be added.</param>
+        <param name="data">To be added.</param>
+        <param name="startIndex">To be added.</param>
+        <param name="elementCount">To be added.</param>
+        <param name="vertexStride">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GraphicsDeviceResetting">
+      <MemberSignature Language="C#" Value="protected void GraphicsDeviceResetting ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig instance void GraphicsDeviceResetting() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetData&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public void SetData&lt;T&gt; (T[] data) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetData&lt;struct .ctor (class System.ValueType) T&gt;(!!T[] data) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="data" Type="T[]" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetData&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public void SetData&lt;T&gt; (T[] data, int startIndex, int elementCount) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetData&lt;struct .ctor (class System.ValueType) T&gt;(!!T[] data, int32 startIndex, int32 elementCount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="data" Type="T[]" />
+        <Parameter Name="startIndex" Type="System.Int32" />
+        <Parameter Name="elementCount" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="data">To be added.</param>
+        <param name="startIndex">To be added.</param>
+        <param name="elementCount">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetData&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public void SetData&lt;T&gt; (int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetData&lt;struct .ctor (class System.ValueType) T&gt;(int32 offsetInBytes, !!T[] data, int32 startIndex, int32 elementCount, int32 vertexStride) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="offsetInBytes" Type="System.Int32" />
+        <Parameter Name="data" Type="T[]" />
+        <Parameter Name="startIndex" Type="System.Int32" />
+        <Parameter Name="elementCount" Type="System.Int32" />
+        <Parameter Name="vertexStride" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="offsetInBytes">To be added.</param>
+        <param name="data">To be added.</param>
+        <param name="startIndex">To be added.</param>
+        <param name="elementCount">To be added.</param>
+        <param name="vertexStride">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetDataInternal&lt;T&gt;">
+      <MemberSignature Language="C#" Value="protected void SetDataInternal&lt;T&gt; (int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, Reactor.Geometry.RVertexDataOptions options) where T : struct;" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void SetDataInternal&lt;struct .ctor (class System.ValueType) T&gt;(int32 offsetInBytes, !!T[] data, int32 startIndex, int32 elementCount, int32 vertexStride, valuetype Reactor.Geometry.RVertexDataOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <ParameterAttribute>DefaultConstructorConstraint</ParameterAttribute>
+            <ParameterAttribute>NotNullableValueTypeConstraint</ParameterAttribute>
+            <BaseTypeName>System.ValueType</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="offsetInBytes" Type="System.Int32" />
+        <Parameter Name="data" Type="T[]" />
+        <Parameter Name="startIndex" Type="System.Int32" />
+        <Parameter Name="elementCount" Type="System.Int32" />
+        <Parameter Name="vertexStride" Type="System.Int32" />
+        <Parameter Name="options" Type="Reactor.Geometry.RVertexDataOptions" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="offsetInBytes">To be added.</param>
+        <param name="data">To be added.</param>
+        <param name="startIndex">To be added.</param>
+        <param name="elementCount">To be added.</param>
+        <param name="vertexStride">To be added.</param>
+        <param name="options">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VertexCount">
+      <MemberSignature Language="C#" Value="public int VertexCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 VertexCount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VertexDeclaration">
+      <MemberSignature Language="C#" Value="public Reactor.Geometry.RVertexDeclaration VertexDeclaration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Geometry.RVertexDeclaration VertexDeclaration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexDeclaration</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

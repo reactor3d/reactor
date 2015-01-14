@@ -1,0 +1,171 @@
+<Type Name="RScene" FullName="Reactor.RScene">
+  <TypeSignature Language="C#" Value="public class RScene : Reactor.Types.RSingleton&lt;Reactor.RScene&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RScene extends Reactor.Types.RSingleton`1&lt;class Reactor.RScene&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Reactor.Types.RSingleton&lt;Reactor.RScene&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">Reactor.RScene</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Create&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public T Create&lt;T&gt; (string name) where T : Reactor.Types.RSceneNode;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!T Create&lt;(class Reactor.Types.RSceneNode) T&gt;(string name) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>T</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <BaseTypeName>Reactor.Types.RSceneNode</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateMesh">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RMesh CreateMesh (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RMesh CreateMesh(string name) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RMesh</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateMesh">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RMesh CreateMesh (string name, Reactor.Types.RSceneNode parent);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RMesh CreateMesh(string name, class Reactor.Types.RSceneNode parent) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RMesh</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="parent" Type="Reactor.Types.RSceneNode" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="parent">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateMeshBuilder">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RMeshBuilder CreateMeshBuilder (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RMeshBuilder CreateMeshBuilder(string name) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RMeshBuilder</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateMeshBuilder">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RMeshBuilder CreateMeshBuilder (string name, Reactor.Types.RSceneNode parent);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RMeshBuilder CreateMeshBuilder(string name, class Reactor.Types.RSceneNode parent) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RMeshBuilder</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="parent" Type="Reactor.Types.RSceneNode" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="parent">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadScene">
+      <MemberSignature Language="C#" Value="public void LoadScene (string filename);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void LoadScene(string filename) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="filename" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="filename">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SaveScene">
+      <MemberSignature Language="C#" Value="public void SaveScene (string filename);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SaveScene(string filename) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="filename" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="filename">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

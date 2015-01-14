@@ -1,0 +1,116 @@
+<Type Name="RCamera" FullName="Reactor.RCamera">
+  <TypeSignature Language="C#" Value="public class RCamera : Reactor.Types.RCameraNode" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RCamera extends Reactor.Types.RCameraNode" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Reactor.Types.RCameraNode</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RCamera ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Far">
+      <MemberSignature Language="C#" Value="public float Far { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Far" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FieldOfView">
+      <MemberSignature Language="C#" Value="public float FieldOfView { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 FieldOfView" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Near">
+      <MemberSignature Language="C#" Value="public float Near { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Near" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetClipPlanes">
+      <MemberSignature Language="C#" Value="public void SetClipPlanes (float near, float far);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetClipPlanes(float32 near, float32 far) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="near" Type="System.Single" />
+        <Parameter Name="far" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="near">To be added.</param>
+        <param name="far">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ViewDirection">
+      <MemberSignature Language="C#" Value="public OpenTK.Vector3 ViewDirection { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype OpenTK.Vector3 ViewDirection" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>OpenTK.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

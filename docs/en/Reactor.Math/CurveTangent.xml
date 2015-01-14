@@ -1,0 +1,59 @@
+<Type Name="CurveTangent" FullName="Reactor.Math.CurveTangent">
+  <TypeSignature Language="C#" Value="public enum CurveTangent" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CurveTangent extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Flat">
+      <MemberSignature Language="C#" Value="Flat" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Math.CurveTangent Flat = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.CurveTangent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Linear">
+      <MemberSignature Language="C#" Value="Linear" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Math.CurveTangent Linear = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.CurveTangent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Smooth">
+      <MemberSignature Language="C#" Value="Smooth" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Math.CurveTangent Smooth = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.CurveTangent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

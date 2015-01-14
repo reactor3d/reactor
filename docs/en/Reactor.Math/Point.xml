@@ -1,0 +1,372 @@
+<Type Name="Point" FullName="Reactor.Math.Point">
+  <TypeSignature Language="C#" Value="public struct Point : IEquatable&lt;Reactor.Math.Point&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Point extends System.ValueType implements class System.IEquatable`1&lt;valuetype Reactor.Math.Point&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Reactor.Math.Point&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Diagnostics.DebuggerDisplay("{DebugDisplayString,nq}")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+            Describes a 2D-point.
+            </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Point (int x, int y);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(int32 x, int32 y) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="x" Type="System.Int32" />
+        <Parameter Name="y" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="x">The x coordinate in 2d-space.</param>
+        <param name="y">The y coordinate in 2d-space.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Math.Point" /> struct, with the specified position.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (Reactor.Math.Point other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype Reactor.Math.Point other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="other">The <see cref="T:Reactor.Math.Point" /> to compare.</param>
+        <summary>
+            Compares whether current instance is equal to specified <see cref="T:Reactor.Math.Point" />.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">The <see cref="T:System.Object" /> to compare.</param>
+        <summary>
+            Compares whether current instance is equal to specified <see cref="T:System.Object" />.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets the hash code of this <see cref="T:Reactor.Math.Point" />.
+            </summary>
+        <returns>Hash code of this <see cref="T:Reactor.Math.Point" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Addition">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Point op_Addition (Reactor.Math.Point value1, Reactor.Math.Point value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Point op_Addition(valuetype Reactor.Math.Point value1, valuetype Reactor.Math.Point value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Point" />
+        <Parameter Name="value2" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source <see cref="T:Reactor.Math.Point" /> on the left of the add sign.</param>
+        <param name="value2">Source <see cref="T:Reactor.Math.Point" /> on the right of the add sign.</param>
+        <summary>
+            Adds two points.
+            </summary>
+        <returns>Sum of the points.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Division">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Point op_Division (Reactor.Math.Point source, Reactor.Math.Point divisor);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Point op_Division(valuetype Reactor.Math.Point source, valuetype Reactor.Math.Point divisor) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="source" Type="Reactor.Math.Point" />
+        <Parameter Name="divisor" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="source">Source <see cref="T:Reactor.Math.Point" /> on the left of the div sign.</param>
+        <param name="divisor">Divisor <see cref="T:Reactor.Math.Point" /> on the right of the div sign.</param>
+        <summary>
+            Divides the components of a <see cref="T:Reactor.Math.Point" /> by the components of another <see cref="T:Reactor.Math.Point" />.
+            </summary>
+        <returns>The result of dividing the points.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Reactor.Math.Point a, Reactor.Math.Point b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype Reactor.Math.Point a, valuetype Reactor.Math.Point b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.Point" />
+        <Parameter Name="b" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="a">
+          <see cref="T:Reactor.Math.Point" /> instance on the left of the equal sign.</param>
+        <param name="b">
+          <see cref="T:Reactor.Math.Point" /> instance on the right of the equal sign.</param>
+        <summary>
+            Compares whether two <see cref="T:Reactor.Math.Point" /> instances are equal.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Reactor.Math.Point a, Reactor.Math.Point b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype Reactor.Math.Point a, valuetype Reactor.Math.Point b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.Point" />
+        <Parameter Name="b" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="a">
+          <see cref="T:Reactor.Math.Point" /> instance on the left of the not equal sign.</param>
+        <param name="b">
+          <see cref="T:Reactor.Math.Point" /> instance on the right of the not equal sign.</param>
+        <summary>
+            Compares whether two <see cref="T:Reactor.Math.Point" /> instances are not equal.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Point op_Multiply (Reactor.Math.Point value1, Reactor.Math.Point value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Point op_Multiply(valuetype Reactor.Math.Point value1, valuetype Reactor.Math.Point value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Point" />
+        <Parameter Name="value2" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source <see cref="T:Reactor.Math.Point" /> on the left of the mul sign.</param>
+        <param name="value2">Source <see cref="T:Reactor.Math.Point" /> on the right of the mul sign.</param>
+        <summary>
+            Multiplies the components of two points by each other.
+            </summary>
+        <returns>Result of the multiplication.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Subtraction">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Point op_Subtraction (Reactor.Math.Point value1, Reactor.Math.Point value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Point op_Subtraction(valuetype Reactor.Math.Point value1, valuetype Reactor.Math.Point value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Point" />
+        <Parameter Name="value2" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source <see cref="T:Reactor.Math.Point" /> on the left of the sub sign.</param>
+        <param name="value2">Source <see cref="T:Reactor.Math.Point" /> on the right of the sub sign.</param>
+        <summary>
+            Subtracts a <see cref="T:Reactor.Math.Point" /> from a <see cref="T:Reactor.Math.Point" />.
+            </summary>
+        <returns>Result of the subtraction.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Returns a <see cref="T:System.String" /> representation of this <see cref="T:Reactor.Math.Point" /> in the format:
+            {X:[<see cref="F:Reactor.Math.Point.X" />] Y:[<see cref="F:Reactor.Math.Point.Y" />]}
+            </summary>
+        <returns>
+          <see cref="T:System.String" /> representation of this <see cref="T:Reactor.Math.Point" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToVector2">
+      <MemberSignature Language="C#" Value="public OpenTK.Vector2 ToVector2 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype OpenTK.Vector2 ToVector2() cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>OpenTK.Vector2</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets a two-component <see cref="T:OpenTK.Vector2" /> representation for this object.
+            </summary>
+        <returns>A two-component <see cref="T:OpenTK.Vector2" /> representation for this object.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToVector2">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector2 ToVector2 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.Vector2 ToVector2() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector2</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets a two-component <see cref="T:Reactor.Math.Vector2" /> representation for this object.
+            </summary>
+        <returns>A two-component <see cref="T:Reactor.Math.Vector2" /> representation for this object.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="X">
+      <MemberSignature Language="C#" Value="public int X;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 X" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The x coordinate of this <see cref="T:Reactor.Math.Point" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Y">
+      <MemberSignature Language="C#" Value="public int Y;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 Y" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The y coordinate of this <see cref="T:Reactor.Math.Point" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Zero">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Point Zero { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Math.Point Zero" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Returns a <see cref="T:Reactor.Math.Point" /> with coordinates 0, 0.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

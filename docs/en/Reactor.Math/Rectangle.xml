@@ -1,0 +1,881 @@
+<Type Name="Rectangle" FullName="Reactor.Math.Rectangle">
+  <TypeSignature Language="C#" Value="public struct Rectangle : IEquatable&lt;Reactor.Math.Rectangle&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Rectangle extends System.ValueType implements class System.IEquatable`1&lt;valuetype Reactor.Math.Rectangle&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Reactor.Math.Rectangle&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Diagnostics.DebuggerDisplay("{DebugDisplayString,nq}")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+            Describes a 2D-rectangle.
+            </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Rectangle (int x, int y, int width, int height);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(int32 x, int32 y, int32 width, int32 height) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="x" Type="System.Int32" />
+        <Parameter Name="y" Type="System.Int32" />
+        <Parameter Name="width" Type="System.Int32" />
+        <Parameter Name="height" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="x">The x coordinate of the top-left corner of the created <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="y">The y coordinate of the top-left corner of the created <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="width">The width of the created <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="height">The height of the created <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Math.Rectangle" /> struct, with the specified
+            position, width, and height.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Bottom">
+      <MemberSignature Language="C#" Value="public int Bottom { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Bottom" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Returns the y coordinate of the bottom edge of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Center">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Point Center { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Point Center" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            A <see cref="T:Reactor.Math.Point" /> located in the center of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            If <see cref="F:Reactor.Math.Rectangle.Width" /> or <see cref="F:Reactor.Math.Rectangle.Height" /> is an odd number,
+            the center point will be rounded down.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (OpenTK.Vector2 value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(valuetype OpenTK.Vector2 value) cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="OpenTK.Vector2" />
+      </Parameters>
+      <Docs>
+        <param name="value">The coordinates to check for inclusion in this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Gets whether or not the provided <see cref="T:OpenTK.Vector2" /> lies within the bounds of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the provided <see cref="T:OpenTK.Vector2" /> lies inside this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (Reactor.Math.Point value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(valuetype Reactor.Math.Point value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="value">The coordinates to check for inclusion in this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Gets whether or not the provided <see cref="T:Reactor.Math.Point" /> lies within the bounds of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the provided <see cref="T:Reactor.Math.Point" /> lies inside this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (Reactor.Math.Rectangle value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(valuetype Reactor.Math.Rectangle value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="value">The <see cref="T:Reactor.Math.Rectangle" /> to check for inclusion in this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Gets whether or not the provided <see cref="T:Reactor.Math.Rectangle" /> lies within the bounds of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the provided <see cref="T:Reactor.Math.Rectangle" />'s bounds lie entirely inside this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (Reactor.Math.Vector2 value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(valuetype Reactor.Math.Vector2 value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Vector2" />
+      </Parameters>
+      <Docs>
+        <param name="value">The coordinates to check for inclusion in this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Gets whether or not the provided <see cref="T:Reactor.Math.Vector2" /> lies within the bounds of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the provided <see cref="T:Reactor.Math.Vector2" /> lies inside this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (int x, int y);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(int32 x, int32 y) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="x" Type="System.Int32" />
+        <Parameter Name="y" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="x">The x coordinate of the point to check for containment.</param>
+        <param name="y">The y coordinate of the point to check for containment.</param>
+        <summary>
+            Gets whether or not the provided coordinates lie within the bounds of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the provided coordinates lie inside this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (float x, float y);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(float32 x, float32 y) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="x" Type="System.Single" />
+        <Parameter Name="y" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="x">The x coordinate of the point to check for containment.</param>
+        <param name="y">The y coordinate of the point to check for containment.</param>
+        <summary>
+            Gets whether or not the provided coordinates lie within the bounds of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the provided coordinates lie inside this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Empty">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Rectangle Empty { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Math.Rectangle Empty" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Rectangle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Returns a <see cref="T:Reactor.Math.Rectangle" /> with X=0, Y=0, Width=0, Height=0.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (Reactor.Math.Rectangle other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype Reactor.Math.Rectangle other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="other">The <see cref="T:Reactor.Math.Rectangle" /> to compare.</param>
+        <summary>
+            Compares whether current instance is equal to specified <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">The <see cref="T:System.Object" /> to compare.</param>
+        <summary>
+            Compares whether current instance is equal to specified <see cref="T:System.Object" />.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets the hash code of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>Hash code of this <see cref="T:Reactor.Math.Rectangle" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Height">
+      <MemberSignature Language="C#" Value="public int Height;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 Height" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The height of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Inflate">
+      <MemberSignature Language="C#" Value="public void Inflate (int horizontalAmount, int verticalAmount);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Inflate(int32 horizontalAmount, int32 verticalAmount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="horizontalAmount" Type="System.Int32" />
+        <Parameter Name="verticalAmount" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="horizontalAmount">Value to adjust the left and right edges.</param>
+        <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
+        <summary>
+            Adjusts the edges of this <see cref="T:Reactor.Math.Rectangle" /> by specified horizontal and vertical amounts.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersect">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Rectangle Intersect (Reactor.Math.Rectangle value1, Reactor.Math.Rectangle value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Rectangle Intersect(valuetype Reactor.Math.Rectangle value1, valuetype Reactor.Math.Rectangle value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Rectangle</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Rectangle" />
+        <Parameter Name="value2" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="value1">The first <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="value2">The second <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Creates a new <see cref="T:Reactor.Math.Rectangle" /> that contains overlapping region of two other rectangles.
+            </summary>
+        <returns>Overlapping region of the two rectangles.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersect">
+      <MemberSignature Language="C#" Value="public static void Intersect (ref Reactor.Math.Rectangle value1, ref Reactor.Math.Rectangle value2, out Reactor.Math.Rectangle result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Intersect(valuetype Reactor.Math.Rectangle value1, valuetype Reactor.Math.Rectangle value2, valuetype Reactor.Math.Rectangle result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Rectangle&amp;" RefType="ref" />
+        <Parameter Name="value2" Type="Reactor.Math.Rectangle&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Rectangle&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="value1">The first <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="value2">The second <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="result">Overlapping region of the two rectangles as an output parameter.</param>
+        <summary>
+            Creates a new <see cref="T:Reactor.Math.Rectangle" /> that contains overlapping region of two other rectangles.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public bool Intersects (Reactor.Math.Rectangle value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Intersects(valuetype Reactor.Math.Rectangle value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="value">Other <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Gets whether or not a specified <see cref="T:Reactor.Math.Rectangle" /> intersects with this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <returns>
+          <c>true</c> if other <see cref="T:Reactor.Math.Rectangle" /> intersects with this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.Rectangle value, out bool result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.Rectangle value, bool result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Rectangle&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Boolean&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="value">Other <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="result">
+          <c>true</c> if other <see cref="T:Reactor.Math.Rectangle" /> intersects with this <see cref="T:Reactor.Math.Rectangle" />; <c>false</c> otherwise. As an output parameter.</param>
+        <summary>
+            Gets whether or not a specified <see cref="T:Reactor.Math.Rectangle" /> intersects with this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsEmpty">
+      <MemberSignature Language="C#" Value="public bool IsEmpty { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsEmpty" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Whether or not this <see cref="T:Reactor.Math.Rectangle" /> has a <see cref="F:Reactor.Math.Rectangle.Width" /> and
+            <see cref="F:Reactor.Math.Rectangle.Height" /> of 0, and a <see cref="P:Reactor.Math.Rectangle.Location" /> of (0, 0).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Left">
+      <MemberSignature Language="C#" Value="public int Left { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Left" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Returns the x coordinate of the left edge of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Location">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Point Location { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Point Location" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The top-left coordinates of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Offset">
+      <MemberSignature Language="C#" Value="public void Offset (OpenTK.Vector2 amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Offset(valuetype OpenTK.Vector2 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="amount" Type="OpenTK.Vector2" />
+      </Parameters>
+      <Docs>
+        <param name="amount">The x and y components to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Changes the <see cref="P:Reactor.Math.Rectangle.Location" /> of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Offset">
+      <MemberSignature Language="C#" Value="public void Offset (Reactor.Math.Point amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Offset(valuetype Reactor.Math.Point amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="amount" Type="Reactor.Math.Point" />
+      </Parameters>
+      <Docs>
+        <param name="amount">The x and y components to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Changes the <see cref="P:Reactor.Math.Rectangle.Location" /> of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Offset">
+      <MemberSignature Language="C#" Value="public void Offset (Reactor.Math.Vector2 amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Offset(valuetype Reactor.Math.Vector2 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="amount" Type="Reactor.Math.Vector2" />
+      </Parameters>
+      <Docs>
+        <param name="amount">The x and y components to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Changes the <see cref="P:Reactor.Math.Rectangle.Location" /> of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Offset">
+      <MemberSignature Language="C#" Value="public void Offset (int offsetX, int offsetY);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Offset(int32 offsetX, int32 offsetY) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offsetX" Type="System.Int32" />
+        <Parameter Name="offsetY" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="offsetX">The x coordinate to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="offsetY">The y coordinate to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Changes the <see cref="P:Reactor.Math.Rectangle.Location" /> of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Offset">
+      <MemberSignature Language="C#" Value="public void Offset (float offsetX, float offsetY);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Offset(float32 offsetX, float32 offsetY) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offsetX" Type="System.Single" />
+        <Parameter Name="offsetY" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="offsetX">The x coordinate to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="offsetY">The y coordinate to add to this <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Changes the <see cref="P:Reactor.Math.Rectangle.Location" /> of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Reactor.Math.Rectangle a, Reactor.Math.Rectangle b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype Reactor.Math.Rectangle a, valuetype Reactor.Math.Rectangle b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.Rectangle" />
+        <Parameter Name="b" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="a">
+          <see cref="T:Reactor.Math.Rectangle" /> instance on the left of the equal sign.</param>
+        <param name="b">
+          <see cref="T:Reactor.Math.Rectangle" /> instance on the right of the equal sign.</param>
+        <summary>
+            Compares whether two <see cref="T:Reactor.Math.Rectangle" /> instances are equal.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static System.Drawing.Rectangle op_Implicit (Reactor.Math.Rectangle value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype System.Drawing.Rectangle op_Implicit(valuetype Reactor.Math.Rectangle value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Drawing.Rectangle</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Rectangle op_Implicit (System.Drawing.Rectangle value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Rectangle op_Implicit(valuetype System.Drawing.Rectangle value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Rectangle</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Drawing.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Reactor.Math.Rectangle a, Reactor.Math.Rectangle b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype Reactor.Math.Rectangle a, valuetype Reactor.Math.Rectangle b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.Rectangle" />
+        <Parameter Name="b" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="a">
+          <see cref="T:Reactor.Math.Rectangle" /> instance on the left of the not equal sign.</param>
+        <param name="b">
+          <see cref="T:Reactor.Math.Rectangle" /> instance on the right of the not equal sign.</param>
+        <summary>
+            Compares whether two <see cref="T:Reactor.Math.Rectangle" /> instances are not equal.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Right">
+      <MemberSignature Language="C#" Value="public int Right { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Right" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Returns the x coordinate of the right edge of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Size">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Point Size { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Point Size" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Point</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The width-height coordinates of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Top">
+      <MemberSignature Language="C#" Value="public int Top { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Top" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Returns the y coordinate of the top edge of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Returns a <see cref="T:System.String" /> representation of this <see cref="T:Reactor.Math.Rectangle" /> in the format:
+            {X:[<see cref="F:Reactor.Math.Rectangle.X" />] Y:[<see cref="F:Reactor.Math.Rectangle.Y" />] Width:[<see cref="F:Reactor.Math.Rectangle.Width" />] Height:[<see cref="F:Reactor.Math.Rectangle.Height" />]}
+            </summary>
+        <returns>
+          <see cref="T:System.String" /> representation of this <see cref="T:Reactor.Math.Rectangle" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Union">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Rectangle Union (Reactor.Math.Rectangle value1, Reactor.Math.Rectangle value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Rectangle Union(valuetype Reactor.Math.Rectangle value1, valuetype Reactor.Math.Rectangle value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Rectangle</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Rectangle" />
+        <Parameter Name="value2" Type="Reactor.Math.Rectangle" />
+      </Parameters>
+      <Docs>
+        <param name="value1">The first <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="value2">The second <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <summary>
+            Creates a new <see cref="T:Reactor.Math.Rectangle" /> that completely contains two other rectangles.
+            </summary>
+        <returns>The union of the two rectangles.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Union">
+      <MemberSignature Language="C#" Value="public static void Union (ref Reactor.Math.Rectangle value1, ref Reactor.Math.Rectangle value2, out Reactor.Math.Rectangle result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Union(valuetype Reactor.Math.Rectangle value1, valuetype Reactor.Math.Rectangle value2, valuetype Reactor.Math.Rectangle result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Rectangle&amp;" RefType="ref" />
+        <Parameter Name="value2" Type="Reactor.Math.Rectangle&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Rectangle&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="value1">The first <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="value2">The second <see cref="T:Reactor.Math.Rectangle" />.</param>
+        <param name="result">The union of the two rectangles as an output parameter.</param>
+        <summary>
+            Creates a new <see cref="T:Reactor.Math.Rectangle" /> that completely contains two other rectangles.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Width">
+      <MemberSignature Language="C#" Value="public int Width;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 Width" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The width of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="X">
+      <MemberSignature Language="C#" Value="public int X;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 X" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The x coordinate of the top-left corner of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Y">
+      <MemberSignature Language="C#" Value="public int Y;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 Y" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            The y coordinate of the top-left corner of this <see cref="T:Reactor.Math.Rectangle" />.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

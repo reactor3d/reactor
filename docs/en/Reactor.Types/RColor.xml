@@ -1,0 +1,3231 @@
+<Type Name="RColor" FullName="Reactor.Types.RColor">
+  <TypeSignature Language="C#" Value="public struct RColor : IEquatable&lt;Reactor.Types.RColor&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed RColor extends System.ValueType implements class System.IEquatable`1&lt;valuetype Reactor.Types.RColor&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Reactor.Types.RColor&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Diagnostics.DebuggerDisplay("{DebugDisplayString,nq}")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+            Describes a 32-bit packed RColor.
+            </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (OpenTK.Vector3 RColor);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype OpenTK.Vector3 RColor) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="RColor" Type="OpenTK.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="RColor">A <see cref="T:OpenTK.Vector3" /> representing RColor.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (OpenTK.Vector4 RColor);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype OpenTK.Vector4 RColor) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="RColor" Type="OpenTK.Vector4" />
+      </Parameters>
+      <Docs>
+        <param name="RColor">A <see cref="T:OpenTK.Vector4" /> representing RColor.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (Reactor.Math.Vector3 RColor);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector3 RColor) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="RColor" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="RColor">A <see cref="T:Reactor.Math.Vector3" /> representing RColor.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (Reactor.Math.Vector4 RColor);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector4 RColor) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="RColor" Type="Reactor.Math.Vector4" />
+      </Parameters>
+      <Docs>
+        <param name="RColor">A <see cref="T:Reactor.Math.Vector4" /> representing RColor.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (Reactor.Types.RColor RColor, int alpha);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Types.RColor RColor, int32 alpha) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="RColor" Type="Reactor.Types.RColor" />
+        <Parameter Name="alpha" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="RColor">A <see cref="T:Reactor.Types.RColor" /> for RGB values of new <see cref="T:Reactor.Types.RColor" /> instance.</param>
+        <param name="alpha">Alpha component value.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (Reactor.Types.RColor RColor, float alpha);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Types.RColor RColor, float32 alpha) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="RColor" Type="Reactor.Types.RColor" />
+        <Parameter Name="alpha" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="RColor">A <see cref="T:Reactor.Types.RColor" /> for RGB values of new <see cref="T:Reactor.Types.RColor" /> instance.</param>
+        <param name="alpha">Alpha component value.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (int r, int g, int b);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(int32 r, int32 g, int32 b) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="r" Type="System.Int32" />
+        <Parameter Name="g" Type="System.Int32" />
+        <Parameter Name="b" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="r">Red component value.</param>
+        <param name="g">Green component value.</param>
+        <param name="b">Blue component value</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (float r, float g, float b);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(float32 r, float32 g, float32 b) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="r" Type="System.Single" />
+        <Parameter Name="g" Type="System.Single" />
+        <Parameter Name="b" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="r">Red component value.</param>
+        <param name="g">Green component value.</param>
+        <param name="b">Blue component value</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (int r, int g, int b, int alpha);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(int32 r, int32 g, int32 b, int32 alpha) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="r" Type="System.Int32" />
+        <Parameter Name="g" Type="System.Int32" />
+        <Parameter Name="b" Type="System.Int32" />
+        <Parameter Name="alpha" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="r">Red component value.</param>
+        <param name="g">Green component value.</param>
+        <param name="b">Blue component value</param>
+        <param name="alpha">Alpha component value.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RColor (float r, float g, float b, float alpha);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(float32 r, float32 g, float32 b, float32 alpha) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="r" Type="System.Single" />
+        <Parameter Name="g" Type="System.Single" />
+        <Parameter Name="b" Type="System.Single" />
+        <Parameter Name="alpha" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="r">Red component value.</param>
+        <param name="g">Green component value.</param>
+        <param name="b">Blue component value</param>
+        <param name="alpha">Alpha component value.</param>
+        <summary>
+            Creates a new instance of <see cref="T:Reactor.Types.RColor" /> struct.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="A">
+      <MemberSignature Language="C#" Value="public byte A { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int8 A" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Byte</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the alpha component of <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AliceBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor AliceBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor AliceBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            AliceBlue RColor (R:240,G:248,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AntiqueWhite">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor AntiqueWhite { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor AntiqueWhite" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            AntiqueWhite RColor (R:250,G:235,B:215,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Aqua">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Aqua { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Aqua" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Aqua RColor (R:0,G:255,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Aquamarine">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Aquamarine { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Aquamarine" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Aquamarine RColor (R:127,G:255,B:212,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Azure">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Azure { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Azure" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Azure RColor (R:240,G:255,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="B">
+      <MemberSignature Language="C#" Value="public byte B { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int8 B" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Byte</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the blue component of <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Beige">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Beige { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Beige" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Beige RColor (R:245,G:245,B:220,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Bisque">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Bisque { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Bisque" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Bisque RColor (R:255,G:228,B:196,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Black">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Black { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Black" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Black RColor (R:0,G:0,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BlanchedAlmond">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor BlanchedAlmond { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor BlanchedAlmond" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            BlanchedAlmond RColor (R:255,G:235,B:205,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Blue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Blue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Blue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Blue RColor (R:0,G:0,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BlueViolet">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor BlueViolet { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor BlueViolet" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            BlueViolet RColor (R:138,G:43,B:226,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Brown">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Brown { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Brown" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Brown RColor (R:165,G:42,B:42,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BurlyWood">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor BurlyWood { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor BurlyWood" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            BurlyWood RColor (R:222,G:184,B:135,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CadetBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor CadetBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor CadetBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            CadetBlue RColor (R:95,G:158,B:160,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Chartreuse">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Chartreuse { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Chartreuse" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Chartreuse RColor (R:127,G:255,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Chocolate">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Chocolate { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Chocolate" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Chocolate RColor (R:210,G:105,B:30,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Coral">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Coral { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Coral" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Coral RColor (R:255,G:127,B:80,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CornflowerBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor CornflowerBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor CornflowerBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            CornflowerBlue RColor (R:100,G:149,B:237,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Cornsilk">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Cornsilk { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Cornsilk" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Cornsilk RColor (R:255,G:248,B:220,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Crimson">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Crimson { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Crimson" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Crimson RColor (R:220,G:20,B:60,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Cyan">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Cyan { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Cyan" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Cyan RColor (R:0,G:255,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkBlue RColor (R:0,G:0,B:139,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkCyan">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkCyan { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkCyan" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkCyan RColor (R:0,G:139,B:139,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkGoldenrod">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkGoldenrod { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkGoldenrod" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkGoldenrod RColor (R:184,G:134,B:11,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkGray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkGray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkGray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkGray RColor (R:169,G:169,B:169,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkGreen RColor (R:0,G:100,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkKhaki">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkKhaki { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkKhaki" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkKhaki RColor (R:189,G:183,B:107,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkMagenta">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkMagenta { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkMagenta" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkMagenta RColor (R:139,G:0,B:139,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkOliveGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkOliveGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkOliveGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkOliveGreen RColor (R:85,G:107,B:47,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkOrange">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkOrange { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkOrange" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkOrange RColor (R:255,G:140,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkOrchid">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkOrchid { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkOrchid" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkOrchid RColor (R:153,G:50,B:204,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkRed">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkRed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkRed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkRed RColor (R:139,G:0,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkSalmon">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkSalmon { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkSalmon" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkSalmon RColor (R:233,G:150,B:122,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkSeaGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkSeaGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkSeaGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkSeaGreen RColor (R:143,G:188,B:139,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkSlateBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkSlateBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkSlateBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkSlateBlue RColor (R:72,G:61,B:139,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkSlateGray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkSlateGray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkSlateGray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkSlateGray RColor (R:47,G:79,B:79,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkTurquoise">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkTurquoise { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkTurquoise" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkTurquoise RColor (R:0,G:206,B:209,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DarkViolet">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DarkViolet { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DarkViolet" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DarkViolet RColor (R:148,G:0,B:211,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DeepPink">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DeepPink { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DeepPink" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DeepPink RColor (R:255,G:20,B:147,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DeepSkyBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DeepSkyBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DeepSkyBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DeepSkyBlue RColor (R:0,G:191,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DimGray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DimGray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DimGray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DimGray RColor (R:105,G:105,B:105,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DodgerBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor DodgerBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor DodgerBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            DodgerBlue RColor (R:30,G:144,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (Reactor.Types.RColor other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype Reactor.Types.RColor other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Reactor.Types.RColor" />
+      </Parameters>
+      <Docs>
+        <param name="other">The <see cref="T:Reactor.Types.RColor" /> to compare.</param>
+        <summary>
+            Compares whether current instance is equal to specified <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">The <see cref="T:Reactor.Types.RColor" /> to compare.</param>
+        <summary>
+            Compares whether current instance is equal to specified object.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Firebrick">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Firebrick { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Firebrick" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Firebrick RColor (R:178,G:34,B:34,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FloralWhite">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor FloralWhite { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor FloralWhite" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            FloralWhite RColor (R:255,G:250,B:240,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ForestGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor ForestGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor ForestGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            ForestGreen RColor (R:34,G:139,B:34,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FromNonPremultiplied">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor FromNonPremultiplied (OpenTK.Vector4 vector);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Types.RColor FromNonPremultiplied(valuetype OpenTK.Vector4 vector) cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="vector" Type="OpenTK.Vector4" />
+      </Parameters>
+      <Docs>
+        <param name="vector">A <see cref="T:OpenTK.Vector4" /> representing RColor.</param>
+        <summary>
+            Translate a non-premultipled alpha <see cref="T:Reactor.Types.RColor" /> to a <see cref="T:Reactor.Types.RColor" /> that contains premultiplied alpha.
+            </summary>
+        <returns>A <see cref="T:Reactor.Types.RColor" /> which contains premultiplied alpha data.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FromNonPremultiplied">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor FromNonPremultiplied (Reactor.Math.Vector4 vector);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Types.RColor FromNonPremultiplied(valuetype Reactor.Math.Vector4 vector) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="vector" Type="Reactor.Math.Vector4" />
+      </Parameters>
+      <Docs>
+        <param name="vector">A <see cref="T:Reactor.Math.Vector4" /> representing RColor.</param>
+        <summary>
+            Translate a non-premultipled alpha <see cref="T:Reactor.Types.RColor" /> to a <see cref="T:Reactor.Types.RColor" /> that contains premultiplied alpha.
+            </summary>
+        <returns>A <see cref="T:Reactor.Types.RColor" /> which contains premultiplied alpha data.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FromNonPremultiplied">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor FromNonPremultiplied (int r, int g, int b, int a);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Types.RColor FromNonPremultiplied(int32 r, int32 g, int32 b, int32 a) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="r" Type="System.Int32" />
+        <Parameter Name="g" Type="System.Int32" />
+        <Parameter Name="b" Type="System.Int32" />
+        <Parameter Name="a" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="r">Red component value.</param>
+        <param name="g">Green component value.</param>
+        <param name="b">Blue component value.</param>
+        <param name="a">Alpha component value.</param>
+        <summary>
+            Translate a non-premultipled alpha <see cref="T:Reactor.Types.RColor" /> to a <see cref="T:Reactor.Types.RColor" /> that contains premultiplied alpha.
+            </summary>
+        <returns>A <see cref="T:Reactor.Types.RColor" /> which contains premultiplied alpha data.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Fuchsia">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Fuchsia { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Fuchsia" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Fuchsia RColor (R:255,G:0,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="G">
+      <MemberSignature Language="C#" Value="public byte G { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int8 G" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Byte</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the green component of <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Gainsboro">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Gainsboro { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Gainsboro" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gainsboro RColor (R:220,G:220,B:220,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets the hash code of this <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <returns>Hash code of this <see cref="T:Reactor.Types.RColor" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GhostWhite">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor GhostWhite { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor GhostWhite" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            GhostWhite RColor (R:248,G:248,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Gold">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Gold { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Gold" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gold RColor (R:255,G:215,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Goldenrod">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Goldenrod { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Goldenrod" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Goldenrod RColor (R:218,G:165,B:32,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Gray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Gray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Gray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gray RColor (R:128,G:128,B:128,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Green">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Green { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Green" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Green RColor (R:0,G:128,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GreenYellow">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor GreenYellow { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor GreenYellow" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            GreenYellow RColor (R:173,G:255,B:47,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Honeydew">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Honeydew { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Honeydew" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Honeydew RColor (R:240,G:255,B:240,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HotPink">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor HotPink { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor HotPink" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            HotPink RColor (R:255,G:105,B:180,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IndianRed">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor IndianRed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor IndianRed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            IndianRed RColor (R:205,G:92,B:92,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Indigo">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Indigo { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Indigo" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Indigo RColor (R:75,G:0,B:130,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Ivory">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Ivory { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Ivory" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Ivory RColor (R:255,G:255,B:240,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Khaki">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Khaki { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Khaki" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Khaki RColor (R:240,G:230,B:140,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lavender">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Lavender { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Lavender" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Lavender RColor (R:230,G:230,B:250,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LavenderBlush">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LavenderBlush { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LavenderBlush" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LavenderBlush RColor (R:255,G:240,B:245,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LawnGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LawnGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LawnGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LawnGreen RColor (R:124,G:252,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LemonChiffon">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LemonChiffon { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LemonChiffon" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LemonChiffon RColor (R:255,G:250,B:205,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lerp">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Lerp (Reactor.Types.RColor value1, Reactor.Types.RColor value2, float amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Types.RColor Lerp(valuetype Reactor.Types.RColor value1, valuetype Reactor.Types.RColor value2, float32 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Types.RColor" />
+        <Parameter Name="value2" Type="Reactor.Types.RColor" />
+        <Parameter Name="amount" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source <see cref="T:Reactor.Types.RColor" />.</param>
+        <param name="value2">Destination <see cref="T:Reactor.Types.RColor" />.</param>
+        <param name="amount">Interpolation factor.</param>
+        <summary>
+            Performs linear interpolation of <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <returns>Interpolated <see cref="T:Reactor.Types.RColor" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightBlue RColor (R:173,G:216,B:230,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightCoral">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightCoral { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightCoral" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightCoral RColor (R:240,G:128,B:128,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightCyan">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightCyan { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightCyan" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightCyan RColor (R:224,G:255,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightGoldenrodYellow">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightGoldenrodYellow { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightGoldenrodYellow" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightGoldenrodYellow RColor (R:250,G:250,B:210,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightGray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightGray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightGray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightGray RColor (R:211,G:211,B:211,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightGreen RColor (R:144,G:238,B:144,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightPink">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightPink { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightPink" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightPink RColor (R:255,G:182,B:193,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightSalmon">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightSalmon { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightSalmon" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightSalmon RColor (R:255,G:160,B:122,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightSeaGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightSeaGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightSeaGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightSeaGreen RColor (R:32,G:178,B:170,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightSkyBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightSkyBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightSkyBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightSkyBlue RColor (R:135,G:206,B:250,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightSlateGray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightSlateGray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightSlateGray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightSlateGray RColor (R:119,G:136,B:153,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightSteelBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightSteelBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightSteelBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightSteelBlue RColor (R:176,G:196,B:222,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LightYellow">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LightYellow { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LightYellow" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LightYellow RColor (R:255,G:255,B:224,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lime">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Lime { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Lime" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Lime RColor (R:0,G:255,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LimeGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor LimeGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor LimeGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            LimeGreen RColor (R:50,G:205,B:50,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Linen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Linen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Linen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Linen RColor (R:250,G:240,B:230,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Magenta">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Magenta { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Magenta" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Magenta RColor (R:255,G:0,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Maroon">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Maroon { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Maroon" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Maroon RColor (R:128,G:0,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumAquamarine">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumAquamarine { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumAquamarine" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumAquamarine RColor (R:102,G:205,B:170,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumBlue RColor (R:0,G:0,B:205,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumOrchid">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumOrchid { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumOrchid" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumOrchid RColor (R:186,G:85,B:211,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumPurple">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumPurple { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumPurple" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumPurple RColor (R:147,G:112,B:219,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumSeaGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumSeaGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumSeaGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumSeaGreen RColor (R:60,G:179,B:113,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumSlateBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumSlateBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumSlateBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumSlateBlue RColor (R:123,G:104,B:238,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumSpringGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumSpringGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumSpringGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumSpringGreen RColor (R:0,G:250,B:154,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumTurquoise">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumTurquoise { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumTurquoise" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumTurquoise RColor (R:72,G:209,B:204,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediumVioletRed">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MediumVioletRed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MediumVioletRed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MediumVioletRed RColor (R:199,G:21,B:133,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MidnightBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MidnightBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MidnightBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MidnightBlue RColor (R:25,G:25,B:112,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MintCream">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MintCream { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MintCream" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MintCream RColor (R:245,G:255,B:250,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MistyRose">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor MistyRose { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor MistyRose" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            MistyRose RColor (R:255,G:228,B:225,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Moccasin">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Moccasin { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Moccasin" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Moccasin RColor (R:255,G:228,B:181,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Multiply (Reactor.Types.RColor value, float scale);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Types.RColor Multiply(valuetype Reactor.Types.RColor value, float32 scale) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Types.RColor" />
+        <Parameter Name="scale" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value">Source <see cref="T:Reactor.Types.RColor" />.</param>
+        <param name="scale">Multiplicator.</param>
+        <summary>
+            Multiply <see cref="T:Reactor.Types.RColor" /> by value.
+            </summary>
+        <returns>Multiplication result.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NavajoWhite">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor NavajoWhite { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor NavajoWhite" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            NavajoWhite RColor (R:255,G:222,B:173,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Navy">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Navy { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Navy" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Navy RColor (R:0,G:0,B:128,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OldLace">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor OldLace { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor OldLace" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            OldLace RColor (R:253,G:245,B:230,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Olive">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Olive { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Olive" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Olive RColor (R:128,G:128,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OliveDrab">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor OliveDrab { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor OliveDrab" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            OliveDrab RColor (R:107,G:142,B:35,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Reactor.Types.RColor a, Reactor.Types.RColor b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype Reactor.Types.RColor a, valuetype Reactor.Types.RColor b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Types.RColor" />
+        <Parameter Name="b" Type="Reactor.Types.RColor" />
+      </Parameters>
+      <Docs>
+        <param name="a">
+          <see cref="T:Reactor.Types.RColor" /> instance on the left of the equal sign.</param>
+        <param name="b">
+          <see cref="T:Reactor.Types.RColor" /> instance on the right of the equal sign.</param>
+        <summary>
+            Compares whether two <see cref="T:Reactor.Types.RColor" /> instances are equal.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Reactor.Types.RColor a, Reactor.Types.RColor b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype Reactor.Types.RColor a, valuetype Reactor.Types.RColor b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Types.RColor" />
+        <Parameter Name="b" Type="Reactor.Types.RColor" />
+      </Parameters>
+      <Docs>
+        <param name="a">
+          <see cref="T:Reactor.Types.RColor" /> instance on the left of the not equal sign.</param>
+        <param name="b">
+          <see cref="T:Reactor.Types.RColor" /> instance on the right of the not equal sign.</param>
+        <summary>
+            Compares whether two <see cref="T:Reactor.Types.RColor" /> instances are not equal.
+            </summary>
+        <returns>
+          <c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor op_Multiply (Reactor.Types.RColor value, float scale);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Types.RColor op_Multiply(valuetype Reactor.Types.RColor value, float32 scale) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Types.RColor" />
+        <Parameter Name="scale" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value">Source <see cref="T:Reactor.Types.RColor" />.</param>
+        <param name="scale">Multiplicator.</param>
+        <summary>
+            Multiply <see cref="T:Reactor.Types.RColor" /> by value.
+            </summary>
+        <returns>Multiplication result.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Orange">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Orange { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Orange" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Orange RColor (R:255,G:165,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OrangeRed">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor OrangeRed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor OrangeRed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            OrangeRed RColor (R:255,G:69,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Orchid">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Orchid { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Orchid" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Orchid RColor (R:218,G:112,B:214,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PackedValue">
+      <MemberSignature Language="C#" Value="public uint PackedValue { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int32 PackedValue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.CLSCompliant(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets packed value of this <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaleGoldenrod">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PaleGoldenrod { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PaleGoldenrod" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PaleGoldenrod RColor (R:238,G:232,B:170,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaleGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PaleGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PaleGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PaleGreen RColor (R:152,G:251,B:152,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaleTurquoise">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PaleTurquoise { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PaleTurquoise" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PaleTurquoise RColor (R:175,G:238,B:238,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaleVioletRed">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PaleVioletRed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PaleVioletRed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PaleVioletRed RColor (R:219,G:112,B:147,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PapayaWhip">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PapayaWhip { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PapayaWhip" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PapayaWhip RColor (R:255,G:239,B:213,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PeachPuff">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PeachPuff { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PeachPuff" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PeachPuff RColor (R:255,G:218,B:185,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Peru">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Peru { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Peru" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Peru RColor (R:205,G:133,B:63,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Pink">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Pink { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Pink" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Pink RColor (R:255,G:192,B:203,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Plum">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Plum { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Plum" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Plum RColor (R:221,G:160,B:221,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PowderBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor PowderBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor PowderBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            PowderBlue RColor (R:176,G:224,B:230,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Purple">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Purple { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Purple" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Purple RColor (R:128,G:0,B:128,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="R">
+      <MemberSignature Language="C#" Value="public byte R { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int8 R" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Byte</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the red component of <see cref="T:Reactor.Types.RColor" />.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Red">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Red { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Red" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Red RColor (R:255,G:0,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RosyBrown">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor RosyBrown { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor RosyBrown" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            RosyBrown RColor (R:188,G:143,B:143,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RoyalBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor RoyalBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor RoyalBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            RoyalBlue RColor (R:65,G:105,B:225,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SaddleBrown">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SaddleBrown { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SaddleBrown" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SaddleBrown RColor (R:139,G:69,B:19,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Salmon">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Salmon { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Salmon" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Salmon RColor (R:250,G:128,B:114,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SandyBrown">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SandyBrown { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SandyBrown" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SandyBrown RColor (R:244,G:164,B:96,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SeaGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SeaGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SeaGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SeaGreen RColor (R:46,G:139,B:87,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SeaShell">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SeaShell { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SeaShell" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SeaShell RColor (R:255,G:245,B:238,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Sienna">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Sienna { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Sienna" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Sienna RColor (R:160,G:82,B:45,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Silver">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Silver { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Silver" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Silver RColor (R:192,G:192,B:192,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SkyBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SkyBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SkyBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SkyBlue RColor (R:135,G:206,B:235,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SlateBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SlateBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SlateBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SlateBlue RColor (R:106,G:90,B:205,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SlateGray">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SlateGray { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SlateGray" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SlateGray RColor (R:112,G:128,B:144,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Snow">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Snow { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Snow" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Snow RColor (R:255,G:250,B:250,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SpringGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SpringGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SpringGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SpringGreen RColor (R:0,G:255,B:127,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SteelBlue">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor SteelBlue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor SteelBlue" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            SteelBlue RColor (R:70,G:130,B:180,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Tan">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Tan { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Tan" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Tan RColor (R:210,G:180,B:140,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Teal">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Teal { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Teal" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Teal RColor (R:0,G:128,B:128,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Thistle">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Thistle { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Thistle" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Thistle RColor (R:216,G:191,B:216,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Tomato">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Tomato { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Tomato" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Tomato RColor (R:255,G:99,B:71,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Returns a <see cref="T:System.String" /> representation of this <see cref="T:Reactor.Types.RColor" /> in the format:
+            {R:[red] G:[green] B:[blue] A:[alpha]}
+            </summary>
+        <returns>
+          <see cref="T:System.String" /> representation of this <see cref="T:Reactor.Types.RColor" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToVector3">
+      <MemberSignature Language="C#" Value="public OpenTK.Vector3 ToVector3 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype OpenTK.Vector3 ToVector3() cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>OpenTK.Vector3</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets a three-component <see cref="T:OpenTK.Vector3" /> representation for this object.
+            </summary>
+        <returns>A three-component <see cref="T:OpenTK.Vector3" /> representation for this object.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToVector3">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 ToVector3 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.Vector3 ToVector3() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets a three-component <see cref="T:Reactor.Math.Vector3" /> representation for this object.
+            </summary>
+        <returns>A three-component <see cref="T:Reactor.Math.Vector3" /> representation for this object.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToVector4">
+      <MemberSignature Language="C#" Value="public OpenTK.Vector4 ToVector4 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype OpenTK.Vector4 ToVector4() cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>OpenTK.Vector4</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets a four-component <see cref="T:OpenTK.Vector4" /> representation for this object.
+            </summary>
+        <returns>A four-component <see cref="T:OpenTK.Vector4" /> representation for this object.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToVector4">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector4 ToVector4 ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.Vector4 ToVector4() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector4</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Gets a four-component <see cref="T:Reactor.Math.Vector4" /> representation for this object.
+            </summary>
+        <returns>A four-component <see cref="T:Reactor.Math.Vector4" /> representation for this object.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Transparent">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Transparent { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Transparent" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Transparent RColor (R:0,G:0,B:0,A:0).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TransparentBlack">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor TransparentBlack { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor TransparentBlack" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            TransparentBlack RColor (R:0,G:0,B:0,A:0).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Turquoise">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Turquoise { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Turquoise" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Turquoise RColor (R:64,G:224,B:208,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Violet">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Violet { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Violet" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Violet RColor (R:238,G:130,B:238,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Wheat">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Wheat { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Wheat" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Wheat RColor (R:245,G:222,B:179,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="White">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor White { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor White" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            White RColor (R:255,G:255,B:255,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WhiteSmoke">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor WhiteSmoke { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor WhiteSmoke" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            WhiteSmoke RColor (R:245,G:245,B:245,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Yellow">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor Yellow { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor Yellow" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Yellow RColor (R:255,G:255,B:0,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="YellowGreen">
+      <MemberSignature Language="C#" Value="public static Reactor.Types.RColor YellowGreen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Types.RColor YellowGreen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            YellowGreen RColor (R:154,G:205,B:50,A:255).
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

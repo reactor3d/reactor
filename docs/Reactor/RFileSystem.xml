@@ -1,0 +1,90 @@
+<Type Name="RFileSystem" FullName="Reactor.RFileSystem">
+  <TypeSignature Language="C#" Value="public class RFileSystem : Reactor.Types.RSingleton&lt;Reactor.RFileSystem&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RFileSystem extends Reactor.Types.RSingleton`1&lt;class Reactor.RFileSystem&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Reactor.Types.RSingleton&lt;Reactor.RFileSystem&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">Reactor.RFileSystem</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RFileSystem ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AssemblyDirectory">
+      <MemberSignature Language="C#" Value="public string AssemblyDirectory { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string AssemblyDirectory" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetFile">
+      <MemberSignature Language="C#" Value="public System.IO.FileStream GetFile (string relativeFilename);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.IO.FileStream GetFile(string relativeFilename) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IO.FileStream</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="relativeFilename" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="relativeFilename">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetFilePath">
+      <MemberSignature Language="C#" Value="public string GetFilePath (string relativeFilename);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string GetFilePath(string relativeFilename) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="relativeFilename" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="relativeFilename">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

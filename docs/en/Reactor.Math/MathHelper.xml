@@ -1,0 +1,602 @@
+<Type Name="MathHelper" FullName="Reactor.Math.MathHelper">
+  <TypeSignature Language="C#" Value="public static class MathHelper" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit MathHelper extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+            Contains commonly used precalculated values and mathematical operations.
+            </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Barycentric">
+      <MemberSignature Language="C#" Value="public static float Barycentric (float value1, float value2, float value3, float amount1, float amount2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Barycentric(float32 value1, float32 value2, float32 value3, float32 amount1, float32 amount2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+        <Parameter Name="value3" Type="System.Single" />
+        <Parameter Name="amount1" Type="System.Single" />
+        <Parameter Name="amount2" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">The coordinate on one axis of vertex 1 of the defining triangle.</param>
+        <param name="value2">The coordinate on the same axis of vertex 2 of the defining triangle.</param>
+        <param name="value3">The coordinate on the same axis of vertex 3 of the defining triangle.</param>
+        <param name="amount1">The normalized barycentric (areal) coordinate b2, equal to the weighting factor for vertex 2, the coordinate of which is specified in value2.</param>
+        <param name="amount2">The normalized barycentric (areal) coordinate b3, equal to the weighting factor for vertex 3, the coordinate of which is specified in value3.</param>
+        <summary>
+            Returns the Cartesian coordinate for one axis of a point that is defined by a given triangle and two normalized barycentric (areal) coordinates.
+            </summary>
+        <returns>Cartesian coordinate of the specified point with respect to the axis being used.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CatmullRom">
+      <MemberSignature Language="C#" Value="public static float CatmullRom (float value1, float value2, float value3, float value4, float amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 CatmullRom(float32 value1, float32 value2, float32 value3, float32 value4, float32 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+        <Parameter Name="value3" Type="System.Single" />
+        <Parameter Name="value4" Type="System.Single" />
+        <Parameter Name="amount" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">The first position in the interpolation.</param>
+        <param name="value2">The second position in the interpolation.</param>
+        <param name="value3">The third position in the interpolation.</param>
+        <param name="value4">The fourth position in the interpolation.</param>
+        <param name="amount">Weighting factor.</param>
+        <summary>
+            Performs a Catmull-Rom interpolation using the specified positions.
+            </summary>
+        <returns>A position that is the result of the Catmull-Rom interpolation.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Clamp">
+      <MemberSignature Language="C#" Value="public static int Clamp (int value, int min, int max);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 Clamp(int32 value, int32 min, int32 max) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Int32" />
+        <Parameter Name="min" Type="System.Int32" />
+        <Parameter Name="max" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="value">The value to clamp.</param>
+        <param name="min">The minimum value. If <c>value</c> is less than <c>min</c>, <c>min</c> will be returned.</param>
+        <param name="max">The maximum value. If <c>value</c> is greater than <c>max</c>, <c>max</c> will be returned.</param>
+        <summary>
+            Restricts a value to be within a specified range.
+            </summary>
+        <returns>The clamped value.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Clamp">
+      <MemberSignature Language="C#" Value="public static float Clamp (float value, float min, float max);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Clamp(float32 value, float32 min, float32 max) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Single" />
+        <Parameter Name="min" Type="System.Single" />
+        <Parameter Name="max" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value">The value to clamp.</param>
+        <param name="min">The minimum value. If <c>value</c> is less than <c>min</c>, <c>min</c> will be returned.</param>
+        <param name="max">The maximum value. If <c>value</c> is greater than <c>max</c>, <c>max</c> will be returned.</param>
+        <summary>
+            Restricts a value to be within a specified range.
+            </summary>
+        <returns>The clamped value.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Distance">
+      <MemberSignature Language="C#" Value="public static float Distance (Reactor.Math.Vector3 vector1, Reactor.Math.Vector3 vector2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Distance(valuetype Reactor.Math.Vector3 vector1, valuetype Reactor.Math.Vector3 vector2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="vector1" Type="Reactor.Math.Vector3" />
+        <Parameter Name="vector2" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="vector1">To be added.</param>
+        <param name="vector2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Distance">
+      <MemberSignature Language="C#" Value="public static float Distance (float value1, float value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Distance(float32 value1, float32 value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source value.</param>
+        <param name="value2">Source value.</param>
+        <summary>
+            Calculates the absolute value of the difference of two values.
+            </summary>
+        <returns>Distance between the two values.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Distance">
+      <MemberSignature Language="C#" Value="public static void Distance (ref Reactor.Math.Vector3 value1, ref Reactor.Math.Vector3 value2, out float result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Distance(valuetype Reactor.Math.Vector3 value1, valuetype Reactor.Math.Vector3 value2, float32 result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="value2" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Single&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="value1">To be added.</param>
+        <param name="value2">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DistanceSquared">
+      <MemberSignature Language="C#" Value="public static float DistanceSquared (Reactor.Math.Vector3 value1, Reactor.Math.Vector3 value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 DistanceSquared(valuetype Reactor.Math.Vector3 value1, valuetype Reactor.Math.Vector3 value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Vector3" />
+        <Parameter Name="value2" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="value1">To be added.</param>
+        <param name="value2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DistanceSquared">
+      <MemberSignature Language="C#" Value="public static void DistanceSquared (ref Reactor.Math.Vector3 value1, ref Reactor.Math.Vector3 value2, out float result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void DistanceSquared(valuetype Reactor.Math.Vector3 value1, valuetype Reactor.Math.Vector3 value2, float32 result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="value2" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Single&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="value1">To be added.</param>
+        <param name="value2">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="E">
+      <MemberSignature Language="C#" Value="public const float E = 2.718282;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 E = (2.718282)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>2.718282</MemberValue>
+      <Docs>
+        <summary>
+            Represents the mathematical constant e(2.71828175).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Hermite">
+      <MemberSignature Language="C#" Value="public static float Hermite (float value1, float tangent1, float value2, float tangent2, float amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Hermite(float32 value1, float32 tangent1, float32 value2, float32 tangent2, float32 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="tangent1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+        <Parameter Name="tangent2" Type="System.Single" />
+        <Parameter Name="amount" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source position.</param>
+        <param name="tangent1">Source tangent.</param>
+        <param name="value2">Source position.</param>
+        <param name="tangent2">Source tangent.</param>
+        <param name="amount">Weighting factor.</param>
+        <summary>
+            Performs a Hermite spline interpolation.
+            </summary>
+        <returns>The result of the Hermite spline interpolation.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsPowerOfTwo">
+      <MemberSignature Language="C#" Value="public static bool IsPowerOfTwo (int value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsPowerOfTwo(int32 value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="value">A value.</param>
+        <summary>
+            Determines if value is powered by two.
+            </summary>
+        <returns>
+          <c>true</c> if <c>value</c> is powered by two; otherwise <c>false</c>.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lerp">
+      <MemberSignature Language="C#" Value="public static float Lerp (float value1, float value2, float amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Lerp(float32 value1, float32 value2, float32 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+        <Parameter Name="amount" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source value.</param>
+        <param name="value2">Source value.</param>
+        <param name="amount">Value between 0 and 1 indicating the weight of value2.</param>
+        <summary>
+            Linearly interpolates between two values.
+            </summary>
+        <returns>Interpolated value.</returns>
+        <remarks>This method performs the linear interpolation based on the following formula.
+            <c>value1 + (value2 - value1) * amount</c>
+            Passing amount a value of 0 will cause value1 to be returned, a value of 1 will cause value2 to be returned.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Log10E">
+      <MemberSignature Language="C#" Value="public const float Log10E = 0.4342945;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 Log10E = (0.4342945)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>0.4342945</MemberValue>
+      <Docs>
+        <summary>
+            Represents the log base ten of e(0.4342945).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Log2E">
+      <MemberSignature Language="C#" Value="public const float Log2E = 1.442695;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 Log2E = (1.442695)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>1.442695</MemberValue>
+      <Docs>
+        <summary>
+            Represents the log base two of e(1.442695).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Max">
+      <MemberSignature Language="C#" Value="public static float Max (float value1, float value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Max(float32 value1, float32 value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source value.</param>
+        <param name="value2">Source value.</param>
+        <summary>
+            Returns the greater of two values.
+            </summary>
+        <returns>The greater value.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Min">
+      <MemberSignature Language="C#" Value="public static float Min (float value1, float value2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 Min(float32 value1, float32 value2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source value.</param>
+        <param name="value2">Source value.</param>
+        <summary>
+            Returns the lesser of two values.
+            </summary>
+        <returns>The lesser value.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Pi">
+      <MemberSignature Language="C#" Value="public const float Pi = 3.141593;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 Pi = (3.141593)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>3.141593</MemberValue>
+      <Docs>
+        <summary>
+            Represents the value of pi(3.14159274).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PiOver2">
+      <MemberSignature Language="C#" Value="public const float PiOver2 = 1.570796;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 PiOver2 = (1.570796)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>1.570796</MemberValue>
+      <Docs>
+        <summary>
+            Represents the value of pi divided by two(1.57079637).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PiOver4">
+      <MemberSignature Language="C#" Value="public const float PiOver4 = 0.7853982;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 PiOver4 = (0.7853982)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>0.7853982</MemberValue>
+      <Docs>
+        <summary>
+            Represents the value of pi divided by four(0.7853982).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SmoothStep">
+      <MemberSignature Language="C#" Value="public static float SmoothStep (float value1, float value2, float amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 SmoothStep(float32 value1, float32 value2, float32 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value1" Type="System.Single" />
+        <Parameter Name="value2" Type="System.Single" />
+        <Parameter Name="amount" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="value1">Source value.</param>
+        <param name="value2">Source value.</param>
+        <param name="amount">Weighting value.</param>
+        <summary>
+            Interpolates between two values using a cubic equation.
+            </summary>
+        <returns>Interpolated value.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToDegrees">
+      <MemberSignature Language="C#" Value="public static float ToDegrees (float radians);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 ToDegrees(float32 radians) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="radians">The angle in radians.</param>
+        <summary>
+            Converts radians to degrees.
+            </summary>
+        <returns>The angle in degrees.</returns>
+        <remarks>
+            This method uses double precission internally,
+            though it returns single float
+            Factor = 180 / pi
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToRadians">
+      <MemberSignature Language="C#" Value="public static float ToRadians (float degrees);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 ToRadians(float32 degrees) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="degrees" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="degrees">The angle in degrees.</param>
+        <summary>
+            Converts degrees to radians.
+            </summary>
+        <returns>The angle in radians.</returns>
+        <remarks>
+            This method uses double precission internally,
+            though it returns single float
+            Factor = pi / 180
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TwoPi">
+      <MemberSignature Language="C#" Value="public const float TwoPi = 6.283185;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal float32 TwoPi = (6.283185)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <MemberValue>6.283185</MemberValue>
+      <Docs>
+        <summary>
+            Represents the value of pi times two(6.28318548).
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WrapAngle">
+      <MemberSignature Language="C#" Value="public static float WrapAngle (float angle);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32 WrapAngle(float32 angle) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="angle" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="angle">The angle to reduce, in radians.</param>
+        <summary>
+            Reduces a given angle to a value between π and -π.
+            </summary>
+        <returns>The new angle, in radians.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

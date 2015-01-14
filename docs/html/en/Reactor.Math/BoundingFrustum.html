@@ -1,0 +1,1301 @@
+<html>
+  <head>
+    <title>Reactor.Math.BoundingFrustum</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a { text-decoration: none }
+
+      div.SideBar {
+        padding-left: 1em;
+        padding-right: 1em;
+        right: 0;
+        float: right;
+        border: thin solid black;
+        background-color: #f2f2f2;
+      }
+    
+      .CollectionTitle { font-weight: bold }
+      .PageTitle { font-size: 150%; font-weight: bold }
+
+      .Summary { }
+      .Signature { }          
+      .Remarks { }
+      .Members { }
+      .Copyright { }
+      
+      .Section { font-size: 125%; font-weight: bold }
+      p.Summary {
+        margin-left: 1em;
+      }
+      .SectionBox { margin-left: 2em }
+      .NamespaceName { font-size: 105%; font-weight: bold }
+      .NamespaceSumary { }
+      .MemberName { font-size: 115%; font-weight: bold; margin-top: 1em }
+      .Subsection { font-size: 105%; font-weight: bold }
+      .SubsectionBox { margin-left: 2em; margin-bottom: 1em }
+
+      .CodeExampleTable { background-color: #f5f5dd; border: thin solid black; padding: .25em; }
+      
+      .TypesListing {
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+      }
+
+      .TypesListing td { 
+        margin: 0px;  
+        padding: .25em;
+        border: solid gray 1px;
+      }
+
+      .TypesListing th { 
+        margin: 0px;  
+        padding: .25em;
+        background-color: #f2f2f2;
+        border: solid gray 1px;
+      }
+
+      div.Footer {
+        border-top: 1px solid gray;
+        margin-top: 1.5em;
+        padding-top: 0.6em;
+        text-align: center;
+        color: gray;
+      }
+
+      span.NotEntered /* Documentation for this section has not yet been entered */ {
+        font-style: italic;
+        color: red;	
+      }
+
+      div.Header {
+        background: #B0C4DE;
+        border: double;
+        border-color: white;
+        border-width: 7px;
+        padding: 0.5em;
+      }
+
+      div.Header * {
+        font-size: smaller;
+      }
+
+      div.Note {
+      }
+
+      i.ParamRef {
+      }
+
+      i.subtitle {
+      }
+
+      ul.TypeMembersIndex {
+        text-align: left;
+        background: #F8F8F8;
+      }
+
+      ul.TypeMembersIndex li {
+        display: inline;
+        margin:  0.5em;
+      }
+
+      table.HeaderTable {
+      }
+
+      table.SignatureTable {
+      }
+
+      table.Documentation, table.Enumeration, table.TypeDocumentation {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table.Documentation tr th, table.TypeMembers tr th, table.Enumeration tr th, table.TypeDocumentation tr th {
+        background: whitesmoke;
+        padding: 0.8em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: bottom;
+      }
+
+      table.Documentation tr td, table.TypeMembers tr td, table.Enumeration tr td, table.TypeDocumentation tr td {
+        padding: 0.5em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      table.TypeMembers {
+        border: 1px solid #C0C0C0;
+        width: 100%;
+      }
+
+      table.TypeMembers tr td {
+        background: #F8F8F8;
+        border: white;
+      }
+
+      table.Documentation {
+      }
+
+      table.TypeMembers {
+      }
+
+      div.CodeExample {
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        background-color: #F8F8F8;
+      }
+
+      div.CodeExample p {
+        margin: 0.5em;
+        border-bottom: 1px solid #DDDDDD;
+      }
+
+      div.CodeExample div {
+        margin: 0.5em;
+      }
+
+      h4 {
+        margin-bottom: 0;
+      }
+
+      div.Signature {
+        border: 1px solid #C0C0C0;
+        background: #F2F2F2;
+        padding: 1em;
+      }
+    </style>
+    <script type="text/JavaScript">
+      function toggle_display (block) {
+        var w = document.getElementById (block);
+        var t = document.getElementById (block + ":toggle");
+        if (w.style.display == "none") {
+          w.style.display = "block";
+          t.innerHTML = "⊟";
+        } else {
+          w.style.display = "none";
+          t.innerHTML = "⊞";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="CollectionTitle">
+      <a href="../index.html">Reactor</a> : <a href="index.html">Reactor.Math Namespace</a></div>
+    <div class="SideBar">
+      <p>
+        <a href="#T:Reactor.Math.BoundingFrustum">Overview</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Math.BoundingFrustum:Signature">Signature</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Math.BoundingFrustum:Docs">Remarks</a>
+      </p>
+      <p>
+        <a href="#Members">Members</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Math.BoundingFrustum:Members">Member Details</a>
+      </p>
+    </div>
+    <h1 class="PageTitle" id="T:Reactor.Math.BoundingFrustum">BoundingFrustum  Class</h1>
+    <p class="Summary" id="T:Reactor.Math.BoundingFrustum:Summary">
+      <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+    </p>
+    <div>
+      <h2>Syntax</h2>
+      <div class="Signature" id="T:Reactor.Math.BoundingFrustum:Signature">[System.Diagnostics.DebuggerDisplay("{DebugDisplayString,nq}")]<br />public class  <b>BoundingFrustum</b> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.IEquatable`1">IEquatable&lt;BoundingFrustum&gt;</a></div>
+    </div>
+    <div class="Remarks" id="T:Reactor.Math.BoundingFrustum:Docs">
+      <h2 class="Section">Remarks</h2>
+      <div class="SectionBox" id="T:Reactor.Math.BoundingFrustum:Docs:Remarks">
+        <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+      </div>
+      <h2 class="Section">Requirements</h2>
+      <div class="SectionBox" id="T:Reactor.Math.BoundingFrustum:Docs:Version Information">
+        <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+      <h2 class="Section" id="Members">Members</h2>
+      <div class="SectionBox" id="_Members">
+        <p>
+								See Also: Inherited members from
+								<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>.
+							</p>
+        <h2 class="Section">Public Constructors</h2>
+        <div class="SectionBox" id="Public Constructors">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <b>
+                      <a href="#C:Reactor.Math.BoundingFrustum(Reactor.Math.Matrix)">BoundingFrustum</a>
+                    </b>(<a href="../Reactor.Math/Matrix.html">Matrix</a>)</div>
+                </td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Fields</h2>
+        <div class="SectionBox" id="Public Fields">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>const </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Reactor.Math.BoundingFrustum.CornerCount">CornerCount</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i> (8). <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Properties</h2>
+        <div class="SectionBox" id="Public Properties">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Bottom">Bottom</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Plane.html">Plane</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Far">Far</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Plane.html">Plane</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Left">Left</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Plane.html">Plane</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Matrix">Matrix</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Matrix.html">Matrix</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Near">Near</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Plane.html">Plane</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Right">Right</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Plane.html">Plane</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.BoundingFrustum.Top">Top</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Plane.html">Plane</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Methods</h2>
+        <div class="SectionBox" id="Public Methods">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox)">Contains</a>
+                  </b>(<a href="../Reactor.Math/BoundingBox.html">BoundingBox</a>)<nobr> : <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere)">Contains</a>
+                  </b>(<a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a>)<nobr> : <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3)">Contains</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Vector3</a>)<nobr> : <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox@,Reactor.Math.ContainmentType@)">Contains</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/BoundingBox.html">BoundingBox</a>, <i>out</i> <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere@,Reactor.Math.ContainmentType@)">Contains</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a>, <i>out</i> <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3@,Reactor.Math.ContainmentType@)">Contains</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/Vector3.html">Vector3</a>, <i>out</i> <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum)">Equals</a>
+                  </b>(<a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Equals(System.Object)">Equals</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.GetCorners()">GetCorners</a>
+                  </b>()<nobr> : <a href="../Reactor.Math/Vector3.html">Vector3</a>[]</nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.GetCorners(Reactor.Math.Vector3[])">GetCorners</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Vector3</a>[])<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.GetHashCode()">GetHashCode</a>
+                  </b>()<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox)">Intersects</a>
+                  </b>(<a href="../Reactor.Math/BoundingBox.html">BoundingBox</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere)">Intersects</a>
+                  </b>(<a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox@,System.Boolean@)">Intersects</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/BoundingBox.html">BoundingBox</a>, <i>out</i> <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere@,System.Boolean@)">Intersects</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a>, <i>out</i> <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.ToString()">ToString</a>
+                  </b>()<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Operators</h2>
+        <div class="SectionBox" id="Public Operators">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum)">Equality</a>
+                  </b>(<a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a>, <a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a>)</td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum)">Inequality</a>
+                  </b>(<a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a>, <a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a>)</td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Members" id="T:Reactor.Math.BoundingFrustum:Members">
+      <h2 class="Section" id="MemberDetails">Member Details</h2>
+      <div class="SectionBox" id="_MemberDetails">
+        <h3 id="C:Reactor.Math.BoundingFrustum(Reactor.Math.Matrix)">BoundingFrustum Constructor</h3>
+        <blockquote id="C:Reactor.Math.BoundingFrustum(Reactor.Math.Matrix):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public  <b>BoundingFrustum</b> (<a href="../Reactor.Math/Matrix.html">Matrix</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="C:Reactor.Math.BoundingFrustum(Reactor.Math.Matrix):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="C:Reactor.Math.BoundingFrustum(Reactor.Math.Matrix):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="C:Reactor.Math.BoundingFrustum(Reactor.Math.Matrix):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Bottom">Bottom Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Bottom:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Plane.html">Plane</a> <b>Bottom</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Bottom:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Bottom:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Bottom:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a> <b>Contains</b> (<a href="../Reactor.Math/BoundingBox.html">BoundingBox</a> box)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox):Parameters">
+            <dl>
+              <dt>
+                <i>box</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a> <b>Contains</b> (<a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a> sphere)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere):Parameters">
+            <dl>
+              <dt>
+                <i>sphere</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a> <b>Contains</b> (<a href="../Reactor.Math/Vector3.html">Vector3</a> point)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3):Parameters">
+            <dl>
+              <dt>
+                <i>point</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox@,Reactor.Math.ContainmentType@)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox@,Reactor.Math.ContainmentType@):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Contains</b> (<i>ref</i> <a href="../Reactor.Math/BoundingBox.html">BoundingBox</a> box, <i>out</i> <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox@,Reactor.Math.ContainmentType@):Parameters">
+            <dl>
+              <dt>
+                <i>box</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox@,Reactor.Math.ContainmentType@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingBox@,Reactor.Math.ContainmentType@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere@,Reactor.Math.ContainmentType@)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere@,Reactor.Math.ContainmentType@):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Contains</b> (<i>ref</i> <a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a> sphere, <i>out</i> <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere@,Reactor.Math.ContainmentType@):Parameters">
+            <dl>
+              <dt>
+                <i>sphere</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere@,Reactor.Math.ContainmentType@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.BoundingSphere@,Reactor.Math.ContainmentType@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3@,Reactor.Math.ContainmentType@)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3@,Reactor.Math.ContainmentType@):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Contains</b> (<i>ref</i> <a href="../Reactor.Math/Vector3.html">Vector3</a> point, <i>out</i> <a href="../Reactor.Math/ContainmentType.html">ContainmentType</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3@,Reactor.Math.ContainmentType@):Parameters">
+            <dl>
+              <dt>
+                <i>point</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3@,Reactor.Math.ContainmentType@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Contains(Reactor.Math.Vector3@,Reactor.Math.ContainmentType@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Reactor.Math.BoundingFrustum.CornerCount">CornerCount Field</h3>
+        <blockquote id="F:Reactor.Math.BoundingFrustum.CornerCount:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <p>
+            <b>Value: </b>8</p>
+          <h2>Syntax</h2>
+          <div class="Signature">public const <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>CornerCount</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Reactor.Math.BoundingFrustum.CornerCount:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Reactor.Math.BoundingFrustum.CornerCount:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum)">Equals Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a> other)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum):Parameters">
+            <dl>
+              <dt>
+                <i>other</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(Reactor.Math.BoundingFrustum):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Equals(System.Object)">Equals Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Equals(System.Object):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> obj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(System.Object):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(System.Object):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(System.Object):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Equals(System.Object):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Far">Far Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Far:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Plane.html">Plane</a> <b>Far</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Far:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Far:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Far:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.GetCorners()">GetCorners Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.GetCorners():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Vector3.html">Vector3</a>[] <b>GetCorners</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.GetCorners():Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.GetCorners():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.GetCorners():Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.GetCorners(Reactor.Math.Vector3[])">GetCorners Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.GetCorners(Reactor.Math.Vector3[]):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>GetCorners</b> (<a href="../Reactor.Math/Vector3.html">Vector3</a>[] corners)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.GetCorners(Reactor.Math.Vector3[]):Parameters">
+            <dl>
+              <dt>
+                <i>corners</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.GetCorners(Reactor.Math.Vector3[]):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.GetCorners(Reactor.Math.Vector3[]):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.GetHashCode()">GetHashCode Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.GetHashCode():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>GetHashCode</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.GetHashCode():Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.GetHashCode():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.GetHashCode():Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox)">Intersects Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Intersects</b> (<a href="../Reactor.Math/BoundingBox.html">BoundingBox</a> box)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox):Parameters">
+            <dl>
+              <dt>
+                <i>box</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere)">Intersects Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Intersects</b> (<a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a> sphere)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere):Parameters">
+            <dl>
+              <dt>
+                <i>sphere</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox@,System.Boolean@)">Intersects Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox@,System.Boolean@):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Intersects</b> (<i>ref</i> <a href="../Reactor.Math/BoundingBox.html">BoundingBox</a> box, <i>out</i> <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox@,System.Boolean@):Parameters">
+            <dl>
+              <dt>
+                <i>box</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox@,System.Boolean@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingBox@,System.Boolean@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere@,System.Boolean@)">Intersects Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere@,System.Boolean@):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Intersects</b> (<i>ref</i> <a href="../Reactor.Math/BoundingSphere.html">BoundingSphere</a> sphere, <i>out</i> <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere@,System.Boolean@):Parameters">
+            <dl>
+              <dt>
+                <i>sphere</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere@,System.Boolean@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.Intersects(Reactor.Math.BoundingSphere@,System.Boolean@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Left">Left Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Left:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Plane.html">Plane</a> <b>Left</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Left:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Left:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Left:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Matrix">Matrix Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Matrix:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Matrix.html">Matrix</a> <b>Matrix</b>  { get; set; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Matrix:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Matrix:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Matrix:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Near">Near Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Near:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Plane.html">Plane</a> <b>Near</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Near:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Near:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Near:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum)">op_Equality Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> operator== (<a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a> a, <a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a> b)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Parameters">
+            <dl>
+              <dt>
+                <i>a</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>b</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.op_Equality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum)">op_Inequality Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> operator!= (<a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a> a, <a href="../Reactor.Math/BoundingFrustum.html">BoundingFrustum</a> b)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Parameters">
+            <dl>
+              <dt>
+                <i>a</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>b</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.op_Inequality(Reactor.Math.BoundingFrustum,Reactor.Math.BoundingFrustum):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Right">Right Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Right:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Plane.html">Plane</a> <b>Right</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Right:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Right:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Right:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.BoundingFrustum.Top">Top Property</h3>
+        <blockquote id="P:Reactor.Math.BoundingFrustum.Top:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Plane.html">Plane</a> <b>Top</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.BoundingFrustum.Top:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Top:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.BoundingFrustum.Top:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.BoundingFrustum.ToString()">ToString Method</h3>
+        <blockquote id="M:Reactor.Math.BoundingFrustum.ToString():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> <b>ToString</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.BoundingFrustum.ToString():Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.ToString():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.BoundingFrustum.ToString():Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+      </div>
+    </div>
+    <hr size="1" />
+    <div class="Copyright">
+    </div>
+  </body>
+</html>

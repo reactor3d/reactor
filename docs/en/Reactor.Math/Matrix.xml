@@ -1,0 +1,2349 @@
+<Type Name="Matrix" FullName="Reactor.Math.Matrix">
+  <TypeSignature Language="C#" Value="public struct Matrix : IEquatable&lt;Reactor.Math.Matrix&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Matrix extends System.ValueType implements class System.IEquatable`1&lt;valuetype Reactor.Math.Matrix&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Reactor.Math.Matrix&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Matrix (float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(float32 m11, float32 m12, float32 m13, float32 m14, float32 m21, float32 m22, float32 m23, float32 m24, float32 m31, float32 m32, float32 m33, float32 m34, float32 m41, float32 m42, float32 m43, float32 m44) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="m11" Type="System.Single" />
+        <Parameter Name="m12" Type="System.Single" />
+        <Parameter Name="m13" Type="System.Single" />
+        <Parameter Name="m14" Type="System.Single" />
+        <Parameter Name="m21" Type="System.Single" />
+        <Parameter Name="m22" Type="System.Single" />
+        <Parameter Name="m23" Type="System.Single" />
+        <Parameter Name="m24" Type="System.Single" />
+        <Parameter Name="m31" Type="System.Single" />
+        <Parameter Name="m32" Type="System.Single" />
+        <Parameter Name="m33" Type="System.Single" />
+        <Parameter Name="m34" Type="System.Single" />
+        <Parameter Name="m41" Type="System.Single" />
+        <Parameter Name="m42" Type="System.Single" />
+        <Parameter Name="m43" Type="System.Single" />
+        <Parameter Name="m44" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="m11">To be added.</param>
+        <param name="m12">To be added.</param>
+        <param name="m13">To be added.</param>
+        <param name="m14">To be added.</param>
+        <param name="m21">To be added.</param>
+        <param name="m22">To be added.</param>
+        <param name="m23">To be added.</param>
+        <param name="m24">To be added.</param>
+        <param name="m31">To be added.</param>
+        <param name="m32">To be added.</param>
+        <param name="m33">To be added.</param>
+        <param name="m34">To be added.</param>
+        <param name="m41">To be added.</param>
+        <param name="m42">To be added.</param>
+        <param name="m43">To be added.</param>
+        <param name="m44">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Add (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Add(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public static void Add (ref Reactor.Math.Matrix matrix1, ref Reactor.Math.Matrix matrix2, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Add(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Backward">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Backward { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Backward" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateBillboard">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateBillboard (Reactor.Math.Vector3 objectPosition, Reactor.Math.Vector3 cameraPosition, Reactor.Math.Vector3 cameraUpVector, Nullable&lt;Reactor.Math.Vector3&gt; cameraForwardVector);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateBillboard(valuetype Reactor.Math.Vector3 objectPosition, valuetype Reactor.Math.Vector3 cameraPosition, valuetype Reactor.Math.Vector3 cameraUpVector, valuetype System.Nullable`1&lt;valuetype Reactor.Math.Vector3&gt; cameraForwardVector) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="objectPosition" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraPosition" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraUpVector" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraForwardVector" Type="System.Nullable&lt;Reactor.Math.Vector3&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="objectPosition">To be added.</param>
+        <param name="cameraPosition">To be added.</param>
+        <param name="cameraUpVector">To be added.</param>
+        <param name="cameraForwardVector">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateBillboard">
+      <MemberSignature Language="C#" Value="public static void CreateBillboard (ref Reactor.Math.Vector3 objectPosition, ref Reactor.Math.Vector3 cameraPosition, ref Reactor.Math.Vector3 cameraUpVector, Nullable&lt;Reactor.Math.Vector3&gt; cameraForwardVector, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateBillboard(valuetype Reactor.Math.Vector3 objectPosition, valuetype Reactor.Math.Vector3 cameraPosition, valuetype Reactor.Math.Vector3 cameraUpVector, valuetype System.Nullable`1&lt;valuetype Reactor.Math.Vector3&gt; cameraForwardVector, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="objectPosition" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraPosition" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraUpVector" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraForwardVector" Type="System.Nullable&lt;Reactor.Math.Vector3&gt;" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="objectPosition">To be added.</param>
+        <param name="cameraPosition">To be added.</param>
+        <param name="cameraUpVector">To be added.</param>
+        <param name="cameraForwardVector">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateConstrainedBillboard">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateConstrainedBillboard (Reactor.Math.Vector3 objectPosition, Reactor.Math.Vector3 cameraPosition, Reactor.Math.Vector3 rotateAxis, Nullable&lt;Reactor.Math.Vector3&gt; cameraForwardVector, Nullable&lt;Reactor.Math.Vector3&gt; objectForwardVector);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateConstrainedBillboard(valuetype Reactor.Math.Vector3 objectPosition, valuetype Reactor.Math.Vector3 cameraPosition, valuetype Reactor.Math.Vector3 rotateAxis, valuetype System.Nullable`1&lt;valuetype Reactor.Math.Vector3&gt; cameraForwardVector, valuetype System.Nullable`1&lt;valuetype Reactor.Math.Vector3&gt; objectForwardVector) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="objectPosition" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraPosition" Type="Reactor.Math.Vector3" />
+        <Parameter Name="rotateAxis" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraForwardVector" Type="System.Nullable&lt;Reactor.Math.Vector3&gt;" />
+        <Parameter Name="objectForwardVector" Type="System.Nullable&lt;Reactor.Math.Vector3&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="objectPosition">To be added.</param>
+        <param name="cameraPosition">To be added.</param>
+        <param name="rotateAxis">To be added.</param>
+        <param name="cameraForwardVector">To be added.</param>
+        <param name="objectForwardVector">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateConstrainedBillboard">
+      <MemberSignature Language="C#" Value="public static void CreateConstrainedBillboard (ref Reactor.Math.Vector3 objectPosition, ref Reactor.Math.Vector3 cameraPosition, ref Reactor.Math.Vector3 rotateAxis, Nullable&lt;Reactor.Math.Vector3&gt; cameraForwardVector, Nullable&lt;Reactor.Math.Vector3&gt; objectForwardVector, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateConstrainedBillboard(valuetype Reactor.Math.Vector3 objectPosition, valuetype Reactor.Math.Vector3 cameraPosition, valuetype Reactor.Math.Vector3 rotateAxis, valuetype System.Nullable`1&lt;valuetype Reactor.Math.Vector3&gt; cameraForwardVector, valuetype System.Nullable`1&lt;valuetype Reactor.Math.Vector3&gt; objectForwardVector, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="objectPosition" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraPosition" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="rotateAxis" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraForwardVector" Type="System.Nullable&lt;Reactor.Math.Vector3&gt;" />
+        <Parameter Name="objectForwardVector" Type="System.Nullable&lt;Reactor.Math.Vector3&gt;" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="objectPosition">To be added.</param>
+        <param name="cameraPosition">To be added.</param>
+        <param name="rotateAxis">To be added.</param>
+        <param name="cameraForwardVector">To be added.</param>
+        <param name="objectForwardVector">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromAxisAngle">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateFromAxisAngle (Reactor.Math.Vector3 axis, float angle);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateFromAxisAngle(valuetype Reactor.Math.Vector3 axis, float32 angle) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="axis" Type="Reactor.Math.Vector3" />
+        <Parameter Name="angle" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="axis">To be added.</param>
+        <param name="angle">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromAxisAngle">
+      <MemberSignature Language="C#" Value="public static void CreateFromAxisAngle (ref Reactor.Math.Vector3 axis, float angle, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateFromAxisAngle(valuetype Reactor.Math.Vector3 axis, float32 angle, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="axis" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="angle" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="axis">To be added.</param>
+        <param name="angle">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromQuaternion">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateFromQuaternion (Reactor.Math.Quaternion quaternion);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateFromQuaternion(valuetype Reactor.Math.Quaternion quaternion) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="quaternion" Type="Reactor.Math.Quaternion" />
+      </Parameters>
+      <Docs>
+        <param name="quaternion">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromQuaternion">
+      <MemberSignature Language="C#" Value="public static void CreateFromQuaternion (ref Reactor.Math.Quaternion quaternion, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateFromQuaternion(valuetype Reactor.Math.Quaternion quaternion, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="quaternion" Type="Reactor.Math.Quaternion&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="quaternion">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromYawPitchRoll">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateFromYawPitchRoll (float yaw, float pitch, float roll);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateFromYawPitchRoll(float32 yaw, float32 pitch, float32 roll) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="yaw" Type="System.Single" />
+        <Parameter Name="pitch" Type="System.Single" />
+        <Parameter Name="roll" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="yaw">To be added.</param>
+        <param name="pitch">To be added.</param>
+        <param name="roll">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromYawPitchRoll">
+      <MemberSignature Language="C#" Value="public static void CreateFromYawPitchRoll (float yaw, float pitch, float roll, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateFromYawPitchRoll(float32 yaw, float32 pitch, float32 roll, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="yaw" Type="System.Single" />
+        <Parameter Name="pitch" Type="System.Single" />
+        <Parameter Name="roll" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="yaw">To be added.</param>
+        <param name="pitch">To be added.</param>
+        <param name="roll">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateLookAt">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateLookAt (Reactor.Math.Vector3 cameraPosition, Reactor.Math.Vector3 cameraTarget, Reactor.Math.Vector3 cameraUpVector);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateLookAt(valuetype Reactor.Math.Vector3 cameraPosition, valuetype Reactor.Math.Vector3 cameraTarget, valuetype Reactor.Math.Vector3 cameraUpVector) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cameraPosition" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraTarget" Type="Reactor.Math.Vector3" />
+        <Parameter Name="cameraUpVector" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="cameraPosition">To be added.</param>
+        <param name="cameraTarget">To be added.</param>
+        <param name="cameraUpVector">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateLookAt">
+      <MemberSignature Language="C#" Value="public static void CreateLookAt (ref Reactor.Math.Vector3 cameraPosition, ref Reactor.Math.Vector3 cameraTarget, ref Reactor.Math.Vector3 cameraUpVector, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateLookAt(valuetype Reactor.Math.Vector3 cameraPosition, valuetype Reactor.Math.Vector3 cameraTarget, valuetype Reactor.Math.Vector3 cameraUpVector, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cameraPosition" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraTarget" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="cameraUpVector" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="cameraPosition">To be added.</param>
+        <param name="cameraTarget">To be added.</param>
+        <param name="cameraUpVector">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrthographic">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateOrthographic (float width, float height, float zNearPlane, float zFarPlane);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateOrthographic(float32 width, float32 height, float32 zNearPlane, float32 zFarPlane) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="width" Type="System.Single" />
+        <Parameter Name="height" Type="System.Single" />
+        <Parameter Name="zNearPlane" Type="System.Single" />
+        <Parameter Name="zFarPlane" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="width">To be added.</param>
+        <param name="height">To be added.</param>
+        <param name="zNearPlane">To be added.</param>
+        <param name="zFarPlane">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrthographic">
+      <MemberSignature Language="C#" Value="public static void CreateOrthographic (float width, float height, float zNearPlane, float zFarPlane, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateOrthographic(float32 width, float32 height, float32 zNearPlane, float32 zFarPlane, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="width" Type="System.Single" />
+        <Parameter Name="height" Type="System.Single" />
+        <Parameter Name="zNearPlane" Type="System.Single" />
+        <Parameter Name="zFarPlane" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="width">To be added.</param>
+        <param name="height">To be added.</param>
+        <param name="zNearPlane">To be added.</param>
+        <param name="zFarPlane">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrthographicOffCenter">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateOrthographicOffCenter (float left, float right, float bottom, float top, float zNearPlane, float zFarPlane);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateOrthographicOffCenter(float32 left, float32 right, float32 bottom, float32 top, float32 zNearPlane, float32 zFarPlane) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="left" Type="System.Single" />
+        <Parameter Name="right" Type="System.Single" />
+        <Parameter Name="bottom" Type="System.Single" />
+        <Parameter Name="top" Type="System.Single" />
+        <Parameter Name="zNearPlane" Type="System.Single" />
+        <Parameter Name="zFarPlane" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="left">To be added.</param>
+        <param name="right">To be added.</param>
+        <param name="bottom">To be added.</param>
+        <param name="top">To be added.</param>
+        <param name="zNearPlane">To be added.</param>
+        <param name="zFarPlane">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrthographicOffCenter">
+      <MemberSignature Language="C#" Value="public static void CreateOrthographicOffCenter (float left, float right, float bottom, float top, float zNearPlane, float zFarPlane, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateOrthographicOffCenter(float32 left, float32 right, float32 bottom, float32 top, float32 zNearPlane, float32 zFarPlane, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="left" Type="System.Single" />
+        <Parameter Name="right" Type="System.Single" />
+        <Parameter Name="bottom" Type="System.Single" />
+        <Parameter Name="top" Type="System.Single" />
+        <Parameter Name="zNearPlane" Type="System.Single" />
+        <Parameter Name="zFarPlane" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="left">To be added.</param>
+        <param name="right">To be added.</param>
+        <param name="bottom">To be added.</param>
+        <param name="top">To be added.</param>
+        <param name="zNearPlane">To be added.</param>
+        <param name="zFarPlane">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreatePerspective">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreatePerspective (float width, float height, float nearPlaneDistance, float farPlaneDistance);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreatePerspective(float32 width, float32 height, float32 nearPlaneDistance, float32 farPlaneDistance) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="width" Type="System.Single" />
+        <Parameter Name="height" Type="System.Single" />
+        <Parameter Name="nearPlaneDistance" Type="System.Single" />
+        <Parameter Name="farPlaneDistance" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="width">To be added.</param>
+        <param name="height">To be added.</param>
+        <param name="nearPlaneDistance">To be added.</param>
+        <param name="farPlaneDistance">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreatePerspective">
+      <MemberSignature Language="C#" Value="public static void CreatePerspective (float width, float height, float nearPlaneDistance, float farPlaneDistance, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreatePerspective(float32 width, float32 height, float32 nearPlaneDistance, float32 farPlaneDistance, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="width" Type="System.Single" />
+        <Parameter Name="height" Type="System.Single" />
+        <Parameter Name="nearPlaneDistance" Type="System.Single" />
+        <Parameter Name="farPlaneDistance" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="width">To be added.</param>
+        <param name="height">To be added.</param>
+        <param name="nearPlaneDistance">To be added.</param>
+        <param name="farPlaneDistance">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreatePerspectiveFieldOfView">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreatePerspectiveFieldOfView (float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreatePerspectiveFieldOfView(float32 fieldOfView, float32 aspectRatio, float32 nearPlaneDistance, float32 farPlaneDistance) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fieldOfView" Type="System.Single" />
+        <Parameter Name="aspectRatio" Type="System.Single" />
+        <Parameter Name="nearPlaneDistance" Type="System.Single" />
+        <Parameter Name="farPlaneDistance" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="fieldOfView">To be added.</param>
+        <param name="aspectRatio">To be added.</param>
+        <param name="nearPlaneDistance">To be added.</param>
+        <param name="farPlaneDistance">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreatePerspectiveFieldOfView">
+      <MemberSignature Language="C#" Value="public static void CreatePerspectiveFieldOfView (float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreatePerspectiveFieldOfView(float32 fieldOfView, float32 aspectRatio, float32 nearPlaneDistance, float32 farPlaneDistance, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fieldOfView" Type="System.Single" />
+        <Parameter Name="aspectRatio" Type="System.Single" />
+        <Parameter Name="nearPlaneDistance" Type="System.Single" />
+        <Parameter Name="farPlaneDistance" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="fieldOfView">To be added.</param>
+        <param name="aspectRatio">To be added.</param>
+        <param name="nearPlaneDistance">To be added.</param>
+        <param name="farPlaneDistance">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreatePerspectiveOffCenter">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreatePerspectiveOffCenter (float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreatePerspectiveOffCenter(float32 left, float32 right, float32 bottom, float32 top, float32 nearPlaneDistance, float32 farPlaneDistance) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="left" Type="System.Single" />
+        <Parameter Name="right" Type="System.Single" />
+        <Parameter Name="bottom" Type="System.Single" />
+        <Parameter Name="top" Type="System.Single" />
+        <Parameter Name="nearPlaneDistance" Type="System.Single" />
+        <Parameter Name="farPlaneDistance" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="left">To be added.</param>
+        <param name="right">To be added.</param>
+        <param name="bottom">To be added.</param>
+        <param name="top">To be added.</param>
+        <param name="nearPlaneDistance">To be added.</param>
+        <param name="farPlaneDistance">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreatePerspectiveOffCenter">
+      <MemberSignature Language="C#" Value="public static void CreatePerspectiveOffCenter (float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreatePerspectiveOffCenter(float32 left, float32 right, float32 bottom, float32 top, float32 nearPlaneDistance, float32 farPlaneDistance, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="left" Type="System.Single" />
+        <Parameter Name="right" Type="System.Single" />
+        <Parameter Name="bottom" Type="System.Single" />
+        <Parameter Name="top" Type="System.Single" />
+        <Parameter Name="nearPlaneDistance" Type="System.Single" />
+        <Parameter Name="farPlaneDistance" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="left">To be added.</param>
+        <param name="right">To be added.</param>
+        <param name="bottom">To be added.</param>
+        <param name="top">To be added.</param>
+        <param name="nearPlaneDistance">To be added.</param>
+        <param name="farPlaneDistance">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateReflection">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateReflection (Reactor.Math.Plane value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateReflection(valuetype Reactor.Math.Plane value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Plane" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateReflection">
+      <MemberSignature Language="C#" Value="public static void CreateReflection (ref Reactor.Math.Plane value, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateReflection(valuetype Reactor.Math.Plane value, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Plane&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRotationX">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateRotationX (float radians);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateRotationX(float32 radians) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="radians">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRotationX">
+      <MemberSignature Language="C#" Value="public static void CreateRotationX (float radians, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateRotationX(float32 radians, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="radians">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRotationY">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateRotationY (float radians);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateRotationY(float32 radians) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="radians">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRotationY">
+      <MemberSignature Language="C#" Value="public static void CreateRotationY (float radians, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateRotationY(float32 radians, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="radians">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRotationZ">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateRotationZ (float radians);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateRotationZ(float32 radians) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="radians">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateRotationZ">
+      <MemberSignature Language="C#" Value="public static void CreateRotationZ (float radians, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateRotationZ(float32 radians, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="radians" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="radians">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateScale">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateScale (Reactor.Math.Vector3 scales);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateScale(valuetype Reactor.Math.Vector3 scales) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scales" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="scales">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateScale">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateScale (float scale);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateScale(float32 scale) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scale" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="scale">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateScale">
+      <MemberSignature Language="C#" Value="public static void CreateScale (ref Reactor.Math.Vector3 scales, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateScale(valuetype Reactor.Math.Vector3 scales, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scales" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="scales">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateScale">
+      <MemberSignature Language="C#" Value="public static void CreateScale (float scale, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateScale(float32 scale, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scale" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="scale">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateScale">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateScale (float xScale, float yScale, float zScale);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateScale(float32 xScale, float32 yScale, float32 zScale) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="xScale" Type="System.Single" />
+        <Parameter Name="yScale" Type="System.Single" />
+        <Parameter Name="zScale" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="xScale">To be added.</param>
+        <param name="yScale">To be added.</param>
+        <param name="zScale">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateScale">
+      <MemberSignature Language="C#" Value="public static void CreateScale (float xScale, float yScale, float zScale, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateScale(float32 xScale, float32 yScale, float32 zScale, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="xScale" Type="System.Single" />
+        <Parameter Name="yScale" Type="System.Single" />
+        <Parameter Name="zScale" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="xScale">To be added.</param>
+        <param name="yScale">To be added.</param>
+        <param name="zScale">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateShadow">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateShadow (Reactor.Math.Vector3 lightDirection, Reactor.Math.Plane plane);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateShadow(valuetype Reactor.Math.Vector3 lightDirection, valuetype Reactor.Math.Plane plane) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lightDirection" Type="Reactor.Math.Vector3" />
+        <Parameter Name="plane" Type="Reactor.Math.Plane" />
+      </Parameters>
+      <Docs>
+        <param name="lightDirection">A Vector3 specifying the direction from which the light that will cast the shadow is coming.</param>
+        <param name="plane">The Plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
+        <summary>
+            Creates a Matrix that flattens geometry into a specified Plane as if casting a shadow from a specified light source.
+            </summary>
+        <returns>A Matrix that can be used to flatten geometry onto the specified plane from the specified direction. </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateShadow">
+      <MemberSignature Language="C#" Value="public static void CreateShadow (ref Reactor.Math.Vector3 lightDirection, ref Reactor.Math.Plane plane, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateShadow(valuetype Reactor.Math.Vector3 lightDirection, valuetype Reactor.Math.Plane plane, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lightDirection" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="plane" Type="Reactor.Math.Plane&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="lightDirection">A Vector3 specifying the direction from which the light that will cast the shadow is coming.</param>
+        <param name="plane">The Plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
+        <param name="result">A Matrix that can be used to flatten geometry onto the specified plane from the specified direction. </param>
+        <summary>
+            Creates a Matrix that flattens geometry into a specified Plane as if casting a shadow from a specified light source.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateTranslation">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateTranslation (Reactor.Math.Vector3 position);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateTranslation(valuetype Reactor.Math.Vector3 position) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateTranslation">
+      <MemberSignature Language="C#" Value="public static void CreateTranslation (ref Reactor.Math.Vector3 position, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateTranslation(valuetype Reactor.Math.Vector3 position, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateTranslation">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateTranslation (float xPosition, float yPosition, float zPosition);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateTranslation(float32 xPosition, float32 yPosition, float32 zPosition) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="xPosition" Type="System.Single" />
+        <Parameter Name="yPosition" Type="System.Single" />
+        <Parameter Name="zPosition" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="xPosition">To be added.</param>
+        <param name="yPosition">To be added.</param>
+        <param name="zPosition">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateTranslation">
+      <MemberSignature Language="C#" Value="public static void CreateTranslation (float xPosition, float yPosition, float zPosition, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateTranslation(float32 xPosition, float32 yPosition, float32 zPosition, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="xPosition" Type="System.Single" />
+        <Parameter Name="yPosition" Type="System.Single" />
+        <Parameter Name="zPosition" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="xPosition">To be added.</param>
+        <param name="yPosition">To be added.</param>
+        <param name="zPosition">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateWorld">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix CreateWorld (Reactor.Math.Vector3 position, Reactor.Math.Vector3 forward, Reactor.Math.Vector3 up);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix CreateWorld(valuetype Reactor.Math.Vector3 position, valuetype Reactor.Math.Vector3 forward, valuetype Reactor.Math.Vector3 up) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="Reactor.Math.Vector3" />
+        <Parameter Name="forward" Type="Reactor.Math.Vector3" />
+        <Parameter Name="up" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <param name="forward">To be added.</param>
+        <param name="up">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateWorld">
+      <MemberSignature Language="C#" Value="public static void CreateWorld (ref Reactor.Math.Vector3 position, ref Reactor.Math.Vector3 forward, ref Reactor.Math.Vector3 up, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateWorld(valuetype Reactor.Math.Vector3 position, valuetype Reactor.Math.Vector3 forward, valuetype Reactor.Math.Vector3 up, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="forward" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="up" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <param name="forward">To be added.</param>
+        <param name="up">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Decompose">
+      <MemberSignature Language="C#" Value="public bool Decompose (out Reactor.Math.Vector3 scale, out Reactor.Math.Quaternion rotation, out Reactor.Math.Vector3 translation);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Decompose(valuetype Reactor.Math.Vector3 scale, valuetype Reactor.Math.Quaternion rotation, valuetype Reactor.Math.Vector3 translation) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scale" Type="Reactor.Math.Vector3&amp;" RefType="out" />
+        <Parameter Name="rotation" Type="Reactor.Math.Quaternion&amp;" RefType="out" />
+        <Parameter Name="translation" Type="Reactor.Math.Vector3&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="scale">To be added.</param>
+        <param name="rotation">To be added.</param>
+        <param name="translation">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Determinant">
+      <MemberSignature Language="C#" Value="public float Determinant ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance float32 Determinant() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Divide">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Divide (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Divide(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Divide">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Divide (Reactor.Math.Matrix matrix1, float divider);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Divide(valuetype Reactor.Math.Matrix matrix1, float32 divider) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="divider" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="divider">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Divide">
+      <MemberSignature Language="C#" Value="public static void Divide (ref Reactor.Math.Matrix matrix1, ref Reactor.Math.Matrix matrix2, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Divide(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Divide">
+      <MemberSignature Language="C#" Value="public static void Divide (ref Reactor.Math.Matrix matrix1, float divider, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Divide(valuetype Reactor.Math.Matrix matrix1, float32 divider, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="divider" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="divider">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Down">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Down { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Down" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (Reactor.Math.Matrix other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype Reactor.Math.Matrix other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Forward">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Forward { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Forward" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Identity">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Identity { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype Reactor.Math.Matrix Identity" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Invert">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Invert (Reactor.Math.Matrix matrix);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Invert(valuetype Reactor.Math.Matrix matrix) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Invert">
+      <MemberSignature Language="C#" Value="public static void Invert (ref Reactor.Math.Matrix matrix, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Invert(valuetype Reactor.Math.Matrix matrix, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public float this[int index] { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Item(int32)" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">To be added.</param>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public float this[int row, int column] { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Item(int32, int32)" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="row" Type="System.Int32" />
+        <Parameter Name="column" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="row">To be added.</param>
+        <param name="column">To be added.</param>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Left">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Left { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Left" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lerp">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Lerp (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2, float amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Lerp(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2, float32 amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+        <Parameter Name="amount" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <param name="amount">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Lerp">
+      <MemberSignature Language="C#" Value="public static void Lerp (ref Reactor.Math.Matrix matrix1, ref Reactor.Math.Matrix matrix2, float amount, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Lerp(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2, float32 amount, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="amount" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <param name="amount">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M11">
+      <MemberSignature Language="C#" Value="public float M11;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M11" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M12">
+      <MemberSignature Language="C#" Value="public float M12;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M12" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M13">
+      <MemberSignature Language="C#" Value="public float M13;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M13" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M14">
+      <MemberSignature Language="C#" Value="public float M14;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M14" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M21">
+      <MemberSignature Language="C#" Value="public float M21;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M21" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M22">
+      <MemberSignature Language="C#" Value="public float M22;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M22" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M23">
+      <MemberSignature Language="C#" Value="public float M23;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M23" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M24">
+      <MemberSignature Language="C#" Value="public float M24;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M24" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M31">
+      <MemberSignature Language="C#" Value="public float M31;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M31" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M32">
+      <MemberSignature Language="C#" Value="public float M32;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M32" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M33">
+      <MemberSignature Language="C#" Value="public float M33;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M33" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M34">
+      <MemberSignature Language="C#" Value="public float M34;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M34" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M41">
+      <MemberSignature Language="C#" Value="public float M41;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M41" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M42">
+      <MemberSignature Language="C#" Value="public float M42;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M42" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M43">
+      <MemberSignature Language="C#" Value="public float M43;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M43" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="M44">
+      <MemberSignature Language="C#" Value="public float M44;" />
+      <MemberSignature Language="ILAsm" Value=".field public float32 M44" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Multiply (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Multiply(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Multiply (Reactor.Math.Matrix matrix1, float factor);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Multiply(valuetype Reactor.Math.Matrix matrix1, float32 factor) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="factor" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="factor">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public static void Multiply (ref Reactor.Math.Matrix matrix1, ref Reactor.Math.Matrix matrix2, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Multiply(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Multiply">
+      <MemberSignature Language="C#" Value="public static void Multiply (ref Reactor.Math.Matrix matrix1, float factor, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Multiply(valuetype Reactor.Math.Matrix matrix1, float32 factor, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="factor" Type="System.Single" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="factor">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Negate">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Negate (Reactor.Math.Matrix matrix);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Negate(valuetype Reactor.Math.Matrix matrix) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Negate">
+      <MemberSignature Language="C#" Value="public static void Negate (ref Reactor.Math.Matrix matrix, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Negate(valuetype Reactor.Math.Matrix matrix, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Addition">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Addition (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Addition(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Division">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Division (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Division(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Division">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Division (Reactor.Math.Matrix matrix, float divider);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Division(valuetype Reactor.Math.Matrix matrix, float32 divider) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix" />
+        <Parameter Name="divider" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <param name="divider">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Implicit (OpenTK.Matrix4 value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Implicit(valuetype OpenTK.Matrix4 value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="OpenTK.Matrix4" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static OpenTK.Matrix4 op_Implicit (Reactor.Math.Matrix value);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype OpenTK.Matrix4 op_Implicit(valuetype Reactor.Math.Matrix value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>OpenTK.Matrix4</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Multiply (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Multiply(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Multiply">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Multiply (Reactor.Math.Matrix matrix, float scaleFactor);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Multiply(valuetype Reactor.Math.Matrix matrix, float32 scaleFactor) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix" />
+        <Parameter Name="scaleFactor" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <param name="scaleFactor">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Subtraction">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_Subtraction (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_Subtraction(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_UnaryNegation">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix op_UnaryNegation (Reactor.Math.Matrix matrix);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype Reactor.Math.Matrix op_UnaryNegation(valuetype Reactor.Math.Matrix matrix) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Right">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Right { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Right" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Subtract">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Subtract (Reactor.Math.Matrix matrix1, Reactor.Math.Matrix matrix2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Subtract(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Subtract">
+      <MemberSignature Language="C#" Value="public static void Subtract (ref Reactor.Math.Matrix matrix1, ref Reactor.Math.Matrix matrix2, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Subtract(valuetype Reactor.Math.Matrix matrix1, valuetype Reactor.Math.Matrix matrix2, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix1" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="matrix2" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix1">To be added.</param>
+        <param name="matrix2">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToFloatArray">
+      <MemberSignature Language="C#" Value="public static float[] ToFloatArray (Reactor.Math.Matrix mat);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig float32[] ToFloatArray(valuetype Reactor.Math.Matrix mat) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="mat" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="mat">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Translation">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Translation { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Translation" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Transpose">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.Matrix Transpose (Reactor.Math.Matrix matrix);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.Matrix Transpose(valuetype Reactor.Math.Matrix matrix) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Matrix</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Transpose">
+      <MemberSignature Language="C#" Value="public static void Transpose (ref Reactor.Math.Matrix matrix, out Reactor.Math.Matrix result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void Transpose(valuetype Reactor.Math.Matrix matrix, valuetype Reactor.Math.Matrix result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="matrix" Type="Reactor.Math.Matrix&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.Matrix&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="matrix">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Up">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Up { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Vector3 Up" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

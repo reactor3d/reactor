@@ -1,0 +1,199 @@
+<Type Name="RVertexElementUsage" FullName="Reactor.Geometry.RVertexElementUsage">
+  <TypeSignature Language="C#" Value="public enum RVertexElementUsage" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed RVertexElementUsage extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Bitangent">
+      <MemberSignature Language="C#" Value="Bitangent" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Bitangent = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BlendIndices">
+      <MemberSignature Language="C#" Value="BlendIndices" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage BlendIndices = int32(6)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BlendWeight">
+      <MemberSignature Language="C#" Value="BlendWeight" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage BlendWeight = int32(7)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Color">
+      <MemberSignature Language="C#" Value="Color" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Color = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Depth">
+      <MemberSignature Language="C#" Value="Depth" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Depth = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Fog">
+      <MemberSignature Language="C#" Value="Fog" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Fog = int32(9)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Normal">
+      <MemberSignature Language="C#" Value="Normal" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Normal = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="PointSize">
+      <MemberSignature Language="C#" Value="PointSize" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage PointSize = int32(10)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Position">
+      <MemberSignature Language="C#" Value="Position" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Position = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Sample">
+      <MemberSignature Language="C#" Value="Sample" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Sample = int32(11)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Tangent">
+      <MemberSignature Language="C#" Value="Tangent" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage Tangent = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TessellateFactor">
+      <MemberSignature Language="C#" Value="TessellateFactor" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage TessellateFactor = int32(12)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TextureCoordinate">
+      <MemberSignature Language="C#" Value="TextureCoordinate" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Geometry.RVertexElementUsage TextureCoordinate = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexElementUsage</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

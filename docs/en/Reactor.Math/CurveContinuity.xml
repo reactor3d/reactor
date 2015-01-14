@@ -1,0 +1,45 @@
+<Type Name="CurveContinuity" FullName="Reactor.Math.CurveContinuity">
+  <TypeSignature Language="C#" Value="public enum CurveContinuity" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CurveContinuity extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Smooth">
+      <MemberSignature Language="C#" Value="Smooth" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Math.CurveContinuity Smooth = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.CurveContinuity</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Step">
+      <MemberSignature Language="C#" Value="Step" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Math.CurveContinuity Step = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.CurveContinuity</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

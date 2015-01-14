@@ -1,0 +1,530 @@
+<Type Name="BoundingFrustum" FullName="Reactor.Math.BoundingFrustum">
+  <TypeSignature Language="C#" Value="public class BoundingFrustum : IEquatable&lt;Reactor.Math.BoundingFrustum&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi beforefieldinit BoundingFrustum extends System.Object implements class System.IEquatable`1&lt;class Reactor.Math.BoundingFrustum&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Reactor.Math.BoundingFrustum&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Diagnostics.DebuggerDisplay("{DebugDisplayString,nq}")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public BoundingFrustum (OpenTK.Matrix4 value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype OpenTK.Matrix4 value) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="value" Type="OpenTK.Matrix4" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Bottom">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Plane Bottom { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Plane Bottom" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Plane</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (OpenTK.Vector3 point);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(valuetype OpenTK.Vector3 point) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="point" Type="OpenTK.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="point">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (Reactor.Math.BoundingBox box);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(valuetype Reactor.Math.BoundingBox box) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (Reactor.Math.BoundingSphere sphere);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(valuetype Reactor.Math.BoundingSphere sphere) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public void Contains (ref OpenTK.Vector3 point, out Reactor.Math.ContainmentType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Contains(valuetype OpenTK.Vector3 point, valuetype Reactor.Math.ContainmentType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="point" Type="OpenTK.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.ContainmentType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="point">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public void Contains (ref Reactor.Math.BoundingBox box, out Reactor.Math.ContainmentType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Contains(valuetype Reactor.Math.BoundingBox box, valuetype Reactor.Math.ContainmentType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.ContainmentType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public void Contains (ref Reactor.Math.BoundingSphere sphere, out Reactor.Math.ContainmentType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Contains(valuetype Reactor.Math.BoundingSphere sphere, valuetype Reactor.Math.ContainmentType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.ContainmentType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CornerCount">
+      <MemberSignature Language="C#" Value="public const int CornerCount = 8;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal int32 CornerCount = (8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <MemberValue>8</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (Reactor.Math.BoundingFrustum other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(class Reactor.Math.BoundingFrustum other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Reactor.Math.BoundingFrustum" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Far">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Plane Far { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Plane Far" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Plane</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCorners">
+      <MemberSignature Language="C#" Value="public OpenTK.Vector3[] GetCorners ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype OpenTK.Vector3[] GetCorners() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>OpenTK.Vector3[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCorners">
+      <MemberSignature Language="C#" Value="public void GetCorners (OpenTK.Vector3[] corners);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void GetCorners(valuetype OpenTK.Vector3[] corners) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="corners" Type="OpenTK.Vector3[]" />
+      </Parameters>
+      <Docs>
+        <param name="corners">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public bool Intersects (Reactor.Math.BoundingBox box);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Intersects(valuetype Reactor.Math.BoundingBox box) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public bool Intersects (Reactor.Math.BoundingSphere sphere);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Intersects(valuetype Reactor.Math.BoundingSphere sphere) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.BoundingBox box, out bool result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.BoundingBox box, bool result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Boolean&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.BoundingSphere sphere, out bool result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.BoundingSphere sphere, bool result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Boolean&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Left">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Plane Left { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Plane Left" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Plane</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Matrix">
+      <MemberSignature Language="C#" Value="public OpenTK.Matrix4 Matrix { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype OpenTK.Matrix4 Matrix" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>OpenTK.Matrix4</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Near">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Plane Near { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Plane Near" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Plane</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Reactor.Math.BoundingFrustum a, Reactor.Math.BoundingFrustum b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(class Reactor.Math.BoundingFrustum a, class Reactor.Math.BoundingFrustum b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.BoundingFrustum" />
+        <Parameter Name="b" Type="Reactor.Math.BoundingFrustum" />
+      </Parameters>
+      <Docs>
+        <param name="a">To be added.</param>
+        <param name="b">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Reactor.Math.BoundingFrustum a, Reactor.Math.BoundingFrustum b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(class Reactor.Math.BoundingFrustum a, class Reactor.Math.BoundingFrustum b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.BoundingFrustum" />
+        <Parameter Name="b" Type="Reactor.Math.BoundingFrustum" />
+      </Parameters>
+      <Docs>
+        <param name="a">To be added.</param>
+        <param name="b">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Right">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Plane Right { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Plane Right" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Plane</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Top">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Plane Top { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Reactor.Math.Plane Top" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Plane</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

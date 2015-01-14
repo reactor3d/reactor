@@ -1,0 +1,241 @@
+<Type Name="RTextureLayer" FullName="Reactor.Types.RTextureLayer">
+  <TypeSignature Language="C#" Value="public enum RTextureLayer" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed RTextureLayer extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="AMBIENT">
+      <MemberSignature Language="C#" Value="AMBIENT" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer AMBIENT = int32(33986)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="DETAIL">
+      <MemberSignature Language="C#" Value="DETAIL" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer DETAIL = int32(33990)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="DIFFUSE">
+      <MemberSignature Language="C#" Value="DIFFUSE" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer DIFFUSE = int32(33984)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="GLOW">
+      <MemberSignature Language="C#" Value="GLOW" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer GLOW = int32(33988)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="HEIGHT">
+      <MemberSignature Language="C#" Value="HEIGHT" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer HEIGHT = int32(33989)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="NORMAL">
+      <MemberSignature Language="C#" Value="NORMAL" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer NORMAL = int32(33985)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SPECULAR">
+      <MemberSignature Language="C#" Value="SPECULAR" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer SPECULAR = int32(33987)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE10">
+      <MemberSignature Language="C#" Value="TEXTURE10" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE10 = int32(33994)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE11">
+      <MemberSignature Language="C#" Value="TEXTURE11" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE11 = int32(33995)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE12">
+      <MemberSignature Language="C#" Value="TEXTURE12" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE12 = int32(33996)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE13">
+      <MemberSignature Language="C#" Value="TEXTURE13" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE13 = int32(33997)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE14">
+      <MemberSignature Language="C#" Value="TEXTURE14" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE14 = int32(33998)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE15">
+      <MemberSignature Language="C#" Value="TEXTURE15" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE15 = int32(33999)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE7">
+      <MemberSignature Language="C#" Value="TEXTURE7" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE7 = int32(33991)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE8">
+      <MemberSignature Language="C#" Value="TEXTURE8" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE8 = int32(33992)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TEXTURE9">
+      <MemberSignature Language="C#" Value="TEXTURE9" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RTextureLayer TEXTURE9 = int32(33993)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTextureLayer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

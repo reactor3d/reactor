@@ -1,0 +1,696 @@
+<Type Name="BoundingBox" FullName="Reactor.Math.BoundingBox">
+  <TypeSignature Language="C#" Value="public struct BoundingBox : IEquatable&lt;Reactor.Math.BoundingBox&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit BoundingBox extends System.ValueType implements class System.IEquatable`1&lt;valuetype Reactor.Math.BoundingBox&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Reactor.Math.BoundingBox&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public BoundingBox (Reactor.Math.Vector3 min, Reactor.Math.Vector3 max);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector3 min, valuetype Reactor.Math.Vector3 max) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="min" Type="Reactor.Math.Vector3" />
+        <Parameter Name="max" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="min">To be added.</param>
+        <param name="max">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (Reactor.Math.BoundingBox box);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(valuetype Reactor.Math.BoundingBox box) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (Reactor.Math.BoundingFrustum frustum);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(class Reactor.Math.BoundingFrustum frustum) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frustum" Type="Reactor.Math.BoundingFrustum" />
+      </Parameters>
+      <Docs>
+        <param name="frustum">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (Reactor.Math.BoundingSphere sphere);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(valuetype Reactor.Math.BoundingSphere sphere) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public Reactor.Math.ContainmentType Contains (Reactor.Math.Vector3 point);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.ContainmentType Contains(valuetype Reactor.Math.Vector3 point) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.ContainmentType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="point" Type="Reactor.Math.Vector3" />
+      </Parameters>
+      <Docs>
+        <param name="point">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public void Contains (ref Reactor.Math.BoundingBox box, out Reactor.Math.ContainmentType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Contains(valuetype Reactor.Math.BoundingBox box, valuetype Reactor.Math.ContainmentType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.ContainmentType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public void Contains (ref Reactor.Math.BoundingSphere sphere, out Reactor.Math.ContainmentType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Contains(valuetype Reactor.Math.BoundingSphere sphere, valuetype Reactor.Math.ContainmentType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.ContainmentType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public void Contains (ref Reactor.Math.Vector3 point, out Reactor.Math.ContainmentType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Contains(valuetype Reactor.Math.Vector3 point, valuetype Reactor.Math.ContainmentType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="point" Type="Reactor.Math.Vector3&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.ContainmentType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="point">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CornerCount">
+      <MemberSignature Language="C#" Value="public const int CornerCount = 8;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal int32 CornerCount = (8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <MemberValue>8</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromPoints">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.BoundingBox CreateFromPoints (System.Collections.Generic.IEnumerable&lt;OpenTK.Vector3&gt; points);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.BoundingBox CreateFromPoints(class System.Collections.Generic.IEnumerable`1&lt;valuetype OpenTK.Vector3&gt; points) cil managed" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.BoundingBox</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="points" Type="System.Collections.Generic.IEnumerable&lt;OpenTK.Vector3&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="points">The list of Vector3 instances defining the point cloud to bound</param>
+        <summary>
+            Create a bounding box from the given list of points.
+            </summary>
+        <returns>A bounding box that encapsulates the given point cloud.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">Thrown if the given list has no points.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromPoints">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.BoundingBox CreateFromPoints (System.Collections.Generic.IEnumerable&lt;Reactor.Math.Vector3&gt; points);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.BoundingBox CreateFromPoints(class System.Collections.Generic.IEnumerable`1&lt;valuetype Reactor.Math.Vector3&gt; points) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.BoundingBox</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="points" Type="System.Collections.Generic.IEnumerable&lt;Reactor.Math.Vector3&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="points">The list of Vector3 instances defining the point cloud to bound</param>
+        <summary>
+            Create a bounding box from the given list of points.
+            </summary>
+        <returns>A bounding box that encapsulates the given point cloud.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">Thrown if the given list has no points.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromSphere">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.BoundingBox CreateFromSphere (Reactor.Math.BoundingSphere sphere);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.BoundingBox CreateFromSphere(valuetype Reactor.Math.BoundingSphere sphere) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.BoundingBox</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromSphere">
+      <MemberSignature Language="C#" Value="public static void CreateFromSphere (ref Reactor.Math.BoundingSphere sphere, out Reactor.Math.BoundingBox result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateFromSphere(valuetype Reactor.Math.BoundingSphere sphere, valuetype Reactor.Math.BoundingBox result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.BoundingBox&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateMerged">
+      <MemberSignature Language="C#" Value="public static Reactor.Math.BoundingBox CreateMerged (Reactor.Math.BoundingBox original, Reactor.Math.BoundingBox additional);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype Reactor.Math.BoundingBox CreateMerged(valuetype Reactor.Math.BoundingBox original, valuetype Reactor.Math.BoundingBox additional) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.BoundingBox</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="original" Type="Reactor.Math.BoundingBox" />
+        <Parameter Name="additional" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="original">To be added.</param>
+        <param name="additional">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateMerged">
+      <MemberSignature Language="C#" Value="public static void CreateMerged (ref Reactor.Math.BoundingBox original, ref Reactor.Math.BoundingBox additional, out Reactor.Math.BoundingBox result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CreateMerged(valuetype Reactor.Math.BoundingBox original, valuetype Reactor.Math.BoundingBox additional, valuetype Reactor.Math.BoundingBox result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="original" Type="Reactor.Math.BoundingBox&amp;" RefType="ref" />
+        <Parameter Name="additional" Type="Reactor.Math.BoundingBox&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.BoundingBox&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="original">To be added.</param>
+        <param name="additional">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (Reactor.Math.BoundingBox other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool Equals(valuetype Reactor.Math.BoundingBox other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCorners">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3[] GetCorners ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.Vector3[] GetCorners() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCorners">
+      <MemberSignature Language="C#" Value="public void GetCorners (Reactor.Math.Vector3[] corners);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void GetCorners(valuetype Reactor.Math.Vector3[] corners) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="corners" Type="Reactor.Math.Vector3[]" />
+      </Parameters>
+      <Docs>
+        <param name="corners">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public override int GetHashCode ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 GetHashCode() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public bool Intersects (Reactor.Math.BoundingBox box);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Intersects(valuetype Reactor.Math.BoundingBox box) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public bool Intersects (Reactor.Math.BoundingFrustum frustum);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Intersects(class Reactor.Math.BoundingFrustum frustum) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frustum" Type="Reactor.Math.BoundingFrustum" />
+      </Parameters>
+      <Docs>
+        <param name="frustum">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public bool Intersects (Reactor.Math.BoundingSphere sphere);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Intersects(valuetype Reactor.Math.BoundingSphere sphere) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public Reactor.Math.PlaneIntersectionType Intersects (Reactor.Math.Plane plane);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Math.PlaneIntersectionType Intersects(valuetype Reactor.Math.Plane plane) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.PlaneIntersectionType</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="plane" Type="Reactor.Math.Plane" />
+      </Parameters>
+      <Docs>
+        <param name="plane">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public Nullable&lt;float&gt; Intersects (Reactor.Math.Ray ray);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Nullable`1&lt;float32&gt; Intersects(valuetype Reactor.Math.Ray ray) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.Single&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ray" Type="Reactor.Math.Ray" />
+      </Parameters>
+      <Docs>
+        <param name="ray">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.BoundingBox box, out bool result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.BoundingBox box, bool result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="Reactor.Math.BoundingBox&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Boolean&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.BoundingSphere sphere, out bool result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.BoundingSphere sphere, bool result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="sphere" Type="Reactor.Math.BoundingSphere&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Boolean&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="sphere">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.Plane plane, out Reactor.Math.PlaneIntersectionType result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.Plane plane, valuetype Reactor.Math.PlaneIntersectionType result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="plane" Type="Reactor.Math.Plane&amp;" RefType="ref" />
+        <Parameter Name="result" Type="Reactor.Math.PlaneIntersectionType&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="plane">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Intersects">
+      <MemberSignature Language="C#" Value="public void Intersects (ref Reactor.Math.Ray ray, out Nullable&lt;float&gt; result);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Intersects(valuetype Reactor.Math.Ray ray, valuetype System.Nullable`1&lt;float32&gt; result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="ray" Type="Reactor.Math.Ray&amp;" RefType="ref" />
+        <Parameter Name="result" Type="System.Nullable&lt;System.Single&gt;&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="ray">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Max">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Max;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector3 Max" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Min">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Min;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector3 Min" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Reactor.Math.BoundingBox a, Reactor.Math.BoundingBox b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype Reactor.Math.BoundingBox a, valuetype Reactor.Math.BoundingBox b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.BoundingBox" />
+        <Parameter Name="b" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="a">To be added.</param>
+        <param name="b">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Reactor.Math.BoundingBox a, Reactor.Math.BoundingBox b);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype Reactor.Math.BoundingBox a, valuetype Reactor.Math.BoundingBox b) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="a" Type="Reactor.Math.BoundingBox" />
+        <Parameter Name="b" Type="Reactor.Math.BoundingBox" />
+      </Parameters>
+      <Docs>
+        <param name="a">To be added.</param>
+        <param name="b">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,1831 @@
+<html>
+  <head>
+    <title>Reactor.Math.Rectangle</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a { text-decoration: none }
+
+      div.SideBar {
+        padding-left: 1em;
+        padding-right: 1em;
+        right: 0;
+        float: right;
+        border: thin solid black;
+        background-color: #f2f2f2;
+      }
+    
+      .CollectionTitle { font-weight: bold }
+      .PageTitle { font-size: 150%; font-weight: bold }
+
+      .Summary { }
+      .Signature { }          
+      .Remarks { }
+      .Members { }
+      .Copyright { }
+      
+      .Section { font-size: 125%; font-weight: bold }
+      p.Summary {
+        margin-left: 1em;
+      }
+      .SectionBox { margin-left: 2em }
+      .NamespaceName { font-size: 105%; font-weight: bold }
+      .NamespaceSumary { }
+      .MemberName { font-size: 115%; font-weight: bold; margin-top: 1em }
+      .Subsection { font-size: 105%; font-weight: bold }
+      .SubsectionBox { margin-left: 2em; margin-bottom: 1em }
+
+      .CodeExampleTable { background-color: #f5f5dd; border: thin solid black; padding: .25em; }
+      
+      .TypesListing {
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+      }
+
+      .TypesListing td { 
+        margin: 0px;  
+        padding: .25em;
+        border: solid gray 1px;
+      }
+
+      .TypesListing th { 
+        margin: 0px;  
+        padding: .25em;
+        background-color: #f2f2f2;
+        border: solid gray 1px;
+      }
+
+      div.Footer {
+        border-top: 1px solid gray;
+        margin-top: 1.5em;
+        padding-top: 0.6em;
+        text-align: center;
+        color: gray;
+      }
+
+      span.NotEntered /* Documentation for this section has not yet been entered */ {
+        font-style: italic;
+        color: red;	
+      }
+
+      div.Header {
+        background: #B0C4DE;
+        border: double;
+        border-color: white;
+        border-width: 7px;
+        padding: 0.5em;
+      }
+
+      div.Header * {
+        font-size: smaller;
+      }
+
+      div.Note {
+      }
+
+      i.ParamRef {
+      }
+
+      i.subtitle {
+      }
+
+      ul.TypeMembersIndex {
+        text-align: left;
+        background: #F8F8F8;
+      }
+
+      ul.TypeMembersIndex li {
+        display: inline;
+        margin:  0.5em;
+      }
+
+      table.HeaderTable {
+      }
+
+      table.SignatureTable {
+      }
+
+      table.Documentation, table.Enumeration, table.TypeDocumentation {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table.Documentation tr th, table.TypeMembers tr th, table.Enumeration tr th, table.TypeDocumentation tr th {
+        background: whitesmoke;
+        padding: 0.8em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: bottom;
+      }
+
+      table.Documentation tr td, table.TypeMembers tr td, table.Enumeration tr td, table.TypeDocumentation tr td {
+        padding: 0.5em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      table.TypeMembers {
+        border: 1px solid #C0C0C0;
+        width: 100%;
+      }
+
+      table.TypeMembers tr td {
+        background: #F8F8F8;
+        border: white;
+      }
+
+      table.Documentation {
+      }
+
+      table.TypeMembers {
+      }
+
+      div.CodeExample {
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        background-color: #F8F8F8;
+      }
+
+      div.CodeExample p {
+        margin: 0.5em;
+        border-bottom: 1px solid #DDDDDD;
+      }
+
+      div.CodeExample div {
+        margin: 0.5em;
+      }
+
+      h4 {
+        margin-bottom: 0;
+      }
+
+      div.Signature {
+        border: 1px solid #C0C0C0;
+        background: #F2F2F2;
+        padding: 1em;
+      }
+    </style>
+    <script type="text/JavaScript">
+      function toggle_display (block) {
+        var w = document.getElementById (block);
+        var t = document.getElementById (block + ":toggle");
+        if (w.style.display == "none") {
+          w.style.display = "block";
+          t.innerHTML = "⊟";
+        } else {
+          w.style.display = "none";
+          t.innerHTML = "⊞";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="CollectionTitle">
+      <a href="../index.html">Reactor</a> : <a href="index.html">Reactor.Math Namespace</a></div>
+    <div class="SideBar">
+      <p>
+        <a href="#T:Reactor.Math.Rectangle">Overview</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Math.Rectangle:Signature">Signature</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Math.Rectangle:Docs">Remarks</a>
+      </p>
+      <p>
+        <a href="#Members">Members</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Math.Rectangle:Members">Member Details</a>
+      </p>
+    </div>
+    <h1 class="PageTitle" id="T:Reactor.Math.Rectangle">Rectangle  Struct</h1>
+    <p class="Summary" id="T:Reactor.Math.Rectangle:Summary">
+            Describes a 2D-rectangle.
+            </p>
+    <div>
+      <h2>Syntax</h2>
+      <div class="Signature" id="T:Reactor.Math.Rectangle:Signature">[System.Diagnostics.DebuggerDisplay("{DebugDisplayString,nq}")]<br />public struct  <b>Rectangle</b> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.IEquatable`1">IEquatable&lt;Rectangle&gt;</a></div>
+    </div>
+    <div class="Remarks" id="T:Reactor.Math.Rectangle:Docs">
+      <h2 class="Section">Remarks</h2>
+      <div class="SectionBox" id="T:Reactor.Math.Rectangle:Docs:Remarks">
+        <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+      </div>
+      <h2 class="Section">Requirements</h2>
+      <div class="SectionBox" id="T:Reactor.Math.Rectangle:Docs:Version Information">
+        <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+      <h2 class="Section" id="Members">Members</h2>
+      <div class="SectionBox" id="_Members">
+        <p>
+								See Also: Inherited members from
+								<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.ValueType">ValueType</a>.
+							</p>
+        <h2 class="Section">Public Constructors</h2>
+        <div class="SectionBox" id="Public Constructors">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <b>
+                      <a href="#C:Reactor.Math.Rectangle(System.Int32,System.Int32,System.Int32,System.Int32)">Rectangle</a>
+                    </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>)</div>
+                </td>
+                <td>
+            Creates a new instance of <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> struct, with the specified
+            position, width, and height.
+            </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Fields</h2>
+        <div class="SectionBox" id="Public Fields">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Reactor.Math.Rectangle.Height">Height</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            The height of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Reactor.Math.Rectangle.Width">Width</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            The width of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Reactor.Math.Rectangle.X">X</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            The x coordinate of the top-left corner of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Reactor.Math.Rectangle.Y">Y</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            The y coordinate of the top-left corner of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Properties</h2>
+        <div class="SectionBox" id="Public Properties">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Bottom">Bottom</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            Returns the y coordinate of the bottom edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Center">Center</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Point.html">Point</a>
+                  </i>. 
+            A <a href="../Reactor.Math/Point.html">Reactor.Math.Point</a> located in the center of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div>static </div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Empty">Empty</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Rectangle.html">Rectangle</a>
+                  </i>. 
+            Returns a <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> with X=0, Y=0, Width=0, Height=0.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.IsEmpty">IsEmpty</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. 
+            Whether or not this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> has a <a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Width">Rectangle.Width</a> and
+            <a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Height">Rectangle.Height</a> of 0, and a <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of (0, 0).
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Left">Left</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            Returns the x coordinate of the left edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Location">Location</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Point.html">Point</a>
+                  </i>. 
+            The top-left coordinates of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Right">Right</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            Returns the x coordinate of the right edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Size">Size</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Point.html">Point</a>
+                  </i>. 
+            The width-height coordinates of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Reactor.Math.Rectangle.Top">Top</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. 
+            Returns the y coordinate of the top edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Methods</h2>
+        <div class="SectionBox" id="Public Methods">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2)">Contains</a>
+                  </b>(<a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not the provided <a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point)">Contains</a>
+                  </b>(<a href="../Reactor.Math/Point.html">Point</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not the provided <a href="../Reactor.Math/Point.html">Reactor.Math.Point</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle)">Contains</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not the provided <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2)">Contains</a>
+                  </b>(<a href="../Reactor.Math/Vector2.html">Vector2</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not the provided <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32)">Contains</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not the provided coordinates lie within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Contains(System.Single,System.Single)">Contains</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not the provided coordinates lie within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle)">Equals</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Compares whether current instance is equal to specified <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Equals(System.Object)">Equals</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Compares whether current instance is equal to specified <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.GetHashCode()">GetHashCode</a>
+                  </b>()<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote>
+            Gets the hash code of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Inflate(System.Int32,System.Int32)">Inflate</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>)<blockquote>
+            Adjusts the edges of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> by specified horizontal and vertical amounts.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">Intersect</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<nobr> : <a href="../Reactor.Math/Rectangle.html">Rectangle</a></nobr><blockquote>
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that contains overlapping region of two other rectangles.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@)">Intersect</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <i>out</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<blockquote>
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that contains overlapping region of two other rectangles.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle)">Intersects</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote>
+            Gets whether or not a specified <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> intersects with this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle@,System.Boolean@)">Intersects</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <i>out</i> <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>)<blockquote>
+            Gets whether or not a specified <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> intersects with this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Offset(OpenTK.Vector2)">Offset</a>
+                  </b>(<a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a>)<blockquote>
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Offset(Reactor.Math.Point)">Offset</a>
+                  </b>(<a href="../Reactor.Math/Point.html">Point</a>)<blockquote>
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Offset(Reactor.Math.Vector2)">Offset</a>
+                  </b>(<a href="../Reactor.Math/Vector2.html">Vector2</a>)<blockquote>
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Offset(System.Int32,System.Int32)">Offset</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>)<blockquote>
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Offset(System.Single,System.Single)">Offset</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote>
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.ToString()">ToString</a>
+                  </b>()<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a></nobr><blockquote>
+            Returns a <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> representation of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> in the format:
+            {X:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.X">Rectangle.X</a>] Y:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Y">Rectangle.Y</a>] Width:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Width">Rectangle.Width</a>] Height:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Height">Rectangle.Height</a>]}
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">Union</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<nobr> : <a href="../Reactor.Math/Rectangle.html">Rectangle</a></nobr><blockquote>
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that completely contains two other rectangles.
+            </blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@)">Union</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <i>out</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a>)<blockquote>
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that completely contains two other rectangles.
+            </blockquote></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Operators</h2>
+        <div class="SectionBox" id="Public Operators">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">Equality</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <a href="../Reactor.Math/Rectangle.html">Rectangle</a>)</td>
+                <td>
+            Compares whether two <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instances are equal.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">Inequality</a>
+                  </b>(<a href="../Reactor.Math/Rectangle.html">Rectangle</a>, <a href="../Reactor.Math/Rectangle.html">Rectangle</a>)</td>
+                <td>
+            Compares whether two <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instances are not equal.
+            </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle">Conversion to System.Drawing.Rectangle</a>
+                  </b>(Implicit)</td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle">Conversion to Reactor.Math.Rectangle</a>
+                  </b>(Implicit)</td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Members" id="T:Reactor.Math.Rectangle:Members">
+      <h2 class="Section" id="MemberDetails">Member Details</h2>
+      <div class="SectionBox" id="_MemberDetails">
+        <h3 id="C:Reactor.Math.Rectangle(System.Int32,System.Int32,System.Int32,System.Int32)">Rectangle Constructor</h3>
+        <blockquote id="C:Reactor.Math.Rectangle(System.Int32,System.Int32,System.Int32,System.Int32):member">
+          <div class="msummary">
+            Creates a new instance of <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> struct, with the specified
+            position, width, and height.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public  <b>Rectangle</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> x, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> y, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> width, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> height)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="C:Reactor.Math.Rectangle(System.Int32,System.Int32,System.Int32,System.Int32):Parameters">
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>The x coordinate of the top-left corner of the created <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>The y coordinate of the top-left corner of the created <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>width</i>
+              </dt>
+              <dd>The width of the created <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>height</i>
+              </dt>
+              <dd>The height of the created <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="C:Reactor.Math.Rectangle(System.Int32,System.Int32,System.Int32,System.Int32):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="C:Reactor.Math.Rectangle(System.Int32,System.Int32,System.Int32,System.Int32):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Bottom">Bottom Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Bottom:member">
+          <div class="msummary">
+            Returns the y coordinate of the bottom edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Bottom</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Bottom:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Bottom:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Bottom:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Center">Center Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Center:member">
+          <div class="msummary">
+            A <a href="../Reactor.Math/Point.html">Reactor.Math.Point</a> located in the center of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Point.html">Point</a> <b>Center</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Center:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Center:Remarks">
+            If <a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Width">Rectangle.Width</a> or <a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Height">Rectangle.Height</a> is an odd number,
+            the center point will be rounded down.
+            </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Center:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2):member">
+          <div class="msummary">
+            Gets whether or not the provided <a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Contains</b> (<a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>The coordinates to check for inclusion in this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2):Returns">
+            <tt>true</tt> if the provided <a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a> lies inside this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(OpenTK.Vector2):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point):member">
+          <div class="msummary">
+            Gets whether or not the provided <a href="../Reactor.Math/Point.html">Reactor.Math.Point</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Contains</b> (<a href="../Reactor.Math/Point.html">Point</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>The coordinates to check for inclusion in this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point):Returns">
+            <tt>true</tt> if the provided <a href="../Reactor.Math/Point.html">Reactor.Math.Point</a> lies inside this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Point):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Gets whether or not the provided <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Contains</b> (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>The <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> to check for inclusion in this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle):Returns">
+            <tt>true</tt> if the provided <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>'s bounds lie entirely inside this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2):member">
+          <div class="msummary">
+            Gets whether or not the provided <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a> lies within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Contains</b> (<a href="../Reactor.Math/Vector2.html">Vector2</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>The coordinates to check for inclusion in this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2):Returns">
+            <tt>true</tt> if the provided <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a> lies inside this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(Reactor.Math.Vector2):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32):member">
+          <div class="msummary">
+            Gets whether or not the provided coordinates lie within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Contains</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> x, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> y)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32):Parameters">
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>The x coordinate of the point to check for containment.</dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>The y coordinate of the point to check for containment.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32):Returns">
+            <tt>true</tt> if the provided coordinates lie inside this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Int32,System.Int32):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Contains(System.Single,System.Single)">Contains Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Contains(System.Single,System.Single):member">
+          <div class="msummary">
+            Gets whether or not the provided coordinates lie within the bounds of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Contains</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a> x, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a> y)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Single,System.Single):Parameters">
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>The x coordinate of the point to check for containment.</dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>The y coordinate of the point to check for containment.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Single,System.Single):Returns">
+            <tt>true</tt> if the provided coordinates lie inside this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Single,System.Single):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Contains(System.Single,System.Single):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Empty">Empty Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Empty:member">
+          <div class="msummary">
+            Returns a <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> with X=0, Y=0, Width=0, Height=0.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="../Reactor.Math/Rectangle.html">Rectangle</a> <b>Empty</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Empty:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Empty:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Empty:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle)">Equals Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Compares whether current instance is equal to specified <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> other)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>other</i>
+              </dt>
+              <dd>The <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> to compare.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle):Returns">
+            <tt>true</tt> if the instances are equal; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Equals(Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Equals(System.Object)">Equals Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Equals(System.Object):member">
+          <div class="msummary">
+            Compares whether current instance is equal to specified <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> obj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Equals(System.Object):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>The <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> to compare.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Equals(System.Object):Returns">
+            <tt>true</tt> if the instances are equal; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Equals(System.Object):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Equals(System.Object):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.GetHashCode()">GetHashCode Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.GetHashCode():member">
+          <div class="msummary">
+            Gets the hash code of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>GetHashCode</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.GetHashCode():Returns">Hash code of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.GetHashCode():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.GetHashCode():Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Reactor.Math.Rectangle.Height">Height Field</h3>
+        <blockquote id="F:Reactor.Math.Rectangle.Height:member">
+          <div class="msummary">
+            The height of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Height</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.Height:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.Height:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Inflate(System.Int32,System.Int32)">Inflate Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Inflate(System.Int32,System.Int32):member">
+          <div class="msummary">
+            Adjusts the edges of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> by specified horizontal and vertical amounts.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Inflate</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> horizontalAmount, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> verticalAmount)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Inflate(System.Int32,System.Int32):Parameters">
+            <dl>
+              <dt>
+                <i>horizontalAmount</i>
+              </dt>
+              <dd>Value to adjust the left and right edges.</dd>
+              <dt>
+                <i>verticalAmount</i>
+              </dt>
+              <dd>Value to adjust the top and bottom edges.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Inflate(System.Int32,System.Int32):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Inflate(System.Int32,System.Int32):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">Intersect Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that contains overlapping region of two other rectangles.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="../Reactor.Math/Rectangle.html">Rectangle</a> <b>Intersect</b> (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> value1, <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value2)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>value1</i>
+              </dt>
+              <dd>The first <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>value2</i>
+              </dt>
+              <dd>The second <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Returns">Overlapping region of the two rectangles.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@)">Intersect Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):member">
+          <div class="msummary">
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that contains overlapping region of two other rectangles.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Intersect</b> (<i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value1, <i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value2, <i>out</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):Parameters">
+            <dl>
+              <dt>
+                <i>value1</i>
+              </dt>
+              <dd>The first <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>value2</i>
+              </dt>
+              <dd>The second <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>Overlapping region of the two rectangles as an output parameter.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersect(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle)">Intersects Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Gets whether or not a specified <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> intersects with this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Intersects</b> (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>Other <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle):Returns">
+            <tt>true</tt> if other <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> intersects with this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle@,System.Boolean@)">Intersects Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle@,System.Boolean@):member">
+          <div class="msummary">
+            Gets whether or not a specified <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> intersects with this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Intersects</b> (<i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value, <i>out</i> <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle@,System.Boolean@):Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>Other <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>
+                <tt>true</tt> if other <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> intersects with this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>; <tt>false</tt> otherwise. As an output parameter.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle@,System.Boolean@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Intersects(Reactor.Math.Rectangle@,System.Boolean@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.IsEmpty">IsEmpty Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.IsEmpty:member">
+          <div class="msummary">
+            Whether or not this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> has a <a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Width">Rectangle.Width</a> and
+            <a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Height">Rectangle.Height</a> of 0, and a <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of (0, 0).
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>IsEmpty</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.IsEmpty:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.IsEmpty:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.IsEmpty:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Left">Left Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Left:member">
+          <div class="msummary">
+            Returns the x coordinate of the left edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Left</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Left:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Left:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Left:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Location">Location Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Location:member">
+          <div class="msummary">
+            The top-left coordinates of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Point.html">Point</a> <b>Location</b>  { get; set; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Location:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Location:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Location:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Offset(OpenTK.Vector2)">Offset Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Offset(OpenTK.Vector2):member">
+          <div class="msummary">
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Offset</b> (<a href="javascript:alert(&quot;Documentation not found.&quot;)">OpenTK.Vector2</a> amount)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Offset(OpenTK.Vector2):Parameters">
+            <dl>
+              <dt>
+                <i>amount</i>
+              </dt>
+              <dd>The x and y components to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(OpenTK.Vector2):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(OpenTK.Vector2):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Point)">Offset Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Point):member">
+          <div class="msummary">
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Offset</b> (<a href="../Reactor.Math/Point.html">Point</a> amount)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Point):Parameters">
+            <dl>
+              <dt>
+                <i>amount</i>
+              </dt>
+              <dd>The x and y components to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Point):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Point):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Vector2)">Offset Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Vector2):member">
+          <div class="msummary">
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Offset</b> (<a href="../Reactor.Math/Vector2.html">Vector2</a> amount)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Vector2):Parameters">
+            <dl>
+              <dt>
+                <i>amount</i>
+              </dt>
+              <dd>The x and y components to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Vector2):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(Reactor.Math.Vector2):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Offset(System.Int32,System.Int32)">Offset Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Offset(System.Int32,System.Int32):member">
+          <div class="msummary">
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Offset</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> offsetX, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> offsetY)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Offset(System.Int32,System.Int32):Parameters">
+            <dl>
+              <dt>
+                <i>offsetX</i>
+              </dt>
+              <dd>The x coordinate to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>offsetY</i>
+              </dt>
+              <dd>The y coordinate to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(System.Int32,System.Int32):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(System.Int32,System.Int32):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Offset(System.Single,System.Single)">Offset Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Offset(System.Single,System.Single):member">
+          <div class="msummary">
+            Changes the <a href="../Reactor.Math/Rectangle.html#P:Reactor.Math.Rectangle.Location">Rectangle.Location</a> of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Offset</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a> offsetX, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a> offsetY)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Offset(System.Single,System.Single):Parameters">
+            <dl>
+              <dt>
+                <i>offsetX</i>
+              </dt>
+              <dd>The x coordinate to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>offsetY</i>
+              </dt>
+              <dd>The y coordinate to add to this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(System.Single,System.Single):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Offset(System.Single,System.Single):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">op_Equality Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Compares whether two <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instances are equal.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> operator== (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> a, <a href="../Reactor.Math/Rectangle.html">Rectangle</a> b)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>a</i>
+              </dt>
+              <dd>
+                <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instance on the left of the equal sign.</dd>
+              <dt>
+                <i>b</i>
+              </dt>
+              <dd>
+                <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instance on the right of the equal sign.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Returns">
+            <tt>true</tt> if the instances are equal; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Equality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle">Conversion Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static implicit operator <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Drawing.Rectangle">System.Drawing.Rectangle</a> (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle:Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle:Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(Reactor.Math.Rectangle)~System.Drawing.Rectangle:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle">Conversion Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static implicit operator <a href="../Reactor.Math/Rectangle.html">Rectangle</a> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Drawing.Rectangle">System.Drawing.Rectangle</a> value)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle:Parameters">
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle:Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Implicit(System.Drawing.Rectangle)~Reactor.Math.Rectangle:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">op_Inequality Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Compares whether two <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instances are not equal.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> operator!= (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> a, <a href="../Reactor.Math/Rectangle.html">Rectangle</a> b)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>a</i>
+              </dt>
+              <dd>
+                <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instance on the left of the not equal sign.</dd>
+              <dt>
+                <i>b</i>
+              </dt>
+              <dd>
+                <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> instance on the right of the not equal sign.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Returns">
+            <tt>true</tt> if the instances are not equal; <tt>false</tt> otherwise.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.op_Inequality(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Right">Right Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Right:member">
+          <div class="msummary">
+            Returns the x coordinate of the right edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Right</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Right:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Right:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Right:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Size">Size Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Size:member">
+          <div class="msummary">
+            The width-height coordinates of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Point.html">Point</a> <b>Size</b>  { get; set; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Size:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Size:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Size:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Math.Rectangle.Top">Top Property</h3>
+        <blockquote id="P:Reactor.Math.Rectangle.Top:member">
+          <div class="msummary">
+            Returns the y coordinate of the top edge of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Top</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Math.Rectangle.Top:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Top:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Math.Rectangle.Top:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.ToString()">ToString Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.ToString():member">
+          <div class="msummary">
+            Returns a <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> representation of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> in the format:
+            {X:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.X">Rectangle.X</a>] Y:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Y">Rectangle.Y</a>] Width:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Width">Rectangle.Width</a>] Height:[<a href="../Reactor.Math/Rectangle.html#F:Reactor.Math.Rectangle.Height">Rectangle.Height</a>]}
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> <b>ToString</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.ToString():Returns">
+            <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> representation of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.ToString():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.ToString():Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle)">Union Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle):member">
+          <div class="msummary">
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that completely contains two other rectangles.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="../Reactor.Math/Rectangle.html">Rectangle</a> <b>Union</b> (<a href="../Reactor.Math/Rectangle.html">Rectangle</a> value1, <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value2)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Parameters">
+            <dl>
+              <dt>
+                <i>value1</i>
+              </dt>
+              <dd>The first <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>value2</i>
+              </dt>
+              <dd>The second <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Returns">The union of the two rectangles.</blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle,Reactor.Math.Rectangle):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@)">Union Method</h3>
+        <blockquote id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):member">
+          <div class="msummary">
+            Creates a new <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a> that completely contains two other rectangles.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Union</b> (<i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value1, <i>ref</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> value2, <i>out</i> <a href="../Reactor.Math/Rectangle.html">Rectangle</a> result)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):Parameters">
+            <dl>
+              <dt>
+                <i>value1</i>
+              </dt>
+              <dd>The first <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>value2</i>
+              </dt>
+              <dd>The second <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.</dd>
+              <dt>
+                <i>result</i>
+              </dt>
+              <dd>The union of the two rectangles as an output parameter.</dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Math.Rectangle.Union(Reactor.Math.Rectangle@,Reactor.Math.Rectangle@,Reactor.Math.Rectangle@):Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Reactor.Math.Rectangle.Width">Width Field</h3>
+        <blockquote id="F:Reactor.Math.Rectangle.Width:member">
+          <div class="msummary">
+            The width of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Width</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.Width:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.Width:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Reactor.Math.Rectangle.X">X Field</h3>
+        <blockquote id="F:Reactor.Math.Rectangle.X:member">
+          <div class="msummary">
+            The x coordinate of the top-left corner of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>X</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.X:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.X:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Reactor.Math.Rectangle.Y">Y Field</h3>
+        <blockquote id="F:Reactor.Math.Rectangle.Y:member">
+          <div class="msummary">
+            The y coordinate of the top-left corner of this <a href="../Reactor.Math/Rectangle.html">Reactor.Math.Rectangle</a>.
+            </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Y</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.Y:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Reactor.Math.Rectangle.Y:Version Information">
+            <b>Namespace: </b>Reactor.Math<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+      </div>
+    </div>
+    <hr size="1" />
+    <div class="Copyright">
+    </div>
+  </body>
+</html>

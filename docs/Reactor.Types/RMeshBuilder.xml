@@ -1,0 +1,130 @@
+<Type Name="RMeshBuilder" FullName="Reactor.Types.RMeshBuilder">
+  <TypeSignature Language="C#" Value="public class RMeshBuilder : Reactor.Types.RRenderNode" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RMeshBuilder extends Reactor.Types.RRenderNode" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Reactor.Types.RRenderNode</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RMeshBuilder ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateBox">
+      <MemberSignature Language="C#" Value="public void CreateBox (OpenTK.Vector3 Center, OpenTK.Vector3 Size, bool FlipNormals);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CreateBox(valuetype OpenTK.Vector3 Center, valuetype OpenTK.Vector3 Size, bool FlipNormals) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="Center" Type="OpenTK.Vector3" />
+        <Parameter Name="Size" Type="OpenTK.Vector3" />
+        <Parameter Name="FlipNormals" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="Center">To be added.</param>
+        <param name="Size">To be added.</param>
+        <param name="FlipNormals">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateSphere">
+      <MemberSignature Language="C#" Value="public void CreateSphere (OpenTK.Vector3 Center, float Radius, int Tessellation);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CreateSphere(valuetype OpenTK.Vector3 Center, float32 Radius, int32 Tessellation) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="Center" Type="OpenTK.Vector3" />
+        <Parameter Name="Radius" Type="System.Single" />
+        <Parameter Name="Tessellation" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="Center">To be added.</param>
+        <param name="Radius">To be added.</param>
+        <param name="Tessellation">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Dispose() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Render">
+      <MemberSignature Language="C#" Value="public override void Render ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Render() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetTexture">
+      <MemberSignature Language="C#" Value="public void SetTexture (int layer, Reactor.Types.RTexture texture);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetTexture(int32 layer, class Reactor.Types.RTexture texture) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="layer" Type="System.Int32" />
+        <Parameter Name="texture" Type="Reactor.Types.RTexture" />
+      </Parameters>
+      <Docs>
+        <param name="layer">To be added.</param>
+        <param name="texture">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,126 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="Reactor" Version="1.0.0.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute+DebuggingModes.IgnoreSymbolStoreSequencePoints | System.Diagnostics.DebuggableAttribute+DebuggingModes.DisableOptimizations)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("Microsoft")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright © Microsoft 2014")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyFileVersion("1.0.0.0")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("OpenGF")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("OpenGF")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.InteropServices.Guid("5a6ca02d-5880-4b5b-86b5-73a71379cb5b")</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="Reactor">
+      <Type Name="RCamera" Kind="Class" />
+      <Type Name="ReactorException" Kind="Class" />
+      <Type Name="REngine" Kind="Class" />
+      <Type Name="RFileSystem" Kind="Class" />
+      <Type Name="RGame" Kind="Class" />
+      <Type Name="RGameWindow" Kind="Class" />
+      <Type Name="RInput" Kind="Class" />
+      <Type Name="RMaterials" Kind="Class" />
+      <Type Name="RScene" Kind="Class" />
+      <Type Name="RTextures" Kind="Class" />
+      <Type Name="RViewport" Kind="Structure" />
+    </Namespace>
+    <Namespace Name="Reactor.Geometry">
+      <Type Name="IVertexType" Kind="Interface" />
+      <Type Name="RBufferUsage" Kind="Enumeration" />
+      <Type Name="RIndexBuffer`1" DisplayName="RIndexBuffer&lt;T&gt;" Kind="Class" />
+      <Type Name="RIndexElementSize" Kind="Enumeration" />
+      <Type Name="RVertexBuffer" Kind="Class" />
+      <Type Name="RVertexData" Kind="Structure" />
+      <Type Name="RVertexDataOptions" Kind="Enumeration" />
+      <Type Name="RVertexDeclaration" Kind="Class" />
+      <Type Name="RVertexElement" Kind="Structure" />
+      <Type Name="RVertexElementFormat" Kind="Enumeration" />
+      <Type Name="RVertexElementUsage" Kind="Enumeration" />
+    </Namespace>
+    <Namespace Name="Reactor.Math">
+      <Type Name="BoundingBox" Kind="Structure" />
+      <Type Name="BoundingFrustum" Kind="Class" />
+      <Type Name="BoundingSphere" Kind="Structure" />
+      <Type Name="ContainmentType" Kind="Enumeration" />
+      <Type Name="MathHelper" Kind="Class" />
+      <Type Name="Plane" Kind="Structure" />
+      <Type Name="PlaneIntersectionType" Kind="Enumeration" />
+      <Type Name="Point" Kind="Structure" />
+      <Type Name="Ray" Kind="Structure" />
+      <Type Name="Rectangle" Kind="Structure" />
+    </Namespace>
+    <Namespace Name="Reactor.Platform">
+      <Type Name="DummyRenderControl" Kind="Class" />
+      <Type Name="FormRenderControl" Kind="Class" />
+      <Type Name="GameWindowRenderControl" Kind="Class" />
+      <Type Name="PictureBoxRenderControl" Kind="Class" />
+      <Type Name="RenderControl" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Reactor.Types">
+      <Type Name="RCameraNode" Kind="Class" />
+      <Type Name="RColor" Kind="Structure" />
+      <Type Name="RDisplayMode" Kind="Class" />
+      <Type Name="RDisplayModes" Kind="Class" />
+      <Type Name="RGameTime" Kind="Class" />
+      <Type Name="RKey" Kind="Enumeration" />
+      <Type Name="RLight" Kind="Structure" />
+      <Type Name="RLightType" Kind="Enumeration" />
+      <Type Name="RMaterial" Kind="Class" />
+      <Type Name="RMesh" Kind="Class" />
+      <Type Name="RMeshBuilder" Kind="Class" />
+      <Type Name="RNode" Kind="Class" />
+      <Type Name="RRenderNode" Kind="Class" />
+      <Type Name="RSceneNode" Kind="Class" />
+      <Type Name="RShader" Kind="Class" />
+      <Type Name="RShaderEffect" Kind="Class" />
+      <Type Name="RShaderEffectType" Kind="Enumeration" />
+      <Type Name="RSingleton`1" DisplayName="RSingleton&lt;T&gt;" Kind="Class" />
+      <Type Name="RSurfaceFormat" Kind="Enumeration" />
+      <Type Name="RTexture" Kind="Class" />
+      <Type Name="RTexture2D" Kind="Class" />
+      <Type Name="RTexture3D" Kind="Class" />
+      <Type Name="RTextureLayer" Kind="Enumeration" />
+      <Type Name="RTextureMagFilter" Kind="Enumeration" />
+      <Type Name="RTextureMinFilter" Kind="Enumeration" />
+      <Type Name="RUpdateNode" Kind="Class" />
+      <Type Name="RWindowStyle" Kind="Enumeration" />
+    </Namespace>
+    <Namespace Name="Reactor.Utilities">
+      <Type Name="Serialization" Kind="Class" />
+    </Namespace>
+  </Types>
+  <Title>Reactor</Title>
+</Overview>

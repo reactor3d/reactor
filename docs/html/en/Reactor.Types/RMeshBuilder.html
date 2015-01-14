@@ -1,0 +1,869 @@
+<html>
+  <head>
+    <title>Reactor.Types.RMeshBuilder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a { text-decoration: none }
+
+      div.SideBar {
+        padding-left: 1em;
+        padding-right: 1em;
+        right: 0;
+        float: right;
+        border: thin solid black;
+        background-color: #f2f2f2;
+      }
+    
+      .CollectionTitle { font-weight: bold }
+      .PageTitle { font-size: 150%; font-weight: bold }
+
+      .Summary { }
+      .Signature { }          
+      .Remarks { }
+      .Members { }
+      .Copyright { }
+      
+      .Section { font-size: 125%; font-weight: bold }
+      p.Summary {
+        margin-left: 1em;
+      }
+      .SectionBox { margin-left: 2em }
+      .NamespaceName { font-size: 105%; font-weight: bold }
+      .NamespaceSumary { }
+      .MemberName { font-size: 115%; font-weight: bold; margin-top: 1em }
+      .Subsection { font-size: 105%; font-weight: bold }
+      .SubsectionBox { margin-left: 2em; margin-bottom: 1em }
+
+      .CodeExampleTable { background-color: #f5f5dd; border: thin solid black; padding: .25em; }
+      
+      .TypesListing {
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+      }
+
+      .TypesListing td { 
+        margin: 0px;  
+        padding: .25em;
+        border: solid gray 1px;
+      }
+
+      .TypesListing th { 
+        margin: 0px;  
+        padding: .25em;
+        background-color: #f2f2f2;
+        border: solid gray 1px;
+      }
+
+      div.Footer {
+        border-top: 1px solid gray;
+        margin-top: 1.5em;
+        padding-top: 0.6em;
+        text-align: center;
+        color: gray;
+      }
+
+      span.NotEntered /* Documentation for this section has not yet been entered */ {
+        font-style: italic;
+        color: red;	
+      }
+
+      div.Header {
+        background: #B0C4DE;
+        border: double;
+        border-color: white;
+        border-width: 7px;
+        padding: 0.5em;
+      }
+
+      div.Header * {
+        font-size: smaller;
+      }
+
+      div.Note {
+      }
+
+      i.ParamRef {
+      }
+
+      i.subtitle {
+      }
+
+      ul.TypeMembersIndex {
+        text-align: left;
+        background: #F8F8F8;
+      }
+
+      ul.TypeMembersIndex li {
+        display: inline;
+        margin:  0.5em;
+      }
+
+      table.HeaderTable {
+      }
+
+      table.SignatureTable {
+      }
+
+      table.Documentation, table.Enumeration, table.TypeDocumentation {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table.Documentation tr th, table.TypeMembers tr th, table.Enumeration tr th, table.TypeDocumentation tr th {
+        background: whitesmoke;
+        padding: 0.8em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: bottom;
+      }
+
+      table.Documentation tr td, table.TypeMembers tr td, table.Enumeration tr td, table.TypeDocumentation tr td {
+        padding: 0.5em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      table.TypeMembers {
+        border: 1px solid #C0C0C0;
+        width: 100%;
+      }
+
+      table.TypeMembers tr td {
+        background: #F8F8F8;
+        border: white;
+      }
+
+      table.Documentation {
+      }
+
+      table.TypeMembers {
+      }
+
+      div.CodeExample {
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        background-color: #F8F8F8;
+      }
+
+      div.CodeExample p {
+        margin: 0.5em;
+        border-bottom: 1px solid #DDDDDD;
+      }
+
+      div.CodeExample div {
+        margin: 0.5em;
+      }
+
+      h4 {
+        margin-bottom: 0;
+      }
+
+      div.Signature {
+        border: 1px solid #C0C0C0;
+        background: #F2F2F2;
+        padding: 1em;
+      }
+    </style>
+    <script type="text/JavaScript">
+      function toggle_display (block) {
+        var w = document.getElementById (block);
+        var t = document.getElementById (block + ":toggle");
+        if (w.style.display == "none") {
+          w.style.display = "block";
+          t.innerHTML = "⊟";
+        } else {
+          w.style.display = "none";
+          t.innerHTML = "⊞";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="CollectionTitle">
+      <a href="../index.html">Reactor</a> : <a href="index.html">Reactor.Types Namespace</a></div>
+    <div class="SideBar">
+      <p>
+        <a href="#T:Reactor.Types.RMeshBuilder">Overview</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Types.RMeshBuilder:Signature">Signature</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Types.RMeshBuilder:Docs">Remarks</a>
+      </p>
+      <p>
+        <a href="#Members">Members</a>
+      </p>
+      <p>
+        <a href="#T:Reactor.Types.RMeshBuilder:Members">Member Details</a>
+      </p>
+    </div>
+    <h1 class="PageTitle" id="T:Reactor.Types.RMeshBuilder">RMeshBuilder  Class</h1>
+    <p class="Summary" id="T:Reactor.Types.RMeshBuilder:Summary">
+      <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+    </p>
+    <div>
+      <h2>Syntax</h2>
+      <div class="Signature" id="T:Reactor.Types.RMeshBuilder:Signature">public class  <b>RMeshBuilder</b> : <a href="../Reactor.Types/RRenderNode.html">RRenderNode</a></div>
+    </div>
+    <div class="Remarks" id="T:Reactor.Types.RMeshBuilder:Docs">
+      <h2 class="Section">Remarks</h2>
+      <div class="SectionBox" id="T:Reactor.Types.RMeshBuilder:Docs:Remarks">
+        <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+      </div>
+      <h2 class="Section">Requirements</h2>
+      <div class="SectionBox" id="T:Reactor.Types.RMeshBuilder:Docs:Version Information">
+        <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+      <h2 class="Section" id="Members">Members</h2>
+      <div class="SectionBox" id="_Members">
+        <p>
+								See Also: Inherited members from
+								<a href="../Reactor.Types/RRenderNode.html">RRenderNode</a>.
+							</p>
+        <h2 class="Section">Public Constructors</h2>
+        <div class="SectionBox" id="Public Constructors">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <b>
+                      <a href="#C:Reactor.Types.RMeshBuilder()">RMeshBuilder</a>
+                    </b>()</div>
+                </td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Properties</h2>
+        <div class="SectionBox" id="Public Properties">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RSceneNode.html#P:Reactor.Types.RSceneNode.Children">Children</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.Generic.List`1">List&lt;RSceneNode&gt;</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RSceneNode.html">RSceneNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RRenderNode.html#P:Reactor.Types.RRenderNode.IsDrawable">IsDrawable</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RRenderNode.html">RRenderNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#P:Reactor.Types.RUpdateNode.IsEnabled">IsEnabled</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#P:Reactor.Types.RUpdateNode.Matrix">Matrix</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Matrix.html">Reactor.Math.Matrix</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RSceneNode.html#P:Reactor.Types.RSceneNode.Name">Name</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RSceneNode.html">RSceneNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RSceneNode.html#P:Reactor.Types.RSceneNode.Parent">Parent</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Types/RSceneNode.html">RSceneNode</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RSceneNode.html">RSceneNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#P:Reactor.Types.RUpdateNode.Position">Position</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#P:Reactor.Types.RUpdateNode.Rotation">Rotation</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Quaternion.html">Reactor.Math.Quaternion</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#P:Reactor.Types.RUpdateNode.Scale">Scale</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RRenderNode.html#P:Reactor.Types.RRenderNode.VertexBuffer">VertexBuffer</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Geometry/RVertexBuffer.html">Reactor.Geometry.RVertexBuffer</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RRenderNode.html">RRenderNode</a>.</i>)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Methods</h2>
+        <div class="SectionBox" id="Public Methods">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Types.RMeshBuilder.CreateBox(Reactor.Math.Vector3,Reactor.Math.Vector3,System.Boolean)">CreateBox</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Types.RMeshBuilder.CreateSphere(Reactor.Math.Vector3,System.Single,System.Int32)">CreateSphere</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Types.RMeshBuilder.Dispose()">Dispose</a>
+                  </b>()<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.GetPosition()">GetPosition</a>
+                  </b>()<nobr> : <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.GetRotation()">GetRotation</a>
+                  </b>()<nobr> : <a href="../Reactor.Math/Quaternion.html">Reactor.Math.Quaternion</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.GetRotationMatrix()">GetRotationMatrix</a>
+                  </b>()<nobr> : <a href="../Reactor.Math/Matrix.html">Reactor.Math.Matrix</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.GetScale()">GetScale</a>
+                  </b>()<nobr> : <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.LookAt(Reactor.Math.Vector3)">LookAt</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.Move(Reactor.Math.Vector3)">Move</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.Move(System.Single,System.Single,System.Single)">Move</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Types.RMeshBuilder.Render()">Render</a>
+                  </b>()<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RRenderNode.html#M:Reactor.Types.RRenderNode.Render()">Render</a>
+                  </b>()<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RRenderNode.html">RRenderNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.Rotate(Reactor.Math.Quaternion)">Rotate</a>
+                  </b>(<a href="../Reactor.Math/Quaternion.html">Reactor.Math.Quaternion</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.Rotate(System.Single,System.Single,System.Single)">Rotate</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.RotateX(System.Single)">RotateX</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.RotateY(System.Single)">RotateY</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.RotateZ(System.Single)">RotateZ</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetMatrix(Reactor.Math.Matrix@)">SetMatrix</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/Matrix.html">Reactor.Math.Matrix</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetPosition(Reactor.Math.Vector3)">SetPosition</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetPosition(System.Single,System.Single,System.Single)">SetPosition</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetRotation(Reactor.Math.Quaternion@)">SetRotation</a>
+                  </b>(<i>ref</i> <a href="../Reactor.Math/Quaternion.html">Reactor.Math.Quaternion</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetScale(Reactor.Math.Vector3)">SetScale</a>
+                  </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetScale(System.Single)">SetScale</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.SetScale(System.Single,System.Single,System.Single)">SetScale</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Reactor.Types.RMeshBuilder.SetTexture(System.Int32,Reactor.Types.RTexture)">SetTexture</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="../Reactor.Types/RTexture.html">RTexture</a>)<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#M:Reactor.Types.RUpdateNode.Update()">Update</a>
+                  </b>()<blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</blockquote></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Events</h2>
+        <div class="SectionBox" id="Public Events">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RRenderNode.html#E:Reactor.Types.RRenderNode.OnRender">OnRender</a>
+                  </b>
+                </td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RRenderNode.html">RRenderNode</a>.</i>)</td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="../Reactor.Types/RUpdateNode.html#E:Reactor.Types.RUpdateNode.OnUpdate">OnUpdate</a>
+                  </b>
+                </td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span> (<i>Inherited from <a href="../Reactor.Types/RUpdateNode.html">RUpdateNode</a>.</i>)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Members" id="T:Reactor.Types.RMeshBuilder:Members">
+      <h2 class="Section" id="MemberDetails">Member Details</h2>
+      <div class="SectionBox" id="_MemberDetails">
+        <h3 id="C:Reactor.Types.RMeshBuilder()">RMeshBuilder Constructor</h3>
+        <blockquote id="C:Reactor.Types.RMeshBuilder():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public  <b>RMeshBuilder</b> ()</div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="C:Reactor.Types.RMeshBuilder():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="C:Reactor.Types.RMeshBuilder():Version Information">
+            <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Types.RMeshBuilder.CreateBox(Reactor.Math.Vector3,Reactor.Math.Vector3,System.Boolean)">CreateBox Method</h3>
+        <blockquote id="M:Reactor.Types.RMeshBuilder.CreateBox(Reactor.Math.Vector3,Reactor.Math.Vector3,System.Boolean):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>CreateBox</b> (<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Center, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Size, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> FlipNormals)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Types.RMeshBuilder.CreateBox(Reactor.Math.Vector3,Reactor.Math.Vector3,System.Boolean):Parameters">
+            <dl>
+              <dt>
+                <i>Center</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>Size</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>FlipNormals</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.CreateBox(Reactor.Math.Vector3,Reactor.Math.Vector3,System.Boolean):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.CreateBox(Reactor.Math.Vector3,Reactor.Math.Vector3,System.Boolean):Version Information">
+            <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Types.RMeshBuilder.CreateSphere(Reactor.Math.Vector3,System.Single,System.Int32)">CreateSphere Method</h3>
+        <blockquote id="M:Reactor.Types.RMeshBuilder.CreateSphere(Reactor.Math.Vector3,System.Single,System.Int32):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>CreateSphere</b> (<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Center, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Single">float</a> Radius, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> Tessellation)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Types.RMeshBuilder.CreateSphere(Reactor.Math.Vector3,System.Single,System.Int32):Parameters">
+            <dl>
+              <dt>
+                <i>Center</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>Radius</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>Tessellation</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.CreateSphere(Reactor.Math.Vector3,System.Single,System.Int32):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.CreateSphere(Reactor.Math.Vector3,System.Single,System.Int32):Version Information">
+            <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Types.RMeshBuilder.Dispose()">Dispose Method</h3>
+        <blockquote id="M:Reactor.Types.RMeshBuilder.Dispose():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Dispose</b> ()</div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.Dispose():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.Dispose():Version Information">
+            <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Types.RMeshBuilder.Render()">Render Method</h3>
+        <blockquote id="M:Reactor.Types.RMeshBuilder.Render():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>Render</b> ()</div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.Render():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.Render():Version Information">
+            <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Reactor.Types.RMeshBuilder.SetTexture(System.Int32,Reactor.Types.RTexture)">SetTexture Method</h3>
+        <blockquote id="M:Reactor.Types.RMeshBuilder.SetTexture(System.Int32,Reactor.Types.RTexture):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Void">void</a> <b>SetTexture</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> layer, <a href="../Reactor.Types/RTexture.html">RTexture</a> texture)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Reactor.Types.RMeshBuilder.SetTexture(System.Int32,Reactor.Types.RTexture):Parameters">
+            <dl>
+              <dt>
+                <i>layer</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>texture</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.SetTexture(System.Int32,Reactor.Types.RTexture):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Reactor.Types.RMeshBuilder.SetTexture(System.Int32,Reactor.Types.RTexture):Version Information">
+            <b>Namespace: </b>Reactor.Types<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+      </div>
+    </div>
+    <hr size="1" />
+    <div class="Copyright">
+    </div>
+  </body>
+</html>

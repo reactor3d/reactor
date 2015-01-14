@@ -1,0 +1,209 @@
+<Type Name="RMaterial" FullName="Reactor.Types.RMaterial">
+  <TypeSignature Language="C#" Value="public class RMaterial" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RMaterial extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RMaterial (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string name) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Colors">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.List&lt;Reactor.Types.RColor&gt; Colors { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.List`1&lt;valuetype Reactor.Types.RColor&gt; Colors" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.List&lt;Reactor.Types.RColor&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Id">
+      <MemberSignature Language="C#" Value="public int Id { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Id" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetTexture">
+      <MemberSignature Language="C#" Value="public void SetTexture (Reactor.Types.RTextureLayer TextureLayer, Reactor.Types.RTexture texture);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetTexture(valuetype Reactor.Types.RTextureLayer TextureLayer, class Reactor.Types.RTexture texture) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="TextureLayer" Type="Reactor.Types.RTextureLayer" />
+        <Parameter Name="texture" Type="Reactor.Types.RTexture" />
+      </Parameters>
+      <Docs>
+        <param name="TextureLayer">To be added.</param>
+        <param name="texture">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetTexture">
+      <MemberSignature Language="C#" Value="public void SetTexture (int TextureLayer, Reactor.Types.RTexture texture);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetTexture(int32 TextureLayer, class Reactor.Types.RTexture texture) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="TextureLayer" Type="System.Int32" />
+        <Parameter Name="texture" Type="Reactor.Types.RTexture" />
+      </Parameters>
+      <Docs>
+        <param name="TextureLayer">To be added.</param>
+        <param name="texture">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetTexture">
+      <MemberSignature Language="C#" Value="public void SetTexture (int TextureLayer, uint TextureId);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetTexture(int32 TextureLayer, unsigned int32 TextureId) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="TextureLayer" Type="System.Int32" />
+        <Parameter Name="TextureId" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="TextureLayer">To be added.</param>
+        <param name="TextureId">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Shader">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RShader Shader { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Types.RShader Shader" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RShader</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Shininess">
+      <MemberSignature Language="C#" Value="public float Shininess { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Shininess" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SpecularPower">
+      <MemberSignature Language="C#" Value="public float SpecularPower { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 SpecularPower" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Textures">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.List&lt;Reactor.Types.RTexture&gt; Textures { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.List`1&lt;class Reactor.Types.RTexture&gt; Textures" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.List&lt;Reactor.Types.RTexture&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

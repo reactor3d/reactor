@@ -1,0 +1,107 @@
+<Type Name="RTextures" FullName="Reactor.RTextures">
+  <TypeSignature Language="C#" Value="public class RTextures : Reactor.Types.RSingleton&lt;Reactor.RTextures&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RTextures extends Reactor.Types.RSingleton`1&lt;class Reactor.RTextures&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Reactor.Types.RSingleton&lt;Reactor.RTextures&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">Reactor.RTextures</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="CreateTexture">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RTexture CreateTexture (string name, string filename);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RTexture CreateTexture(string name, string filename) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTexture</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="filename" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <param name="filename">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateTexture">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RTexture CreateTexture (byte[] data, string name, bool isCompressed);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RTexture CreateTexture(unsigned int8[] data, string name, bool isCompressed) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTexture</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="System.Byte[]" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="isCompressed" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="name">To be added.</param>
+        <param name="isCompressed">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetTexture">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RTexture GetTexture (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RTexture GetTexture(string name) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RTexture</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveTexture">
+      <MemberSignature Language="C#" Value="public bool RemoveTexture (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool RemoveTexture(string name) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
