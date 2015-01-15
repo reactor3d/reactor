@@ -57,7 +57,7 @@ namespace MonoMac
             mesh.Update();
 
             RFont testing = new RFont();
-            testing.RenderString("This is a test");
+
 
         }
 

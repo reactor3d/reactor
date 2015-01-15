@@ -29,6 +29,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Drawing.Text;
+using System.Runtime.InteropServices;
+using SharpFont;
+using System.IO;
 
 
 namespace Reactor.Types
@@ -37,7 +40,7 @@ namespace Reactor.Types
     {
 
         internal string FamilyName;
-        internal FontFamily font;
+        internal Face font;
         public RFont(string fileName)
         {
         }
@@ -46,49 +49,46 @@ namespace Reactor.Types
         {
             RLog.Info("Creating default system font.");
             font = RFontResources.SystemFont;
-            Font f = new Font(font, 1.0f);
-            int charHeight = f.Height;
-            Rectangle bounds = new Rectangle(0,0,1,1);
-            bounds.Inflate(0, charHeight);
+            BuildTextureMap(16);
 
         }
 
-        public void BuildTextureMap(uint Size)
+        public void BuildTextureMap(int Size)
         {
+            font.SetCharSize(0, Size, 0, 72);
+            font.SetPixelSizes(0, (uint)Size);
+            string table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+~`\\|]}[{'\";:/?.>,<";
+            List<RTextureGlyph> glyphs = new List<RTextureGlyph>();
+            foreach(char c in table)
+            {
 
+                font.LoadChar(c, (LoadFlags.Render|LoadFlags.Monochrome), LoadTarget.Normal);
+                //font.Glyph.RenderGlyph(RenderMode.Normal);
 
+                glyphs.Add(new RTextureGlyph(font.Glyph, c));
+            }
         }
-        public Bitmap RenderString(string text)
-        {
 
-        }
     }
     internal static class RFontResources
     {
-        internal static PrivateFontCollection fonts = new PrivateFontCollection();
+        internal static Library FreetypeLibrary = new Library();
         internal static Assembly Assembly = Assembly.GetAssembly(typeof(RFontResources));
-        internal static FontFamily GetResource(string resource){
+        internal static Face GetResource(string resource){
             System.IO.BinaryReader reader = new System.IO.BinaryReader(Assembly.GetManifestResourceStream(resource));
             byte[] buffer = new byte[reader.BaseStream.Length];
             reader.Read(buffer, 0, buffer.Length);
             reader.Close();
-            FontFamily font;
-            try
-            {
-                fonts.AddMemoryFont((IntPtr)buffer, buffer.Length);
-                font = new FontFamily("coders_crux", fonts);
 
-                return font;
-            }
-            catch(Exception e)
-            {
-                RLog.Error(e);
-                return null;
-            }
+            Face face = FreetypeLibrary.NewMemoryFace(buffer, 0);
+            return face;
+
         }
 
-        internal static FontFamily SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
+        internal static Face SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
 
     }
+
+
 }
 

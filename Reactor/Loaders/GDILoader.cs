@@ -23,6 +23,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System.IO;
+
+
 #region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
@@ -48,9 +51,21 @@ namespace Reactor
     {
         public static void LoadFromData( byte[] data, out uint texturehandle, out TextureTarget dimension)
         {
-            throw new NotImplementedException("Loading uncompressed textures from memory isn't yet supported");
+            dimension = (TextureTarget) 0;
+            texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
+            MemoryStream stream = new MemoryStream(data);
+            Bitmap b = new Bitmap(stream);
+            LoadFromBitmap(ref b, out texturehandle, out dimension);
         }
+
         public static void LoadFromDisk( string filename, out uint texturehandle, out TextureTarget dimension )
+        {
+            dimension = (TextureTarget) 0;
+            texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
+            Bitmap b = new Bitmap(filename);
+            LoadFromBitmap(ref b, out texturehandle, out dimension);
+        }
+        public static void LoadFromBitmap( ref Bitmap bitmap, out uint texturehandle, out TextureTarget dimension )
         {
             dimension = (TextureTarget) 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
@@ -60,7 +75,7 @@ namespace Reactor
 
             try // Exceptions will be thrown if any Problem occurs while working on the file. 
             {
-                CurrentBitmap = new Bitmap( filename );
+                CurrentBitmap = bitmap;
                 if ( TextureLoaderParameters.FlipImages )
                     CurrentBitmap.RotateFlip( RotateFlipType.RotateNoneFlipY );
 
@@ -77,8 +92,6 @@ namespace Reactor
                 OpenTK.Graphics.OpenGL.PixelFormat pf;
                 OpenTK.Graphics.OpenGL.PixelType pt;
 
-                if (TextureLoaderParameters.Verbose)
-                    Trace.WriteLine( "File: " + filename + " Format: " + CurrentBitmap.PixelFormat );
 
                 switch ( CurrentBitmap.PixelFormat )
                 {
@@ -168,7 +181,7 @@ namespace Reactor
             {
                 dimension = (TextureTarget) 0;
                 texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
-                throw new ArgumentException( "Texture Loading Error: Failed to read file " + filename + ".\n" + e );
+                throw new ArgumentException( "Texture Loading Error: Failed to read data.\n" + e );
                 // return; // failure
             } finally
             {

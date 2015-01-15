@@ -105,6 +105,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SharpFont">
+      <HintPath>packages\SharpFont.2.5.3.0\lib\net20\SharpFont.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Platform\Threading.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="Platform\Profiler.cs" />
     <Compile Include="RScreen.cs" />
     <Compile Include="Types\RFont.cs" />
+    <Compile Include="Types\RTextureGlyph.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -201,6 +205,7 @@
     <EmbeddedResource Include="Shaders\basicEffect.frag.glsl" />
     <EmbeddedResource Include="Shaders\basicEffect.vert.glsl" />
     <EmbeddedResource Include="Fonts\coders_crux.ttf" />
+    <None Include="freetype6.dll" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
