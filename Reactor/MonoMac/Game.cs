@@ -56,6 +56,9 @@ namespace MonoMac
             //mesh.SetScale(0.0001f);
             mesh.Update();
 
+            RFont testing = new RFont();
+            testing.RenderString("This is a test");
+
         }
 
         public override void Render()

@@ -24,8 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using SharpFont;
 using System.Reflection;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+using System.Drawing.Text;
 
 
 namespace Reactor.Types
@@ -34,66 +37,48 @@ namespace Reactor.Types
     {
 
         internal string FamilyName;
-        internal int FaceCount;
-        internal FaceFlags FaceFlags;
-        internal string StyleName;
-        internal StyleFlags StyleFlags;
-
+        internal FontFamily font;
         public RFont(string fileName)
         {
-            using (Library lib = new Library())
-            {
-                RLog.Info("FreeType version: " + lib.Version + "\n");
-
-                using (Face face = lib.NewFace(RFileSystem.Instance.GetFilePath(fileName), 0))
-                {
-
-                    FamilyName = face.FamilyName;
-                    FaceCount = face.FaceCount;
-                    FaceFlags = face.FaceFlags;
-                    StyleName = face.StyleName;
-                    StyleFlags = face.StyleFlags;
-
-
-                    //face.SetCharSize(0, 32, 0, 96);
-
-                    //Console.WriteLine("\nWriting string \"Hello World!\":");
-                    //Bitmap bmp = RenderString(face, "Hello World!");
-                    //bmp.Save("helloworld.png", ImageFormat.Png);
-                    //bmp.Dispose();
-
-                    //Console.WriteLine("Done!\n");
-                }
-            }
         }
 
         public RFont()
         {
             RLog.Info("Creating default system font.");
-            Face systemFont = RFontResources.SystemFont;
-            FamilyName = systemFont.FamilyName;
-            FaceCount = systemFont.FaceCount;
-            FaceFlags = systemFont.FaceFlags;
-            StyleName = systemFont.StyleName;
-            StyleFlags = systemFont.StyleFlags;
+            font = RFontResources.SystemFont;
+            Font f = new Font(font, 1.0f);
+            int charHeight = f.Height;
+            Rectangle bounds = new Rectangle(0,0,1,1);
+            bounds.Inflate(0, charHeight);
+
+        }
+
+        public void BuildTextureMap(uint Size)
+        {
+
+
+        }
+        public Bitmap RenderString(string text)
+        {
+
         }
     }
     internal static class RFontResources
     {
-        internal static Library Library = new Library();
+        internal static PrivateFontCollection fonts = new PrivateFontCollection();
         internal static Assembly Assembly = Assembly.GetAssembly(typeof(RFontResources));
-        internal static Face GetResource(string resource){
+        internal static FontFamily GetResource(string resource){
             System.IO.BinaryReader reader = new System.IO.BinaryReader(Assembly.GetManifestResourceStream(resource));
             byte[] buffer = new byte[reader.BaseStream.Length];
             reader.Read(buffer, 0, buffer.Length);
             reader.Close();
-            Face face;
+            FontFamily font;
             try
             {
+                fonts.AddMemoryFont((IntPtr)buffer, buffer.Length);
+                font = new FontFamily("coders_crux", fonts);
 
-                face = new Face(Library, buffer, 0);
-
-                return face;
+                return font;
             }
             catch(Exception e)
             {
@@ -102,7 +87,7 @@ namespace Reactor.Types
             }
         }
 
-        internal static SharpFont.Face SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
+        internal static FontFamily SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
 
     }
 }
