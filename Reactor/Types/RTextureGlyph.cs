@@ -31,7 +31,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Reactor.Types
 {
-    internal class RTextureGlyph : RTexture
+    internal class RTextureGlyph : RTextureSprite
     {
 
         char keyCode;
@@ -40,7 +40,7 @@ namespace Reactor.Types
         int bitmapLeft;
         int bitmapTop;
         Vector2 advance;
-        public RTextureGlyph(GlyphSlot glyph, char c)
+        public RTextureGlyph(GlyphSlot glyph, char c) : base()
         {
             bearingX = (float)glyph.Metrics.HorizontalBearingX / 72;
             bearingY = (float)glyph.Metrics.HorizontalBearingY / 72;
@@ -67,9 +67,15 @@ namespace Reactor.Types
             REngine.CheckGLError();
             GL.TexParameter( TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
             REngine.CheckGLError();
-
+            GL.TexParameter( TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
+            REngine.CheckGLError();
             keyCode = c;
 
+        }
+
+        public Vector2 GetSize(char c)
+        {
+            return new Vector2(Bounds.Width, Bounds.Height);
         }
             
     }

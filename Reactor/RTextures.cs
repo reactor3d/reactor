@@ -9,7 +9,7 @@ namespace Reactor
 
         internal static Dictionary<string, RTexture> Textures = new Dictionary<string, RTexture>();
 
-        private RTextures()
+        public RTextures()
         {
              
         }

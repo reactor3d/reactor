@@ -1,5 +1,5 @@
 ﻿//
-// RScreen.cs
+// RTextureSprite.cs
 //
 // Author:
 //       Gabriel Reiser <gabriel@reisergames.com>
@@ -24,40 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using Reactor.Types;
+using Reactor.Math;
 
-namespace Reactor
+namespace Reactor.Types
 {
-    public class RScreen : RSingleton<RScreen>
+    public class RTextureSprite : RTexture
     {
-        static List<RFont> Fonts = new List<RFont>();
-        static RFont defaultFont = new RFont();
-        public RScreen()
+        public Vector2 Offset = new Vector2();
+        public Vector2 Origin = new Vector2();
+        public Rectangle ScaledBounds = new Rectangle();
+        public RTextureSprite()
         {
-
         }
-
-        internal void Init()
-        {
-            Fonts.Add(defaultFont);
-        }
-
-
-        public void LoadFont(string path)
-        {
-
-
-        }
-
-        public void CreateTextureFont(string fontName, int size, Rectangle textureSize)
-        {
-
-        }
-
-
     }
 }
 

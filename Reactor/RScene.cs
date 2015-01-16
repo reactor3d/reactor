@@ -7,7 +7,7 @@ namespace Reactor
     public class RScene : RSingleton<RScene>
     {
         private RSceneNode _root;
-        private RScene()
+        public RScene()
         {
             _root = new RSceneNode();
             _root.Children = new List<RSceneNode>();

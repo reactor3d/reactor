@@ -38,7 +38,7 @@ namespace Reactor
         private float _lastFps = 0;
         private float _fps = 0;
         private TimeSpan lastFrameTime;
-        private REngine()
+        public REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Info("Engine startup sequence activated.");

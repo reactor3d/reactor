@@ -32,7 +32,7 @@ namespace Reactor
     public class RInput : RSingleton<RInput>
     {
 
-        RInput()
+        public RInput()
         {
 
         }

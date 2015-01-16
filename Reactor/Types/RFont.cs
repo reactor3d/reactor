@@ -49,7 +49,7 @@ namespace Reactor.Types
         {
             RLog.Info("Creating default system font.");
             font = RFontResources.SystemFont;
-            BuildTextureMap(16);
+            BuildTextureMap(60);
 
         }
 
@@ -58,7 +58,8 @@ namespace Reactor.Types
             font.SetCharSize(0, Size, 0, 72);
             font.SetPixelSizes(0, (uint)Size);
             string table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+~`\\|]}[{'\";:/?.>,<";
-            List<RTextureGlyph> glyphs = new List<RTextureGlyph>();
+            List<RTextureSprite> glyphs = new List<RTextureSprite>();
+
             foreach(char c in table)
             {
 
@@ -67,6 +68,9 @@ namespace Reactor.Types
 
                 glyphs.Add(new RTextureGlyph(font.Glyph, c));
             }
+            RTextureAtlas atlas = new RTextureAtlas();
+
+            atlas.BuildAtlas(glyphs);
         }
 
     }
