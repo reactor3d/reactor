@@ -17,7 +17,7 @@ namespace Reactor.Geometry
             {
                 if (_cached == null)
                 {
-                    _cached = (Activator.CreateInstance(typeof(T)) as IVertexType).VertexDeclaration;
+                    _cached = (Activator.CreateInstance(typeof(T)) as IVertexType).Declaration;
                     if(_cached == null)
                         throw new NullReferenceException("RVertexDeclarationCache was unable to get a VertexDeclaration for an uncached IVertexType!");
                 }

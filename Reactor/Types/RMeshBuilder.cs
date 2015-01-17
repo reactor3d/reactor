@@ -161,6 +161,54 @@ namespace Reactor.Types
 
         }
 
+        public void CreateFullscreenQuad()
+        {
+            RViewport viewport = REngine.Instance._viewport;
+            //CreateQuad(new Vector2(-1, -1), new Vector2(2,2), true);
+            CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width,viewport.Height), false);
+        }
+
+        /// <summary>
+        /// Creates a quad from screen coordinates.
+        /// </summary>
+        /// <param name="position">Position.</param>
+        /// <param name="size">Size.</param>
+        /// <param name="deviceNormalized">If set to <c>true</c> the position and size are already device normalized.</param>
+        public void CreateQuad(Vector2 position, Vector2 size, bool deviceNormalized)
+        {
+            RVertexData2D[] vertices = new RVertexData2D[4];
+            short[] indices = new short[6]{0,1,2,0,2,3};
+            if(!deviceNormalized)
+            {
+                // Kinda like a 2d unproject,  screen coords to device normal coords...
+                RViewport viewport = REngine.Instance._viewport;
+                Matrix normMatrix = Matrix.CreateOrthographic(viewport.Width, viewport.Height, -1, 1);
+                Vector2 w = new Vector2(viewport.Width, viewport.Height);
+                Vector2 l = size;
+                Vector2 d = l - w;
+                d.X = d.X / w.X;
+                d.Y = d.Y / w.Y;
+                position.X = d.X;
+                position.Y = d.Y;
+                Vector2 s = l/w;
+                size.X = s.X;
+                size.Y = s.Y;
+            }
+
+            vertices[0] = new RVertexData2D(new Vector2(position.X,        position.Y),        new Vector2(0, 0));
+            vertices[1] = new RVertexData2D(new Vector2(position.X,        position.Y+size.Y), new Vector2(0, 1));
+            vertices[2] = new RVertexData2D(new Vector2(position.X+size.X, position.Y+size.Y), new Vector2(1, 1));
+            vertices[3] = new RVertexData2D(new Vector2(position.X+size.X, position.Y),        new Vector2(1, 0));
+
+            _buffer = new RVertexBuffer(vertices[0].Declaration, 4, RBufferUsage.WriteOnly);
+            _buffer.SetData<RVertexData2D>(vertices);
+
+            _index = new RIndexBuffer(typeof(byte), 6, RBufferUsage.WriteOnly);
+            _index.SetData<short>(indices);
+
+
+        }
+
         public void CreateSphere(Vector3 Center, float Radius, int Tessellation)
         {
             int Stacks = Tessellation;

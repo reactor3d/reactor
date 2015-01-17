@@ -49,8 +49,14 @@ namespace Reactor.Types
         {
             RLog.Info("Creating default system font.");
             font = RFontResources.SystemFont;
-            BuildTextureMap(60);
+            BuildTextureMap(64);
 
+        }
+
+        public void Load(string filename)
+        {
+            font = new Face(RFontResources.FreetypeLibrary, filename);
+            FamilyName = font.FamilyName;
         }
 
         public void BuildTextureMap(int Size)

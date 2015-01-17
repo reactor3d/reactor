@@ -28,7 +28,6 @@ using Reactor.Types;
 using Assimp;
 using Reactor.Math;
 using Reactor.Geometry;
-using Reactor.Math;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;

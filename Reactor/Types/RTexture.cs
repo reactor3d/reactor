@@ -20,14 +20,15 @@ namespace Reactor.Types
 
         bool bound;
         TextureTarget textureTarget;
-
+        RPixelFormat pixelFormat;
+        PixelType pixelType;
         internal void LoadFromData(byte[] data, string name, bool isCompressed)
         {
             if(isCompressed)
             {
                 try
                 {
-                    ImageDDS.LoadFromData( data, name, out Id, out textureTarget );
+                    ImageDDS.LoadFromData( data, name, out Id, out textureTarget, out pixelFormat, out pixelType );
 
                 }catch(Exception e){
                     RLog.Error("Error loading texture for: "+name);
@@ -39,7 +40,7 @@ namespace Reactor.Types
             {
                 try
                 {
-                    ImageGDI.LoadFromData( data, out Id, out textureTarget );
+                    ImageGDI.LoadFromData( data, out Id, out textureTarget, out pixelFormat, out pixelType );
                 }catch(Exception e){
                     RLog.Error("Error loading texture for: "+name);
                     RLog.Error(e.Message);
@@ -64,6 +65,7 @@ namespace Reactor.Types
             int height, width;
             GL.GetTexParameter(textureTarget, GetTextureParameter.TextureHeight, out height);
             GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWidth, out width);
+
             Bounds = new Reactor.Math.Rectangle(0, 0, width, height);
             RLog.Info("Texture loaded for: "+name);
         }
@@ -71,7 +73,7 @@ namespace Reactor.Types
         {
             try
             {
-                ImageGDI.LoadFromBitmap( ref bitmap, out Id, out textureTarget );
+                ImageGDI.LoadFromBitmap( ref bitmap, out Id, out textureTarget, out pixelFormat, out pixelType );
             }catch(Exception e){
                 RLog.Error("Error loading texture from bitmap...");
                 RLog.Error(e);
@@ -100,7 +102,7 @@ namespace Reactor.Types
             if(Path.GetExtension(filename).ToLower() == "dds"){
                 try
                 {
-                    ImageDDS.LoadFromDisk( filename, out Id, out textureTarget );
+                    ImageDDS.LoadFromDisk( filename, out Id, out textureTarget, out pixelFormat, out pixelType );
 
                 }catch(Exception e){
                     RLog.Error("Error loading texture from: "+filename);
@@ -110,7 +112,7 @@ namespace Reactor.Types
             else {
                 try
                 {
-                    ImageGDI.LoadFromDisk( filename, out Id, out textureTarget );
+                    ImageGDI.LoadFromDisk( filename, out Id, out textureTarget, out pixelFormat, out pixelType );
                 }catch(Exception e){
                     RLog.Error("Error loading texture from: "+filename);
                     RLog.Error(e);
@@ -189,6 +191,35 @@ namespace Reactor.Types
             while (((x % 2) == 0) && x > 1) /* While x is even and > 1 */
                 x /= 2;
             return (x == 1);
+        }
+
+        public RColor[] GetData()
+        {
+            byte[] pixels = new byte[Bounds.Width * Bounds.Height * 4];
+            Bind();
+            GL.GetTexImage<byte>(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, pixels);
+            REngine.CheckGLError();
+            Unbind();
+            RColor[] colors = new RColor[Bounds.Width * Bounds.Height];
+            int b=0;
+            for(int i=0; i< colors.Length; i++)
+            {
+
+                colors[i] = new RColor();
+                colors[i].R = pixels[++b];
+                colors[i].G = pixels[++b];
+                colors[i].B = pixels[++b];
+                colors[i].A = pixels[++b];
+
+            }
+            return colors;
+        }
+        public void SetData(RColor[] colors, RPixelFormat format, int x, int y, int width, int height, int offsetx, int offsety)
+        {
+            Bind();
+            GL.TexSubImage2D<RColor>(textureTarget, 0, offsetx, offsety, width, height, (PixelFormat)format, PixelType.Bitmap, colors);
+            REngine.CheckGLError();
+            Unbind();
         }
         #region IDisposable implementation
 

@@ -9,7 +9,7 @@ namespace Reactor.Types
     /// <summary>
     /// Describes a 32-bit packed RColor.
     /// </summary>
-    
+
     [DebuggerDisplay("{DebugDisplayString,nq}")]
     public struct RColor : IEquatable<RColor>
     {

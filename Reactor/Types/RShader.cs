@@ -282,5 +282,8 @@ namespace Reactor.Types
 
         internal static string BasicEffectVert = GetResourceString("Reactor.Shaders.basicEffect.vert.glsl");
         internal static string BasicEffectFrag = GetResourceString("Reactor.Shaders.basicEffect.frag.glsl");
+
+        internal static string Basic2dEffectVert = GetResourceString("Reactor.Shaders.basic2dEffect.vert.glsl");
+        internal static string Basic2dEffectFrag = GetResourceString("Reactor.Shaders.basic2dEffect.frag.glsl");
     }
 }

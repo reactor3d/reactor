@@ -7,7 +7,7 @@ namespace Reactor.Geometry
 {
     public interface IVertexType
     {
-        RVertexDeclaration VertexDeclaration
+        RVertexDeclaration Declaration
         {
             get;
         }

@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System.IO;
+using Reactor.Types;
 
 
 #region --- License ---
@@ -49,23 +50,23 @@ namespace Reactor
 {
     static class ImageGDI
     {
-        public static void LoadFromData( byte[] data, out uint texturehandle, out TextureTarget dimension)
+        public static void LoadFromData( byte[] data, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type)
         {
             dimension = (TextureTarget) 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
             MemoryStream stream = new MemoryStream(data);
             Bitmap b = new Bitmap(stream);
-            LoadFromBitmap(ref b, out texturehandle, out dimension);
+            LoadFromBitmap(ref b, out texturehandle, out dimension, out format, out type);
         }
 
-        public static void LoadFromDisk( string filename, out uint texturehandle, out TextureTarget dimension )
+        public static void LoadFromDisk( string filename, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type )
         {
             dimension = (TextureTarget) 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
             Bitmap b = new Bitmap(filename);
-            LoadFromBitmap(ref b, out texturehandle, out dimension);
+            LoadFromBitmap(ref b, out texturehandle, out dimension, out format, out type);
         }
-        public static void LoadFromBitmap( ref Bitmap bitmap, out uint texturehandle, out TextureTarget dimension )
+        public static void LoadFromBitmap( ref Bitmap bitmap, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type )
         {
             dimension = (TextureTarget) 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
@@ -127,7 +128,8 @@ namespace Reactor
                     default:
                         throw new ArgumentException( "ERROR: Unsupported Pixel Format " + CurrentBitmap.PixelFormat );
                 }
-
+                format = (RPixelFormat)pf;
+                type = pt;
                 BitmapData Data = CurrentBitmap.LockBits( new System.Drawing.Rectangle( 0, 0, CurrentBitmap.Width, CurrentBitmap.Height ), ImageLockMode.ReadOnly, CurrentBitmap.PixelFormat );
 
                 if ( Data.Height > 1 )

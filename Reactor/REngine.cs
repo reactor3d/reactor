@@ -53,7 +53,7 @@ namespace Reactor
             camera = new RCamera();
             lastFrameTime = new TimeSpan();
             RShader.InitShaders();
-            Screen.Init();
+
 
         }
 
@@ -374,6 +374,11 @@ namespace Reactor
     {
         public ReactorException(string message, Exception baseException)
             : base(message, baseException)
+        {
+
+        }
+
+        public ReactorException(string message) : base(message)
         {
 
         }

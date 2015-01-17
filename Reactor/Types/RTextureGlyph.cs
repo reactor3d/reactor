@@ -72,6 +72,13 @@ namespace Reactor.Types
             keyCode = c;
 
         }
+        public RTextureGlyph(Rectangle bounds, char c)
+        {
+            this.Bounds = bounds;
+            this.ScaledBounds = bounds;
+            this.keyCode = c;
+
+        }
 
         public Vector2 GetSize(char c)
         {

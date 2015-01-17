@@ -39,7 +39,7 @@ namespace Reactor.Geometry
 
         private static readonly RVertexDeclaration VertexDeclaration;
 
-        RVertexDeclaration IVertexType.VertexDeclaration
+        public RVertexDeclaration Declaration
         {
             get
             {
@@ -65,6 +65,39 @@ namespace Reactor.Geometry
                     new RVertexElement(sizeof(float) * (3 * 2), RVertexElementFormat.Vector3, RVertexElementUsage.Bitangent),
                     new RVertexElement(sizeof(float) * (3 * 3), RVertexElementFormat.Vector3, RVertexElementUsage.Tangent),
                     new RVertexElement(sizeof(float) * (3 * 4), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
+                };
+            RVertexDeclaration declaration = new RVertexDeclaration(elements);
+            VertexDeclaration = declaration;
+        }
+    }
+
+    public struct RVertexData2D : IVertexType
+    {
+        public Vector2 Position;
+        public Vector2 TexCoord;
+
+        private static readonly RVertexDeclaration VertexDeclaration;
+
+        public RVertexDeclaration Declaration
+        {
+            get
+            {
+                return VertexDeclaration;
+            }
+        }
+
+        public RVertexData2D(Vector2 Position, Vector2 TexCoord)
+        {
+            this.Position = Position;
+            this.TexCoord = TexCoord;
+        }
+
+        static RVertexData2D()
+        {
+            RVertexElement[] elements = new RVertexElement[]
+                { 
+                    new RVertexElement(0, RVertexElementFormat.Vector2, RVertexElementUsage.Position),
+                    new RVertexElement(sizeof(float) * (2), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
                 };
             RVertexDeclaration declaration = new RVertexDeclaration(elements);
             VertexDeclaration = declaration;

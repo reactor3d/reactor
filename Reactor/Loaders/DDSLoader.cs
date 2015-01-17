@@ -23,6 +23,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using Reactor.Types;
+
+
 #region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
@@ -204,11 +207,11 @@ namespace Reactor
         #endif
         #endregion Private Members
 
-        public static void LoadFromDisk(string filename, out uint texturehandle, out TextureTarget dimension)
+        public static void LoadFromDisk(string filename, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type)
         {
             byte[] data;
             data = File.ReadAllBytes( @filename );
-            LoadFromData(data, filename, out texturehandle, out dimension);
+            LoadFromData(data, filename, out texturehandle, out dimension, out format, out type);
         }
         /// <summary>
         /// This function will generate, bind and fill a Texture Object with a DXT1/3/5 compressed Texture in .dds Format.
@@ -220,7 +223,7 @@ namespace Reactor
         /// <param name="filename">The name of the file including path and extention.</param> 
         /// <param name="texturehandle">0 if invalid, otherwise a Texture Object usable with GL.BindTexture().</param>
         /// <param name="dimension">0 if invalid, will output what was loaded (typically Texture1D/2D/3D or Cubemap)</param>
-        public static void LoadFromData( byte[] data, string filename, out uint texturehandle, out TextureTarget dimension )
+        public static void LoadFromData( byte[] data, string filename, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type )
         {
             #region Prep data
             // invalidate whatever it was before
@@ -339,7 +342,8 @@ namespace Reactor
                     throw Unfinished;
                 // pf*Bitmasks should be examined here
                 #endregion
-
+                format = (RPixelFormat)_PixelInternalFormat;
+                type = PixelType.Bitmap;
                 // Works, but commented out because some texture authoring tools don't set this flag.
                 /* Safety Check, if file is only 1x 2D surface without mipmaps, eDDSCAPS.COMPLEX should not be set
                 if ( CheckFlag( dwCaps1, (uint) eDDSCAPS.COMPLEX ) )

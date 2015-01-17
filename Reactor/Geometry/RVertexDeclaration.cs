@@ -157,7 +157,7 @@ namespace Reactor.Geometry
                 throw new ArgumentException("vertexData does not inherit IVertexType");
             }
 
-            var vertexDeclaration = type.VertexDeclaration;
+            var vertexDeclaration = type.Declaration;
             if (vertexDeclaration == null)
             {
                 throw new Exception("VertexDeclaration cannot be null");

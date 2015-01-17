@@ -24,17 +24,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Drawing;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using Reactor.Types;
-
+using Reactor.Geometry;
+using Reactor.Math;
 namespace Reactor
 {
     public class RScreen : RSingleton<RScreen>
     {
         static List<RFont> Fonts = new List<RFont>();
         static RFont defaultFont = new RFont();
+        bool initialized=false;
+        RMeshBuilder quad;
+        RShader defaultShader;
         public RScreen()
         {
 
@@ -42,19 +45,42 @@ namespace Reactor
 
         internal void Init()
         {
+            defaultShader = new RShader();
+            defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
             Fonts.Add(defaultFont);
+            quad = new RMeshBuilder();
+            quad.CreateFullscreenQuad();
+            initialized = true;
+        }
+        void InitCheck()
+        {
+            if(!initialized)
+                throw new ReactorException("You must first call Init() before using RScreen.");
         }
 
-
-        public void LoadFont(string path)
+        public RFont LoadFont(string path)
         {
-
+            InitCheck();
+            RFont font = new RFont();
+            font.Load(RFileSystem.Instance.GetFilePath(path));
+            return font;
 
         }
 
-        public void CreateTextureFont(string fontName, int size, Rectangle textureSize)
+        public RFont LoadTextureFont(string fontName, int size)
         {
+            InitCheck();
+            return null;
+        }
 
+        public void RenderFullscreenQuad()
+        {
+            InitCheck();
+        }
+
+        public void RenderFullscreenQuad(RShader shader)
+        {
+            InitCheck();
         }
 
 

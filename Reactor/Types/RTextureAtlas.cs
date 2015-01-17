@@ -81,6 +81,8 @@ namespace Reactor.Types
                     {
                         RLog.Info(node.ToString());
                         sprite.ScaledBounds = node.bounds;
+
+                        Pack(sprite);
                     } else {
                         unclaimed++;
                     }
@@ -93,6 +95,11 @@ namespace Reactor.Types
                 index++;
 
             }
+
+        }
+
+        private void Pack(RTextureSprite sprite)
+        {
 
         }
     }
