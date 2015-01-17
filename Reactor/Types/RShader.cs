@@ -151,16 +151,69 @@ namespace Reactor.Types
             REngine.CheckGLError();
         }
 
-        public void SetSamplerValue(RTextureLayer layer, RTexture2D texture)
+        public void SetSamplerValue(RTextureLayer layer, RTexture texture)
         {
+            GL.Uniform1(GetTexUniformLocation(layer), texture.Id);
             GL.ActiveTexture((TextureUnit)(int)layer);
             GL.BindTexture(TextureTarget.Texture2D, texture.Id);
-        }
 
-        public void SetSamplerValue(RTextureLayer layer, RTexture3D texture)
+        }
+        internal int GetTexUniformLocation(RTextureLayer layer)
         {
-            GL.ActiveTexture((TextureUnit)(int)layer);
-            GL.BindTexture(TextureTarget.Texture3D, texture.Id);
+            string name = "";
+            switch(layer)
+            {
+                case RTextureLayer.AMBIENT:
+                    name = "ambient";
+                    break;
+                case RTextureLayer.DETAIL:
+                    name = "detail";
+                    break;
+                case RTextureLayer.DIFFUSE:
+                    name = "diffuse";
+                    break;
+                case RTextureLayer.GLOW:
+                    name = "glow";
+                    break;
+                case RTextureLayer.HEIGHT:
+                    name = "height";
+                    break;
+                case RTextureLayer.NORMAL:
+                    name = "normal";
+                    break;
+                case RTextureLayer.SPECULAR:
+                    name = "specular";
+                    break;
+                case RTextureLayer.TEXTURE7:
+                    name = "texture7";
+                    break;
+                case RTextureLayer.TEXTURE8:
+                    name = "texture8";
+                    break;
+                case RTextureLayer.TEXTURE9:
+                    name = "texture9";
+                    break;
+                case RTextureLayer.TEXTURE10:
+                    name = "texture10";
+                    break;
+                case RTextureLayer.TEXTURE11:
+                    name = "texture11";
+                    break;
+                case RTextureLayer.TEXTURE12:
+                    name = "texture12";
+                    break;
+                case RTextureLayer.TEXTURE13:
+                    name = "texture13";
+                    break;
+                case RTextureLayer.TEXTURE14:
+                    name = "texture14";
+                    break;
+                case RTextureLayer.TEXTURE15:
+                    name = "texture15";
+                    break;
+                 
+            }
+            return GetUniformLocation(name);
         }
         internal int GetUniformLocation(string name)
         {

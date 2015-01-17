@@ -155,19 +155,7 @@ namespace Reactor.Geometry
         }
 
 
-        internal void BindVertexArray()
-        {
-            GenerateIfRequired();
-            REngine.CheckGLError();
-            GL.BindVertexArray(vao);
-            REngine.CheckGLError();
-        }
 
-        internal void UnbindVertexArray()
-        {
-            GL.BindVertexArray(0);
-            REngine.CheckGLError();
-        }
         private void GetBufferData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct
         {
             GL.BindBuffer (BufferTarget.ArrayBuffer, vbo);
@@ -245,13 +233,27 @@ namespace Reactor.Geometry
         internal void Bind()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            REngine.CheckGLError();
         }
 
         internal void Unbind()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            REngine.CheckGLError();
+        }
+        internal void BindVertexArray()
+        {
+            GenerateIfRequired();
+            REngine.CheckGLError();
+            GL.BindVertexArray(vao);
+            REngine.CheckGLError();
         }
 
+        internal void UnbindVertexArray()
+        {
+            GL.BindVertexArray(0);
+            REngine.CheckGLError();
+        }
         public void Dispose()
         {
             if (!IsDisposed)

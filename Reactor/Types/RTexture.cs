@@ -102,7 +102,7 @@ namespace Reactor.Types
             if(Path.GetExtension(filename).ToLower() == "dds"){
                 try
                 {
-                    ImageDDS.LoadFromDisk( filename, out Id, out textureTarget, out pixelFormat, out pixelType );
+                    ImageDDS.LoadFromDisk( RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget, out pixelFormat, out pixelType );
 
                 }catch(Exception e){
                     RLog.Error("Error loading texture from: "+filename);
@@ -112,7 +112,7 @@ namespace Reactor.Types
             else {
                 try
                 {
-                    ImageGDI.LoadFromDisk( filename, out Id, out textureTarget, out pixelFormat, out pixelType );
+                    ImageGDI.LoadFromDisk( RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget, out pixelFormat, out pixelType );
                 }catch(Exception e){
                     RLog.Error("Error loading texture from: "+filename);
                     RLog.Error(e);

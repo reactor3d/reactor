@@ -36,6 +36,8 @@ namespace MonoMac
     {
         RMesh mesh;
         RCamera camera;
+        RTexture2D bg;
+        RViewport viewport;
         public Game()
         {
         }
@@ -55,10 +57,9 @@ namespace MonoMac
             mesh.IsEnabled = true;
             //mesh.SetScale(0.0001f);
             mesh.Update();
-
-            RFont testing = new RFont();
-
-
+            viewport = Engine.GetViewport();
+            Engine.Screen.Init();
+            bg = Engine.Textures.CreateTexture<RTexture2D>("bg", "/reisergames.png");
         }
 
         public override void Render()
@@ -66,6 +67,10 @@ namespace MonoMac
             Engine.Clear();
 
             mesh.Render();
+
+            Engine.Screen.Begin();
+            Engine.Screen.DrawTexture(bg, new Rectangle(0,0, (int)viewport.Width, (int)viewport.Height));
+            Engine.Screen.End();
             Engine.Present();
         }
 
@@ -93,7 +98,6 @@ namespace MonoMac
 
         public override void Resized(int Width, int Height)
         {
-            RViewport viewport = Engine.GetViewport();
             viewport.Width = Width;
             viewport.Height = Height;
             Engine.SetViewport(viewport);

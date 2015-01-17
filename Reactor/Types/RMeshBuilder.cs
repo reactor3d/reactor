@@ -36,7 +36,6 @@ namespace Reactor.Types
         #region Members
         internal RMaterial _material;
 
-        internal RVertexBuffer _buffer;
         internal RIndexBuffer _index;
         
         internal int vertCount = 0;
@@ -51,8 +50,7 @@ namespace Reactor.Types
             this.Scale = Vector3.One;
             this.Rotation = Quaternion.Identity;
             this.Position = Vector3.Zero;
-            Shader = new RShader();
-            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
+
         }
         
         public void SetTexture(int layer, RTexture texture)
@@ -158,14 +156,17 @@ namespace Reactor.Types
             VertexBuffer.SetData<RVertexData>(vertices);
             vertices = null;
             vertCount = 36;
+            this.Position = Center;
+            Shader = new RShader();
+            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
 
         }
 
         public void CreateFullscreenQuad()
         {
             RViewport viewport = REngine.Instance._viewport;
-            //CreateQuad(new Vector2(-1, -1), new Vector2(2,2), true);
-            CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width,viewport.Height), false);
+            CreateQuad(new Vector2(0, 0), new Vector2(1,1), true);
+            //CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width,viewport.Height), true);
         }
 
         /// <summary>
@@ -182,17 +183,14 @@ namespace Reactor.Types
             {
                 // Kinda like a 2d unproject,  screen coords to device normal coords...
                 RViewport viewport = REngine.Instance._viewport;
-                Matrix normMatrix = Matrix.CreateOrthographic(viewport.Width, viewport.Height, -1, 1);
                 Vector2 w = new Vector2(viewport.Width, viewport.Height);
                 Vector2 l = size;
-                Vector2 d = l - w;
-                d.X = d.X / w.X;
-                d.Y = d.Y / w.Y;
-                position.X = d.X;
-                position.Y = d.Y;
-                Vector2 s = l/w;
-                size.X = s.X;
-                size.Y = s.Y;
+                Vector2 d = (l/w);
+                size.X = d.X;
+                size.Y = d.Y;
+                Vector2 p = (position/w);
+                position.X = p.X;
+                position.Y = p.Y;
             }
 
             vertices[0] = new RVertexData2D(new Vector2(position.X,        position.Y),        new Vector2(0, 0));
@@ -200,12 +198,13 @@ namespace Reactor.Types
             vertices[2] = new RVertexData2D(new Vector2(position.X+size.X, position.Y+size.Y), new Vector2(1, 1));
             vertices[3] = new RVertexData2D(new Vector2(position.X+size.X, position.Y),        new Vector2(1, 0));
 
-            _buffer = new RVertexBuffer(vertices[0].Declaration, 4, RBufferUsage.WriteOnly);
-            _buffer.SetData<RVertexData2D>(vertices);
+            VertexBuffer = new RVertexBuffer(vertices[0].Declaration, 4, RBufferUsage.WriteOnly);
+            VertexBuffer.SetData<RVertexData2D>(vertices);
 
-            _index = new RIndexBuffer(typeof(byte), 6, RBufferUsage.WriteOnly);
+            _index = new RIndexBuffer(typeof(short), 6, RBufferUsage.WriteOnly);
             _index.SetData<short>(indices);
-
+            Shader = new RShader();
+            Shader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
 
         }
 
@@ -326,9 +325,20 @@ namespace Reactor.Types
             indices = null;
 
             this.Position = Center;
+            Shader = new RShader();
+            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
 
         }
 
+        public void SetShader(RShader shader)
+        {
+            Shader = shader;
+        }
+
+        public RShader GetShader()
+        {
+            return Shader;
+        }
         public override void Render()
         {
             GL.Enable(EnableCap.DepthTest);
@@ -356,12 +366,12 @@ namespace Reactor.Types
 
             Shader.Bind();
             VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
-
+            RViewport viewport = REngine.Instance._viewport;
 
             Shader.SetUniformValue("world", Matrix.Identity);
             Shader.SetUniformValue("view", REngine.camera.View);
             Shader.SetUniformValue("projection", REngine.camera.Projection);
-
+            Shader.SetUniformValue("viewport", new Vector4(viewport.X, viewport.Y, viewport.Width, viewport.Height));
             if(_index != null)
             {
 
@@ -393,7 +403,6 @@ namespace Reactor.Types
         
         public void Dispose()
         {
-            _buffer.Dispose();
             _index.Dispose();
 
         }

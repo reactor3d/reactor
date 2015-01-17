@@ -209,6 +209,8 @@
     <EmbeddedResource Include="Shaders\basicEffect.vert.glsl" />
     <EmbeddedResource Include="Fonts\coders_crux.ttf" />
     <None Include="freetype6.dll" />
+    <EmbeddedResource Include="Shaders\basic2dEffect.frag.glsl" />
+    <EmbeddedResource Include="Shaders\basic2dEffect.vert.glsl" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

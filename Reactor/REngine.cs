@@ -88,7 +88,7 @@ namespace Reactor
         }
         public float GetTime()
         {
-            return (float)REngine.RGame.GameWindow.UpdateTime * 1000.0f;
+            return (float)(REngine.RGame.GameWindow.UpdateTime * 1000.0);
         }
         public static void CheckGLError()
         {

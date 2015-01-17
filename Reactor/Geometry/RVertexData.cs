@@ -75,6 +75,8 @@ namespace Reactor.Geometry
     {
         public Vector2 Position;
         public Vector2 TexCoord;
+        public Vector4 Color;
+
 
         private static readonly RVertexDeclaration VertexDeclaration;
 
@@ -86,10 +88,18 @@ namespace Reactor.Geometry
             }
         }
 
+        public RVertexData2D(Vector2 Position, Vector2 TexCoord, Vector4 Color)
+        {
+            this.Position = Position;
+            this.TexCoord = TexCoord;
+            this.Color = Color;
+        }
+
         public RVertexData2D(Vector2 Position, Vector2 TexCoord)
         {
             this.Position = Position;
             this.TexCoord = TexCoord;
+            this.Color = new Vector4(1f);
         }
 
         static RVertexData2D()
@@ -97,7 +107,8 @@ namespace Reactor.Geometry
             RVertexElement[] elements = new RVertexElement[]
                 { 
                     new RVertexElement(0, RVertexElementFormat.Vector2, RVertexElementUsage.Position),
-                    new RVertexElement(sizeof(float) * (2), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
+                    new RVertexElement(sizeof(float) * (2), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate),
+                    new RVertexElement(sizeof(float) * (2*2), RVertexElementFormat.Vector4, RVertexElementUsage.Color)
                 };
             RVertexDeclaration declaration = new RVertexDeclaration(elements);
             VertexDeclaration = declaration;
