@@ -28,6 +28,7 @@ using Reactor;
 using Reactor.Types;
 using Reactor.Math;
 using Reactor.Platform;
+using Reactor.Types.States;
 
 
 namespace MonoMac
@@ -38,6 +39,7 @@ namespace MonoMac
         RCamera camera;
         RTexture2D bg;
         RViewport viewport;
+        float alpha = 0;
         public Game()
         {
         }
@@ -48,14 +50,14 @@ namespace MonoMac
             camera = new RCamera();
             camera.SetPosition(Vector3.UnitZ * -10f);
             camera.LookAt(new Vector3(0, 0, -1f) * 10f);
-            camera.SetClipPlanes(0.1f, 1000f);
+            camera.SetClipPlanes(1f, 100f);
             camera.Update();
             Engine.SetCamera(camera);
             mesh = Engine.Scene.Create<RMesh>("test");
             mesh.LoadSourceModel("/meshes/bunny.x");
             mesh.IsDrawable = true;
             mesh.IsEnabled = true;
-            //mesh.SetScale(0.0001f);
+            mesh.SetScale(0.01f);
             mesh.Update();
             viewport = Engine.GetViewport();
             Engine.Screen.Init();
@@ -68,15 +70,22 @@ namespace MonoMac
 
             mesh.Render();
 
+            //Engine.Screen.AlphaBlendMode = RBlendFunc.Add;
+            //Engine.Screen.AlphaSourceBlend = RBlend.SourceAlpha;
+            //Engine.Screen.AlphaDestinationBlend = RBlend.One;
+
             Engine.Screen.Begin();
+            float a = (float)(Math.Sin(alpha));
             //Engine.Screen.RenderFullscreenQuad();
-            Engine.Screen.DrawTexture(bg, new Rectangle(0,0, 1, 1));
+
+            //Engine.Screen.RenderTexture(bg, new Rectangle(0,0, (int)viewport.Width, (int)viewport.Height), new RColor(RColor.White, a));
             Engine.Screen.End();
             Engine.Present();
         }
 
         public override void Update()
         {
+            alpha*=1.0000001f;
 
             if(Engine.Input.IsKeyDown(RKey.A))
                 camera.RotateY(-5f * Engine.GetTime());

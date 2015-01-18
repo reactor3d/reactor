@@ -144,6 +144,10 @@ namespace Reactor.Types
             GL.Uniform4(GetUniformLocation(name), value);
             REngine.CheckGLError();
         }
+        public void SetUniformValue(string name, RColor value)
+        {
+            SetUniformValue(name, value.ToVector4());
+        }
         public void SetUniformValue(string name, Matrix value)
         {
             OpenTK.Matrix4 matrix = value;

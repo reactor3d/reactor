@@ -99,7 +99,7 @@ namespace Reactor.Geometry
         {
             this.Position = Position;
             this.TexCoord = TexCoord;
-            this.Color = new Vector4(1f);
+            this.Color = Vector4.One;
         }
 
         static RVertexData2D()

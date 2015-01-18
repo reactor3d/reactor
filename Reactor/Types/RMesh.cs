@@ -21,6 +21,11 @@ namespace Reactor.Types
             this.Rotation = Quaternion.Identity;
             Parts = new List<RMeshPart>();
             Shader = RShader.basicShader;
+            this.CullEnable = true;
+            this.CullMode = Reactor.Types.States.RCullMode.CullClockwiseFace;
+            this.BlendEnable = false;
+            this.DepthWrite= true;
+
         }
 
         #region IDisposable implementation
@@ -40,20 +45,8 @@ namespace Reactor.Types
 
         public override void Render()
         {
-            GL.Enable(EnableCap.DepthTest);
-            REngine.CheckGLError();
-            GL.DepthMask(true);
-            REngine.CheckGLError();
-            GL.DepthFunc(DepthFunction.Less);
-            REngine.CheckGLError();
 
-
-            GL.Enable(EnableCap.CullFace);
-            REngine.CheckGLError();
-            GL.FrontFace(FrontFaceDirection.Ccw);
-            REngine.CheckGLError();
-            GL.CullFace(CullFaceMode.Back);
-            REngine.CheckGLError();
+            ApplyState();
             foreach(RMeshPart part in Parts)
             {
                 

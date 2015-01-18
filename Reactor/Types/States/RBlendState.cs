@@ -176,6 +176,12 @@ namespace Reactor.Types.States
             _blendFactor = RColor.White;
             _multiSampleMask = Int32.MaxValue;
             _independentBlendEnable = false;
+            Name = "BlendState.Opaque";
+            ColorSourceBlend = RBlend.Zero;
+            AlphaSourceBlend = RBlend.Zero;
+            ColorDestinationBlend = RBlend.Zero;
+            AlphaDestinationBlend = RBlend.Zero;
+
         }
 
         static RBlendState()
@@ -226,15 +232,7 @@ namespace Reactor.Types.States
         }
         internal void PlatformApplyState()
         {
-            var blendEnabled = !(this.ColorSourceBlend == RBlend.One && 
-                                 this.ColorDestinationBlend == RBlend.Zero &&
-                                 this.AlphaSourceBlend == RBlend.One &&
-                                 this.AlphaDestinationBlend == RBlend.Zero);
-            if (blendEnabled)
-                GL.Enable(EnableCap.Blend);
-            else
-                GL.Disable(EnableCap.Blend);
-            REngine.CheckGLError();
+
 
             GL.BlendColor(
                 this.BlendFactor.R / 255.0f,      

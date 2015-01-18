@@ -30,6 +30,7 @@ using Reactor.Types;
 using Reactor.Geometry;
 using Reactor.Math;
 using OpenTK.Graphics.OpenGL;
+using Reactor.Types.States;
 
 
 namespace Reactor
@@ -44,7 +45,9 @@ namespace Reactor
         RCamera2d camera2d;
         RCamera oldCamera;
         RVertexBuffer vertexQuad2D;
+        RIndexBuffer indexQuad2D;
         RVertexData2D[] quadVerts;
+        RBlendState blendState;
         public RScreen()
         {
             camera2d = new RCamera2d();
@@ -58,19 +61,21 @@ namespace Reactor
 
         public void Init()
         {
+            blendState = RBlendState.Opaque;
             defaultShader = new RShader();
             defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
             Fonts.Add(defaultFont);
             quad = new RMeshBuilder();
             quad.CreateFullscreenQuad();
             quadVerts = new RVertexData2D[4];
-            quadVerts[0] = new RVertexData2D(new Vector2(-1, 1), new Vector2(0, 0));
-            quadVerts[1] = new RVertexData2D(new Vector2(-1, -1), new Vector2(0, 1));
-            quadVerts[2] = new RVertexData2D(new Vector2(1, 1), new Vector2(1, 0));
-            quadVerts[3] = new RVertexData2D(new Vector2(1, -1), new Vector2(1, 1));
-            vertexQuad2D = new RVertexBuffer(quadVerts[0].Declaration, 6, RBufferUsage.WriteOnly);
+            quadVerts[0] = new RVertexData2D(new Vector2(-1, -1), new Vector2(0, 0));
+            quadVerts[1] = new RVertexData2D(new Vector2(1, -1), new Vector2(1, 0));
+            quadVerts[2] = new RVertexData2D(new Vector2(1, 1), new Vector2(1, 1));
+            quadVerts[3] = new RVertexData2D(new Vector2(-1, 1), new Vector2(0, 1));
+            vertexQuad2D = new RVertexBuffer(quadVerts[0].Declaration, 4, RBufferUsage.WriteOnly);
             vertexQuad2D.SetData<RVertexData2D>(quadVerts);
-
+            indexQuad2D = new RIndexBuffer(typeof(short), 6, RBufferUsage.WriteOnly);
+            indexQuad2D.SetData<short>(new short[6]{0,1,2,0,2,3}, 0, 6);
             initialized = true;
         }
 
@@ -80,18 +85,15 @@ namespace Reactor
             REngine.Instance.SetCamera(camera2d);
             
             //GL.Viewport(0, (int)viewport.Width, 0, (int)viewport.Height);
-            GL.Disable(EnableCap.DepthTest);
-            REngine.CheckGLError();
-            GL.DepthMask(false);
-            REngine.CheckGLError();
-            GL.DepthFunc(DepthFunction.Less);
-            REngine.CheckGLError();
-
+            blendState.ColorWriteChannels = RColorWriteChannels.All;
+            blendState.PlatformApplyState();
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             REngine.CheckGLError();
             GL.Disable(EnableCap.CullFace);
+
             camera2d.Update();
+
             
         }
 
@@ -102,10 +104,11 @@ namespace Reactor
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
             GL.DepthFunc(DepthFunction.Less);
-
+            GL.Disable(EnableCap.Blend);
             REngine.CheckGLError();
             GL.DepthMask(true);
             REngine.CheckGLError();
+
         }
         void InitCheck()
         {
@@ -141,7 +144,15 @@ namespace Reactor
             quad.Render();
         }
 
-        public void DrawTexture(RTexture2D texture, Rectangle bounds)
+        public void RenderTexture(RTexture texture, Rectangle bounds)
+        {
+            RenderTexture(texture, bounds, RColor.White);
+        }
+        public void RenderTexture(RTexture texture, Rectangle bounds, RColor color)
+        {
+           RenderTexture(texture, bounds, color, Matrix.Identity);
+        }
+        public void RenderTexture(RTexture texture, Rectangle bounds, RColor color, Matrix matrix)
         {
             RViewport viewport = REngine.Instance._viewport;
             UpdateQuad(bounds);
@@ -149,12 +160,21 @@ namespace Reactor
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
             vertexQuad2D.Bind();
             vertexQuad2D.BindVertexArray();
-            //Matrix m = Matrix.CreateOrthographicOffCenter(screenBounds.X*viewport.AspectRatio, screenBounds.Width * viewport.AspectRatio, screenBounds.Height, screenBounds.Y, 0, 1);
+            indexQuad2D.Bind();
+
+
             defaultShader.SetUniformValue("projection", camera2d.Projection);
             defaultShader.SetUniformValue("view", camera2d.View);
+            defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
+            defaultShader.SetUniformValue("model", matrix);
             vertexQuad2D.VertexDeclaration.Apply(defaultShader, IntPtr.Zero);
 
-            GL.DrawArrays(PrimitiveType.Quads, 0, 4);
+
+            GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
+            REngine.CheckGLError();
+
+
+            indexQuad2D.Unbind();
             vertexQuad2D.UnbindVertexArray();
             vertexQuad2D.Unbind();
             defaultShader.Unbind();
@@ -173,7 +193,47 @@ namespace Reactor
             vertexQuad2D.SetData<RVertexData2D>(quadVerts);
         }
 
+        public RBlendFunc AlphaBlendMode
+        {
+            get { return blendState.AlphaBlendFunction; }
+            set { blendState.AlphaBlendFunction = value; }
+        }
 
+        public RBlend AlphaDestinationBlend
+        {
+            get { return blendState.AlphaDestinationBlend;}
+            set { blendState.AlphaDestinationBlend = value; }
+        }
+        public RBlend AlphaSourceBlend
+        {
+            get { return blendState.AlphaSourceBlend;}
+            set { blendState.AlphaSourceBlend = value; }
+        }
+        public RColor BlendFactor
+        {
+            get { return blendState.BlendFactor; }
+            set { blendState.BlendFactor=value; }
+        }
+        public RBlendFunc ColorBlendMode
+        {
+            get { return blendState.ColorBlendFunction; }
+            set { blendState.ColorBlendFunction = value; }
+        }
+        public RBlend ColorDestinationBlend
+        {
+            get { return blendState.ColorDestinationBlend;}
+            set { blendState.ColorDestinationBlend = value; }
+        }
+        public RBlend ColorSourceBlend
+        {
+            get { return blendState.ColorSourceBlend;}
+            set { blendState.ColorSourceBlend = value; }
+        }
+        public int MultiSampleMask
+        {
+            get { return blendState.MultiSampleMask; }
+            set { blendState.MultiSampleMask = value; }
+        }
     }
 }
 

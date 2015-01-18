@@ -161,7 +161,6 @@
     <Compile Include="Types\RTexture3D.cs" />
     <Compile Include="Types\RTextureLayer.cs" />
     <Compile Include="Types\RUpdateNode.cs" />
-    <Compile Include="Types\States\TargetBlendState.cs" />
     <Compile Include="Utilities\Hash.cs" />
     <Compile Include="Utilities\ObjectFactory.cs" />
     <Compile Include="Utilities\ReflectionHelpers.cs" />
@@ -213,6 +212,7 @@
     <Compile Include="Types\RTextureAtlas.cs" />
     <Compile Include="Types\RTextureSprite.cs" />
     <Compile Include="Types\RPixelFormat.cs" />
+    <Compile Include="Types\States\RTargetBlendState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
