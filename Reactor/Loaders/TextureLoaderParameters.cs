@@ -32,7 +32,7 @@ namespace Reactor
     static class TextureLoaderParameters
     {
         /// <summary>(Debug Aid, should be set to false) If set to false only Errors will be printed. If set to true, debug information (Warnings and Queries) will be printed in addition to Errors.</summary>
-        public static bool Verbose = false;
+        public static bool Verbose = true;
 
         /// <summary>Always-valid fallback parameter for GL.BindTexture (Default: 0). This number will be returned if loading the Texture failed. You can set this to a checkerboard texture or similar, which you have already loaded.</summary>
         public static uint OpenGLDefaultTexture = 0;
@@ -47,10 +47,10 @@ namespace Reactor
         public static bool BuildMipmapsForUncompressed = false;
 
         /// <summary>Selects the Magnification filter for following Textures to be loaded. (Default: Nearest)</summary>
-        public static TextureMagFilter MagnificationFilter = TextureMagFilter.Nearest;
+        public static TextureMagFilter MagnificationFilter = TextureMagFilter.Linear;
 
         /// <summary>Selects the Minification filter for following Textures to be loaded. (Default: Nearest)</summary>
-        public static TextureMinFilter MinificationFilter = TextureMinFilter.Nearest;
+        public static TextureMinFilter MinificationFilter = TextureMinFilter.LinearMipmapLinear;
 
         /// <summary>Selects the S Wrapping for following Textures to be loaded. (Default: Repeat)</summary>
         public static TextureWrapMode WrapModeS = TextureWrapMode.Repeat;
@@ -59,7 +59,7 @@ namespace Reactor
         public static TextureWrapMode WrapModeT = TextureWrapMode.Repeat;
 
         /// <summary>Selects the Texture Environment Mode for the following Textures to be loaded. Default: Modulate)</summary>
-        public static TextureEnvMode EnvMode = TextureEnvMode.Modulate;
+        public static TextureEnvMode EnvMode = TextureEnvMode.Blend;
     }
 
 }

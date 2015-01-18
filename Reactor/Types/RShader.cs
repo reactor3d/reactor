@@ -153,9 +153,15 @@ namespace Reactor.Types
 
         public void SetSamplerValue(RTextureLayer layer, RTexture texture)
         {
-            GL.Uniform1(GetTexUniformLocation(layer), texture.Id);
-            GL.ActiveTexture((TextureUnit)(int)layer);
+            int unival = GetTexUniformValue(layer);
+            int loc = GetTexUniformLocation(layer);
+            GL.Uniform1(loc, unival);
+            REngine.CheckGLError();
+            TextureUnit unit = (TextureUnit)(int)layer;
+            GL.ActiveTexture(unit);
+            REngine.CheckGLError();
             GL.BindTexture(TextureTarget.Texture2D, texture.Id);
+            REngine.CheckGLError();
 
         }
         internal int GetTexUniformLocation(RTextureLayer layer)
@@ -215,6 +221,63 @@ namespace Reactor.Types
             }
             return GetUniformLocation(name);
         }
+        internal int GetTexUniformValue(RTextureLayer layer)
+        {
+            RTextureUnit name = RTextureUnit.DIFFUSE;
+            switch(layer)
+            {
+                case RTextureLayer.AMBIENT:
+                    name = RTextureUnit.AMBIENT;
+                    break;
+                case RTextureLayer.DETAIL:
+                    name = RTextureUnit.DETAIL;
+                    break;
+                case RTextureLayer.DIFFUSE:
+                    name = RTextureUnit.DIFFUSE;
+                    break;
+                case RTextureLayer.GLOW:
+                    name = RTextureUnit.GLOW;
+                    break;
+                case RTextureLayer.HEIGHT:
+                    name = RTextureUnit.HEIGHT;
+                    break;
+                case RTextureLayer.NORMAL:
+                    name = RTextureUnit.NORMAL;
+                    break;
+                case RTextureLayer.SPECULAR:
+                    name = RTextureUnit.SPECULAR;
+                    break;
+                case RTextureLayer.TEXTURE7:
+                    name = RTextureUnit.TEXTURE7;
+                    break;
+                case RTextureLayer.TEXTURE8:
+                    name = RTextureUnit.TEXTURE8;
+                    break;
+                case RTextureLayer.TEXTURE9:
+                    name = RTextureUnit.TEXTURE9;
+                    break;
+                case RTextureLayer.TEXTURE10:
+                    name = RTextureUnit.TEXTURE10;
+                    break;
+                case RTextureLayer.TEXTURE11:
+                    name = RTextureUnit.TEXTURE11;
+                    break;
+                case RTextureLayer.TEXTURE12:
+                    name = RTextureUnit.TEXTURE12;
+                    break;
+                case RTextureLayer.TEXTURE13:
+                    name = RTextureUnit.TEXTURE13;
+                    break;
+                case RTextureLayer.TEXTURE14:
+                    name = RTextureUnit.TEXTURE14;
+                    break;
+                case RTextureLayer.TEXTURE15:
+                    name = RTextureUnit.TEXTURE15;
+                    break;
+
+            }
+            return (int)name;
+        }
         internal int GetUniformLocation(string name)
         {
             if (_uniformLocations.ContainsKey(name))
@@ -224,6 +287,7 @@ namespace Reactor.Types
             else
             {
                 int location = GL.GetUniformLocation(Id, name);
+                REngine.CheckGLError();
                 if(location != -1){
                     _uniformLocations.Add(name, location);
                     return location;
@@ -292,12 +356,18 @@ namespace Reactor.Types
             if (Id != 0)
             {
                 GL.UseProgram(Id);
+                REngine.CheckGLError();
+            }
+            else
+            {
+                throw new EngineGLException("You must first compile a shader program before you can bind it");
             }
         }
 
         internal void Unbind()
         {
             GL.UseProgram(0);
+            REngine.CheckGLError();
         }
 
 

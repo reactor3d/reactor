@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 using System.IO;
 using Reactor.Types;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 
 #region --- License ---
@@ -39,9 +41,6 @@ using Reactor.Types;
 
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -52,6 +51,7 @@ namespace Reactor
     {
         public static void LoadFromData( byte[] data, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type)
         {
+
             dimension = (TextureTarget) 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
             MemoryStream stream = new MemoryStream(data);
@@ -122,7 +122,7 @@ namespace Reactor
                     case System.Drawing.Imaging.PixelFormat.Canonical:
                     case System.Drawing.Imaging.PixelFormat.Format32bppArgb: // works
                         pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
+                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Rgba;
                         pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     default:
@@ -152,7 +152,7 @@ namespace Reactor
                         GL.TexImage1D(dimension, 0, pif, Data.Width, TextureLoaderParameters.Border, pf, pt, Data.Scan0);
                 }
 
-                GL.Finish( );
+                //GL.Finish( );
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )
                 {
@@ -163,13 +163,13 @@ namespace Reactor
                 #endregion Load Texture
 
                 #region Set Texture Parameters
-                GL.TexParameter( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
-                GL.TexParameter( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
+                //GL.TexParameter( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
+                //GL.TexParameter( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
 
-                GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
-                GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
+                //GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
+                //GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
 
-                GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+                //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
 
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )

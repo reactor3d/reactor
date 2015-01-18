@@ -107,8 +107,8 @@ namespace Reactor.Geometry
             RVertexElement[] elements = new RVertexElement[]
                 { 
                     new RVertexElement(0, RVertexElementFormat.Vector2, RVertexElementUsage.Position),
-                    new RVertexElement(sizeof(float) * (2), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate),
-                    new RVertexElement(sizeof(float) * (2*2), RVertexElementFormat.Vector4, RVertexElementUsage.Color)
+                    new RVertexElement(8, RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate),
+                    new RVertexElement(16, RVertexElementFormat.Vector4, RVertexElementUsage.Color)
                 };
             RVertexDeclaration declaration = new RVertexDeclaration(elements);
             VertexDeclaration = declaration;

@@ -13,21 +13,21 @@ namespace Reactor
         {
              
         }
-        public T CreateTexture<T>(byte[] data, string name, bool isCompressed) where T : RTexture
+        public RTexture CreateTexture<TRTexture>(byte[] data, string name, bool isCompressed) where TRTexture : RTexture, new()
         {
-            RTexture texture = new RTexture();
+            RTexture texture = new TRTexture();
             texture.Name = name;
             texture.LoadFromData(data, name, isCompressed);
             Textures.Add(name, texture);
-            return (T)texture;
+            return texture;
         }
-        public T CreateTexture<T>(string name, string filename) where T : RTexture
+        public RTexture CreateTexture<TRTexture>(string name, string filename) where TRTexture : RTexture, new()
         {
-            RTexture texture = new RTexture();
+            RTexture texture = new TRTexture();
             texture.Name = name;
             texture.LoadFromDisk(filename);
             Textures.Add(name, texture);
-            return (T)texture;
+            return texture;
         }
         public RTexture GetTexture(string name)
         {

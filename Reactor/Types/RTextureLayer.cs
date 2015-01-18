@@ -25,5 +25,23 @@ namespace Reactor.Types
         TEXTURE14 = TextureUnit.Texture14,
         TEXTURE15 = TextureUnit.Texture15
     }
-
+    public enum RTextureUnit : int
+    {
+        DIFFUSE = 0,
+        NORMAL = 1,
+        AMBIENT = 2,
+        SPECULAR = 3,
+        GLOW = 4,
+        HEIGHT = 5,
+        DETAIL = 6,
+        TEXTURE7 = 7,
+        TEXTURE8 = 8,
+        TEXTURE9 = 9,
+        TEXTURE10 = 10,
+        TEXTURE11 = 11,
+        TEXTURE12 = 12,
+        TEXTURE13 = 13,
+        TEXTURE14 = 14,
+        TEXTURE15 = 15
+    }
 }

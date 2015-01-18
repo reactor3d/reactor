@@ -59,7 +59,7 @@ namespace MonoMac
             mesh.Update();
             viewport = Engine.GetViewport();
             Engine.Screen.Init();
-            bg = Engine.Textures.CreateTexture<RTexture2D>("bg", "/reisergames.png");
+            bg = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("bg", "/reisergames.png");
         }
 
         public override void Render()
@@ -69,7 +69,8 @@ namespace MonoMac
             mesh.Render();
 
             Engine.Screen.Begin();
-            Engine.Screen.DrawTexture(bg, new Rectangle(0,0, (int)viewport.Width, (int)viewport.Height));
+            //Engine.Screen.RenderFullscreenQuad();
+            Engine.Screen.DrawTexture(bg, new Rectangle(0,0, 1, 1));
             Engine.Screen.End();
             Engine.Present();
         }

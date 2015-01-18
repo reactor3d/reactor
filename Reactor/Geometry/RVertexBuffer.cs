@@ -199,6 +199,7 @@ namespace Reactor.Geometry
                 //Buffer.BlockCopy(buffer, 0, data, startIndex * elementSizeInByte, elementCount * elementSizeInByte);
             }
             GL.UnmapBuffer(BufferTarget.ArrayBuffer);
+            REngine.CheckGLError();
         }
             
 

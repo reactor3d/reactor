@@ -127,15 +127,20 @@ namespace Reactor.Types
                 // load succeeded, Texture can be used.
                 Bind();
             GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
+            REngine.CheckGLError();
             int MipMapCount;
             GL.GetTexParameter( textureTarget, GetTextureParameter.TextureMaxLevel, out MipMapCount );
+            REngine.CheckGLError();
             if ( MipMapCount == 0 ) // if no MipMaps are present, use linear Filter
                 GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
             else // MipMaps are present, use trilinear Filter
                 GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
+            REngine.CheckGLError();
             int height, width;
-            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureHeight, out height);
-            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWidth, out width);
+            GL.GetTexLevelParameter(textureTarget, 0, GetTextureParameter.TextureHeight, out height);
+            REngine.CheckGLError();
+            GL.GetTexLevelParameter(textureTarget, 0, GetTextureParameter.TextureWidth, out width);
+            REngine.CheckGLError();
             Bounds = new Reactor.Math.Rectangle(0, 0, width, height);
             RLog.Info("Texture loaded from: "+filename);
         }

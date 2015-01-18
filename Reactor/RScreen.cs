@@ -57,12 +57,12 @@ namespace Reactor
             quad = new RMeshBuilder();
             quad.CreateFullscreenQuad();
             RVertexData2D[] vertices = new RVertexData2D[6];
-            vertices[0] = new RVertexData2D(new Vector2(0, 0), new Vector2(0,0));
-            vertices[1] = new RVertexData2D(new Vector2(0, 1), new Vector2(0,1));
-            vertices[2] = new RVertexData2D(new Vector2(1, 1), new Vector2(1,1));
-            vertices[3] = new RVertexData2D(new Vector2(0, 0), new Vector2(0,0));
-            vertices[4] = new RVertexData2D(new Vector2(1, 1), new Vector2(1,1));
-            vertices[5] = new RVertexData2D(new Vector2(1, 0), new Vector2(1,0));
+            vertices[0] = new RVertexData2D(new Vector2(0, 0), new Vector2(0,1));
+            vertices[1] = new RVertexData2D(new Vector2(0, 1), new Vector2(0,0));
+            vertices[2] = new RVertexData2D(new Vector2(1, 1), new Vector2(1,0));
+            vertices[3] = new RVertexData2D(new Vector2(0, 0), new Vector2(0,1));
+            vertices[4] = new RVertexData2D(new Vector2(1, 1), new Vector2(1,0));
+            vertices[5] = new RVertexData2D(new Vector2(1, 0), new Vector2(1,1));
             vertexQuad2D = new RVertexBuffer(vertices[0].Declaration, 6, RBufferUsage.WriteOnly);
             vertexQuad2D.SetData<RVertexData2D>(vertices);
 
@@ -74,12 +74,20 @@ namespace Reactor
             oldCamera = REngine.Instance.GetCamera();
             var viewport = REngine.Instance._viewport;
             GL.Viewport(0, 0, (int)viewport.Width, (int)viewport.Height);
-            GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
-            GL.DepthFunc(DepthFunction.Always);
+            REngine.CheckGLError();
+            GL.DepthMask(false);
+            REngine.CheckGLError();
+            GL.DepthFunc(DepthFunction.Less);
+            REngine.CheckGLError();
+
+            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            REngine.CheckGLError();
+            GL.Disable(EnableCap.CullFace);
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
-            //projection.M41 += -0.5f * projection.M11;
-            //projection.M42 += -0.5f * projection.M22;
+            projection.M41 += -0.5f * projection.M11;
+            projection.M42 += -0.5f * projection.M22;
             camera2d.Projection = projection;
             camera2d.View = Matrix.Identity;
             REngine.Instance.SetCamera(camera2d);
@@ -93,6 +101,10 @@ namespace Reactor
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
             GL.DepthFunc(DepthFunction.Less);
+
+            REngine.CheckGLError();
+            GL.DepthMask(true);
+            REngine.CheckGLError();
         }
         void InitCheck()
         {
@@ -134,8 +146,10 @@ namespace Reactor
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
             vertexQuad2D.Bind();
             vertexQuad2D.BindVertexArray();
-            Matrix m = Matrix.CreateOrthographicOffCenter(screenBounds.Left, screenBounds.Right, screenBounds.Bottom, screenBounds.Top, -1, 1);
-            defaultShader.SetUniformValue("projection", m);
+            //Matrix m = Matrix.CreateOrthographicOffCenter(screenBounds.X, screenBounds.Width, screenBounds.Height, screenBounds.Y, 0, 1);
+            defaultShader.SetUniformValue("projection", camera2d.Projection);
+            vertexQuad2D.VertexDeclaration.Apply(defaultShader, IntPtr.Zero);
+
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
             vertexQuad2D.UnbindVertexArray();
             vertexQuad2D.Unbind();

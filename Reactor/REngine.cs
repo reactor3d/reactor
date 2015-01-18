@@ -207,7 +207,7 @@ namespace Reactor
 
             //camera.Update();
 
-
+            REngine.CheckGLError();
             
         }
 
