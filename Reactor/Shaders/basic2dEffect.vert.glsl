@@ -4,12 +4,12 @@ layout(location=2) in vec4 color;
 
 uniform mat4 projection;
 uniform vec4 viewport;
-
+uniform mat4 view;
 out vec2 out_texcoords;
 out vec4 out_color;
 
 void main(){
 	out_texcoords = texcoord;
 	out_color = color;
-	gl_Position = vec4(position, 0, 1);
+	gl_Position = projection*vec4(position, 0, 1);
 }

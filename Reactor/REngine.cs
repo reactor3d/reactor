@@ -13,6 +13,7 @@ using System.Reflection;
 using Reactor.Math;
 using System.Diagnostics;
 using OpenTK;
+using Reactor.Types.States;
 
 namespace Reactor
 {
@@ -360,6 +361,27 @@ namespace Reactor
 
             return String.Format("Using OpenGL version {0} from {1}, renderer {2}, GLSL version {3}", version, vendor, renderer, glslVersion);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     }
 
     internal class EngineGLException : Exception
@@ -384,5 +406,125 @@ namespace Reactor
         }
     }
 
-    
+    public static class Extentions
+    {
+        public static BlendEquationMode GetBlendEquationMode(this RBlendFunc function)
+        {
+            switch (function)
+            {
+                case RBlendFunc.Add:
+                    return BlendEquationMode.FuncAdd;
+                case RBlendFunc.Max:
+                    return BlendEquationMode.Max;
+                case RBlendFunc.Min:
+                    return BlendEquationMode.Min;
+                case RBlendFunc.ReverseSubtract:
+                    return BlendEquationMode.FuncReverseSubtract;
+                case RBlendFunc.Subtract:
+                    return BlendEquationMode.FuncSubtract;
+
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public static BlendingFactorSrc GetBlendFactorSrc(this RBlend blend)
+        {
+            switch (blend)
+            {
+                case RBlend.DestinationAlpha:
+                    return BlendingFactorSrc.DstAlpha;
+                case RBlend.DestinationColor:
+                    return BlendingFactorSrc.DstColor;
+                case RBlend.InverseDestinationAlpha:
+                    return BlendingFactorSrc.OneMinusDstAlpha;
+                case RBlend.InverseDestinationColor:
+                    return BlendingFactorSrc.OneMinusDstColor;
+                case RBlend.InverseSourceAlpha:
+                    return BlendingFactorSrc.OneMinusSrcAlpha;
+                case RBlend.InverseSourceColor:
+                    return (BlendingFactorSrc)All.OneMinusSrcColor;
+                case RBlend.One:
+                    return BlendingFactorSrc.One;
+                case RBlend.SourceAlpha:
+                    return BlendingFactorSrc.SrcAlpha;
+                case RBlend.SourceAlphaSaturation:
+                    return BlendingFactorSrc.SrcAlphaSaturate;
+                case RBlend.SourceColor:
+                    return (BlendingFactorSrc)All.SrcColor;
+                case RBlend.Zero:
+                    return BlendingFactorSrc.Zero;
+                default:
+                    return BlendingFactorSrc.One;
+            }
+
+        }
+
+        public static BlendingFactorDest GetBlendFactorDest(this RBlend blend)
+        {
+            switch (blend)
+            {
+                case RBlend.DestinationAlpha:
+                    return BlendingFactorDest.DstAlpha;
+                //			case Blend.DestinationColor:
+                //				return BlendingFactorDest.DstColor;
+                case RBlend.InverseDestinationAlpha:
+                    return BlendingFactorDest.OneMinusDstAlpha;
+                //			case Blend.InverseDestinationColor:
+                //				return BlendingFactorDest.OneMinusDstColor;
+                case RBlend.InverseSourceAlpha:
+                    return BlendingFactorDest.OneMinusSrcAlpha;
+                case RBlend.InverseSourceColor:
+                    return (BlendingFactorDest)All.OneMinusSrcColor;
+                case RBlend.One:
+                    return BlendingFactorDest.One;
+                case RBlend.SourceAlpha:
+                    return BlendingFactorDest.SrcAlpha;
+                //			case Blend.SourceAlphaSaturation:
+                //				return BlendingFactorDest.SrcAlphaSaturate;
+                case RBlend.SourceColor:
+                    return (BlendingFactorDest)All.SrcColor;
+
+                case RBlend.Zero:
+                    return BlendingFactorDest.Zero;
+                default:
+                    return BlendingFactorDest.One;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Convert a <see cref="SurfaceFormat"/> to an OpenTK.Graphics.ColorFormat.
+        /// This is used for setting up the backbuffer format of the OpenGL context.
+        /// </summary>
+        /// <returns>An OpenTK.Graphics.ColorFormat instance.</returns>
+        /// <param name="format">The <see cref="SurfaceFormat"/> to convert.</param>
+        internal static ColorFormat GetColorFormat(this RSurfaceFormat format)
+        {
+            switch (format)
+            {
+                case RSurfaceFormat.Alpha8:
+                    return new ColorFormat(0, 0, 0, 8);
+                case RSurfaceFormat.Bgr565:
+                    return new ColorFormat(5, 6, 5, 0);
+                case RSurfaceFormat.Bgra4444:
+                    return new ColorFormat(4, 4, 4, 4);
+                case RSurfaceFormat.Bgra5551:
+                    return new ColorFormat(5, 5, 5, 1);
+                case RSurfaceFormat.Bgr32:
+                    return new ColorFormat(8, 8, 8, 0);
+                case RSurfaceFormat.Bgra32:
+                case RSurfaceFormat.Color:
+                    return new ColorFormat(8, 8, 8, 8);
+                case RSurfaceFormat.Rgba1010102:
+                    return new ColorFormat(10, 10, 10, 2);
+                default:
+                    // Floating point backbuffers formats could be implemented
+                    // but they are not typically used on the backbuffer. In
+                    // those cases it is better to create a render target instead.
+                    throw new NotSupportedException();
+            }
+        }
+    }
 }

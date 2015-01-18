@@ -64,7 +64,7 @@ namespace Reactor.Types
             font.SetCharSize(0, Size, 0, 72);
             font.SetPixelSizes(0, (uint)Size);
             string table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+~`\\|]}[{'\";:/?.>,<";
-            List<RTextureSprite> glyphs = new List<RTextureSprite>();
+            List<RTextureGlyph> glyphs = new List<RTextureGlyph>();
 
             foreach(char c in table)
             {
@@ -76,7 +76,7 @@ namespace Reactor.Types
             }
             RTextureAtlas atlas = new RTextureAtlas();
 
-            atlas.BuildAtlas(glyphs);
+            atlas.BuildFontAtlas(glyphs, 64);
         }
 
     }

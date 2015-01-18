@@ -26,54 +26,31 @@
 using System;
 using Reactor.Math;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Reactor.Types
 {
     public class RTextureAtlas : RTexture
     {
         const int FixedWidth = 64;
+        
         public RTextureAtlas()
         {
+            
         }
 
-        public void BuildAtlas(List<RTextureSprite> textures)
+        internal void BuildFontAtlas(List<RTextureGlyph> textures, int textureSize)
         {
+            Bounds = new Math.Rectangle(0,0,textureSize, textureSize);
             textures.Sort(new RTextureSizeSorter());
             textures.Reverse();
-            Rectangle largest = textures[0].Bounds;
-            int cellSize = System.Math.Max(largest.Width, largest.Height);
-            double sqr = System.Math.Sqrt((double)textures.Count);
-            int remainder = ((int)(sqr*100) % 100);
-            /*Rectangle bounds = new Rectangle();
-            foreach(RTextureSprite sprite in textures)
-            {
-                bounds = Rectangle.Union(bounds, sprite.Bounds);
-            }
-            RTextureSprite previous = null;
-            foreach(RTextureSprite sprite in textures)
-            {
-                if(previous == null){
-                    sprite.Offset.X = 0;
-                    previous = sprite;
-                }
-                else {
-                    sprite.Offset.X = previous.Offset.X + previous.Bounds.Width;
-                    sprite.Bounds.Offset(sprite.Offset);
-                    previous = sprite;
-                }
-
-                bounds = Rectangle.Union(bounds, previous.Bounds);
-            }
-            while(!this.isPowerOfTwo((uint)bounds.Height))
-                bounds.Height += 1;
-            while(!this.isPowerOfTwo((uint)bounds.Width))
-                bounds.Width += 1;
-                */
+            
             AtlasNode root = new AtlasNode();
-            root.bounds = new Rectangle(0, 0, 512, 512);
+            root.bounds = new Math.Rectangle(0, 0, textureSize, textureSize);
             uint index = 0;
             int unclaimed = 0;
-            foreach(RTextureSprite sprite in textures)
+            foreach(RTextureGlyph sprite in textures)
             {
                 try{
                     AtlasNode node = root.Insert(sprite.Bounds);
@@ -98,26 +75,26 @@ namespace Reactor.Types
 
         }
 
-        private void Pack(RTextureSprite sprite)
+        private void Pack(RTextureGlyph sprite)
         {
-
+            
         }
     }
     internal class AtlasNode
     {
         public AtlasNode left;
         public AtlasNode right;
-        public Rectangle bounds;
+        public Math.Rectangle bounds;
         public bool filled;
 
         public AtlasNode()
         {
             left = null;
             right = null;
-            this.bounds = Rectangle.Empty;
+            this.bounds = Math.Rectangle.Empty;
             filled = false;
         }
-        public AtlasNode Insert(Rectangle sBounds)
+        public AtlasNode Insert(Math.Rectangle sBounds)
         {
             if(this.left != null)
             {
@@ -148,12 +125,12 @@ namespace Reactor.Types
                     int dw = this.bounds.Width - sBounds.Width;
                     int dh = this.bounds.Height - sBounds.Height;
                     if (dw > dh) {
-                        this.left.bounds = new Rectangle(this.bounds.X, this.bounds.Y, sBounds.Width, this.bounds.Height);
-                        this.right.bounds = new Rectangle(this.bounds.X+sBounds.Width, this.bounds.Y, this.bounds.Width - sBounds.Width, this.bounds.Height);
+                        this.left.bounds = new Math.Rectangle(this.bounds.X, this.bounds.Y, sBounds.Width, this.bounds.Height);
+                        this.right.bounds = new Math.Rectangle(this.bounds.X+sBounds.Width, this.bounds.Y, this.bounds.Width - sBounds.Width, this.bounds.Height);
                     }
                     else {
-                        this.left.bounds = new Rectangle(this.bounds.X, this.bounds.Y, this.bounds.Width, sBounds.Height);
-                        this.right.bounds = new Rectangle(this.bounds.X, this.bounds.Y+sBounds.Height, this.bounds.Width, this.bounds.Height - sBounds.Height);
+                        this.left.bounds = new Math.Rectangle(this.bounds.X, this.bounds.Y, this.bounds.Width, sBounds.Height);
+                        this.right.bounds = new Math.Rectangle(this.bounds.X, this.bounds.Y+sBounds.Height, this.bounds.Width, this.bounds.Height - sBounds.Height);
                     }
 
                     return this.left.Insert(sBounds);
@@ -165,9 +142,11 @@ namespace Reactor.Types
     {
         public int Compare(RTextureSprite left, RTextureSprite right)
         {
-            if(left.Bounds.Width > right.Bounds.Width && left.Bounds.Height > right.Bounds.Height)
-                return 1;
-            if(left.Bounds.Width > right.Bounds.Width)
+            if (left == null)
+                return 0;
+            if (right == null)
+                return 0;
+            if(left.Bounds.Height > right.Bounds.Height)
                 return 1;
             else
                 return -1;

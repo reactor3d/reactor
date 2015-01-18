@@ -126,6 +126,14 @@ namespace Reactor.Types
 
                 // load succeeded, Texture can be used.
                 Bind();
+                int max_level = 0;
+                int min_level = 0;
+                
+                REngine.CheckGLError();
+                GL.TexParameterI(textureTarget, TextureParameterName.TextureBaseLevel,ref min_level);
+                REngine.CheckGLError();
+                GL.TexParameterI(textureTarget, TextureParameterName.TextureMaxLevel,ref max_level);
+                REngine.CheckGLError();
             GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
             REngine.CheckGLError();
             int MipMapCount;
@@ -146,7 +154,10 @@ namespace Reactor.Types
         }
 
         internal void Bind(){
+            GL.ActiveTexture(TextureUnit.Texture0);
+            REngine.CheckGLError();
             GL.BindTexture( textureTarget, Id );
+            REngine.CheckGLError();
             bound = true;
         }
 

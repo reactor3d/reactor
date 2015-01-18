@@ -41,12 +41,19 @@ namespace Reactor
         bool initialized=false;
         RMeshBuilder quad;
         RShader defaultShader;
-        RCamera camera2d;
+        RCamera2d camera2d;
         RCamera oldCamera;
         RVertexBuffer vertexQuad2D;
+        RVertexData2D[] quadVerts;
         public RScreen()
         {
-            camera2d = new RCamera();
+            camera2d = new RCamera2d();
+        }
+
+        public RCamera2d Camera
+        {
+            get { return camera2d; }
+            set { camera2d = value; }
         }
 
         public void Init()
@@ -56,15 +63,13 @@ namespace Reactor
             Fonts.Add(defaultFont);
             quad = new RMeshBuilder();
             quad.CreateFullscreenQuad();
-            RVertexData2D[] vertices = new RVertexData2D[6];
-            vertices[0] = new RVertexData2D(new Vector2(0, 0), new Vector2(0,1));
-            vertices[1] = new RVertexData2D(new Vector2(0, 1), new Vector2(0,0));
-            vertices[2] = new RVertexData2D(new Vector2(1, 1), new Vector2(1,0));
-            vertices[3] = new RVertexData2D(new Vector2(0, 0), new Vector2(0,1));
-            vertices[4] = new RVertexData2D(new Vector2(1, 1), new Vector2(1,0));
-            vertices[5] = new RVertexData2D(new Vector2(1, 0), new Vector2(1,1));
-            vertexQuad2D = new RVertexBuffer(vertices[0].Declaration, 6, RBufferUsage.WriteOnly);
-            vertexQuad2D.SetData<RVertexData2D>(vertices);
+            quadVerts = new RVertexData2D[4];
+            quadVerts[0] = new RVertexData2D(new Vector2(-1, 1), new Vector2(0, 0));
+            quadVerts[1] = new RVertexData2D(new Vector2(-1, -1), new Vector2(0, 1));
+            quadVerts[2] = new RVertexData2D(new Vector2(1, 1), new Vector2(1, 0));
+            quadVerts[3] = new RVertexData2D(new Vector2(1, -1), new Vector2(1, 1));
+            vertexQuad2D = new RVertexBuffer(quadVerts[0].Declaration, 6, RBufferUsage.WriteOnly);
+            vertexQuad2D.SetData<RVertexData2D>(quadVerts);
 
             initialized = true;
         }
@@ -72,8 +77,9 @@ namespace Reactor
         public void Begin()
         {
             oldCamera = REngine.Instance.GetCamera();
-            var viewport = REngine.Instance._viewport;
-            GL.Viewport(0, 0, (int)viewport.Width, (int)viewport.Height);
+            REngine.Instance.SetCamera(camera2d);
+            
+            //GL.Viewport(0, (int)viewport.Width, 0, (int)viewport.Height);
             GL.Disable(EnableCap.DepthTest);
             REngine.CheckGLError();
             GL.DepthMask(false);
@@ -85,18 +91,13 @@ namespace Reactor
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             REngine.CheckGLError();
             GL.Disable(EnableCap.CullFace);
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
-            projection.M41 += -0.5f * projection.M11;
-            projection.M42 += -0.5f * projection.M22;
-            camera2d.Projection = projection;
-            camera2d.View = Matrix.Identity;
-            REngine.Instance.SetCamera(camera2d);
+            camera2d.Update();
+            
         }
 
         public void End()
         {
-            var viewport = REngine.Instance._viewport;
-            viewport.Bind();
+            
             REngine.Instance.SetCamera(oldCamera);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
@@ -140,21 +141,36 @@ namespace Reactor
             quad.Render();
         }
 
-        public void DrawTexture(RTexture2D texture, Rectangle screenBounds)
+        public void DrawTexture(RTexture2D texture, Rectangle bounds)
         {
+            RViewport viewport = REngine.Instance._viewport;
+            UpdateQuad(bounds);
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
             vertexQuad2D.Bind();
             vertexQuad2D.BindVertexArray();
-            //Matrix m = Matrix.CreateOrthographicOffCenter(screenBounds.X, screenBounds.Width, screenBounds.Height, screenBounds.Y, 0, 1);
+            //Matrix m = Matrix.CreateOrthographicOffCenter(screenBounds.X*viewport.AspectRatio, screenBounds.Width * viewport.AspectRatio, screenBounds.Height, screenBounds.Y, 0, 1);
             defaultShader.SetUniformValue("projection", camera2d.Projection);
+            defaultShader.SetUniformValue("view", camera2d.View);
             vertexQuad2D.VertexDeclaration.Apply(defaultShader, IntPtr.Zero);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
+            GL.DrawArrays(PrimitiveType.Quads, 0, 4);
             vertexQuad2D.UnbindVertexArray();
             vertexQuad2D.Unbind();
             defaultShader.Unbind();
 
+        }
+        void UpdateQuad(Rectangle placement)
+        {
+            quadVerts[0].Position = new Vector2(placement.X, placement.Y);
+            quadVerts[0].TexCoord = new Vector2(0, 0);
+            quadVerts[1].Position = new Vector2(placement.X + placement.Width, placement.Y);
+            quadVerts[1].TexCoord = new Vector2(1, 0);
+            quadVerts[2].Position = new Vector2(placement.X + placement.Width, placement.Y + placement.Height);
+            quadVerts[2].TexCoord = new Vector2(1, 1);
+            quadVerts[3].Position = new Vector2(placement.X, placement.Y + placement.Height);
+            quadVerts[3].TexCoord = new Vector2(0, 1);
+            vertexQuad2D.SetData<RVertexData2D>(quadVerts);
         }
 
 

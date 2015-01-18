@@ -111,7 +111,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Platform\Threading.cs" />
+    <Compile Include="RCamera2d.cs" />
+    <Compile Include="RFrameBuffer.cs" />
     <Compile Include="Types\RCameraNode.cs" />
+    <Compile Include="Types\RColorWriteChannels.cs" />
+    <Compile Include="Types\States\RBlend.cs" />
+    <Compile Include="Types\States\RBlendFunc.cs" />
+    <Compile Include="Types\States\RBlendState.cs" />
+    <Compile Include="Types\States\RCullMode.cs" />
+    <Compile Include="Types\States\RCompareFunction.cs" />
+    <Compile Include="Types\States\RDepthFormat.cs" />
+    <Compile Include="Types\RRenderTargetUsage.cs" />
     <Compile Include="Types\RViewport.cs" />
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\BoundingFrustum.cs" />
@@ -151,7 +161,9 @@
     <Compile Include="Types\RTexture3D.cs" />
     <Compile Include="Types\RTextureLayer.cs" />
     <Compile Include="Types\RUpdateNode.cs" />
+    <Compile Include="Types\States\TargetBlendState.cs" />
     <Compile Include="Utilities\Hash.cs" />
+    <Compile Include="Utilities\ObjectFactory.cs" />
     <Compile Include="Utilities\ReflectionHelpers.cs" />
     <Compile Include="RGameWindow.cs" />
     <Compile Include="RLog.cs" />
@@ -208,7 +220,9 @@
     <EmbeddedResource Include="Shaders\basicEffect.frag.glsl" />
     <EmbeddedResource Include="Shaders\basicEffect.vert.glsl" />
     <EmbeddedResource Include="Fonts\coders_crux.ttf" />
-    <None Include="freetype6.dll" />
+    <Content Include="freetype6.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Shaders\basic2dEffect.frag.glsl" />
     <EmbeddedResource Include="Shaders\basic2dEffect.vert.glsl" />
   </ItemGroup>
@@ -239,9 +253,7 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="SharpFont.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
