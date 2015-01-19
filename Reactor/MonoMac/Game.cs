@@ -69,20 +69,20 @@ namespace MonoMac
 
         public override void Render()
         {
-            Engine.Clear();
+            Engine.Clear(RColor.DarkGray * 0.2f);
 
             mesh.Render();
 
             //Engine.Screen.AlphaBlendMode = RBlendFunc.Add;
             //Engine.Screen.AlphaSourceBlend = RBlend.SourceAlpha;
             //Engine.Screen.AlphaDestinationBlend = RBlend.One;
-
+            Engine.Screen.BlendState = RBlendState.AlphaBlend;
             Engine.Screen.Begin();
             float a = (float)(Math.Sin(alpha));
             //Engine.Screen.RenderFullscreenQuad();
 
-            Engine.Screen.RenderTexture(font, new Rectangle(900,400, (int)font.width, (int)font.height), new RColor(RColor.White, a));
-            //Engine.Screen.RenderText(font, new Vector2(10,100), 10, "Testing All Things Human");
+            Engine.Screen.RenderTexture(bg, new Rectangle(10,400, 1400, 900), RColor.White);
+            Engine.Screen.RenderText(font, new Vector2(10,100), 8, "Testing font rendering and \n multiline data");
             Engine.Screen.End();
             Engine.Present();
         }

@@ -26,8 +26,6 @@
 using System;
 using Reactor.Math;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 
 namespace Reactor.Types
@@ -35,39 +33,56 @@ namespace Reactor.Types
     public class RTextureAtlas : RTexture
     {
         const int FixedWidth = 64;
-        
         public RTextureAtlas()
         {
             textureTarget = TextureTarget.Texture2D;
             pixelFormat = RPixelFormat.Rgba;
-
         }
 
-        internal void BuildFontAtlas(List<RTextureGlyph> textures, int textureSize)
+        public void BuildAtlas(List<RTextureSprite> textures)
         {
-            GL.GenTextures(1, out Id);
-            REngine.CheckGLError();
-            Bind();
-            REngine.CheckGLError();
-            GL.TexImage2D(textureTarget, 0, PixelInternalFormat.Rgba8, textureSize, textureSize, 0, (OpenTK.Graphics.OpenGL.PixelFormat)pixelFormat, PixelType.UnsignedByte, IntPtr.Zero);
-            REngine.CheckGLError();
-            Unbind();
-            Bounds = new Math.Rectangle(0,0,textureSize, textureSize);
             textures.Sort(new RTextureSizeSorter());
             textures.Reverse();
-            
+            Rectangle largest = textures[0].Bounds;
+            int cellSize = System.Math.Max(largest.Width, largest.Height);
+            double sqr = System.Math.Sqrt((double)textures.Count);
+            int remainder = ((int)(sqr*100) % 100);
+            /*Rectangle bounds = new Rectangle();
+            foreach(RTextureSprite sprite in textures)
+            {
+                bounds = Rectangle.Union(bounds, sprite.Bounds);
+            }
+            RTextureSprite previous = null;
+            foreach(RTextureSprite sprite in textures)
+            {
+                if(previous == null){
+                    sprite.Offset.X = 0;
+                    previous = sprite;
+                }
+                else {
+                    sprite.Offset.X = previous.Offset.X + previous.Bounds.Width;
+                    sprite.Bounds.Offset(sprite.Offset);
+                    previous = sprite;
+                }
+
+                bounds = Rectangle.Union(bounds, previous.Bounds);
+            }
+            while(!this.isPowerOfTwo((uint)bounds.Height))
+                bounds.Height += 1;
+            while(!this.isPowerOfTwo((uint)bounds.Width))
+                bounds.Width += 1;
+                */
             AtlasNode root = new AtlasNode();
-            root.bounds = new Math.Rectangle(0, 0, textureSize, textureSize);
+            root.bounds = new Rectangle(0, 0, 512, 512);
             uint index = 0;
             int unclaimed = 0;
-            foreach(RTextureGlyph sprite in textures)
+            foreach(RTextureSprite sprite in textures)
             {
                 try{
                     AtlasNode node = root.Insert(sprite.Bounds);
                     if(node != null)
                     {
                         RLog.Info(node.ToString());
-                        sprite.Bounds = node.bounds;
                         sprite.ScaledBounds = node.bounds;
 
                         Pack(sprite);
@@ -86,31 +101,26 @@ namespace Reactor.Types
 
         }
 
-        private void Pack(RTextureGlyph sprite)
+        private void Pack(RTextureSprite sprite)
         {
-            RColor[] sprite_colors = sprite.GetData<RColor>();
-            Bind();
-            REngine.CheckGLError();
-            GL.TexSubImage2D<RColor>(textureTarget, 0, sprite.ScaledBounds.X, sprite.ScaledBounds.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, (OpenTK.Graphics.OpenGL.PixelFormat)pixelFormat, PixelType.UnsignedByte, sprite_colors);
-            REngine.CheckGLError();
-            Unbind();
+
         }
     }
     internal class AtlasNode
     {
         public AtlasNode left;
         public AtlasNode right;
-        public Math.Rectangle bounds;
+        public Rectangle bounds;
         public bool filled;
 
         public AtlasNode()
         {
             left = null;
             right = null;
-            this.bounds = Math.Rectangle.Empty;
+            this.bounds = Rectangle.Empty;
             filled = false;
         }
-        public AtlasNode Insert(Math.Rectangle sBounds)
+        public AtlasNode Insert(Rectangle sBounds)
         {
             if(this.left != null)
             {
@@ -141,12 +151,12 @@ namespace Reactor.Types
                     int dw = this.bounds.Width - sBounds.Width;
                     int dh = this.bounds.Height - sBounds.Height;
                     if (dw > dh) {
-                        this.left.bounds = new Math.Rectangle(this.bounds.X, this.bounds.Y, sBounds.Width, this.bounds.Height);
-                        this.right.bounds = new Math.Rectangle(this.bounds.X+sBounds.Width, this.bounds.Y, this.bounds.Width - sBounds.Width, this.bounds.Height);
+                        this.left.bounds = new Rectangle(this.bounds.X, this.bounds.Y, sBounds.Width, this.bounds.Height);
+                        this.right.bounds = new Rectangle(this.bounds.X+sBounds.Width, this.bounds.Y, this.bounds.Width - sBounds.Width, this.bounds.Height);
                     }
                     else {
-                        this.left.bounds = new Math.Rectangle(this.bounds.X, this.bounds.Y, this.bounds.Width, sBounds.Height);
-                        this.right.bounds = new Math.Rectangle(this.bounds.X, this.bounds.Y+sBounds.Height, this.bounds.Width, this.bounds.Height - sBounds.Height);
+                        this.left.bounds = new Rectangle(this.bounds.X, this.bounds.Y, this.bounds.Width, sBounds.Height);
+                        this.right.bounds = new Rectangle(this.bounds.X, this.bounds.Y+sBounds.Height, this.bounds.Width, this.bounds.Height - sBounds.Height);
                     }
 
                     return this.left.Insert(sBounds);
@@ -158,10 +168,6 @@ namespace Reactor.Types
     {
         public int Compare(RTextureSprite left, RTextureSprite right)
         {
-            if (left == null)
-                return 0;
-            if (right == null)
-                return 0;
             if(left.Bounds.Height > right.Bounds.Height)
                 return 1;
             else

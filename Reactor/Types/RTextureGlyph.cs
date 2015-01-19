@@ -35,13 +35,14 @@ namespace Reactor.Types
     internal class RTextureGlyph : RTextureSprite
     {
 
-        char keyCode;
-        float bearingX;
-        float bearingY;
-        int bitmapLeft;
-        int bitmapTop;
+        internal char keyCode;
+        internal float bearingX;
+        internal float bearingY;
+        internal int bitmapLeft;
+        internal int bitmapTop;
         internal Vector2 advance;
         internal GlyphSlot glyph;
+
         public RTextureGlyph(GlyphSlot glyph, char c) : base()
         {
             this.glyph = glyph;
@@ -61,8 +62,8 @@ namespace Reactor.Types
                     internalFormat = PixelInternalFormat.Rgb;
                     break;
                 case PixelMode.Gray:
-                    pixelFormat = RPixelFormat.Alpha;
-                    internalFormat = PixelInternalFormat.Alpha;
+                    pixelFormat = RPixelFormat.Red;
+                    internalFormat = PixelInternalFormat.R8;
                     break;
                 case PixelMode.Lcd:
                     pixelFormat = RPixelFormat.Rgb;
@@ -78,30 +79,39 @@ namespace Reactor.Types
             GL.BindTexture(TextureTarget.Texture2D, Id);
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
             REngine.CheckGLError();
-            GL.TexImage2D(textureTarget, 0,internalFormat, glyph.Bitmap.Width, glyph.Bitmap.Rows, 0, (PixelFormat)pixelFormat, PixelType.UnsignedByte, glyph.Bitmap.Buffer);
+            GL.TexImage2D<byte>(textureTarget, 0,internalFormat, glyph.Bitmap.Width, glyph.Bitmap.Rows, 0, (PixelFormat)pixelFormat, PixelType.UnsignedByte, glyph.Bitmap.BufferData);
             REngine.CheckGLError();
             GL.PixelStore(PixelStoreParameter.PackAlignment, 1);
             REngine.CheckGLError();
+            GL.TexParameter(textureTarget, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(textureTarget, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            REngine.CheckGLError();
+            GL.TexParameter(textureTarget, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(textureTarget, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            REngine.CheckGLError();
+            //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+            REngine.CheckGLError();
             GL.BindTexture(textureTarget, 0);
             REngine.CheckGLError();
-            byte[] colors = GetData<byte>();
-            if(colors.Length > 0)
-            {
-                RColor[] pixels = new RColor[colors.Length];
-                for(int i=0; i<colors.Length; i++)
-                {
-                    pixels[i] = new RColor(colors[i], colors[i], colors[i], 1.0f);
-                }
-                SetData(pixels, RPixelFormat.Rgba, 0, 0, Bounds.Width, Bounds.Height, 0, 0);
-            }
+
             keyCode = c;
 
+        }
+        ~RTextureGlyph()
+        {
+            if(this.Id != 0)
+            {
+                GL.DeleteTexture(this.Id);
+                REngine.CheckGLError();
+            }
         }
         public RTextureGlyph(Rectangle bounds, char c)
         {
             this.Bounds = bounds;
             this.ScaledBounds = bounds;
             this.keyCode = c;
+            this.Offset = Vector2.Zero;
+
 
         }
 

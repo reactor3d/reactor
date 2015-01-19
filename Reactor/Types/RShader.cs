@@ -113,7 +113,14 @@ namespace Reactor.Types
             }
 
         }
-
+        public void SetUniformValue(string name, bool value)
+        {
+            if(value)
+                GL.Uniform1(GetUniformLocation(name), 1);
+            else
+                GL.Uniform1(GetUniformLocation(name), 0);
+            REngine.CheckGLError();
+        }
         public void SetUniformValue(string name, int value)
         {
             GL.Uniform1(GetUniformLocation(name), value);

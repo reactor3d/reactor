@@ -131,7 +131,7 @@ namespace Reactor
                 format = (RPixelFormat)pf;
                 type = pt;
                 BitmapData Data = CurrentBitmap.LockBits( new System.Drawing.Rectangle( 0, 0, CurrentBitmap.Width, CurrentBitmap.Height ), ImageLockMode.ReadOnly, CurrentBitmap.PixelFormat );
-
+                Setup(dimension);
                 if ( Data.Height > 1 )
                 { // image is 2D
                     if (TextureLoaderParameters.BuildMipmapsForUncompressed)
@@ -162,21 +162,7 @@ namespace Reactor
                 CurrentBitmap.UnlockBits( Data );
                 #endregion Load Texture
 
-                #region Set Texture Parameters
-                //GL.TexParameter( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
-                //GL.TexParameter( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
 
-                //GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
-                //GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
-
-                //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
-
-                GLError = GL.GetError( );
-                if ( GLError != ErrorCode.NoError )
-                {
-                    throw new ArgumentException( "Error setting Texture Parameters. GL Error: " + GLError );
-                }
-                #endregion Set Texture Parameters
 
                 return; // success
             } catch ( Exception e )
@@ -189,6 +175,25 @@ namespace Reactor
             {
                 CurrentBitmap = null;
             }
+        }
+
+        static void Setup(TextureTarget dimension)
+        {
+            #region Set Texture Parameters
+            GL.TexParameter( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
+            GL.TexParameter( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
+
+            GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
+            GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
+
+            GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+
+            ErrorCode GLError = GL.GetError( );
+            if ( GLError != ErrorCode.NoError )
+            {
+                RLog.Info( "Error setting Texture Parameters. GL Error: " + GLError );
+            }
+            #endregion Set Texture Parameters
         }
 
     }

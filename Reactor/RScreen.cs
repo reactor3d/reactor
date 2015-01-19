@@ -61,7 +61,7 @@ namespace Reactor
 
         public void Init()
         {
-            blendState = RBlendState.Opaque;
+            blendState = RBlendState.AlphaBlend;
             defaultShader = new RShader();
             defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
             Fonts.Add(defaultFont);
@@ -83,11 +83,14 @@ namespace Reactor
         {
             oldCamera = REngine.Instance.GetCamera();
             REngine.Instance.SetCamera(camera2d);
-            
+            GL.Disable(EnableCap.DepthTest);
+
             //GL.Viewport(0, (int)viewport.Width, 0, (int)viewport.Height);
-            blendState.ColorWriteChannels = RColorWriteChannels.All;
+            //blendState.ColorWriteChannels = RColorWriteChannels.All;
+            GL.Enable(EnableCap.Blend);
             blendState.PlatformApplyState();
-            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //GL.FrontFace(FrontFaceDirection.Ccw);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             REngine.CheckGLError();
             GL.Disable(EnableCap.CullFace);
@@ -103,8 +106,11 @@ namespace Reactor
             REngine.Instance.SetCamera(oldCamera);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
+            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.CullFace(CullFaceMode.Back);
             GL.DepthFunc(DepthFunction.Less);
             GL.Disable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
             REngine.CheckGLError();
             GL.DepthMask(true);
             REngine.CheckGLError();
@@ -116,11 +122,11 @@ namespace Reactor
                 throw new ReactorException("You must first call Init() before using RScreen.");
         }
 
-        public RFont LoadFont(string path)
+        public RFont LoadFont(string path, int size)
         {
             InitCheck();
             RFont font = new RFont();
-            font.Load(RFileSystem.Instance.GetFilePath(path));
+            font.Load(RFileSystem.Instance.GetFilePath(path), size);
             return font;
 
         }
@@ -150,13 +156,18 @@ namespace Reactor
         }
         public void RenderTexture(RTexture texture, Rectangle bounds, RColor color)
         {
-           RenderTexture(texture, bounds, color, Matrix.Identity);
+           RenderTexture(texture, bounds, color, Matrix.Identity, false);
         }
-        public void RenderTexture(RTexture texture, Rectangle bounds, RColor color, Matrix matrix)
+        public void RenderTexture(RTexture texture, Rectangle bounds, RColor color, Matrix matrix, bool font)
         {
             RViewport viewport = REngine.Instance._viewport;
-            //UpdateQuad(bounds);
-
+            UpdateQuad(bounds);
+            blendState.PlatformApplyState();
+            if(font)
+            {
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            }
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
             vertexQuad2D.Bind();
@@ -167,14 +178,16 @@ namespace Reactor
             defaultShader.SetUniformValue("projection", camera2d.Projection);
             defaultShader.SetUniformValue("view", camera2d.View);
             defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
-            defaultShader.SetUniformValue("model", matrix *Matrix.CreateScale(new Vector3(bounds.Width, bounds.Height, 0)) * Matrix.CreateTranslation(new Vector3(bounds.X, bounds.Y, 0f)));
+            defaultShader.SetUniformValue("model", matrix);
+            defaultShader.SetUniformValue("font", font);
             vertexQuad2D.VertexDeclaration.Apply(defaultShader, IntPtr.Zero);
 
 
             GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
             REngine.CheckGLError();
 
-
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
+            GL.Disable(EnableCap.Blend);
             indexQuad2D.Unbind();
             vertexQuad2D.UnbindVertexArray();
             vertexQuad2D.Unbind();
@@ -184,20 +197,37 @@ namespace Reactor
 
         public void RenderText(RFont font, Vector2 penPoint, int size, string text)
         {
-            /*foreach(char c in text)
+            font.BuildTextureMap(size);
+            char lastChar = '\0';
+            Vector2 originalPoint = penPoint;
+            foreach(char c in text)
             {
+                if(c == ' ')
+                {
+                    penPoint.X += font.Kerning(lastChar, c).X+font.SpaceWidth;
+                    lastChar = ' ';
+                    continue;
+                }
+
+                if(c == '\r' || c=='\n')
+                {
+                    penPoint.Y += font.LineHeight + (font.font.Height>>6)+size;
+                    penPoint.X = originalPoint.X-size;
+                    continue;
+                }
+                penPoint.X += font.Kerning(lastChar, c).X;
                 RTextureGlyph glyph = font.GetGlyph(c);
-                int x0 = (int)(penPoint.X + glyph.Offset.X);
-                int y0 = (int)(penPoint.Y + glyph.Offset.Y);
+                int x0 = (int)(penPoint.X + (glyph.bitmapLeft));
+                int y0 = (int)(penPoint.Y - (glyph.bitmapTop));
                 //penPoint.X += glyph.Offset.X;
 
-                RenderTexture(font.texture, new Rectangle(x0, y0, (int)glyph.Bounds.Width, (int)glyph.Bounds.Height), RColor.White);
+                RenderTexture(glyph, new Rectangle(x0, y0, (int)glyph.Bounds.Width, (int)glyph.Bounds.Height), RColor.White, Matrix.Identity, true);
                 penPoint.X += glyph.advance.X;
-
-            }*/
-            font.RenderText(defaultShader, text, penPoint.X, penPoint.Y, size, size);
+                lastChar = c;
+            }
+            //font.RenderText(defaultShader, text, penPoint.X, penPoint.Y, size, size);
         }
-        /*void UpdateQuad(Rectangle placement)
+        void UpdateQuad(Rectangle placement)
         {
             quadVerts[0].Position = new Vector2(placement.X, placement.Y);
             quadVerts[0].TexCoord = new Vector2(0, 0);
@@ -208,48 +238,11 @@ namespace Reactor
             quadVerts[3].Position = new Vector2(placement.X, placement.Y + placement.Height);
             quadVerts[3].TexCoord = new Vector2(0, 1);
             vertexQuad2D.SetData<RVertexData2D>(quadVerts);
-        }*/
-
-        public RBlendFunc AlphaBlendMode
-        {
-            get { return blendState.AlphaBlendFunction; }
-            set { blendState.AlphaBlendFunction = value; }
         }
 
-        public RBlend AlphaDestinationBlend
+        public RBlendState BlendState
         {
-            get { return blendState.AlphaDestinationBlend;}
-            set { blendState.AlphaDestinationBlend = value; }
-        }
-        public RBlend AlphaSourceBlend
-        {
-            get { return blendState.AlphaSourceBlend;}
-            set { blendState.AlphaSourceBlend = value; }
-        }
-        public RColor BlendFactor
-        {
-            get { return blendState.BlendFactor; }
-            set { blendState.BlendFactor=value; }
-        }
-        public RBlendFunc ColorBlendMode
-        {
-            get { return blendState.ColorBlendFunction; }
-            set { blendState.ColorBlendFunction = value; }
-        }
-        public RBlend ColorDestinationBlend
-        {
-            get { return blendState.ColorDestinationBlend;}
-            set { blendState.ColorDestinationBlend = value; }
-        }
-        public RBlend ColorSourceBlend
-        {
-            get { return blendState.ColorSourceBlend;}
-            set { blendState.ColorSourceBlend = value; }
-        }
-        public int MultiSampleMask
-        {
-            get { return blendState.MultiSampleMask; }
-            set { blendState.MultiSampleMask = value; }
+            get { return blendState; } set { blendState = value;}
         }
     }
 }
