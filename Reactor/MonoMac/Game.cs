@@ -39,6 +39,7 @@ namespace MonoMac
         RCamera camera;
         RTexture2D bg;
         RViewport viewport;
+        RFont font;
         float alpha = 0;
         public Game()
         {
@@ -62,6 +63,8 @@ namespace MonoMac
             viewport = Engine.GetViewport();
             Engine.Screen.Init();
             bg = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("bg", "/reisergames.png");
+
+            font = new RFont();
         }
 
         public override void Render()
@@ -78,7 +81,8 @@ namespace MonoMac
             float a = (float)(Math.Sin(alpha));
             //Engine.Screen.RenderFullscreenQuad();
 
-            //Engine.Screen.RenderTexture(bg, new Rectangle(0,0, (int)viewport.Width, (int)viewport.Height), new RColor(RColor.White, a));
+            Engine.Screen.RenderTexture(font, new Rectangle(900,400, (int)font.width, (int)font.height), new RColor(RColor.White, a));
+            //Engine.Screen.RenderText(font, new Vector2(10,100), 10, "Testing All Things Human");
             Engine.Screen.End();
             Engine.Present();
         }

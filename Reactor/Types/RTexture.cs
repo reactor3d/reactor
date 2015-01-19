@@ -19,9 +19,9 @@ namespace Reactor.Types
         public Reactor.Math.Rectangle Bounds;
 
         bool bound;
-        TextureTarget textureTarget;
-        RPixelFormat pixelFormat;
-        PixelType pixelType;
+        protected TextureTarget textureTarget;
+        protected RPixelFormat pixelFormat;
+        PixelType pixelType = PixelType.UnsignedByte;
         internal void LoadFromData(byte[] data, string name, bool isCompressed)
         {
             if(isCompressed)
@@ -209,31 +209,25 @@ namespace Reactor.Types
             return (x == 1);
         }
 
-        public RColor[] GetData()
+        public T[] GetData<T>()where T : struct
         {
-            byte[] pixels = new byte[Bounds.Width * Bounds.Height * 4];
+
             Bind();
-            GL.GetTexImage<byte>(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, pixels);
+
+            T[] pixels = new T[Bounds.Width * Bounds.Height];
+
+
+            GL.GetTexImage<T>(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, pixels);
             REngine.CheckGLError();
             Unbind();
-            RColor[] colors = new RColor[Bounds.Width * Bounds.Height];
-            int b=0;
-            for(int i=0; i< colors.Length; i++)
-            {
+            REngine.CheckGLError();
 
-                colors[i] = new RColor();
-                colors[i].R = pixels[++b];
-                colors[i].G = pixels[++b];
-                colors[i].B = pixels[++b];
-                colors[i].A = pixels[++b];
-
-            }
-            return colors;
+            return pixels;
         }
         public void SetData(RColor[] colors, RPixelFormat format, int x, int y, int width, int height, int offsetx, int offsety)
         {
             Bind();
-            GL.TexSubImage2D<RColor>(textureTarget, 0, offsetx, offsety, width, height, (PixelFormat)format, PixelType.Bitmap, colors);
+            GL.TexSubImage2D<RColor>(textureTarget, 0, offsetx, offsety, width, height, (PixelFormat)format, PixelType.UnsignedByte, colors);
             REngine.CheckGLError();
             Unbind();
         }

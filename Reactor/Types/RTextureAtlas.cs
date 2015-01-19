@@ -28,6 +28,7 @@ using Reactor.Math;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using OpenTK.Graphics.OpenGL;
 
 namespace Reactor.Types
 {
@@ -37,11 +38,20 @@ namespace Reactor.Types
         
         public RTextureAtlas()
         {
-            
+            textureTarget = TextureTarget.Texture2D;
+            pixelFormat = RPixelFormat.Rgba;
+
         }
 
         internal void BuildFontAtlas(List<RTextureGlyph> textures, int textureSize)
         {
+            GL.GenTextures(1, out Id);
+            REngine.CheckGLError();
+            Bind();
+            REngine.CheckGLError();
+            GL.TexImage2D(textureTarget, 0, PixelInternalFormat.Rgba8, textureSize, textureSize, 0, (OpenTK.Graphics.OpenGL.PixelFormat)pixelFormat, PixelType.UnsignedByte, IntPtr.Zero);
+            REngine.CheckGLError();
+            Unbind();
             Bounds = new Math.Rectangle(0,0,textureSize, textureSize);
             textures.Sort(new RTextureSizeSorter());
             textures.Reverse();
@@ -57,6 +67,7 @@ namespace Reactor.Types
                     if(node != null)
                     {
                         RLog.Info(node.ToString());
+                        sprite.Bounds = node.bounds;
                         sprite.ScaledBounds = node.bounds;
 
                         Pack(sprite);
@@ -77,7 +88,12 @@ namespace Reactor.Types
 
         private void Pack(RTextureGlyph sprite)
         {
-            
+            RColor[] sprite_colors = sprite.GetData<RColor>();
+            Bind();
+            REngine.CheckGLError();
+            GL.TexSubImage2D<RColor>(textureTarget, 0, sprite.ScaledBounds.X, sprite.ScaledBounds.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, (OpenTK.Graphics.OpenGL.PixelFormat)pixelFormat, PixelType.UnsignedByte, sprite_colors);
+            REngine.CheckGLError();
+            Unbind();
         }
     }
     internal class AtlasNode

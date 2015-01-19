@@ -155,7 +155,8 @@ namespace Reactor
         public void RenderTexture(RTexture texture, Rectangle bounds, RColor color, Matrix matrix)
         {
             RViewport viewport = REngine.Instance._viewport;
-            UpdateQuad(bounds);
+            //UpdateQuad(bounds);
+
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
             vertexQuad2D.Bind();
@@ -166,7 +167,7 @@ namespace Reactor
             defaultShader.SetUniformValue("projection", camera2d.Projection);
             defaultShader.SetUniformValue("view", camera2d.View);
             defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
-            defaultShader.SetUniformValue("model", matrix);
+            defaultShader.SetUniformValue("model", matrix *Matrix.CreateScale(new Vector3(bounds.Width, bounds.Height, 0)) * Matrix.CreateTranslation(new Vector3(bounds.X, bounds.Y, 0f)));
             vertexQuad2D.VertexDeclaration.Apply(defaultShader, IntPtr.Zero);
 
 
@@ -180,7 +181,23 @@ namespace Reactor
             defaultShader.Unbind();
 
         }
-        void UpdateQuad(Rectangle placement)
+
+        public void RenderText(RFont font, Vector2 penPoint, int size, string text)
+        {
+            /*foreach(char c in text)
+            {
+                RTextureGlyph glyph = font.GetGlyph(c);
+                int x0 = (int)(penPoint.X + glyph.Offset.X);
+                int y0 = (int)(penPoint.Y + glyph.Offset.Y);
+                //penPoint.X += glyph.Offset.X;
+
+                RenderTexture(font.texture, new Rectangle(x0, y0, (int)glyph.Bounds.Width, (int)glyph.Bounds.Height), RColor.White);
+                penPoint.X += glyph.advance.X;
+
+            }*/
+            font.RenderText(defaultShader, text, penPoint.X, penPoint.Y, size, size);
+        }
+        /*void UpdateQuad(Rectangle placement)
         {
             quadVerts[0].Position = new Vector2(placement.X, placement.Y);
             quadVerts[0].TexCoord = new Vector2(0, 0);
@@ -191,7 +208,7 @@ namespace Reactor
             quadVerts[3].Position = new Vector2(placement.X, placement.Y + placement.Height);
             quadVerts[3].TexCoord = new Vector2(0, 1);
             vertexQuad2D.SetData<RVertexData2D>(quadVerts);
-        }
+        }*/
 
         public RBlendFunc AlphaBlendMode
         {

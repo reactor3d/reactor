@@ -26,30 +26,42 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 using SharpFont;
 using System.IO;
-
+using OpenTK.Graphics.OpenGL;
+using Reactor.Geometry;
+using Reactor.Math;
 
 namespace Reactor.Types
 {
-    public class RFont
+    public class RFont : RTexture
     {
 
         internal string FamilyName;
         internal Face font;
-        public RFont(string fileName)
+        public int width;
+        public int height;
+        //public int texture;
+        int size;
+        font_glyph[] glyphs = new font_glyph[128];
+        RVertexBuffer buffer;
+        public RFont(string fileName, int size)
         {
+            RLog.Info("Creating font from :"+fileName);
+            Load(fileName);
+
         }
 
         public RFont()
         {
             RLog.Info("Creating default system font.");
             font = RFontResources.SystemFont;
-            BuildTextureMap(64);
+            size = 16;
+            DoTextureUpload();
+            REngine.CheckGLError();
+
+
+            //BuildTextureMap(64);
 
         }
 
@@ -57,26 +69,115 @@ namespace Reactor.Types
         {
             font = new Face(RFontResources.FreetypeLibrary, filename);
             FamilyName = font.FamilyName;
+            DoTextureUpload();
         }
 
-        public void BuildTextureMap(int Size)
+        private void DoTextureUpload()
         {
-            font.SetCharSize(0, Size, 0, 72);
-            font.SetPixelSizes(0, (uint)Size);
-            string table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+~`\\|]}[{'\";:/?.>,<";
-            List<RTextureGlyph> glyphs = new List<RTextureGlyph>();
+            font.SetCharSize(0, size << 6, 0, 300);
+            int w = 0, h = 0;
+            for(uint i = 32; i < 128; i++) {
+                font.LoadChar(i, LoadFlags.Render, LoadTarget.Light);
+                GlyphSlot g = font.Glyph;
+                if(g.Bitmap != null)
+                {
+                    w += g.Bitmap.Width;
+                    h = System.Math.Max(h, g.Bitmap.Rows);
+                }
 
-            foreach(char c in table)
-            {
 
-                font.LoadChar(c, (LoadFlags.Render|LoadFlags.Monochrome), LoadTarget.Normal);
-                //font.Glyph.RenderGlyph(RenderMode.Normal);
 
-                glyphs.Add(new RTextureGlyph(font.Glyph, c));
             }
-            RTextureAtlas atlas = new RTextureAtlas();
+            width = w;
+            height = h;
+            int atlas_width = w;
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.GenTextures(1, out Id);
+            REngine.CheckGLError();
+            GL.BindTexture(TextureTarget.Texture2D, Id);
+            REngine.CheckGLError();
+            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+            REngine.CheckGLError();
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.R8, w, h, 0, PixelFormat.Red, PixelType.UnsignedByte, IntPtr.Zero);
+            REngine.CheckGLError();
+            int x = 0;
+            for(int i = 32; i < 128; i++) {
+                font.LoadChar((uint)i, LoadFlags.Render, LoadTarget.Light);
+                GlyphSlot g = font.Glyph;
+                g.RenderGlyph(RenderMode.Light);
+                if(g != null)
+                if(g.Bitmap.Buffer != IntPtr.Zero)
+                {
+                    GL.TexSubImage2D<byte>(TextureTarget.Texture2D, 0, x, 0, g.Bitmap.Width, g.Bitmap.Rows, PixelFormat.Red, PixelType.UnsignedByte, g.Bitmap.BufferData);
+                //glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0, g->bitmap.width, g->bitmap.rows, GL_ALPHA, GL_UNSIGNED_BYTE, g->bitmap.buffer);
+                    REngine.CheckGLError();
+                    glyphs[i].ax = g.Advance.X >> 6;
+                    glyphs[i].ay = g.Advance.Y >> 6;
 
-            atlas.BuildFontAtlas(glyphs, 64);
+                    glyphs[i].bw = g.Bitmap.Width;
+                    glyphs[i].bh = g.Bitmap.Rows;
+
+                    glyphs[i].bl = g.BitmapLeft;
+                    glyphs[i].bt = g.BitmapTop;
+
+                    glyphs[i].tx = (float)x / w;
+                
+
+
+                    x += g.Bitmap.Width;
+                }
+            }
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            REngine.CheckGLError();
+
+        }
+
+        internal void RenderText(RShader shader, string text, float x, float y, float sx, float sy)
+        {
+
+            RVertexData2D[] coords = new RVertexData2D[6*text.Length];
+
+            int n = 0;
+            foreach(char c in text)
+            {
+                float x2 =  x + glyphs[c].bl * sx;
+                float y2 = -y - glyphs[c].bt * sy;
+                float w = glyphs[c].bw * sx;
+                float h = glyphs[c].bh * sy;
+
+                /* Advance the cursor to the start of the next character */
+                x += glyphs[c].ax * sx;
+                y += glyphs[c].ay * sy;
+
+                /* Skip glyphs that have no pixels */
+                if(w == 0 || h == 0)
+                    continue;
+
+                coords[n++] = new RVertexData2D(new Vector2(x2,-y2), new Vector2(glyphs[c].tx,0));
+                coords[n++] = new RVertexData2D(new Vector2(x2 + w, -y2), new Vector2(glyphs[c].tx + glyphs[c].bw / width,0));
+                coords[n++] = new RVertexData2D(new Vector2(x2,-y2 - h), new Vector2(glyphs[c].tx, glyphs[c].bh / height)); //remember: each glyph occupies a different amount of vertical space
+                coords[n++] = new RVertexData2D(new Vector2(x2 + w, -y2), new Vector2(glyphs[c].tx + glyphs[c].bw / width,0));
+                coords[n++] = new RVertexData2D(new Vector2(x2,-y2 - h), new Vector2(glyphs[c].tx,glyphs[c].bh / height));
+                coords[n++] = new RVertexData2D(new Vector2(x2 + w, -y2 - h), new Vector2(glyphs[c].tx + glyphs[c].bw / width, glyphs[c].bh / height));
+
+            }
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, Id);
+            REngine.CheckGLError();
+            shader.Bind();
+            shader.SetSamplerValue(RTextureLayer.DIFFUSE, this);
+            buffer = new RVertexBuffer(coords[0].Declaration, coords.Length, RBufferUsage.WriteOnly);
+            buffer.SetData<RVertexData2D>(coords);
+            buffer.BindVertexArray();
+            buffer.Bind();
+            coords[0].Declaration.Apply(shader, IntPtr.Zero);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, buffer.VertexCount);
+            REngine.CheckGLError();
+            buffer.Unbind();
+            buffer.UnbindVertexArray();
+
+
         }
 
     }
@@ -97,6 +198,20 @@ namespace Reactor.Types
 
         internal static Face SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
 
+    }
+
+    public struct font_glyph
+    {
+        public float ax; // advance.x
+        public float ay; // advance.y
+
+        public float bw; // bitmap.width;
+        public float bh; // bitmap.rows;
+
+        public float bl; // bitmap_left;
+        public float bt; // bitmap_top;
+
+        public float tx; // x offset of glyph in texture coordinates
     }
 
 
