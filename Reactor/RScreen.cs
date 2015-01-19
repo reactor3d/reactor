@@ -186,7 +186,7 @@ namespace Reactor
             GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
             GL.Disable(EnableCap.Blend);
             indexQuad2D.Unbind();
             vertexQuad2D.UnbindVertexArray();
@@ -195,9 +195,8 @@ namespace Reactor
 
         }
 
-        public void RenderText(RFont font, Vector2 penPoint, int size, string text)
+        public void RenderText(RFont font, Vector2 penPoint, string text)
         {
-            font.BuildTextureMap(size);
             char lastChar = '\0';
             Vector2 originalPoint = penPoint;
             foreach(char c in text)
@@ -211,8 +210,8 @@ namespace Reactor
 
                 if(c == '\r' || c=='\n')
                 {
-                    penPoint.Y += font.LineHeight + (font.font.Height>>6)+size;
-                    penPoint.X = originalPoint.X-size;
+                    penPoint.Y += font.LineHeight + (font.font.Height>>6);
+                    penPoint.X = originalPoint.X;
                     continue;
                 }
                 penPoint.X += font.Kerning(lastChar, c).X;

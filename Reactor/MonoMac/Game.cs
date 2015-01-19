@@ -51,7 +51,7 @@ namespace MonoMac
             camera = new RCamera();
             camera.SetPosition(Vector3.UnitZ * -10f);
             camera.LookAt(new Vector3(0, 0, -1f) * 10f);
-            camera.SetClipPlanes(1f, 100f);
+            camera.SetClipPlanes(0.01f, 100f);
             camera.Update();
             Engine.SetCamera(camera);
             mesh = Engine.Scene.Create<RMesh>("test");
@@ -81,15 +81,15 @@ namespace MonoMac
             float a = (float)(Math.Sin(alpha));
             //Engine.Screen.RenderFullscreenQuad();
 
-            Engine.Screen.RenderTexture(bg, new Rectangle(10,400, 1400, 900), RColor.White);
-            Engine.Screen.RenderText(font, new Vector2(10,100), 8, "Testing font rendering and \n multiline data");
+            Engine.Screen.RenderTexture(bg, new Rectangle(10,400, 1400, 900), new RColor(a, a, a, a));
+            Engine.Screen.RenderText(font, new Vector2(10,100), "Testing font rendering and \n multiline data");
             Engine.Screen.End();
             Engine.Present();
         }
 
         public override void Update()
         {
-            alpha*=1.0000001f;
+            alpha+=0.01f;
 
             if(Engine.Input.IsKeyDown(RKey.A))
                 camera.RotateY(-5f * Engine.GetTime());
