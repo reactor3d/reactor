@@ -197,6 +197,11 @@ namespace Reactor
 
         public void RenderText(RFont font, Vector2 penPoint, string text)
         {
+            RenderText(font, penPoint, text, RColor.White);
+        }
+        public void RenderText(RFont font, Vector2 penPoint, string text, RColor color)
+        {
+            text = text.Replace("\r\n", "\n");
             char lastChar = '\0';
             Vector2 originalPoint = penPoint;
             foreach(char c in text)
@@ -207,11 +212,15 @@ namespace Reactor
                     lastChar = ' ';
                     continue;
                 }
-
+                if(c == '\t')
+                {
+                    penPoint.X += (font.Kerning(lastChar, c).X+(font.SpaceWidth * 2));
+                    continue;
+                }
                 if(c == '\r' || c=='\n')
                 {
                     penPoint.Y += font.LineHeight + (font.font.Height>>6);
-                    penPoint.X = originalPoint.X;
+                    penPoint.X = originalPoint.X+font.Kerning(lastChar, c).X;
                     continue;
                 }
                 penPoint.X += font.Kerning(lastChar, c).X;
@@ -220,11 +229,18 @@ namespace Reactor
                 int y0 = (int)(penPoint.Y - (glyph.bitmapTop));
                 //penPoint.X += glyph.Offset.X;
 
-                RenderTexture(glyph, new Rectangle(x0, y0, (int)glyph.Bounds.Width, (int)glyph.Bounds.Height), RColor.White, Matrix.Identity, true);
+                RenderTexture(glyph, new Rectangle(x0, y0, (int)glyph.Bounds.Width, (int)glyph.Bounds.Height), color, Matrix.Identity, true);
                 penPoint.X += glyph.advance.X;
                 lastChar = c;
             }
             //font.RenderText(defaultShader, text, penPoint.X, penPoint.Y, size, size);
+        }
+
+        internal void RenderFPS(int fps)
+        {
+            Begin();
+            RenderText(defaultFont, new Vector2(5, 30), String.Format("{0}fps",fps));
+            End();
         }
         void UpdateQuad(Rectangle placement)
         {

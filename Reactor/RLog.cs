@@ -30,6 +30,8 @@ namespace Reactor
 {
     public class RLog
     {
+        internal static bool Enabled = false;
+        internal static string LogPath = REngine.RootPath + "/debug.log";
         internal static StreamWriter Writer;
         internal static object mutex = new object();
 
@@ -38,11 +40,13 @@ namespace Reactor
 
             lock(mutex)
             {
-
-                Writer = new StreamWriter(new FileStream(REngine.RootPath + "/debug.log", FileMode.OpenOrCreate));
-                Writer.WriteLine(output);
-                Writer.Flush();
-                Writer.Close();
+                if(Enabled)
+                {
+                    Writer = new StreamWriter(new FileStream(LogPath, FileMode.OpenOrCreate));
+                    Writer.WriteLine(output);
+                    Writer.Flush();
+                    Writer.Close();
+                }
             }
         }
         

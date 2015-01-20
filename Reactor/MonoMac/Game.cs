@@ -47,6 +47,8 @@ namespace MonoMac
 
         public override void Init()
         {
+            Engine.SetDebug(true);
+            Engine.SetShowFPS(true);
             Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
             camera = new RCamera();
             camera.SetPosition(Vector3.UnitZ * -10f);
@@ -82,7 +84,7 @@ namespace MonoMac
             //Engine.Screen.RenderFullscreenQuad();
 
             Engine.Screen.RenderTexture(bg, new Rectangle(10,400, 1400, 900), new RColor(a, a, a, a));
-            Engine.Screen.RenderText(font, new Vector2(10,100), "Testing font rendering and \n multiline data");
+            //Engine.Screen.RenderText(font, new Vector2(10,30), String.Format("FPS: {0}\nMem: {1}Mb\nGBM: {2}Mb", Engine.GetFPS(),Profiler.GetUsedMemory(), Profiler.GetGCMemory()));
             Engine.Screen.End();
             Engine.Present();
         }

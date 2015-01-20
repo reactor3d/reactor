@@ -14,6 +14,7 @@ using Reactor.Math;
 using System.Diagnostics;
 using OpenTK;
 using Reactor.Types.States;
+using System.Timers;
 
 namespace Reactor
 {
@@ -22,7 +23,7 @@ namespace Reactor
         private RDisplayModes _supportedDisplayModes;
         private RenderControl _renderControl;
         private Stopwatch _stopWatch;
-        private Timer _fpsTimer;
+        private System.Timers.Timer _fpsTimer;
         public RScene Scene { get { return RScene.Instance; } }
         public RTextures Textures { get { return RTextures.Instance; } }
         public RMaterials Materials { get { return RMaterials.Instance; } }
@@ -34,7 +35,7 @@ namespace Reactor
         internal static RGame RGame;
         internal static string RootPath;
         internal static RCamera camera;
-
+        internal static bool showFps = false;
 
         private float _lastFps = 0;
         private float _fps = 0;
@@ -45,9 +46,10 @@ namespace Reactor
             RLog.Info("Engine startup sequence activated.");
 
             _stopWatch = new Stopwatch();
-            _fpsTimer = new Timer();
+            _fpsTimer = new System.Timers.Timer();
+
             _fpsTimer.Interval = 1000;
-            _fpsTimer.Tick += _fpsTimer_Tick;
+            _fpsTimer.Elapsed += _fpsTimer_Tick;
             _fpsTimer.Start();
 
             _viewport = new RViewport(0,0,800,600);
@@ -58,9 +60,9 @@ namespace Reactor
 
         }
 
-        void _fpsTimer_Tick(object sender, EventArgs e)
+        void _fpsTimer_Tick(object sender, ElapsedEventArgs e)
         {
-            _lastFps = (float)System.Math.Floor((_fps / (lastFrameTime.TotalMilliseconds)) * 1000.0f);
+            _lastFps = (float)System.Math.Ceiling((_fps / (lastFrameTime.TotalMilliseconds)) * 1000.0f);
             _fps = 0;
             lastFrameTime = _stopWatch.Elapsed;
             _stopWatch.Restart();
@@ -68,7 +70,7 @@ namespace Reactor
 
         ~REngine()
         {
-            _fpsTimer.Tick -= _fpsTimer_Tick;
+            _fpsTimer.Elapsed -= _fpsTimer_Tick;
             _fpsTimer.Stop();
             RLog.Info("Engine shutdown sequence activated.");
         }
@@ -184,6 +186,19 @@ namespace Reactor
                 return (aspect > limit);
             }
         }
+        public void SetDebug(bool value)
+        {
+            RLog.Enabled = value;
+        }
+        public void SetDebug(bool value, string logPath)
+        {
+            RLog.Enabled = value;
+            RLog.LogPath = logPath;
+        }
+        public void SetShowFPS(bool value)
+        {
+            showFps = value;
+        }
         public void Clear()
         {
             Clear(RColor.Black, false);
@@ -214,6 +229,8 @@ namespace Reactor
 
         public void Present()
         {
+            if(showFps)
+                Screen.RenderFPS((int)GetFPS());
             _renderControl.SwapBuffers();
         }
 

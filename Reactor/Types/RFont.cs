@@ -57,6 +57,10 @@ namespace Reactor.Types
         {
             get; set;
         }
+        public int DPI
+        {
+            get; set;
+        }
         public RTextureAtlas Atlas
         {
             get { return atlas; } set { atlas = value; }
@@ -70,7 +74,8 @@ namespace Reactor.Types
             RLog.Info("Creating default system font.");
             font = RFontResources.SystemFont;
             LineHeight = font.Height >> 6;
-            BuildTextureMap(8);
+            DPI=72;
+            BuildTextureMap(36);
 
         }
 
@@ -95,20 +100,21 @@ namespace Reactor.Types
                     g.Dispose();
                 }
             }
-            SpaceWidth = Size;
-            font.SetCharSize(0, Size*64, 300, 300);
+            //SpaceWidth = Size;
+            font.SetCharSize(0, Size*64,(uint) DPI,(uint) DPI);
 
             string table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+~`\\|]}[{'\";:/?.>,<";
             glyphs = new List<RTextureSprite>();
-
-            foreach(char c in table)
+            font.LoadChar((uint)32, (LoadFlags.Render|LoadFlags.Color|LoadFlags.Pedantic), LoadTarget.Normal);
+            SpaceWidth = font.Glyph.Metrics.HorizontalAdvance >> 6;
+            for(int i=33; i < 126; i++)
             {
 
-                font.LoadChar(c, (LoadFlags.Render|LoadFlags.Color|LoadFlags.Pedantic), LoadTarget.Normal);
+                font.LoadChar((uint)i, (LoadFlags.Render|LoadFlags.Color|LoadFlags.Pedantic), LoadTarget.Normal);
                 SpaceWidth = font.Glyph.Metrics.HorizontalAdvance >> 6;
                 //font.Glyph.RenderGlyph(RenderMode.Normal);
 
-                glyphs.Add(new RTextureGlyph(font.Glyph, c));
+                glyphs.Add(new RTextureGlyph(font.Glyph, (char)i));
             }
             atlas = new RTextureAtlas();
 
