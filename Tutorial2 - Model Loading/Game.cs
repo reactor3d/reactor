@@ -14,13 +14,14 @@ namespace Tutorial2___Model_Loading
         RCamera camera;
         RViewport viewport;
         RTexture2D texture;
+        RFont font;
         public Game()
         {
         }
 
         public override void Init()
         {
-            Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Normal);
+            Engine.InitGameWindow(new RDisplayMode(1920, 1080, -1, RSurfaceFormat.Color), RWindowStyle.Normal);
             camera = Engine.GetCamera();
             camera.Position = Vector3.Zero;
             camera.LookAt(Vector3.Forward);
@@ -36,6 +37,7 @@ namespace Tutorial2___Model_Loading
             Engine.Screen.Init();
             viewport = Engine.GetViewport();
             texture = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("test", "/textures/fields.jpg");
+            font = new RFont();
         }
 
         public override void Render()
@@ -45,7 +47,8 @@ namespace Tutorial2___Model_Loading
             mesh.Render();
 
             Engine.Screen.Begin();
-            Engine.Screen.DrawTexture(texture, new Rectangle(3200,400, 100, 100));
+            Engine.Screen.RenderText(font, new Vector2(10, 200), "This is a test on PC");
+            Engine.Screen.RenderTexture(texture, new Rectangle(200,400, 100, 100));
             Engine.Screen.End();
             Engine.Present();
         }
@@ -57,9 +60,9 @@ namespace Tutorial2___Model_Loading
             if (Engine.Input.IsKeyDown(RKey.D))
                 camera.RotateY(5f);
             if (Engine.Input.IsKeyDown(RKey.W))
-                camera.Move(Vector3.Normalize(camera.ViewDirection) * -5f);
+                camera.Move(Vector3.Normalize(camera.ViewDirection) * -0.5f);
             if (Engine.Input.IsKeyDown(RKey.S))
-                camera.Move(Vector3.Normalize(camera.ViewDirection) * 5f);
+                camera.Move(Vector3.Normalize(camera.ViewDirection) * 0.5f);
             mesh.RotateY(-0.1f);
             mesh.Update();
             camera.Update();

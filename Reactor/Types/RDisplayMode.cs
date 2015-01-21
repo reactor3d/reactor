@@ -55,7 +55,7 @@ namespace Reactor.Types
 
         #region Constructors
 
-        internal RDisplayMode(int width, int height, int refreshRate, RSurfaceFormat format)
+        public RDisplayMode(int width, int height, int refreshRate, RSurfaceFormat format)
         {
             this.width = width;
             this.height = height;

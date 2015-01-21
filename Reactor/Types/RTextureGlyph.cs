@@ -97,14 +97,7 @@ namespace Reactor.Types
             keyCode = c;
 
         }
-        ~RTextureGlyph()
-        {
-            if(this.Id != 0)
-            {
-                GL.DeleteTexture(this.Id);
-                REngine.CheckGLError();
-            }
-        }
+
         public RTextureGlyph(Rectangle bounds, char c)
         {
             this.Bounds = bounds;
@@ -119,6 +112,8 @@ namespace Reactor.Types
         {
             return new Vector2(Bounds.Width, Bounds.Height);
         }
+
+        
             
     }
 }
