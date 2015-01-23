@@ -1,0 +1,535 @@
+<Type Name="RPixelFormat" FullName="Reactor.Types.RPixelFormat">
+  <TypeSignature Language="C#" Value="public enum RPixelFormat" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed RPixelFormat extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="AbgrExt">
+      <MemberSignature Language="C#" Value="AbgrExt" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat AbgrExt = int32(32768)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Alpha">
+      <MemberSignature Language="C#" Value="Alpha" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Alpha = int32(6406)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Alpha16IccSgix">
+      <MemberSignature Language="C#" Value="Alpha16IccSgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Alpha16IccSgix = int32(33896)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="AlphaInteger">
+      <MemberSignature Language="C#" Value="AlphaInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat AlphaInteger = int32(36247)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Bgr">
+      <MemberSignature Language="C#" Value="Bgr" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Bgr = int32(32992)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Bgra">
+      <MemberSignature Language="C#" Value="Bgra" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Bgra = int32(32993)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BgraInteger">
+      <MemberSignature Language="C#" Value="BgraInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat BgraInteger = int32(36251)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BgrInteger">
+      <MemberSignature Language="C#" Value="BgrInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat BgrInteger = int32(36250)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Blue">
+      <MemberSignature Language="C#" Value="Blue" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Blue = int32(6405)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BlueInteger">
+      <MemberSignature Language="C#" Value="BlueInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat BlueInteger = int32(36246)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="CmykaExt">
+      <MemberSignature Language="C#" Value="CmykaExt" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat CmykaExt = int32(32781)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="CmykExt">
+      <MemberSignature Language="C#" Value="CmykExt" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat CmykExt = int32(32780)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ColorIndex">
+      <MemberSignature Language="C#" Value="ColorIndex" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat ColorIndex = int32(6400)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="DepthComponent">
+      <MemberSignature Language="C#" Value="DepthComponent" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat DepthComponent = int32(6402)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="DepthStencil">
+      <MemberSignature Language="C#" Value="DepthStencil" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat DepthStencil = int32(34041)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Green">
+      <MemberSignature Language="C#" Value="Green" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Green = int32(6404)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="GreenInteger">
+      <MemberSignature Language="C#" Value="GreenInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat GreenInteger = int32(36245)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Luminance">
+      <MemberSignature Language="C#" Value="Luminance" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Luminance = int32(6409)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Luminance16Alpha8IccSgix">
+      <MemberSignature Language="C#" Value="Luminance16Alpha8IccSgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Luminance16Alpha8IccSgix = int32(33899)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Luminance16IccSgix">
+      <MemberSignature Language="C#" Value="Luminance16IccSgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Luminance16IccSgix = int32(33897)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="LuminanceAlpha">
+      <MemberSignature Language="C#" Value="LuminanceAlpha" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat LuminanceAlpha = int32(6410)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="R5G6B5A8IccSgix">
+      <MemberSignature Language="C#" Value="R5G6B5A8IccSgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat R5G6B5A8IccSgix = int32(33895)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="R5G6B5IccSgix">
+      <MemberSignature Language="C#" Value="R5G6B5IccSgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat R5G6B5IccSgix = int32(33894)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Red">
+      <MemberSignature Language="C#" Value="Red" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Red = int32(6403)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RedExt">
+      <MemberSignature Language="C#" Value="RedExt" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat RedExt = int32(6403)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RedInteger">
+      <MemberSignature Language="C#" Value="RedInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat RedInteger = int32(36244)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Rg">
+      <MemberSignature Language="C#" Value="Rg" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Rg = int32(33319)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Rgb">
+      <MemberSignature Language="C#" Value="Rgb" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Rgb = int32(6407)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Rgba">
+      <MemberSignature Language="C#" Value="Rgba" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Rgba = int32(6408)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RgbaInteger">
+      <MemberSignature Language="C#" Value="RgbaInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat RgbaInteger = int32(36249)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RgbInteger">
+      <MemberSignature Language="C#" Value="RgbInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat RgbInteger = int32(36248)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RgInteger">
+      <MemberSignature Language="C#" Value="RgInteger" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat RgInteger = int32(33320)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="StencilIndex">
+      <MemberSignature Language="C#" Value="StencilIndex" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat StencilIndex = int32(6401)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UnsignedInt">
+      <MemberSignature Language="C#" Value="UnsignedInt" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat UnsignedInt = int32(5125)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UnsignedShort">
+      <MemberSignature Language="C#" Value="UnsignedShort" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat UnsignedShort = int32(5123)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Ycrcb422Sgix">
+      <MemberSignature Language="C#" Value="Ycrcb422Sgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Ycrcb422Sgix = int32(33211)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Ycrcb444Sgix">
+      <MemberSignature Language="C#" Value="Ycrcb444Sgix" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Reactor.Types.RPixelFormat Ycrcb444Sgix = int32(33212)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RPixelFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

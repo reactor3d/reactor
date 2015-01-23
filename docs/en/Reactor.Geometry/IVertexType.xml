@@ -11,9 +11,9 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName="VertexDeclaration">
-      <MemberSignature Language="C#" Value="public Reactor.Geometry.RVertexDeclaration VertexDeclaration { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Geometry.RVertexDeclaration VertexDeclaration" />
+    <Member MemberName="Declaration">
+      <MemberSignature Language="C#" Value="public Reactor.Geometry.RVertexDeclaration Declaration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Geometry.RVertexDeclaration Declaration" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>

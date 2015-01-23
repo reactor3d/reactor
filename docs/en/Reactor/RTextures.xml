@@ -17,21 +17,42 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName="CreateTexture">
-      <MemberSignature Language="C#" Value="public Reactor.Types.RTexture CreateTexture (string name, string filename);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RTexture CreateTexture(string name, string filename) cil managed" />
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RTextures ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateTexture&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public T CreateTexture&lt;T&gt; (string name, string filename) where T : Reactor.Types.RTexture;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!T CreateTexture&lt;(class Reactor.Types.RTexture) T&gt;(string name, string filename) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>Reactor.Types.RTexture</ReturnType>
+        <ReturnType>T</ReturnType>
       </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <BaseTypeName>Reactor.Types.RTexture</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
       <Parameters>
         <Parameter Name="name" Type="System.String" />
         <Parameter Name="filename" Type="System.String" />
       </Parameters>
       <Docs>
+        <typeparam name="T">To be added.</typeparam>
         <param name="name">To be added.</param>
         <param name="filename">To be added.</param>
         <summary>To be added.</summary>
@@ -39,22 +60,30 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="CreateTexture">
-      <MemberSignature Language="C#" Value="public Reactor.Types.RTexture CreateTexture (byte[] data, string name, bool isCompressed);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RTexture CreateTexture(unsigned int8[] data, string name, bool isCompressed) cil managed" />
+    <Member MemberName="CreateTexture&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public T CreateTexture&lt;T&gt; (byte[] data, string name, bool isCompressed) where T : Reactor.Types.RTexture;" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!T CreateTexture&lt;(class Reactor.Types.RTexture) T&gt;(unsigned int8[] data, string name, bool isCompressed) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>Reactor.Types.RTexture</ReturnType>
+        <ReturnType>T</ReturnType>
       </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Constraints>
+            <BaseTypeName>Reactor.Types.RTexture</BaseTypeName>
+          </Constraints>
+        </TypeParameter>
+      </TypeParameters>
       <Parameters>
         <Parameter Name="data" Type="System.Byte[]" />
         <Parameter Name="name" Type="System.String" />
         <Parameter Name="isCompressed" Type="System.Boolean" />
       </Parameters>
       <Docs>
+        <typeparam name="T">To be added.</typeparam>
         <param name="data">To be added.</param>
         <param name="name">To be added.</param>
         <param name="isCompressed">To be added.</param>

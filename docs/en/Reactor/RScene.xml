@@ -17,6 +17,19 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RScene ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Create&lt;T&gt;">
       <MemberSignature Language="C#" Value="public T Create&lt;T&gt; (string name) where T : Reactor.Types.RSceneNode;" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance !!T Create&lt;(class Reactor.Types.RSceneNode) T&gt;(string name) cil managed" />

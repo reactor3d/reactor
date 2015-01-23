@@ -19,8 +19,8 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public RVertexData (Reactor.Math.Vector3 Position, Reactor.Math.Vector3 Normal, Reactor.Math.Vector2 TexCoord);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector3 Position, valuetype Reactor.Math.Vector3 Normal, valuetype Reactor.Math.Vector2 TexCoord) cil managed" />
+      <MemberSignature Language="C#" Value="public RVertexData (Reactor.Math.Vector3 Position, Reactor.Math.Vector3 Normal, Reactor.Math.Vector3 Bitangent, Reactor.Math.Vector3 Tangent, Reactor.Math.Vector2 TexCoord);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector3 Position, valuetype Reactor.Math.Vector3 Normal, valuetype Reactor.Math.Vector3 Bitangent, valuetype Reactor.Math.Vector3 Tangent, valuetype Reactor.Math.Vector2 TexCoord) cil managed" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -28,13 +28,48 @@
       <Parameters>
         <Parameter Name="Position" Type="Reactor.Math.Vector3" />
         <Parameter Name="Normal" Type="Reactor.Math.Vector3" />
+        <Parameter Name="Bitangent" Type="Reactor.Math.Vector3" />
+        <Parameter Name="Tangent" Type="Reactor.Math.Vector3" />
         <Parameter Name="TexCoord" Type="Reactor.Math.Vector2" />
       </Parameters>
       <Docs>
         <param name="Position">To be added.</param>
         <param name="Normal">To be added.</param>
+        <param name="Bitangent">To be added.</param>
+        <param name="Tangent">To be added.</param>
         <param name="TexCoord">To be added.</param>
         <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Bitangent">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Bitangent;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector3 Bitangent" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Declaration">
+      <MemberSignature Language="C#" Value="public Reactor.Geometry.RVertexDeclaration Declaration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Geometry.RVertexDeclaration Declaration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexDeclaration</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -68,19 +103,18 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Reactor.Geometry.IVertexType.VertexDeclaration">
-      <MemberSignature Language="C#" Value="Reactor.Geometry.RVertexDeclaration Reactor.Geometry.IVertexType.VertexDeclaration { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Geometry.RVertexDeclaration Reactor.Geometry.IVertexType.VertexDeclaration" />
-      <MemberType>Property</MemberType>
+    <Member MemberName="Tangent">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector3 Tangent;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector3 Tangent" />
+      <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>Reactor.Geometry.RVertexDeclaration</ReturnType>
+        <ReturnType>Reactor.Math.Vector3</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
-        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

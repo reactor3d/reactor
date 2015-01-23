@@ -1,0 +1,50 @@
+<Type Name="RTextureAtlas" FullName="Reactor.Types.RTextureAtlas">
+  <TypeSignature Language="C#" Value="public class RTextureAtlas : Reactor.Types.RTexture" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit RTextureAtlas extends Reactor.Types.RTexture" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Reactor.Types.RTexture</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RTextureAtlas ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BuildAtlas">
+      <MemberSignature Language="C#" Value="public void BuildAtlas (System.Collections.Generic.List&lt;Reactor.Types.RTextureSprite&gt; textures);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void BuildAtlas(class System.Collections.Generic.List`1&lt;class Reactor.Types.RTextureSprite&gt; textures) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="textures" Type="System.Collections.Generic.List&lt;Reactor.Types.RTextureSprite&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="textures">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

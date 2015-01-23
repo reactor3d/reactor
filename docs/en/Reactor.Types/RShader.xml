@@ -104,8 +104,8 @@
       </Docs>
     </Member>
     <Member MemberName="SetSamplerValue">
-      <MemberSignature Language="C#" Value="public void SetSamplerValue (Reactor.Types.RTextureLayer layer, Reactor.Types.RTexture2D texture);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetSamplerValue(valuetype Reactor.Types.RTextureLayer layer, class Reactor.Types.RTexture2D texture) cil managed" />
+      <MemberSignature Language="C#" Value="public void SetSamplerValue (Reactor.Types.RTextureLayer layer, Reactor.Types.RTexture texture);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetSamplerValue(valuetype Reactor.Types.RTextureLayer layer, class Reactor.Types.RTexture texture) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -115,28 +115,7 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="layer" Type="Reactor.Types.RTextureLayer" />
-        <Parameter Name="texture" Type="Reactor.Types.RTexture2D" />
-      </Parameters>
-      <Docs>
-        <param name="layer">To be added.</param>
-        <param name="texture">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetSamplerValue">
-      <MemberSignature Language="C#" Value="public void SetSamplerValue (Reactor.Types.RTextureLayer layer, Reactor.Types.RTexture3D texture);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetSamplerValue(valuetype Reactor.Types.RTextureLayer layer, class Reactor.Types.RTexture3D texture) cil managed" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="layer" Type="Reactor.Types.RTextureLayer" />
-        <Parameter Name="texture" Type="Reactor.Types.RTexture3D" />
+        <Parameter Name="texture" Type="Reactor.Types.RTexture" />
       </Parameters>
       <Docs>
         <param name="layer">To be added.</param>

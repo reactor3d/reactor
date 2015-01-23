@@ -50,6 +50,47 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="CreateFullscreenQuad">
+      <MemberSignature Language="C#" Value="public void CreateFullscreenQuad ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CreateFullscreenQuad() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateQuad">
+      <MemberSignature Language="C#" Value="public void CreateQuad (Reactor.Math.Vector2 position, Reactor.Math.Vector2 size, bool deviceNormalized);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CreateQuad(valuetype Reactor.Math.Vector2 position, valuetype Reactor.Math.Vector2 size, bool deviceNormalized) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="Reactor.Math.Vector2" />
+        <Parameter Name="size" Type="Reactor.Math.Vector2" />
+        <Parameter Name="deviceNormalized" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="position">Position.</param>
+        <param name="size">Size.</param>
+        <param name="deviceNormalized">If set to <c>true</c> the position and size are already device normalized.</param>
+        <summary>
+            Creates a quad from screen coordinates.
+            </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="CreateSphere">
       <MemberSignature Language="C#" Value="public void CreateSphere (Reactor.Math.Vector3 Center, float Radius, int Tessellation);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CreateSphere(valuetype Reactor.Math.Vector3 Center, float32 Radius, int32 Tessellation) cil managed" />
@@ -89,6 +130,23 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="GetShader">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RShader GetShader ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Reactor.Types.RShader GetShader() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RShader</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Render">
       <MemberSignature Language="C#" Value="public override void Render ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Render() cil managed" />
@@ -101,6 +159,25 @@
       </ReturnValue>
       <Parameters />
       <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetShader">
+      <MemberSignature Language="C#" Value="public void SetShader (Reactor.Types.RShader shader);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetShader(class Reactor.Types.RShader shader) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shader" Type="Reactor.Types.RShader" />
+      </Parameters>
+      <Docs>
+        <param name="shader">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>

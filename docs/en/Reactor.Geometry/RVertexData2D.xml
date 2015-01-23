@@ -1,0 +1,121 @@
+<Type Name="RVertexData2D" FullName="Reactor.Geometry.RVertexData2D">
+  <TypeSignature Language="C#" Value="public struct RVertexData2D : Reactor.Geometry.IVertexType" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed RVertexData2D extends System.ValueType implements class Reactor.Geometry.IVertexType" />
+  <AssemblyInfo>
+    <AssemblyName>Reactor</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Reactor.Geometry.IVertexType</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RVertexData2D (Reactor.Math.Vector2 Position, Reactor.Math.Vector2 TexCoord);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector2 Position, valuetype Reactor.Math.Vector2 TexCoord) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="Position" Type="Reactor.Math.Vector2" />
+        <Parameter Name="TexCoord" Type="Reactor.Math.Vector2" />
+      </Parameters>
+      <Docs>
+        <param name="Position">To be added.</param>
+        <param name="TexCoord">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RVertexData2D (Reactor.Math.Vector2 Position, Reactor.Math.Vector2 TexCoord, Reactor.Math.Vector4 Color);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Reactor.Math.Vector2 Position, valuetype Reactor.Math.Vector2 TexCoord, valuetype Reactor.Math.Vector4 Color) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="Position" Type="Reactor.Math.Vector2" />
+        <Parameter Name="TexCoord" Type="Reactor.Math.Vector2" />
+        <Parameter Name="Color" Type="Reactor.Math.Vector4" />
+      </Parameters>
+      <Docs>
+        <param name="Position">To be added.</param>
+        <param name="TexCoord">To be added.</param>
+        <param name="Color">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Color">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector4 Color;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector4 Color" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector4</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Declaration">
+      <MemberSignature Language="C#" Value="public Reactor.Geometry.RVertexDeclaration Declaration { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.Geometry.RVertexDeclaration Declaration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Geometry.RVertexDeclaration</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Position">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector2 Position;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector2 Position" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector2</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TexCoord">
+      <MemberSignature Language="C#" Value="public Reactor.Math.Vector2 TexCoord;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype Reactor.Math.Vector2 TexCoord" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Math.Vector2</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

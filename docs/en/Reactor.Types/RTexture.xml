@@ -77,6 +77,23 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="GetData">
+      <MemberSignature Language="C#" Value="public Reactor.Types.RColor[] GetData ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Types.RColor[] GetData() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.Types.RColor[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="GetTextureMagFilter">
       <MemberSignature Language="C#" Value="public Reactor.Types.RTextureMagFilter GetTextureMagFilter ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype Reactor.Types.RTextureMagFilter GetTextureMagFilter() cil managed" />
@@ -126,6 +143,26 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="isPowerOfTwo">
+      <MemberSignature Language="C#" Value="protected bool isPowerOfTwo (uint x);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance bool isPowerOfTwo(unsigned int32 x) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="x" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="x">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Name">
       <MemberSignature Language="C#" Value="public string Name;" />
       <MemberSignature Language="ILAsm" Value=".field public string Name" />
@@ -137,6 +174,39 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetData">
+      <MemberSignature Language="C#" Value="public void SetData (Reactor.Types.RColor[] colors, Reactor.Types.RPixelFormat format, int x, int y, int width, int height, int offsetx, int offsety);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void SetData(valuetype Reactor.Types.RColor[] colors, valuetype Reactor.Types.RPixelFormat format, int32 x, int32 y, int32 width, int32 height, int32 offsetx, int32 offsety) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="colors" Type="Reactor.Types.RColor[]" />
+        <Parameter Name="format" Type="Reactor.Types.RPixelFormat" />
+        <Parameter Name="x" Type="System.Int32" />
+        <Parameter Name="y" Type="System.Int32" />
+        <Parameter Name="width" Type="System.Int32" />
+        <Parameter Name="height" Type="System.Int32" />
+        <Parameter Name="offsetx" Type="System.Int32" />
+        <Parameter Name="offsety" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="colors">To be added.</param>
+        <param name="format">To be added.</param>
+        <param name="x">To be added.</param>
+        <param name="y">To be added.</param>
+        <param name="width">To be added.</param>
+        <param name="height">To be added.</param>
+        <param name="offsetx">To be added.</param>
+        <param name="offsety">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>

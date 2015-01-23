@@ -1,6 +1,6 @@
 <Type Name="RSingleton&lt;T&gt;" FullName="Reactor.Types.RSingleton&lt;T&gt;">
-  <TypeSignature Language="C#" Value="public abstract class RSingleton&lt;T&gt; where T : class" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit RSingleton`1&lt;class T&gt; extends System.Object" />
+  <TypeSignature Language="C#" Value="public abstract class RSingleton&lt;T&gt; where T : class, new()" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit RSingleton`1&lt;class .ctor T&gt; extends System.Object" />
   <AssemblyInfo>
     <AssemblyName>Reactor</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -32,6 +32,23 @@
       <Parameters />
       <Docs>
         <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="protected static T Create ();" />
+      <MemberSignature Language="ILAsm" Value=".method familystatic hidebysig !T Create() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>T</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

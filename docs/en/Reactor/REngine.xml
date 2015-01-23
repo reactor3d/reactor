@@ -17,6 +17,19 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public REngine ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="CheckGLError">
       <MemberSignature Language="C#" Value="public static void CheckGLError ();" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CheckGLError() cil managed" />
@@ -414,6 +427,22 @@
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Reactor.RScene</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Screen">
+      <MemberSignature Language="C#" Value="public Reactor.RScreen Screen { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Reactor.RScreen Screen" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Reactor.RScreen</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

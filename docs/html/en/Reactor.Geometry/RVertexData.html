@@ -239,8 +239,8 @@
                 <td>
                   <div>
                     <b>
-                      <a href="#C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2)">RVertexData</a>
-                    </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a>)</div>
+                      <a href="#C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2)">RVertexData</a>
+                    </b>(<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>, <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a>)</div>
                 </td>
                 <td>
                   <span class="NotEntered">Documentation for this section has not yet been entered.</span>
@@ -253,6 +253,21 @@
         <div class="SectionBox" id="Public Fields">
           <div class="SubsectionBox">
             <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Reactor.Geometry.RVertexData.Bitangent">Bitangent</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
               <tr valign="top">
                 <td>
                   <div>
@@ -290,6 +305,21 @@
                 </td>
                 <td>
                   <b>
+                    <a href="#F:Reactor.Geometry.RVertexData.Tangent">Tangent</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
                     <a href="#F:Reactor.Geometry.RVertexData.TexCoord">TexCoord</a>
                   </b>
                 </td>
@@ -301,16 +331,16 @@
             </table>
           </div>
         </div>
-        <h2 class="Section">Explicitly Implemented Interface Members</h2>
-        <div class="SectionBox" id="Explicitly Implemented Interface Members">
+        <h2 class="Section">Public Properties</h2>
+        <div class="SectionBox" id="Public Properties">
           <div class="SubsectionBox">
             <table class="TypeMembers">
               <tr valign="top">
                 <td>[read-only]<div></div></td>
                 <td>
-                  <a href="#P:Reactor.Geometry.RVertexData.Reactor#Geometry#IVertexType#VertexDeclaration">
-                    <b>Reactor.Geometry.IVertexType.VertexDeclaration</b>
-                  </a>
+                  <b>
+                    <a href="#P:Reactor.Geometry.RVertexData.Declaration">Declaration</a>
+                  </b>
                 </td>
                 <td>
                   <i>
@@ -325,15 +355,15 @@
     <div class="Members" id="T:Reactor.Geometry.RVertexData:Members">
       <h2 class="Section" id="MemberDetails">Member Details</h2>
       <div class="SectionBox" id="_MemberDetails">
-        <h3 id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2)">RVertexData Constructor</h3>
-        <blockquote id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):member">
+        <h3 id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2)">RVertexData Constructor</h3>
+        <blockquote id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):member">
           <div class="msummary">
             <span class="NotEntered">Documentation for this section has not yet been entered.</span>
           </div>
           <h2>Syntax</h2>
-          <div class="Signature">public  <b>RVertexData</b> (<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Position, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Normal, <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a> TexCoord)</div>
+          <div class="Signature">public  <b>RVertexData</b> (<a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Position, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Normal, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Bitangent, <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> Tangent, <a href="../Reactor.Math/Vector2.html">Reactor.Math.Vector2</a> TexCoord)</div>
           <h4 class="Subsection">Parameters</h4>
-          <blockquote class="SubsectionBox" id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):Parameters">
+          <blockquote class="SubsectionBox" id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):Parameters">
             <dl>
               <dt>
                 <i>Position</i>
@@ -348,6 +378,18 @@
                 <span class="NotEntered">Documentation for this section has not yet been entered.</span>
               </dd>
               <dt>
+                <i>Bitangent</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>Tangent</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
                 <i>TexCoord</i>
               </dt>
               <dd>
@@ -356,11 +398,47 @@
             </dl>
           </blockquote>
           <h2 class="Section">Remarks</h2>
-          <div class="SectionBox" id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):Remarks">
+          <div class="SectionBox" id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):Remarks">
             <span class="NotEntered">Documentation for this section has not yet been entered.</span>
           </div>
           <h2 class="Section">Requirements</h2>
-          <div class="SectionBox" id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):Version Information">
+          <div class="SectionBox" id="C:Reactor.Geometry.RVertexData(Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector3,Reactor.Math.Vector2):Version Information">
+            <b>Namespace: </b>Reactor.Geometry<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Reactor.Geometry.RVertexData.Bitangent">Bitangent Field</h3>
+        <blockquote id="F:Reactor.Geometry.RVertexData.Bitangent:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> <b>Bitangent</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Reactor.Geometry.RVertexData.Bitangent:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Reactor.Geometry.RVertexData.Bitangent:Version Information">
+            <b>Namespace: </b>Reactor.Geometry<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Reactor.Geometry.RVertexData.Declaration">Declaration Property</h3>
+        <blockquote id="P:Reactor.Geometry.RVertexData.Declaration:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="../Reactor.Geometry/RVertexDeclaration.html">RVertexDeclaration</a> <b>Declaration</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Reactor.Geometry.RVertexData.Declaration:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Reactor.Geometry.RVertexData.Declaration:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Reactor.Geometry.RVertexData.Declaration:Version Information">
             <b>Namespace: </b>Reactor.Geometry<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
           <hr size="1" />
         </blockquote>
@@ -396,24 +474,19 @@
             <b>Namespace: </b>Reactor.Geometry<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
           <hr size="1" />
         </blockquote>
-        <h3 id="P:Reactor.Geometry.RVertexData.Reactor#Geometry#IVertexType#VertexDeclaration">Reactor.Geometry.IVertexType.VertexDeclaration Property</h3>
-        <blockquote id="P:Reactor.Geometry.RVertexData.Reactor#Geometry#IVertexType#VertexDeclaration:member">
+        <h3 id="F:Reactor.Geometry.RVertexData.Tangent">Tangent Field</h3>
+        <blockquote id="F:Reactor.Geometry.RVertexData.Tangent:member">
           <div class="msummary">
             <span class="NotEntered">Documentation for this section has not yet been entered.</span>
           </div>
           <h2>Syntax</h2>
-          <div class="Signature">
-            <a href="../Reactor.Geometry/RVertexDeclaration.html">RVertexDeclaration</a> <b>Reactor.Geometry.IVertexType.VertexDeclaration</b>  { get; }</div>
-          <h4 class="Subsection">Value</h4>
-          <blockquote class="SubsectionBox" id="P:Reactor.Geometry.RVertexData.Reactor#Geometry#IVertexType#VertexDeclaration:Value">
-            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
-          </blockquote>
+          <div class="Signature">public <a href="../Reactor.Math/Vector3.html">Reactor.Math.Vector3</a> <b>Tangent</b> </div>
           <h2 class="Section">Remarks</h2>
-          <div class="SectionBox" id="P:Reactor.Geometry.RVertexData.Reactor#Geometry#IVertexType#VertexDeclaration:Remarks">
+          <div class="SectionBox" id="F:Reactor.Geometry.RVertexData.Tangent:Remarks">
             <span class="NotEntered">Documentation for this section has not yet been entered.</span>
           </div>
           <h2 class="Section">Requirements</h2>
-          <div class="SectionBox" id="P:Reactor.Geometry.RVertexData.Reactor#Geometry#IVertexType#VertexDeclaration:Version Information">
+          <div class="SectionBox" id="F:Reactor.Geometry.RVertexData.Tangent:Version Information">
             <b>Namespace: </b>Reactor.Geometry<br /><b>Assembly: </b>Reactor (in Reactor.dll)<br /><b>Assembly Versions: </b>1.0.0.0</div>
           <hr size="1" />
         </blockquote>
