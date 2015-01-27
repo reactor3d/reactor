@@ -33,12 +33,12 @@ namespace Reactor
     {
 
 
-        public RGameWindow():base(800,600, new GraphicsMode(new ColorFormat(32), 24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 4, 1, GraphicsContextFlags.ForwardCompatible){
+        public RGameWindow():base(800,600, new GraphicsMode(new ColorFormat(32), 24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.Default){
 
         }
 
         public RGameWindow(int width, int height)
-            : base(width, height, new GraphicsMode(new ColorFormat(32), 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.Default, 4, 1, GraphicsContextFlags.ForwardCompatible)
+            : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary))
         {
 
         }
