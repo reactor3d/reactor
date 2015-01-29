@@ -41,7 +41,7 @@ namespace PlatformTest
         {
             Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
             mesh = Engine.Scene.Create<RMesh>("test");
-            mesh.LoadSourceModel(Engine.FileSystem.GetFilePath("/meshes/test.dae"));
+            mesh.LoadSourceModel("/meshes/test.dae");
             mesh.IsDrawable = true;
             mesh.IsEnabled = true;
 
