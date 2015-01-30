@@ -40,7 +40,6 @@ namespace Reactor.Loaders
         {
 
             AssimpContext context = new AssimpContext();
-
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,
                 PostProcessSteps.FindInvalidData |

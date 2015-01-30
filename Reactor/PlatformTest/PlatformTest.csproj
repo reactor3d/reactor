@@ -45,7 +45,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="meshes\test.dae">
+    <Folder Include="meshes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="meshes\bunny.x">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

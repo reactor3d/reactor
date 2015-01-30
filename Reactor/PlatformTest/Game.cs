@@ -27,51 +27,95 @@ using System;
 using Reactor;
 using Reactor.Types;
 using Reactor.Math;
+using Reactor.Types.States;
+using Reactor.Platform;
 
 namespace PlatformTest
 {
     public class Game : RGame
     {
-        RMesh mesh;
-        public Game()
-        {
-        }
+		RMesh mesh;
+		RCamera camera;
+		RTexture2D bg;
+		RViewport viewport;
+		RFont font;
+		float alpha = 0;
+		public Game()
+		{
+		}
 
-        public override void Init()
-        {
-            Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
-            mesh = Engine.Scene.Create<RMesh>("test");
-            mesh.LoadSourceModel("/meshes/test.dae");
-            mesh.IsDrawable = true;
-            mesh.IsEnabled = true;
+		public override void Init()
+		{
+			Engine.SetDebug(true);
+			Engine.SetShowFPS(true);
+			Engine.InitGameWindow(Engine.CurrentDisplayMode, RWindowStyle.Borderless);
+			camera = new RCamera();
+			camera.SetPosition(Vector3.UnitZ * -10f);
+			camera.LookAt(new Vector3(0, 0, -1f) * 10f);
+			camera.SetClipPlanes(0.01f, 100f);
+			camera.Update();
+			Engine.SetCamera(camera);
+			mesh = Engine.Scene.Create<RMesh>("test");
+			mesh.LoadSourceModel("/meshes/bunny.x");
+			mesh.IsDrawable = true;
+			mesh.IsEnabled = true;
+			mesh.SetScale(0.01f);
+			mesh.Update();
+			viewport = Engine.GetViewport();
+			Engine.Screen.Init();
 
-        }
+			font = new RFont();
+			font.BuildTextureMap (16);
+		}
 
-        public override void Render()
-        {
-            Engine.Clear();
+		public override void Render()
+		{
+			Engine.Clear(RColor.DarkGray * 0.2f);
 
-            mesh.Render();
-            Engine.Present();
-        }
+			mesh.Render();
 
-        public override void Update()
-        {
-            mesh.Update();
-        }
+			//Engine.Screen.AlphaBlendMode = RBlendFunc.Add;
+			//Engine.Screen.AlphaSourceBlend = RBlend.SourceAlpha;
+			//Engine.Screen.AlphaDestinationBlend = RBlend.One;
+			Engine.Screen.BlendState = RBlendState.AlphaBlend;
+			Engine.Screen.Begin();
+			float a = (float)(Math.Sin(alpha));
+			//Engine.Screen.RenderFullscreenQuad();
 
-        public override void Dispose()
-        {
-            Engine.Dispose();
-        }
+			Engine.Screen.RenderText(font, new Vector2(10,80), String.Format("FPS: {0}\nMem: {1}Mb\nGBM: {2}Mb", Engine.GetFPS(),Profiler.GetUsedMemory(), Profiler.GetGCMemory()));
+			Engine.Screen.End();
+			Engine.Present();
+		}
 
-        public override void Resized(int Width, int Height)
-        {
-            RViewport viewport = Engine.GetViewport();
-            viewport.Width = Width;
-            viewport.Height = Height;
-            Engine.SetViewport(viewport);
-        }
+		public override void Update()
+		{
+			alpha+=0.01f;
+
+			if(Engine.Input.IsKeyDown(RKey.A))
+				camera.RotateY(-5f * Engine.GetTime());
+			if(Engine.Input.IsKeyDown(RKey.D))
+				camera.RotateY(5f * Engine.GetTime());
+			if(Engine.Input.IsKeyDown(RKey.W))
+				camera.Move(Vector3.Normalize(camera.ViewDirection) * -5f * Engine.GetTime());
+			if(Engine.Input.IsKeyDown(RKey.S))
+				camera.Move(Vector3.Normalize(camera.ViewDirection) * 5f * Engine.GetTime());
+			mesh.RotateY(-0.1f);
+			mesh.Update();
+			camera.Update();
+
+		}
+
+		public override void Dispose()
+		{
+			Engine.Dispose();
+		}
+
+		public override void Resized(int Width, int Height)
+		{
+			viewport.Width = Width;
+			viewport.Height = Height;
+			Engine.SetViewport(viewport);
+		}
     }
 }
 

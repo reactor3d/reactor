@@ -1465,8 +1465,8 @@ namespace Assimp.Unmanaged
         public const String DefaultWindows32BitPath = "Assimp32.dll";
         public const String DefaultWindows64BitPath = "Assimp64.dll";
 
-        public const String DefaultLinux32BitPath = "libassimp.so";
-        public const String DefaultLinux64BitPath = "libassimp.so";
+        public const String DefaultLinux32BitPath = "/usr/lib/libassimp.so";
+        public const String DefaultLinux64BitPath = "/usr/lib64/libassimp.so";
 
 		public const String DefaultOSX32BitPath = "libassimp.so";
 		public const String DefaultOSX64BitPath = "libassimp.so";
