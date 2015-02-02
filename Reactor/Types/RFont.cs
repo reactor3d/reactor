@@ -75,7 +75,7 @@ namespace Reactor.Types
             font = RFontResources.SystemFont;
             LineHeight = font.Height >> 6;
             DPI=72;
-            BuildTextureMap(36);
+            BuildTextureMap(16);
 
         }
 

@@ -22,6 +22,7 @@ namespace Tutorial2___Model_Loading
         public override void Init()
         {
             Engine.InitGameWindow(new RDisplayMode(1920, 1080, -1, RSurfaceFormat.Color), RWindowStyle.Normal);
+            
             camera = Engine.GetCamera();
             camera.Position = Vector3.Zero;
             camera.LookAt(Vector3.Forward);
@@ -55,14 +56,22 @@ namespace Tutorial2___Model_Loading
 
         public override void Update()
         {
-            if (Engine.Input.IsKeyDown(RKey.A))
-                camera.RotateY(-5f);
-            if (Engine.Input.IsKeyDown(RKey.D))
-                camera.RotateY(5f);
-            if (Engine.Input.IsKeyDown(RKey.W))
-                camera.Move(Vector3.Normalize(camera.ViewDirection) * -0.5f);
-            if (Engine.Input.IsKeyDown(RKey.S))
-                camera.Move(Vector3.Normalize(camera.ViewDirection) * 0.5f);
+            if(this.GameWindow.Focused)
+            {
+                if (Engine.Input.IsKeyDown(RKey.A))
+                    camera.RotateY(-5f);
+                if (Engine.Input.IsKeyDown(RKey.D))
+                    camera.RotateY(5f);
+                if (Engine.Input.IsKeyDown(RKey.W))
+                    camera.Move(Vector3.Normalize(camera.ViewDirection) * -0.5f);
+                if (Engine.Input.IsKeyDown(RKey.S))
+                    camera.Move(Vector3.Normalize(camera.ViewDirection) * 0.5f);
+                if (Engine.Input.IsKeyDown(RKey.Escape))
+                    this.GameWindow.Exit();
+                if (Engine.Input.IsKeyDown(RKey.AltLeft) && Engine.Input.IsKeyDown(RKey.Enter))
+                    Engine.ToggleFullscreen(new RDisplayMode(1920, 1080, -1, RSurfaceFormat.Color));
+            }
+            
             mesh.RotateY(-0.1f);
             mesh.Update();
             camera.Update();
