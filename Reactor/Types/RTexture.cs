@@ -154,11 +154,16 @@ namespace Reactor.Types
         }
 
         internal void Bind(){
-            GL.ActiveTexture(TextureUnit.Texture0);
-            REngine.CheckGLError();
             GL.BindTexture( textureTarget, Id );
             REngine.CheckGLError();
             bound = true;
+        }
+
+        internal void SetActive()
+        {
+            GL.ActiveTexture(TextureUnit.Texture0);
+            REngine.CheckGLError();
+
         }
 
         internal void Unbind(){

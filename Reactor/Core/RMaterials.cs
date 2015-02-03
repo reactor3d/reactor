@@ -20,6 +20,7 @@ namespace Reactor
             if (!materials.ContainsKey(name))
             {
                 RMaterial material = new RMaterial(name);
+                material.Id = materials.Count;
                 materials.Add(name, material);
                 return material;
             } else

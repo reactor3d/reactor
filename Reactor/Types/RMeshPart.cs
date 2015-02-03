@@ -37,14 +37,13 @@ namespace Reactor.Types
     {
         internal RVertexBuffer VertexBuffer { get; set; }
         internal RIndexBuffer IndexBuffer { get; set; }
-        internal List<uint> Textures { get; set; }
         public BoundingSphere BoundingSphere { get; set; }
         public BoundingBox BoundingBox { get; set; }
         RMeshPart()
         {
             
         }
-        internal void Draw(RShader shader, PrimitiveType primitiveType, Matrix world)
+        internal void Draw(RMaterial material, PrimitiveType primitiveType, Matrix world)
         {
             Threading.EnsureUIThread();
 
@@ -57,52 +56,21 @@ namespace Reactor.Types
             VertexBuffer.BindVertexArray();
             VertexBuffer.Bind();
             IndexBuffer.Bind();
-            shader.Bind();
-            VertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
-            
+            VertexBuffer.VertexDeclaration.Apply(material.Shader, IntPtr.Zero);
 
-            shader.SetUniformValue("world", world);
-            shader.SetUniformValue("view", REngine.camera.View);
-            shader.SetUniformValue("projection", REngine.camera.Projection);
+
+            material.Shader.SetUniformValue("world", world);
+            material.Shader.SetUniformValue("view", REngine.camera.View);
+            material.Shader.SetUniformValue("projection", REngine.camera.Projection);
 
             GL.DrawElements(primitiveType, IndexBuffer.IndexCount, indexElementType, IntPtr.Zero);
 
-            shader.Unbind();
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
             VertexBuffer.UnbindVertexArray();
 
         }
-        internal void SetTexture(uint texture, RTextureLayer layer)
-        {
-            if(Textures == null)
-                Textures = new List<uint>(16);
-
-            Textures[(int)layer] = texture;
-        }
-
-        internal void BindTextures()
-        {
-            if(Textures != null)
-            {
-                foreach(uint t in Textures)
-                {
-                    if(t!=0)
-                        RTextures.GetTexture(t).Bind();
-                }
-            }
-        }
-        internal void UnbindTextures()
-        {
-            if(Textures != null)
-            {
-                foreach(uint t in Textures)
-                {
-                    if(t!=0)
-                        RTextures.GetTexture(t).Unbind();
-                }
-            }
-        }
+        
     }
 }
 
