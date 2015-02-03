@@ -31,6 +31,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Reactor.Types
 {
+    /// <summary>
+    /// The RMeshBuilder provides basic geometry building methods and represents a Mesh in it's basic form.  A vertex buffer, and index buffer, and a shader.
+    /// </summary>
     public class RMeshBuilder : RRenderNode
     {
         #region Members
