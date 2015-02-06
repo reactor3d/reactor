@@ -33,13 +33,13 @@ namespace Reactor.Utilities
     public class Serialization
     {
 
-        public static T ReadStruct<T>(ref Stream input) where T: struct
+        public static T ReadStruct<T>(ref Stream input)
         {
             byte[] buffer = new byte[Marshal.SizeOf(typeof(T))];
 
             if (input.Read(buffer, 0, buffer.Length) != buffer.Length)
             {
-                throw new IOException("Premature end of input stream while reading a struct.");
+                throw new IOException("Premature end of input stream while reading data.");
             }
 
             GCHandle gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
@@ -61,7 +61,7 @@ namespace Reactor.Utilities
         /// <param name="output">The stream to which to write the struct.</param>
         /// <param name="data">The struct to write.</param>
 
-        public static void WriteStruct<T>(ref Stream output, T data) where T: struct
+        public static void WriteStruct<T>(ref Stream output, T data)
         {
             byte[] buffer = new byte[Marshal.SizeOf(typeof(T))];
             GCHandle gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
@@ -77,6 +77,20 @@ namespace Reactor.Utilities
                 gcHandle.Free();
             }
         }
+        public static byte[] WriteString(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        public static string ReadString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+        
 
     }
 }

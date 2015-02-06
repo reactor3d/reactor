@@ -1,6 +1,7 @@
 ﻿using Reactor.Types;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,18 @@ namespace Reactor
             {
                 materials.Remove(name);
             }
+        }
+
+        public MemoryStream SaveMaterial(RMaterial material)
+        {
+            return RFileSystem.Instance.Save<RMaterial>(material);
+        }
+        public RMaterial LoadMaterial(string name, MemoryStream stream)
+        {
+            RMaterial material = RFileSystem.Instance.Load<RMaterial>(stream);
+            material.Id = materials.Count + 1;
+            materials.Add(name, material);
+            return material;
         }
     }
 }

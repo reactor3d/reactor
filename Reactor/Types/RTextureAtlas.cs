@@ -30,7 +30,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Reactor.Types
 {
-    public class RTextureAtlas : RTexture
+    public class RTextureAtlas : RTexture2D
     {
         const int FixedWidth = 64;
         public RTextureAtlas()
@@ -74,6 +74,7 @@ namespace Reactor.Types
                 */
             AtlasNode root = new AtlasNode();
             root.bounds = new Rectangle(0, 0, 512, 512);
+            Create(512, 512, RSurfaceFormat.Color);
             uint index = 0;
             int unclaimed = 0;
             foreach(RTextureSprite sprite in textures)
@@ -85,7 +86,7 @@ namespace Reactor.Types
                         RLog.Info(node.ToString());
                         sprite.ScaledBounds = node.bounds;
 
-                        Pack(sprite);
+                        Pack(sprite, sprite.GetPixelFormat());
                     } else {
                         unclaimed++;
                     }
@@ -101,9 +102,10 @@ namespace Reactor.Types
 
         }
 
-        private void Pack(RTextureSprite sprite)
+        private void Pack(RTextureSprite sprite, RPixelFormat format)
         {
-
+            byte[] data = sprite.GetData<byte>();
+            GL.TexSubImage2D<byte>(textureTarget, 0, (int)sprite.Offset.X, (int)sprite.Offset.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, (PixelFormat)format, PixelType.Byte, data);
         }
     }
     internal class AtlasNode

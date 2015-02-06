@@ -20,7 +20,7 @@ namespace Reactor.Types
 
         bool bound;
         protected TextureTarget textureTarget;
-        protected RPixelFormat pixelFormat;
+        protected RPixelFormat pixelFormat = RPixelFormat.Rgba;
         PixelType pixelType = PixelType.UnsignedByte;
         internal void LoadFromData(byte[] data, string name, bool isCompressed)
         {
@@ -187,6 +187,16 @@ namespace Reactor.Types
             }
         }
 
+        public void SetTextureWrapMode(RTextureWrapMode modeS, RTextureWrapMode modeT, RTextureWrapMode modeR = RTextureWrapMode.Clamp)
+        {
+            if(Id != 0)
+            {
+                GL.TexParameter(textureTarget, TextureParameterName.TextureWrapR, (int) modeR);
+                GL.TexParameter(textureTarget, TextureParameterName.TextureWrapS, (int) modeS);
+                GL.TexParameter(textureTarget, TextureParameterName.TextureWrapT, (int) modeT);
+            }
+        }
+
         public RTextureMagFilter GetTextureMagFilter()
         {
             if(Id != 0)
@@ -206,6 +216,53 @@ namespace Reactor.Types
                 return (RTextureMinFilter)minFilter;
             }
             return 0;
+        }
+
+        public RTextureWrapMode GetTextureWrapModeS()
+        {
+            if(Id!=0)
+            {
+                int modeS;
+                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWrapS, out modeS);
+                return (RTextureWrapMode)modeS;
+            }
+            return 0;
+        }
+        public RTextureWrapMode GetTextureWrapModeR()
+        {
+            if(Id!=0)
+            {
+                int modeR;
+                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWrapR, out modeR);
+                return (RTextureWrapMode)modeR;
+            }
+            return 0;
+        }
+        public RTextureWrapMode GetTextureWrapModeT()
+        {
+            if(Id!=0)
+            {
+                int modeT;
+                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWrapT, out modeT);
+                return (RTextureWrapMode)modeT;
+            }
+            return 0;
+        }
+        public RPixelFormat GetPixelFormat()
+        {
+            if(Id != 0)
+            {
+                return pixelFormat;
+            }
+            else return 0;
+        }
+        public void SetPixelFormat(RPixelFormat format)
+        {
+            if(Id != 0)
+            {
+                pixelFormat = format;
+            }
+            
         }
         protected bool isPowerOfTwo (uint x)
         {
@@ -248,6 +305,14 @@ namespace Reactor.Types
         }
 
         #endregion
+
+        protected void CreateProperties(TextureTarget target, bool mipmapped = false)
+        {
+            textureTarget = target;
+            SetTextureMagFilter(RTextureMagFilter.Linear);
+            SetTextureMinFilter(mipmapped ? RTextureMinFilter.LinearMipmapLinear : RTextureMinFilter.Linear);
+            SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+        }
     }
 
     public enum RTextureMagFilter
@@ -281,5 +346,15 @@ namespace Reactor.Types
         NearestClipmapNearestSgix = TextureMinFilter.NearestClipmapNearestSgix,
         NearestClipmapLinearSgix = TextureMinFilter.NearestClipmapLinearSgix,
         LinearClipmapNearestSgix = TextureMinFilter.LinearClipmapNearestSgix
+    }
+
+    public enum RTextureWrapMode
+    {
+        Clamp = TextureWrapMode.Clamp,
+        ClampToBorder = TextureWrapMode.ClampToBorder,
+        ClampToBorderARB = TextureWrapMode.ClampToBorderArb,
+        ClampToBorderNV = TextureWrapMode.ClampToBorderNv,
+        Repeat = TextureWrapMode.Repeat,
+        Mirrior = TextureWrapMode.MirroredRepeat
     }
 }

@@ -203,11 +203,7 @@ namespace Reactor
         {
             Clear(RColor.Black, false);
         }
-        public void Clear(RColor color)
-        {
-            Clear(color, false);
-        }
-        public void Clear(RColor color, bool onlyDepth)
+        public void Clear(RColor color, bool onlyDepth = false)
         {
             StartClock();
             

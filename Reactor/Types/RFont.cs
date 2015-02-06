@@ -103,7 +103,6 @@ namespace Reactor.Types
             //SpaceWidth = Size;
             font.SetCharSize(0, Size*64,(uint) DPI,(uint) DPI);
 
-            string table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+~`\\|]}[{'\";:/?.>,<";
             glyphs = new List<RTextureSprite>();
             font.LoadChar((uint)32, (LoadFlags.Render|LoadFlags.Color|LoadFlags.Pedantic), LoadTarget.Normal);
             SpaceWidth = font.Glyph.Metrics.HorizontalAdvance >> 6;
@@ -117,7 +116,7 @@ namespace Reactor.Types
                 glyphs.Add(new RTextureGlyph(font.Glyph, (char)i));
             }
             atlas = new RTextureAtlas();
-
+            
             atlas.BuildAtlas(glyphs);
 
         }

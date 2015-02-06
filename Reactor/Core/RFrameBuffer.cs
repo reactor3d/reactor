@@ -13,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace Reactor
 {
-    public class RFrameBuffer : RTexture
+    public class RFrameBuffer
     {
+        public int Id { get; set; }
         internal static FramebufferHelperEXT frameHelper = new FramebufferHelperEXT();
         public RDepthFormat DepthStencilFormat { get; private set; }
 
@@ -36,7 +37,6 @@ namespace Reactor
             DepthStencilFormat = preferredDepthFormat;
             MultiSampleCount = preferredMultiSampleCount;
             RenderTargetUsage = usage;
-
             PlatformConstruct(width, height, mipMap, preferredFormat, preferredDepthFormat, preferredMultiSampleCount, usage, shared);
         }
 
@@ -77,9 +77,85 @@ namespace Reactor
         {
             Threading.BlockOnUIThread(() =>
             {
-                //graphicsDevice.PlatformCreateRenderTarget(this, width, height, mipMap, preferredFormat, preferredDepthFormat, preferredMultiSampleCount, usage);
-                frameHelper.GenFramebuffer(out Id);
-                frameHelper.BindFramebuffer(Id);
+                var color = 0;
+                var depth = 0;
+                var stencil = 0;
+
+                if (preferredMultiSampleCount > 0 && frameHelper.SupportsBlitFramebuffer)
+                {
+                    frameHelper.GenRenderbuffer(out color);
+                    frameHelper.BindRenderbuffer(color);
+#if GLES
+                this.framebufferHelper.RenderbufferStorageMultisample(preferredMultiSampleCount, (int)RenderbufferStorage.Rgba8Oes, width, height);
+#else
+                    frameHelper.RenderbufferStorageMultisample(preferredMultiSampleCount, (int)RenderbufferStorage.Rgba8, width, height);
+#endif
+                }
+
+                if (preferredDepthFormat != RDepthFormat.None)
+                {
+                    var depthInternalFormat = RenderbufferStorage.DepthComponent16;
+                    var stencilInternalFormat = (RenderbufferStorage)0;
+                    switch (preferredDepthFormat)
+                    {
+                        case RDepthFormat.Depth16:
+                            depthInternalFormat = RenderbufferStorage.DepthComponent16; break;
+#if GLES
+                    case RDepthFormat.Depth24:
+                        if (GraphicsCapabilities.SupportsDepth24)
+                            depthInternalFormat = RenderbufferStorage.DepthComponent24Oes;
+                        else if (GraphicsCapabilities.SupportsDepthNonLinear)
+                            depthInternalFormat = (RenderbufferStorage)0x8E2C;
+                        else
+                            depthInternalFormat = RenderbufferStorage.DepthComponent16;
+                        break;
+                    case RDepthFormat.Depth24Stencil8:
+                        if (GraphicsCapabilities.SupportsPackedDepthStencil)
+                            depthInternalFormat = RenderbufferStorage.Depth24Stencil8Oes;
+                        else
+                        {
+                            if (GraphicsCapabilities.SupportsDepth24)
+                                depthInternalFormat = RenderbufferStorage.DepthComponent24Oes;
+                            else if (GraphicsCapabilities.SupportsDepthNonLinear)
+                                depthInternalFormat = (RenderbufferStorage)0x8E2C;
+                            else
+                                depthInternalFormat = RenderbufferStorage.DepthComponent16;
+                            stencilInternalFormat = RenderbufferStorage.StencilIndex8;
+                            break;
+                        }
+                        break;
+#else
+                        case RDepthFormat.Depth24: depthInternalFormat = RenderbufferStorage.DepthComponent24; break;
+                        case RDepthFormat.Depth24Stencil8: depthInternalFormat = RenderbufferStorage.Depth24Stencil8; break;
+#endif
+                    }
+
+                    if (depthInternalFormat != 0)
+                    {
+                        frameHelper.GenRenderbuffer(out depth);
+                        frameHelper.BindRenderbuffer(depth);
+                        frameHelper.RenderbufferStorageMultisample(preferredMultiSampleCount, (int)depthInternalFormat, width, height);
+                        if (preferredDepthFormat == RDepthFormat.Depth24Stencil8)
+                        {
+                            stencil = depth;
+                            if (stencilInternalFormat != 0)
+                            {
+                                frameHelper.GenRenderbuffer(out stencil);
+                                frameHelper.BindRenderbuffer(stencil);
+                                frameHelper.RenderbufferStorageMultisample(preferredMultiSampleCount, (int)stencilInternalFormat, width, height);
+                            }
+                        }
+                    }
+                }
+
+                
+                    if (color != 0)
+                        glColorBuffer = color;
+                    else
+                        glColorBuffer = 0;
+                    glDepthBuffer = depth;
+                    glStencilBuffer = stencil;
+                
                 
             });
 

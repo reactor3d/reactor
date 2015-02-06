@@ -1,20 +1,27 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using Newtonsoft.Json;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Reactor.Types
 {
     public class RMaterial : IDisposable
     {
+        [JsonIgnore]
         public int Id { get; set; }
+        [JsonProperty("name")]
         public string Name { get; set; }
+        [JsonProperty("textures")]
         public List<RTexture> Textures { get; set; }
+        [JsonProperty("colors")]
         public List<RColor> Colors { get; set; }
+        [JsonProperty("shininess")]
         public float Shininess { get; set; }
+        [JsonProperty("specularPower")]
         public float SpecularPower { get; set; }
+        [JsonProperty("shader")]
         public RShader Shader { get; set; }
 
         internal RMaterial(string name)
@@ -117,6 +124,8 @@ namespace Reactor.Types
             if (Shader != null)
                 Shader.Dispose();
         }
+
+        
     }
     public enum RMaterialColor : int
     {

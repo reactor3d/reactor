@@ -27,12 +27,18 @@ using System;
 using Reactor.Types;
 using System.IO;
 using System.Reflection;
-
+using System.Collections.Generic;
+using System.IO.Compression;
+using Reactor.Core;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Reactor.Utilities;
 
 namespace Reactor
 {
     public class RFileSystem : RSingleton<RFileSystem>
     {
+        private List<RPackage> packages = new List<RPackage>();
 
         public string GetFilePath(string relativeFilename)
         {
@@ -61,6 +67,49 @@ namespace Reactor
                 return Path.GetDirectoryName(path);
             }
         }
+
+        public bool LoadPackage(string relativeFilename, string password = null)
+        {
+            string fullFilename = GetFilePath(relativeFilename);
+            if(File.Exists(fullFilename))
+            {
+                RPackage package = new RPackage(fullFilename, password);
+                packages.Add(package);
+                return true;
+            }
+            return false;
+        }
+
+        public MemoryStream GetPackageContent(string name)
+        {
+            foreach(var package in packages)
+            {
+                if (package.ContainsEntry(name))
+                    return package.GetEntry(name).Result;
+            }
+            RLog.Error(String.Format("Entry {0} not found in any loaded packages"));
+            return null;
+        }
+        internal System.IO.MemoryStream Save<T>(T data)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            return Task.Run<System.IO.MemoryStream>(() =>
+            {
+                System.IO.MemoryStream stream = new System.IO.MemoryStream();
+
+                byte[] d = Serialization.WriteString(json);
+                stream.WriteAsync(d, 0, d.Length);
+                return stream;
+            }).Result;
+        }
+        internal T Load<T>(System.IO.MemoryStream stream)
+        {
+            return Task<T>.Factory.StartNew(() =>
+            {
+                return JsonConvert.DeserializeObject<T>(Serialization.ReadString(stream.ToArray()));
+            }).Result;
+        }
+        
     }
 }
 
