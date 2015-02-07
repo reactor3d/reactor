@@ -15,12 +15,14 @@ namespace Reactor.Types
                 GL.BindTexture(TextureTarget.Texture2DMultisample, Id);
                 REngine.CheckGLError();
                 CreateProperties(TextureTarget.Texture2DMultisample, true);
+                REngine.CheckGLError();
             }
             else
             {
                 GL.BindTexture(TextureTarget.Texture2D, Id);
                 REngine.CheckGLError();
                 CreateProperties(TextureTarget.Texture2D, true);
+                REngine.CheckGLError();
             }
             
         }

@@ -176,6 +176,7 @@ namespace Reactor.Types
             if(Id != 0)
             {
                 GL.TexParameter(textureTarget, TextureParameterName.TextureMagFilter, (int)value);
+                REngine.CheckGLError();
             }
         }
 
@@ -184,16 +185,18 @@ namespace Reactor.Types
             if(Id != 0)
             {
                 GL.TexParameter(textureTarget, TextureParameterName.TextureMinFilter, (int)value);
+                REngine.CheckGLError();
             }
         }
 
-        public void SetTextureWrapMode(RTextureWrapMode modeS, RTextureWrapMode modeT, RTextureWrapMode modeR = RTextureWrapMode.Clamp)
+        public void SetTextureWrapMode(RTextureWrapMode modeS, RTextureWrapMode modeT)
         {
             if(Id != 0)
             {
-                GL.TexParameter(textureTarget, TextureParameterName.TextureWrapR, (int) modeR);
                 GL.TexParameter(textureTarget, TextureParameterName.TextureWrapS, (int) modeS);
+                REngine.CheckGLError();
                 GL.TexParameter(textureTarget, TextureParameterName.TextureWrapT, (int) modeT);
+                REngine.CheckGLError();
             }
         }
 
@@ -228,16 +231,7 @@ namespace Reactor.Types
             }
             return 0;
         }
-        public RTextureWrapMode GetTextureWrapModeR()
-        {
-            if(Id!=0)
-            {
-                int modeR;
-                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWrapR, out modeR);
-                return (RTextureWrapMode)modeR;
-            }
-            return 0;
-        }
+
         public RTextureWrapMode GetTextureWrapModeT()
         {
             if(Id!=0)
@@ -312,6 +306,7 @@ namespace Reactor.Types
             SetTextureMagFilter(RTextureMagFilter.Linear);
             SetTextureMinFilter(mipmapped ? RTextureMinFilter.LinearMipmapLinear : RTextureMinFilter.Linear);
             SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+            REngine.CheckGLError();
         }
     }
 

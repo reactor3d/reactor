@@ -41,6 +41,7 @@ namespace Reactor.Types
 
         public void BuildAtlas(List<RTextureSprite> textures)
         {
+            REngine.CheckGLError();
             textures.Sort(new RTextureSizeSorter());
             textures.Reverse();
             Rectangle largest = textures[0].Bounds;
@@ -77,6 +78,8 @@ namespace Reactor.Types
             Create(512, 512, RSurfaceFormat.Color);
             uint index = 0;
             int unclaimed = 0;
+
+            REngine.CheckGLError();
             foreach(RTextureSprite sprite in textures)
             {
                 try{
@@ -86,7 +89,7 @@ namespace Reactor.Types
                         RLog.Info(node.ToString());
                         sprite.ScaledBounds = node.bounds;
 
-                        Pack(sprite, sprite.GetPixelFormat());
+                        //Pack(sprite, sprite.GetPixelFormat());
                     } else {
                         unclaimed++;
                     }
@@ -105,7 +108,11 @@ namespace Reactor.Types
         private void Pack(RTextureSprite sprite, RPixelFormat format)
         {
             byte[] data = sprite.GetData<byte>();
+            GL.ActiveTexture(TextureUnit.Texture0);
+            Bind();
+            REngine.CheckGLError();
             GL.TexSubImage2D<byte>(textureTarget, 0, (int)sprite.Offset.X, (int)sprite.Offset.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, (PixelFormat)format, PixelType.Byte, data);
+            REngine.CheckGLError();
         }
     }
     internal class AtlasNode

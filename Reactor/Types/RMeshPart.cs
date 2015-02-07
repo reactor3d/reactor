@@ -58,13 +58,15 @@ namespace Reactor.Types
             IndexBuffer.Bind();
             VertexBuffer.VertexDeclaration.Apply(material.Shader, IntPtr.Zero);
 
-
+            REngine.CheckGLError();
+            material.Shader.Bind();
             material.Shader.SetUniformValue("world", world);
             material.Shader.SetUniformValue("view", REngine.camera.View);
             material.Shader.SetUniformValue("projection", REngine.camera.Projection);
 
             GL.DrawElements(primitiveType, IndexBuffer.IndexCount, indexElementType, IntPtr.Zero);
 
+            material.Shader.Unbind();
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
             VertexBuffer.UnbindVertexArray();

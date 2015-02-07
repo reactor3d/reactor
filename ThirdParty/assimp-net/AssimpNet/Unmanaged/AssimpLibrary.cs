@@ -1465,11 +1465,11 @@ namespace Assimp.Unmanaged
         public const String DefaultWindows32BitPath = "Assimp32.dll";
         public const String DefaultWindows64BitPath = "Assimp64.dll";
 
-        public const String DefaultLinux32BitPath = "/usr/lib/libassimp.so";
-        public const String DefaultLinux64BitPath = "/usr/lib64/libassimp.so";
+        public const String DefaultLinux32BitPath = "libassimp.so";
+        public const String DefaultLinux64BitPath = "libassimp64.so";
 
-		public const String DefaultOSX32BitPath = "libassimp.so";
-		public const String DefaultOSX64BitPath = "libassimp.so";
+		public const String DefaultOSX32BitPath = "libassimp.dylib";
+		public const String DefaultOSX64BitPath = "libassimp64.dylib";
 
         public static AssimpLibraryImplementation CreateRuntimeImplementation()
         {
@@ -1484,14 +1484,41 @@ namespace Assimp.Unmanaged
 
         private static bool IsLinux()
         {
-            int platform = (int) Environment.OSVersion.Platform;
-            return (platform == 4) || (platform == 128);
+            return RunningPlatform() == Platform.Linux;
         }
 		private static bool IsMacOSX()
 		{
-			int platform = (int)Environment.OSVersion.Platform;
-			return (platform == 6);
+            return RunningPlatform() == Platform.Mac;
 		}
+        public enum Platform
+        {
+            Windows,
+            Linux,
+            Mac
+        }
+
+        public static Platform RunningPlatform()
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
+                    // Well, there are chances MacOSX is reported as Unix instead of MacOSX.
+                    // Instead of platform check, we'll do a feature checks (Mac specific root folders)
+                    if (Directory.Exists("/Applications")
+                        & Directory.Exists("/System")
+                        & Directory.Exists("/Users")
+                        & Directory.Exists("/Volumes"))
+                        return Platform.Mac;
+                    else
+                        return Platform.Linux;
+
+                case PlatformID.MacOSX:
+                    return Platform.Mac;
+
+                default:
+                    return Platform.Windows;
+            }
+        }
     }
 
     /// <summary>
@@ -1800,16 +1827,16 @@ namespace Assimp.Unmanaged
 			}
 		}
 
-		[DllImport("libdl.so")]
+        [DllImport("libSystem.B.dylib")]
 		private static extern IntPtr dlopen(String fileName, int flags);
 
-		[DllImport("libdl.so")]
+        [DllImport("libSystem.B.dylib")]
 		private static extern IntPtr dlsym(IntPtr handle, String functionName);
 
-		[DllImport("libdl.so")]
+        [DllImport("libSystem.B.dylib")]
 		private static extern int dlclose(IntPtr handle);
 
-		[DllImport("libdl.so")]
+        [DllImport("libSystem.B.dylib")]
 		private static extern IntPtr dlerror();
 
 		private const int RTLD_NOW = 2;
