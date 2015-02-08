@@ -12,9 +12,15 @@ namespace Reactor.Core
     public class RPackage
     {
         ZipFile file;
+        public RPackage()
+        {
+            file = new ZipFile();
+            file.Password = null;
+        }
+
         public RPackage(string filename, string password = null)
         {
-            file = new ZipFile(filename);
+            file = ZipFile.Read(filename);
             file.Password = password;
         }
 
@@ -57,10 +63,8 @@ namespace Reactor.Core
 
         public void Save(string filename)
         {
-            Task.Run(() =>
-            {
-                file.Save(filename);
-            });
+            file.ParallelDeflateThreshold = -1; 
+            file.Save(filename);
         }
 
         public bool ContainsEntry(string name)
@@ -69,6 +73,11 @@ namespace Reactor.Core
                 return true;
             else
                 return false;
+        }
+
+        public List<string> GetEntries()
+        {
+            return new List<string>(file.EntryFileNames);
         }
 
     }
