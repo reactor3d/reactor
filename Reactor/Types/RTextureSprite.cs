@@ -28,12 +28,12 @@ using Reactor.Math;
 
 namespace Reactor.Types
 {
-    public class RTextureSprite : RTexture
+    public class RTextureSprite : RTexture2D
     {
         public Vector2 Offset = new Vector2();
         public Vector2 Origin = new Vector2();
         public Rectangle ScaledBounds = new Rectangle();
-        public RTextureSprite()
+        public RTextureSprite() : base()
         {
         }
     }

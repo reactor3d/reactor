@@ -18,10 +18,10 @@ namespace Reactor.Types
                 List<RDisplayMode> list = new List<RDisplayMode>();
                 foreach (RDisplayMode mode in this.modes)
                 {
-                    if (mode.Format == format)
-                    {
+                    //if (mode.Format == format)
+                    //{
                         list.Add(mode);
-                    }
+                    //}
                 }
                 return list;
 

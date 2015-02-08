@@ -99,9 +99,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="AssimpNet">
-      <HintPath>..\ThirdParty\assimp\AssimpNet.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK">
       <HintPath>packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
@@ -112,6 +109,9 @@
       <HintPath>packages\SharpFont.2.5.3.0\lib\net20\SharpFont.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="AssimpNet">
+      <HintPath>..\ThirdParty\Windows\AssimpNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\ALHelper.cs" />

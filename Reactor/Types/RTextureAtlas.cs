@@ -45,9 +45,9 @@ namespace Reactor.Types
             textures.Sort(new RTextureSizeSorter());
             textures.Reverse();
             Rectangle largest = textures[0].Bounds;
-            int cellSize = System.Math.Max(largest.Width, largest.Height);
-            double sqr = System.Math.Sqrt((double)textures.Count);
-            int remainder = ((int)(sqr*100) % 100);
+            //int cellSize = System.Math.Max(largest.Width, largest.Height);
+            //double sqr = System.Math.Sqrt((double)textures.Count);
+            //int remainder = ((int)(sqr*100) % 100);
             /*Rectangle bounds = new Rectangle();
             foreach(RTextureSprite sprite in textures)
             {
@@ -75,7 +75,7 @@ namespace Reactor.Types
                 */
             AtlasNode root = new AtlasNode();
             root.bounds = new Rectangle(0, 0, 512, 512);
-            Create(512, 512, RSurfaceFormat.Color);
+            Create(512, 512, textures[0].GetPixelFormat());
             uint index = 0;
             int unclaimed = 0;
 
@@ -89,7 +89,7 @@ namespace Reactor.Types
                         RLog.Info(node.ToString());
                         sprite.ScaledBounds = node.bounds;
 
-                        //Pack(sprite, sprite.GetPixelFormat());
+                        Pack(sprite, sprite.GetPixelFormat());
                     } else {
                         unclaimed++;
                     }
@@ -108,11 +108,7 @@ namespace Reactor.Types
         private void Pack(RTextureSprite sprite, RPixelFormat format)
         {
             byte[] data = sprite.GetData<byte>();
-            GL.ActiveTexture(TextureUnit.Texture0);
-            Bind();
-            REngine.CheckGLError();
-            GL.TexSubImage2D<byte>(textureTarget, 0, (int)sprite.Offset.X, (int)sprite.Offset.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, (PixelFormat)format, PixelType.Byte, data);
-            REngine.CheckGLError();
+            SetData<byte>(data, format, (int)sprite.Offset.X, (int)sprite.Offset.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, false);
         }
     }
     internal class AtlasNode

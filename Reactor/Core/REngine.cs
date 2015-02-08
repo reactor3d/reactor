@@ -103,7 +103,7 @@ namespace Reactor
         {
             get
             {
-                return new RDisplayMode(OpenTK.DisplayDevice.Default.Width, OpenTK.DisplayDevice.Default.Height, (int)OpenTK.DisplayDevice.Default.RefreshRate, RSurfaceFormat.Color);
+                return new RDisplayMode(OpenTK.DisplayDevice.Default.Width, OpenTK.DisplayDevice.Default.Height, (int)OpenTK.DisplayDevice.Default.RefreshRate);
             }
         }
         public RDisplayModes SupportedDisplayModes
@@ -154,7 +154,7 @@ namespace Reactor
                                 // Need to decide what to do about other surface formats
                                 if (format == RSurfaceFormat.Color)
                                 {
-                                    modes.Add(new RDisplayMode(resolution.Width, resolution.Height, (int)resolution.RefreshRate, format));
+                                    modes.Add(new RDisplayMode(resolution.Width, resolution.Height, (int)resolution.RefreshRate));
                                 }
                             }
 
@@ -250,7 +250,7 @@ namespace Reactor
 
         public bool InitGameWindow(int width, int height, RWindowStyle windowStyle)
         {
-            RDisplayMode mode = new RDisplayMode(width, height, -1, RSurfaceFormat.Color);
+            RDisplayMode mode = new RDisplayMode(width, height, -1);
             return InitGameWindow(mode, windowStyle);
         }
         public bool InitGameWindow(RDisplayMode displayMode)

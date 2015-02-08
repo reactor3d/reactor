@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2012
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactor", "Reactor.csproj", "{A1293177-73F3-40E5-848A-85B626886C7D}"
@@ -11,79 +11,43 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPKEditor", "..\Tools\RPKEd
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		AppStore|Any CPU = AppStore|Any CPU
-		AppStore|Mixed Platforms = AppStore|Mixed Platforms
-		AppStore|Win32 = AppStore|Win32
-		AppStore|x64 = AppStore|x64
-		AppStore|x86 = AppStore|x86
 		Debug|Any CPU = Debug|Any CPU
-		Debug|Mixed Platforms = Debug|Mixed Platforms
-		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|Mixed Platforms = Release|Mixed Platforms
-		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|Any CPU.Build.0 = Debug|Any CPU
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|Mixed Platforms.ActiveCfg = Release|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|Mixed Platforms.Build.0 = Release|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|Win32.ActiveCfg = Debug|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|Win32.Build.0 = Debug|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|x64.ActiveCfg = Release|x64
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|x64.Build.0 = Release|x64
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|x86.ActiveCfg = Release|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.AppStore|x86.Build.0 = Release|x86
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|x64.ActiveCfg = Debug|x64
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|x64.Build.0 = Debug|x64
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|x86.ActiveCfg = Debug|x86
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|x86.Build.0 = Debug|x86
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|x64.ActiveCfg = Release|x64
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|x64.Build.0 = Release|x64
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|x86.ActiveCfg = Release|x86
+		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|x86.Build.0 = Release|x86
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|Win32.ActiveCfg = Debug|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|Win32.Build.0 = Debug|x86
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|x64.ActiveCfg = Debug|x64
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|x64.Build.0 = Debug|x64
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|x86.ActiveCfg = Debug|x86
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Debug|x86.Build.0 = Debug|x86
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|Mixed Platforms.Build.0 = Release|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|Win32.ActiveCfg = Release|x86
-		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|Win32.Build.0 = Release|x86
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|x64.ActiveCfg = Release|x64
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|x64.Build.0 = Release|x64
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|x86.ActiveCfg = Release|x86
 		{A1293177-73F3-40E5-848A-85B626886C7D}.Release|x86.Build.0 = Release|x86
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|Any CPU.Build.0 = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|Win32.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|x64.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.AppStore|x86.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Any CPU.Build.0 = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|Win32.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|x64.ActiveCfg = Release|Any CPU
-		{301233C5-EBBE-4350-B195-F6741B8AD234}.Release|x86.ActiveCfg = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{301233C5-EBBE-4350-B195-F6741B8AD234} = {478828BC-B58B-4168-8CAD-683333F22CA8}
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

@@ -12,7 +12,7 @@ namespace Reactor.Types
     {
         #region Fields
 
-        private RSurfaceFormat format;
+        //private RSurfaceFormat format;
         private int height;
         private int refreshRate;
         private int width;
@@ -26,10 +26,10 @@ namespace Reactor.Types
             get { return (float)width / (float)height; }
         }
 
-        public RSurfaceFormat Format
+        /*public RSurfaceFormat Format
         {
             get { return format; }
-        }
+        }*/
 
         public int Height
         {
@@ -55,12 +55,12 @@ namespace Reactor.Types
 
         #region Constructors
 
-        public RDisplayMode(int width, int height, int refreshRate, RSurfaceFormat format)
+        public RDisplayMode(int width, int height, int refreshRate)
         {
             this.width = width;
             this.height = height;
             this.refreshRate = refreshRate;
-            this.format = format;
+            //this.format = format;
         }
 
         #endregion Constructors
@@ -82,7 +82,7 @@ namespace Reactor.Types
             {
                 return false;
             }
-            return (left.format == right.format) &&
+            return
                 (left.height == right.height) &&
                 (left.refreshRate == right.refreshRate) &&
                 (left.width == right.width);
@@ -99,12 +99,12 @@ namespace Reactor.Types
 
         public override int GetHashCode()
         {
-            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ this.refreshRate.GetHashCode() ^ this.format.GetHashCode());
+            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ this.refreshRate.GetHashCode());
         }
 
         public override string ToString()
         {
-            return "{{Width:" + this.width + " Height:" + this.height + " Format:" + this.Format + " RefreshRate:" + this.refreshRate + "}}";
+            return "{{Width:" + this.width + " Height:" + this.height + " RefreshRate:" + this.refreshRate + "}}";
         }
 
         #endregion Public Methods

@@ -21,7 +21,7 @@ namespace Reactor.Types
         bool bound;
         protected TextureTarget textureTarget;
         protected RPixelFormat pixelFormat = RPixelFormat.Rgba;
-        PixelType pixelType = PixelType.UnsignedByte;
+        protected PixelType pixelType = PixelType.UnsignedByte;
         internal void LoadFromData(byte[] data, string name, bool isCompressed)
         {
             if(isCompressed)
@@ -267,12 +267,8 @@ namespace Reactor.Types
 
         public T[] GetData<T>()where T : struct
         {
-
             Bind();
-
             T[] pixels = new T[Bounds.Width * Bounds.Height];
-
-
             GL.GetTexImage<T>(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, pixels);
             REngine.CheckGLError();
             Unbind();
@@ -280,12 +276,24 @@ namespace Reactor.Types
 
             return pixels;
         }
-        public void SetData(RColor[] colors, RPixelFormat format, int x, int y, int width, int height, int offsetx, int offsety)
+        public void SetData<T>(T[] data, RPixelFormat format, int x, int y, int width, int height, bool packAlignment=true) where T : struct
         {
+            if(!packAlignment)
+                GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
             Bind();
-            GL.TexSubImage2D<RColor>(textureTarget, 0, offsetx, offsety, width, height, (PixelFormat)format, PixelType.UnsignedByte, colors);
+            GL.TexSubImage2D<T>(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, data);
             REngine.CheckGLError();
             Unbind();
+            if(!packAlignment)
+                GL.PixelStore(PixelStoreParameter.PackAlignment, 1);
+        }
+        public void SetData(RColor[] colors, RPixelFormat format, int x, int y, int width, int height)
+        {
+            Bind();
+            GL.TexSubImage2D<RColor>(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, colors);
+            REngine.CheckGLError();
+            Unbind();
+            REngine.CheckGLError();
         }
         #region IDisposable implementation
 
