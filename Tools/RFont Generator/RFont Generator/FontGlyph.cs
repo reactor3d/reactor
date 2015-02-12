@@ -12,7 +12,7 @@ namespace RFont_Generator
     {
         public int CharIndex;
         public Rectangle Bounds;
-        public Rectangle AtlasBounds;
+        public Vector4 UVBounds;
         public Vector2 Offset;
         public int Advance;
         public Drawing.Bitmap bitmap;
@@ -24,15 +24,37 @@ namespace RFont_Generator
             stream.Write(Bounds.Width);
             stream.Write(Bounds.Height);
             
-            stream.Write(AtlasBounds.X);
-            stream.Write(AtlasBounds.Y);
-            stream.Write(AtlasBounds.Width);
-            stream.Write(AtlasBounds.Height);
+            stream.Write(UVBounds.X);
+            stream.Write(UVBounds.Y);
+            stream.Write(UVBounds.Z);
+            stream.Write(UVBounds.W);
 
             stream.Write(Offset.X);
             stream.Write(Offset.Y);
 
             stream.Write(Advance);
+        }
+
+        internal void Load(ref BinaryReader stream)
+        {
+            CharIndex = stream.ReadInt32();
+            Bounds = new Rectangle();
+            Bounds.X = stream.ReadInt32();
+            Bounds.Y = stream.ReadInt32();
+            Bounds.Width = stream.ReadInt32();
+            Bounds.Height = stream.ReadInt32();
+
+            UVBounds = new Vector4();
+            UVBounds.X = stream.ReadSingle();
+            UVBounds.Y = stream.ReadSingle();
+            UVBounds.Z = stream.ReadSingle();
+            UVBounds.W = stream.ReadSingle();
+
+            Offset = new Vector2();
+            Offset.X = stream.ReadSingle();
+            Offset.Y = stream.ReadSingle();
+
+            Advance = stream.ReadInt32();
         }
     }
 }

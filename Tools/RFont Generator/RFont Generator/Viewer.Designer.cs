@@ -30,6 +30,8 @@
         {
             this.mainContainer = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.saveButton = new System.Windows.Forms.Button();
             this.GoButton = new System.Windows.Forms.Button();
             this.dpiDropDown = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -39,14 +41,18 @@
             this.fileTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.fontFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveButton = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.label4 = new System.Windows.Forms.Label();
+            this.antialiasCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainContainer)).BeginInit();
             this.mainContainer.Panel1.SuspendLayout();
             this.mainContainer.Panel2.SuspendLayout();
             this.mainContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // mainContainer
@@ -64,6 +70,9 @@
             // 
             // mainContainer.Panel2
             // 
+            this.mainContainer.Panel2.Controls.Add(this.textBox1);
+            this.mainContainer.Panel2.Controls.Add(this.groupBox1);
+            this.mainContainer.Panel2.Controls.Add(this.antialiasCheckBox);
             this.mainContainer.Panel2.Controls.Add(this.label4);
             this.mainContainer.Panel2.Controls.Add(this.saveButton);
             this.mainContainer.Panel2.Controls.Add(this.GoButton);
@@ -86,6 +95,26 @@
             this.pictureBox1.Size = new System.Drawing.Size(766, 318);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(59, 144);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "label4";
+            // 
+            // saveButton
+            // 
+            this.saveButton.Enabled = false;
+            this.saveButton.Location = new System.Drawing.Point(143, 112);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 8;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // GoButton
             // 
@@ -151,7 +180,7 @@
             this.fileTextBox.Name = "fileTextBox";
             this.fileTextBox.ReadOnly = true;
             this.fileTextBox.Size = new System.Drawing.Size(195, 20);
-            this.fileTextBox.TabIndex = 1;
+            this.fileTextBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -164,29 +193,46 @@
             this.label1.Text = "File: ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // saveButton
-            // 
-            this.saveButton.Enabled = false;
-            this.saveButton.Location = new System.Drawing.Point(143, 112);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 8;
-            this.saveButton.Text = "Save";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
             // saveFileDialog
             // 
             this.saveFileDialog.Filter = "RFont File|*.rft";
             // 
-            // label4
+            // antialiasCheckBox
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(260, 117);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "label4";
+            this.antialiasCheckBox.AutoSize = true;
+            this.antialiasCheckBox.Location = new System.Drawing.Point(62, 89);
+            this.antialiasCheckBox.Name = "antialiasCheckBox";
+            this.antialiasCheckBox.Size = new System.Drawing.Size(68, 17);
+            this.antialiasCheckBox.TabIndex = 10;
+            this.antialiasCheckBox.Text = "Anti-alias";
+            this.antialiasCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.pictureBox2);
+            this.groupBox1.ForeColor = System.Drawing.Color.Black;
+            this.groupBox1.Location = new System.Drawing.Point(356, 20);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(398, 115);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Sample";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(6, 19);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(386, 91);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(362, 137);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(386, 20);
+            this.textBox1.TabIndex = 12;
             // 
             // Viewer
             // 
@@ -207,6 +253,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.mainContainer)).EndInit();
             this.mainContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -227,5 +275,9 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox antialiasCheckBox;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

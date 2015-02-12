@@ -56,10 +56,14 @@ namespace RFont_Generator
         private void GoButton_Click(object sender, EventArgs e)
         {
             FontGenerator generator = new FontGenerator();
-            font = generator.Build(filename, (int)sizeDropDown.SelectedItem, (int)dpiDropDown.SelectedItem);
+            font = generator.Build(filename, (int)sizeDropDown.SelectedItem, (int)dpiDropDown.SelectedItem, antialiasCheckBox.Checked);
             pictureBox1.Image = font.Bitmap;
             saveButton.Enabled = true;
             label4.Text = String.Format("Optimal Texture Size: {0}x{1}", font.Bitmap.Width, font.Bitmap.Height);
+            var text = "The quick brown fox jumped over the lazy dog.";
+            if(textBox1.Text != String.Empty)
+                text = textBox1.Text;
+            font.Render(text, pictureBox2.Handle);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -82,6 +86,7 @@ namespace RFont_Generator
                 MessageBox.Show("Saved Successfully!", "Saved!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
 
     }
 }

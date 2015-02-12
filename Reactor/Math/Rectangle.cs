@@ -227,6 +227,7 @@ namespace Reactor.Math
             return new Rectangle(value.X, value.Y, value.Width, value.Height);
         }
 
+        
 
         #endregion
 
