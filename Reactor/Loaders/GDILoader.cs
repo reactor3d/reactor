@@ -122,7 +122,7 @@ namespace Reactor
                     case System.Drawing.Imaging.PixelFormat.Canonical:
                     case System.Drawing.Imaging.PixelFormat.Format32bppArgb: // works
                         pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Rgba;
+                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                         pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     default:
