@@ -7,12 +7,12 @@ uniform bool font = false;
 out vec4 color;
 
 void main(){
-    vec4 t = texture(diffuse, out_texcoords.xy);
+    vec4 t = texture(diffuse, out_texcoords.xy).rgba;
 	if(font){
-		color = vec4(t.r) * diffuse_color;
-    	color.a = t.r;
+		color = t * diffuse_color;
+    	color.a = t.a;
     } else {
-    	color = diffuse_color * t;
+    	color = t;
     }
 
 }
