@@ -13,7 +13,6 @@ void main(){
     	color.a = t.r;
     } else {
     	color = diffuse_color * t;
-    	color.a = diffuse_color.a;
     }
 
 }
