@@ -23,6 +23,9 @@ namespace Reactor.Types
                     foreach(string define in defines){
                         defineSource.AppendFormat("#{0};\r\n", define);
                     }
+
+                source = source.Replace("#include \"headers.glsl\"", RShaderResources.Headers);
+                source = source.Replace("#include \"lighting.glsl\"", RShaderResources.Lighting);
             //if(Type == RShaderEffectType.VERTEX)
                 //defineSource.Append(RShaderResources.Headers);
             EffectSource = defineSource.ToString() + source;

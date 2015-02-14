@@ -12,16 +12,14 @@ namespace InitGame
     {
         public override void Init()
         {
-            Engine.InitGameWindow(800, 600, Reactor.Types.RWindowStyle.Normal);
+            Engine.InitGameWindow(800, 600, Reactor.Types.RWindowStyle.Normal, "Reactor Samples : Init Game");
+            
         }
 
         public override void Render()
         {
-            Engine.Clear(RColor.Gray);
+            Engine.Clear();
 
-            Engine.Screen.Begin();
-            
-            Engine.Screen.End();
             Engine.Present();
         }
 

@@ -1,4 +1,6 @@
-﻿in vec2 out_texcoord;
+﻿#include "lighting.glsl"
+
+in vec2 out_texcoord;
 in vec3 out_normal;
 out vec4 color;
 void main()

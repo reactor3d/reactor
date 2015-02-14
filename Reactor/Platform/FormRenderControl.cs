@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,24 +12,35 @@ namespace Reactor.Platform
     public class FormRenderControl : RenderControl
     {
         public Form Form { get; internal set; }
+        private GLControl GLControl;
         public override void Init()
         {
-            throw new NotImplementedException();
-        }
+            GLControl = new OpenTK.GLControl(GraphicsMode.Default, 4, 2, GraphicsContextFlags.ForwardCompatible);
+            GLControl.Dock = DockStyle.Fill;
+            GLControl.BackColor = System.Drawing.Color.Black;
+            GLControl.MakeCurrent();
+            GLControl.VSync = true;
+            Form.Controls.Add(GLControl);
+            Context = (GraphicsContext)GLControl.Context;
+            WindowInfo = GLControl.WindowInfo;
 
-        public override void Destroy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void MakeCurrent()
-        {
-            throw new NotImplementedException();
+            Threading.WindowInfo = WindowInfo;
         }
 
         public override void SwapBuffers()
         {
-            throw new NotImplementedException();
+            Context.SwapBuffers();
+        }
+
+        public override void MakeCurrent()
+        {
+            Context.MakeCurrent(WindowInfo);
+        }
+
+        public override void Destroy()
+        {
+            Context.Dispose();
+            WindowInfo.Dispose();
         }
     }
 }

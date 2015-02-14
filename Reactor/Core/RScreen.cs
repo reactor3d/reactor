@@ -222,7 +222,6 @@ namespace Reactor
             defaultShader.SetUniformValue("view", camera2d.View);
             defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
             defaultShader.SetUniformValue("model", Matrix.Identity);
-            defaultShader.SetUniformValue("font", false);
             font.Render(ref defaultShader, ref vertexQuad2D, ref indexQuad2D, text, penPoint, color, Matrix.Identity);
 
             

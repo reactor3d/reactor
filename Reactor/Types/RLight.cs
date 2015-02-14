@@ -11,6 +11,6 @@ namespace Reactor.Types
         public float Radius;
         public float Phi;
         public float Theta;
-        public RMesh Mesh;
+        public RColor Color;
     }
 }

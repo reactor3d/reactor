@@ -84,7 +84,7 @@ namespace Reactor.Types
                 StringBuilder name = new StringBuilder();
                 GL.GetActiveAttrib(Id, i, 4096, out length, out size, out type, name);
                 Attribute attrib = new Attribute();
-                attrib.name = name.ToString().ToLower();  //ToLower() so that we can do matching with RVertexElementFormat's
+                attrib.name = name.ToString();
                 attrib.index = i;
                 attrib.location = GL.GetAttribLocation(Id, attrib.name);
                 attrib.type = type;
@@ -323,31 +323,31 @@ namespace Reactor.Types
             switch(rVertexElementUsage)
             {
                 case RVertexElementUsage.Position:
-                    name = "position";
+                    name = "r_Position";
                     break;
                 case RVertexElementUsage.Color:
-                    name = "color";
+                    name = "r_Color";
                     break;
                 case RVertexElementUsage.Normal:
-                    name = "normal";
+                    name = "r_Normal";
                     break;
                 case RVertexElementUsage.Bitangent:
-                    name = "bitangent";
+                    name = "r_Bitangent";
                     break;
                 case RVertexElementUsage.Tangent:
-                    name = "tangent";
+                    name = "r_Tangent";
                     break;
                 case RVertexElementUsage.TextureCoordinate:
-                    name = "texcoord";
+                    name = "r_TexCoord";
                     break;
                 case RVertexElementUsage.BlendIndices:
-                    name = "blendindices";
+                    name = "r_BlendIndices";
                     break;
                 case RVertexElementUsage.BlendWeight:
-                    name = "blendweight";
+                    name = "r_BlendWeight";
                     break;
                 case RVertexElementUsage.TessellateFactor:
-                    name = "tessellatefactor";
+                    name = "r_TessellateFactor";
                     break;
                 default:
                     throw new NotImplementedException();
@@ -413,6 +413,7 @@ namespace Reactor.Types
             return contents;
         }
         internal static string Headers = GetResourceString("Reactor.Shaders.headers.glsl");
+        internal static string Lighting = GetResourceString("Reactor.Shaders.lighting.glsl");
 
         internal static string BasicEffectVert = GetResourceString("Reactor.Shaders.basicEffect.vert.glsl");
         internal static string BasicEffectFrag = GetResourceString("Reactor.Shaders.basicEffect.frag.glsl");

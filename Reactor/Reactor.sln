@@ -17,6 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E7C1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1 - Init Game", "..\Samples\1 - InitGame\1 - Init Game\1 - Init Game.csproj", "{222F4BE0-F4FE-4B07-8E7D-C97C1F42640B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2 - Init Form", "..\Samples\2 - Init Form\2 - Init Form\2 - Init Form.csproj", "{972414D9-8C26-4B89-826F-99BA4E1D1A20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8CA95811-44F9-4692-AEE1-1E4A01C14905}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +118,22 @@ Global
 		{222F4BE0-F4FE-4B07-8E7D-C97C1F42640B}.Release|x64.Build.0 = Release|x64
 		{222F4BE0-F4FE-4B07-8E7D-C97C1F42640B}.Release|x86.ActiveCfg = Release|x86
 		{222F4BE0-F4FE-4B07-8E7D-C97C1F42640B}.Release|x86.Build.0 = Release|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|x64.ActiveCfg = Debug|x64
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|x64.Build.0 = Debug|x64
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|x86.ActiveCfg = Debug|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Debug|x86.Build.0 = Debug|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|Mixed Platforms.Build.0 = Release|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|x64.ActiveCfg = Release|x64
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|x64.Build.0 = Release|x64
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|x86.ActiveCfg = Release|x86
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,5 +143,6 @@ Global
 		{321F4415-DE4D-4DCF-9CE7-37DC98230EEF} = {478828BC-B58B-4168-8CAD-683333F22CA8}
 		{299E1DF5-1BEA-4EC5-A909-9E4113ADDFA9} = {478828BC-B58B-4168-8CAD-683333F22CA8}
 		{222F4BE0-F4FE-4B07-8E7D-C97C1F42640B} = {E7C18B7B-98DB-4291-BF52-29B7FE59BCF2}
+		{972414D9-8C26-4B89-826F-99BA4E1D1A20} = {E7C18B7B-98DB-4291-BF52-29B7FE59BCF2}
 	EndGlobalSection
 EndGlobal

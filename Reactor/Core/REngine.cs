@@ -55,7 +55,7 @@ namespace Reactor
             _viewport = new RViewport(0,0,800,600);
             camera = new RCamera();
             lastFrameTime = new TimeSpan();
-            RShader.InitShaders();
+            
 
 
         }
@@ -236,6 +236,7 @@ namespace Reactor
 
         public void Present()
         {
+            Tick(1);
             if(showFps)
                 Screen.RenderFPS((int)GetFPS());
             _renderControl.SwapBuffers();
@@ -249,6 +250,8 @@ namespace Reactor
                 control.PictureBox = (PictureBox)PictureBox.FromHandle(handle);
                 control.Init();
                 _renderControl = control;
+                RShader.InitShaders();
+                Screen.Init();
                 RLog.Info(GetGLInfo());
                 RLog.Info("Picture Box Renderer Initialized.");
                 return true;
@@ -258,20 +261,43 @@ namespace Reactor
             }
 
         }
-
-        public bool InitGameWindow(int width, int height, RWindowStyle windowStyle)
-        {
-            RDisplayMode mode = new RDisplayMode(width, height, -1);
-            return InitGameWindow(mode, windowStyle);
-        }
-        public bool InitGameWindow(RDisplayMode displayMode)
-        {
-            return InitGameWindow(displayMode, RWindowStyle.Normal);
-        }
-        public bool InitGameWindow(RDisplayMode displayMode, RWindowStyle windowStyle)
+        public bool InitForm(IntPtr handle)
         {
             try
             {
+                FormRenderControl control = new FormRenderControl();
+                control.Form = (Form)Form.FromHandle(handle);
+                control.Init();
+                _renderControl = control;
+                RShader.InitShaders();
+                Screen.Init();
+                RLog.Info(GetGLInfo());
+                RLog.Info("Form Renderer Initialized.");
+                return true;
+            }
+            catch (Exception e)
+            {
+                RLog.Error(e);
+                return false;
+            }
+
+        }
+
+        public bool InitGameWindow(int width, int height, RWindowStyle windowStyle, string title = "Reactor")
+        {
+            RDisplayMode mode = new RDisplayMode(width, height, -1);
+            return InitGameWindow(mode, windowStyle, title);
+        }
+        public bool InitGameWindow(RDisplayMode displayMode, string title = "Reactor")
+        {
+            return InitGameWindow(displayMode, RWindowStyle.Normal, title);
+        }
+        public bool InitGameWindow(RDisplayMode displayMode, RWindowStyle windowStyle, string title = "Reactor")
+        {
+            try
+            {
+                RGame.GameWindow.Title = title;
+
                 GameWindowRenderControl control = new GameWindowRenderControl();
                 control.GameWindow = RGame.GameWindow;
                 control.GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
@@ -281,6 +307,7 @@ namespace Reactor
                 control.GameWindow.Y = 0;
                 control.Context = (GraphicsContext)control.GameWindow.Context;
                 _renderControl = control;
+                RShader.InitShaders();
                 RLog.Info(GetGLInfo());
                 RLog.Info("Game Window Renderer Initialized.");
                 REngine.CheckGLError();
@@ -308,6 +335,18 @@ namespace Reactor
             }
         }
 
+        public void SetGameWindowIcon(System.Drawing.Icon icon)
+        {
+            try
+            {
+                RGame.GameWindow.Icon = icon;
+            }
+            catch(Exception e)
+            {
+                RLog.Error(e);
+            }
+            
+        }
         public bool ToggleFullscreen(RDisplayMode displayMode)
         {
             try

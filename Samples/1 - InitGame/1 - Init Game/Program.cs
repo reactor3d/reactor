@@ -7,6 +7,7 @@ namespace InitGame
 {
     public class Program
     {
+        [STAThread]
         public static void Main(String[] args)
         {
             using(Game g = new Game())

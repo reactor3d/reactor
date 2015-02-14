@@ -125,7 +125,6 @@ namespace Reactor
 
         void GameWindow_RenderFrame(object sender, FrameEventArgs e)
         {
-            Engine.Tick(1);
             Render();
         }
 

@@ -53,7 +53,7 @@ namespace Reactor.Types
             this.Scale = Vector3.One;
             this.Rotation = Quaternion.Identity;
             this.Position = Vector3.Zero;
-
+            this._material = RMaterial.defaultMaterial;
         }
         
         public void SetTexture(int layer, RTexture texture)

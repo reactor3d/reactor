@@ -9,7 +9,6 @@ namespace Reactor.Types
     {
         DIRECTIONAL = 0,
         POINT = 1,
-        SPOTLIGHT = 2,
-        MESH = 3
+        SPOTLIGHT = 2
     }
 }
