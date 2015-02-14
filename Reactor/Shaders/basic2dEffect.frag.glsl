@@ -12,8 +12,7 @@ void main(){
 		color = vec4(t.r) * diffuse_color;
     	color.a = t.r;
     } else {
-    	color = diffuse_color * t;
-    	color.a = diffuse_color.a;
+    	color = t;
     }
 
 }

@@ -122,7 +122,7 @@ namespace Reactor
                     case System.Drawing.Imaging.PixelFormat.Canonical:
                     case System.Drawing.Imaging.PixelFormat.Format32bppArgb: // works
                         pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Rgba;
+                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                         pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     default:
@@ -186,7 +186,7 @@ namespace Reactor
             GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
             GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
 
-            GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+            //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
 
             ErrorCode GLError = GL.GetError( );
             if ( GLError != ErrorCode.NoError )

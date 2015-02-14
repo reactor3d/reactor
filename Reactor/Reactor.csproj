@@ -242,7 +242,7 @@
     <Compile Include="Platform\Profiler.cs" />
     <Compile Include="Core\RScreen.cs" />
     <Compile Include="Types\RFont.cs" />
-    <Compile Include="Types\RTextureGlyph.cs" />
+    <Compile Include="Types\RFontGlyph.cs" />
     <Compile Include="Types\RTextureAtlas.cs" />
     <Compile Include="Types\RTextureSprite.cs" />
     <Compile Include="Types\RPixelFormat.cs" />

@@ -31,6 +31,7 @@ using Reactor.Geometry;
 using Reactor.Math;
 using OpenTK.Graphics.OpenGL;
 using Reactor.Types.States;
+using System.IO;
 
 
 namespace Reactor
@@ -38,7 +39,7 @@ namespace Reactor
     public class RScreen : RSingleton<RScreen>
     {
         static List<RFont> Fonts = new List<RFont>();
-        static RFont defaultFont = new RFont();
+        static RFont defaultFont = new RFont(RFontResources.SystemFont);
         bool initialized=false;
         RMeshBuilder quad;
         RShader defaultShader;
@@ -51,6 +52,7 @@ namespace Reactor
         public RScreen()
         {
             camera2d = new RCamera2d();
+            blendState = RBlendState.AlphaBlend;
         }
 
         public RCamera2d Camera
@@ -61,7 +63,8 @@ namespace Reactor
 
         public void Init()
         {
-            blendState = RBlendState.AlphaBlend;
+            REngine.CheckGLError();
+           
             defaultShader = new RShader();
             defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
             Fonts.Add(defaultFont);
@@ -122,19 +125,24 @@ namespace Reactor
                 throw new ReactorException("You must first call Init() before using RScreen.");
         }
 
-        public RFont LoadFont(string path, int size)
+        public RFont LoadFont(string path, int size, int dpi = 72)
         {
             InitCheck();
             RFont font = new RFont();
-            font.Load(RFileSystem.Instance.GetFilePath(path), size);
+            font.Generate(RFileSystem.Instance.GetFilePath(path),size, dpi);
             return font;
 
         }
 
-        public RFont LoadTextureFont(string fontName, int size)
+        public RFont LoadTextureFont(string definitionPath, string texturePath)
         {
             InitCheck();
-            return null;
+            RFont font = new RFont();
+            BinaryReader reader = new BinaryReader(File.OpenRead(RFileSystem.Instance.GetFilePath(definitionPath)));
+            font.Load(ref reader);
+            font.Texture = new RTexture2D();
+            font.Texture.LoadFromDisk(RFileSystem.Instance.GetFilePath(texturePath));
+            return font;
         }
 
         public void RenderFullscreenQuad()
@@ -201,7 +209,31 @@ namespace Reactor
         }
         public void RenderText(RFont font, Vector2 penPoint, string text, RColor color)
         {
-            text = text.Replace("\r\n", "\n");
+            
+
+            blendState.PlatformApplyState();
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.Disable(EnableCap.CullFace);
+            defaultShader.Bind();
+            defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, font.Texture);
+            
+
+            defaultShader.SetUniformValue("projection", camera2d.Projection);
+            defaultShader.SetUniformValue("view", camera2d.View);
+            defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
+            defaultShader.SetUniformValue("model", Matrix.Identity);
+            defaultShader.SetUniformValue("font", false);
+            font.Render(ref defaultShader, ref vertexQuad2D, ref indexQuad2D, text, penPoint, color, Matrix.Identity);
+
+            
+            REngine.CheckGLError();
+
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.Disable(EnableCap.Blend);
+            
+            defaultShader.Unbind();
+            /*text = text.Replace("\r\n", "\n");
             char lastChar = '\0';
             Vector2 originalPoint = penPoint;
             foreach(char c in text)
@@ -234,6 +266,7 @@ namespace Reactor
                 lastChar = c;
             }
             //font.RenderText(defaultShader, text, penPoint.X, penPoint.Y, size, size);
+             */
         }
 
         internal void RenderFPS(int fps)

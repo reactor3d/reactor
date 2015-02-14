@@ -56,8 +56,11 @@ namespace RFont_Generator
         private void GoButton_Click(object sender, EventArgs e)
         {
             FontGenerator generator = new FontGenerator();
-            font = generator.Build(filename, (int)sizeDropDown.SelectedItem, (int)dpiDropDown.SelectedItem, antialiasCheckBox.Checked);
-            pictureBox1.Image = font.Bitmap;
+            font = generator.Build(filename, (int)sizeDropDown.SelectedItem, (int)dpiDropDown.SelectedItem);
+            Graphics g = Graphics.FromHwnd(pictureBox1.Handle);
+            g.Clear(Color.Black);
+            g.DrawImageUnscaled(font.Bitmap, new Point(0, 0));
+            g.Flush();
             saveButton.Enabled = true;
             label4.Text = String.Format("Optimal Texture Size: {0}x{1}", font.Bitmap.Width, font.Bitmap.Height);
             var text = "The quick brown fox jumped over the lazy dog.";

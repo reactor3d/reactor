@@ -12,7 +12,7 @@ namespace RFont_Generator
     public class FontGenerator
     {
         public static Library FreeTypeLibrary = new Library();
-        public Font Build(string filename, int size, int dpi, bool antiAlias)
+        public Font Build(string filename, int size, int dpi)
         {
             Face face = new Face(FreeTypeLibrary, filename);
             face.SetCharSize(0, size<<6, 0, (uint)dpi);
@@ -33,7 +33,7 @@ namespace RFont_Generator
 
 
                 uint charIndex = face.GetCharIndex((uint)i);
-                face.LoadGlyph(charIndex, (LoadFlags.Render | LoadFlags.Color | LoadFlags.Pedantic | LoadFlags.CropBitmap ), LoadTarget.Normal);
+                face.LoadGlyph(charIndex, (LoadFlags.Render | LoadFlags.Color | LoadFlags.Pedantic ), LoadTarget.Normal);
                 
                 FontGlyph glyph = new FontGlyph();
                 glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);
@@ -58,13 +58,8 @@ namespace RFont_Generator
                 b.Dispose();
                 b = new Bitmap(width, width);
                 Graphics g = Graphics.FromImage(b);
-                g.Clear(Color.Black);
-                if (((face.FaceFlags & FaceFlags.FixedWidth) == FaceFlags.FixedWidth) || (!antiAlias))
-                {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                }
-                else
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.Clear(Color.Transparent);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 for (var i = 0; i < font.Glyphs.Count; i++)
                 {
                     FontGlyph glyph = font.Glyphs[i];
@@ -73,7 +68,8 @@ namespace RFont_Generator
                     if (result != null)
                     {
                         Reactor.Math.Rectangle bounds = result.bounds;
-                        g.DrawImageUnscaledAndClipped(glyph.bitmap, bounds);
+                        //g.DrawImageUnscaledAndClipped(glyph.bitmap, bounds);
+                        g.DrawImage(glyph.bitmap, bounds);
                         glyph.Bounds = bounds;
                         glyph.UVBounds = new Vector4((float)bounds.X / (float)width, (float)bounds.Y / (float)width, (float)bounds.Width / (float)width, (float)bounds.Height / (float)width);
                         font.Glyphs[i] = glyph;

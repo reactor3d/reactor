@@ -42,7 +42,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.fontFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.antialiasCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -72,7 +71,6 @@
             // 
             this.mainContainer.Panel2.Controls.Add(this.textBox1);
             this.mainContainer.Panel2.Controls.Add(this.groupBox1);
-            this.mainContainer.Panel2.Controls.Add(this.antialiasCheckBox);
             this.mainContainer.Panel2.Controls.Add(this.label4);
             this.mainContainer.Panel2.Controls.Add(this.saveButton);
             this.mainContainer.Panel2.Controls.Add(this.GoButton);
@@ -197,16 +195,6 @@
             // 
             this.saveFileDialog.Filter = "RFont File|*.rft";
             // 
-            // antialiasCheckBox
-            // 
-            this.antialiasCheckBox.AutoSize = true;
-            this.antialiasCheckBox.Location = new System.Drawing.Point(62, 89);
-            this.antialiasCheckBox.Name = "antialiasCheckBox";
-            this.antialiasCheckBox.Size = new System.Drawing.Size(68, 17);
-            this.antialiasCheckBox.TabIndex = 10;
-            this.antialiasCheckBox.Text = "Anti-alias";
-            this.antialiasCheckBox.UseVisualStyleBackColor = true;
-            // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
@@ -275,7 +263,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox antialiasCheckBox;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pictureBox2;

@@ -33,112 +33,248 @@ using System.Runtime.InteropServices;
 using SharpFont;
 using System.IO;
 using Reactor.Math;
+using Reactor.Geometry;
+using OpenTK.Graphics.OpenGL4;
 
 
 namespace Reactor.Types
 {
     public class RFont
     {
-        RTextureAtlas atlas;
-        internal string FamilyName;
-        internal Face font;
-        List<RTextureSprite> glyphs;
-
-        public int LineHeight
-        {
-            get; set;
-
-        }
-        public int SpaceWidth
-        {
-            get; set;
-        }
-        public int Size
-        {
-            get; set;
-        }
-        public int DPI
-        {
-            get; set;
-        }
-        public RTextureAtlas Atlas
-        {
-            get { return atlas; } set { atlas = value; }
-        }
-        public RFont(string fileName)
-        {
-        }
+        public int Size;
+        public string Name;
+        public bool Kerning;
+        public int LineHeight;
+        public int SpaceWidth;
+        public int Ascent;
+        public int Descent;
+        internal List<RFontGlyph> Glyphs;
+        public RTexture2D Texture;
+        internal RVertexData2D[] quadVerts = new RVertexData2D[4];
+        internal static RFont Default = new RFont(RFontResources.SystemFont);
 
         public RFont()
         {
-            RLog.Info("Creating default system font.");
-            font = RFontResources.SystemFont;
-            LineHeight = font.Height >> 6;
-            DPI=72;
-            BuildTextureMap(16);
-
         }
 
-        public void Load(string filename, int size)
+        internal RFont(Face face)
         {
-            font = new Face(RFontResources.FreetypeLibrary, filename);
-            LineHeight = font.Height >> 6;
-            FamilyName = font.FamilyName;
-            BuildTextureMap(size);
+            Generate(face, 16, 72);
         }
-
-        public void BuildTextureMap(int Size)
+        internal void Save(ref BinaryWriter stream)
         {
-            if(this.Size == Size)
-                return;
-            else
-                this.Size = Size;
-            if(glyphs != null)
+            stream.Write(Size);
+            stream.Write(Name);
+            stream.Write(Kerning);
+            stream.Write(LineHeight);
+            stream.Write(SpaceWidth);
+            stream.Write(Ascent);
+            stream.Write(Descent);
+            stream.Write(Glyphs.Count);
+            foreach (var glyph in Glyphs)
             {
-                foreach(RTextureGlyph g in glyphs)
+                glyph.Save(ref stream);
+            }
+            stream.Close();
+        }
+        internal void Load(ref BinaryReader stream)
+        {
+            Size = stream.ReadInt32();
+            Name = stream.ReadString();
+            Kerning = stream.ReadBoolean();
+            LineHeight = stream.ReadInt32();
+            SpaceWidth = stream.ReadInt32();
+            Ascent = stream.ReadInt32();
+            Descent = stream.ReadInt32();
+            int glyph_count = stream.ReadInt32();
+            Glyphs = new List<RFontGlyph>();
+            for (var i = 0; i < glyph_count; i++)
+            {
+                var glyph = new RFontGlyph();
+                glyph.Load(ref stream);
+                Glyphs.Add(glyph);
+            }
+            stream.Close();
+
+
+        }
+        internal void Generate(string filename, int size, int dpi)
+        {
+            Face face = new Face(RFontResources.FreetypeLibrary, filename);
+            Generate(face, size, dpi);
+        }
+        internal void Generate(Face face, int size, int dpi)
+        {
+            face.SetCharSize(0, size << 6, 0, (uint)dpi);
+            Name = face.FamilyName;
+            face.LoadChar((uint)32, (LoadFlags.Render | LoadFlags.Monochrome | LoadFlags.Pedantic), LoadTarget.Normal);
+            SpaceWidth = face.Glyph.Metrics.HorizontalAdvance >> 6;
+            LineHeight = face.Height >> 6;
+            Kerning = face.HasKerning;
+            Size = size;
+            Ascent = face.Ascender >> 6;
+            Descent = face.Descender >> 6;
+            Glyphs = new List<RFontGlyph>();
+
+
+            for (int i = 33; i < 126; i++)
+            {
+
+
+                uint charIndex = face.GetCharIndex((uint)i);
+                face.LoadGlyph(charIndex, (LoadFlags.Render | LoadFlags.Color | LoadFlags.Pedantic | LoadFlags.CropBitmap), LoadTarget.Normal);
+
+                RFontGlyph glyph = new RFontGlyph();
+                
+                glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);
+                glyph.Bounds = new Reactor.Math.Rectangle(0, 0, glyph.bitmap.Width, glyph.bitmap.Height);
+                glyph.CharIndex = i;
+                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX >> 6, face.Glyph.Metrics.HorizontalBearingY >> 6);
+                glyph.Advance = face.Glyph.Advance.X >> 6;
+
+                Glyphs.Add(glyph);
+            }
+            Glyphs.Sort(new FontGlyphSizeSorter());
+            var missed = -1;
+            var width = 16;
+            Bitmap b = new Bitmap(1, 1);
+            while (missed != 0)
+            {
+                missed = 0;
+                AtlasNode root = new AtlasNode();
+                root.bounds = new Reactor.Math.Rectangle(0, 0, width, width);
+                b.Dispose();
+                b = new Bitmap(width, width);
+                Graphics g = Graphics.FromImage(b);
+                g.Clear(Color.Transparent);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                for (var i = 0; i < Glyphs.Count; i++)
                 {
-                    g.Dispose();
+                    RFontGlyph glyph = Glyphs[i];
+                    AtlasNode result = root.Insert(glyph.Bounds);
+
+                    if (result != null)
+                    {
+                        Reactor.Math.Rectangle bounds = result.bounds;
+                        //g.DrawImageUnscaledAndClipped(glyph.bitmap, bounds);
+                        g.DrawImage(glyph.bitmap, bounds);
+                        glyph.Bounds = bounds;
+                        glyph.UVBounds = new Vector4((float)bounds.X, (float)bounds.Y, (float)bounds.Width, (float)bounds.Height);
+                        glyph.UVBounds /= (float)width;
+                        Glyphs[i] = glyph;
+                    }
+                    else
+                    {
+                        missed += 1;
+                        break;
+                    }
+
+
                 }
+                width += 16;
             }
-            //SpaceWidth = Size;
-            font.SetCharSize(0, Size*64,(uint) DPI,(uint) DPI);
-
-            glyphs = new List<RTextureSprite>();
-            font.LoadChar((uint)32, (LoadFlags.Render|LoadFlags.Color|LoadFlags.Pedantic), LoadTarget.Normal);
-            SpaceWidth = font.Glyph.Metrics.HorizontalAdvance >> 6;
-            for(int i=33; i < 126; i++)
-            {
-
-                font.LoadChar((uint)i, (LoadFlags.Render|LoadFlags.Color|LoadFlags.Pedantic), LoadTarget.Normal);
-                SpaceWidth = font.Glyph.Metrics.HorizontalAdvance >> 6;
-                //font.Glyph.RenderGlyph(RenderMode.Normal);
-
-                glyphs.Add(new RTextureGlyph(font.Glyph, (char)i));
-            }
-            atlas = new RTextureAtlas();
-            
-            atlas.BuildAtlas(glyphs);
+            Texture = new RTexture2D();
+            Texture.LoadFromBitmap(b);
+            Texture.SetTextureMagFilter(RTextureMagFilter.Linear);
+            Texture.SetTextureMinFilter(RTextureMinFilter.Linear);
+            Texture.SetTextureWrapMode(RTextureWrapMode.Clamp, RTextureWrapMode.Clamp);
+            REngine.CheckGLError();
 
         }
-        internal Vector2 Kerning(char a, char b)
+        internal void Render(ref RShader shader, ref RVertexBuffer vertexBuffer, ref RIndexBuffer indexBuffer, string text, Vector2 location, RColor color, Matrix matrix)
         {
-            if(font.HasKerning)
+            Vector2 pen = new Vector2();
+            pen.Y += MeasureString(text).Height;
+            float x = pen.X;
+            List<RVertexData2D> quads = new List<RVertexData2D>();
+            foreach (char c in text)
             {
-                uint first = font.GetCharIndex((uint)a);
-                uint last = font.GetCharIndex((uint)b);
-                FTVector k = font.GetKerning((uint)first, (uint)last, KerningMode.Default);
-                return new Vector2(k.X >> 6, k.Y >> 6);
+                if(c == '\r')
+                {
+                    continue;
+                }
+                if(c == '\n')
+                {
+                    pen.X = x;
+                    pen.Y += LineHeight;
+                    continue;
+                }
+                if (c == ' ')
+                {
+                    pen.X += SpaceWidth;
+                    continue;
+                }
+                if (c == '\t')
+                {
+                    pen.X += (SpaceWidth * 3);
+                    continue;
+                }
+                RFontGlyph glyph = GetGlyphForChar(c);
+                var dest = new Reactor.Math.Rectangle();
+                dest.X = (int)(pen.X + glyph.Offset.X);
+                dest.Y = (int)pen.Y - ((int)glyph.Offset.Y);
+                dest.Width = glyph.Bounds.Width;
+                dest.Height = glyph.Bounds.Height;
+
+                vertexBuffer.SetData<RVertexData2D>(AddQuads(dest, glyph.UVBounds));
+                vertexBuffer.Bind();
+                vertexBuffer.BindVertexArray();
+                indexBuffer.Bind();
+                vertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
+                GL.DrawElements(PrimitiveType.Triangles, indexBuffer.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
+                REngine.CheckGLError();
+                indexBuffer.Unbind();
+                vertexBuffer.Unbind();
+                vertexBuffer.UnbindVertexArray();
+                pen.X += glyph.Advance;
+
             }
-            return Vector2.Zero;
+
         }
-        internal RTextureGlyph GetGlyph(char c)
+
+        public Reactor.Math.Rectangle MeasureString(string text)
         {
-            foreach(RTextureGlyph glyph in glyphs)
+            Reactor.Math.Rectangle r = new Reactor.Math.Rectangle();
+            foreach (char c in text)
             {
-                if(glyph.keyCode == c)
-                    return glyph;
+                if (c == ' ')
+                {
+                    r.Width += SpaceWidth;
+                    continue;
+                }
+                if (c == '\t')
+                {
+                    r.Width += (SpaceWidth * 3);
+                    continue;
+                }
+                RFontGlyph glyph = GetGlyphForChar(c);
+                r.Height = System.Math.Max(r.Height, glyph.Bounds.Height);
+                r.Width += (int)glyph.Offset.X;
             }
-            return null;
+            return r;
+        }
+
+        RFontGlyph GetGlyphForChar(char ch)
+        {
+            foreach (var g in Glyphs)
+            {
+                if (g.CharIndex == (int)ch)
+                    return g;
+            }
+            throw new InvalidOperationException(String.Format("Character {0} not found in character map", ch));
+        }
+        RVertexData2D[] AddQuads(Reactor.Math.Rectangle placement, Vector4 UVs)
+        {
+            quadVerts[0].Position = new Vector2(placement.X, placement.Y);
+            quadVerts[0].TexCoord = new Vector2(UVs.X, UVs.Y);
+            quadVerts[1].Position = new Vector2(placement.X + placement.Width, placement.Y);
+            quadVerts[1].TexCoord = new Vector2(UVs.X+UVs.Z, UVs.Y);
+            quadVerts[2].Position = new Vector2(placement.X + placement.Width, placement.Y + placement.Height);
+            quadVerts[2].TexCoord = new Vector2(UVs.X+UVs.Z, UVs.Y+UVs.W);
+            quadVerts[3].Position = new Vector2(placement.X, placement.Y + placement.Height);
+            quadVerts[3].TexCoord = new Vector2(UVs.X, UVs.Y+UVs.W);
+            //vertexBuffer.SetData<RVertexData2D>(quadVerts);
+            return quadVerts;
         }
     }
     internal static class RFontResources
@@ -158,6 +294,19 @@ namespace Reactor.Types
 
         internal static Face SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
 
+    }
+
+    internal class FontGlyphSizeSorter : IComparer<RFontGlyph>
+    {
+        public int Compare(RFontGlyph left, RFontGlyph right)
+        {
+            if (left.Bounds.Height > right.Bounds.Height)
+                return -1;  // this is reversed on purpose, we want largest to smallest!
+            else
+                return 1;
+            return 0;
+
+        }
     }
 
 

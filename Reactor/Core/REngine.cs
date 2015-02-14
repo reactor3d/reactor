@@ -35,7 +35,7 @@ namespace Reactor
         internal static RGame RGame;
         internal static string RootPath;
         internal static RCamera camera;
-        internal static bool showFps = false;
+        internal static bool showFps = true;
 
         private float _lastFps = 0;
         private float _fps = 0;
@@ -97,7 +97,18 @@ namespace Reactor
         {
             ErrorCode error = GL.GetError();
             if (error != ErrorCode.NoError)
+            {
+                StackTrace trace = new StackTrace(true);
+                StackFrame[] frames = trace.GetFrames();
+                RLog.Error("Stack Trace:");
+                foreach(StackFrame f in frames)
+                {
+                    RLog.Error(f.ToString());
+                }
                 throw new EngineGLException("GL.GetError() returned " + error.ToString());
+
+            }
+               
         }
         public RDisplayMode CurrentDisplayMode
         {
@@ -272,6 +283,9 @@ namespace Reactor
                 _renderControl = control;
                 RLog.Info(GetGLInfo());
                 RLog.Info("Game Window Renderer Initialized.");
+                REngine.CheckGLError();
+                Screen.Init();
+                
                 return true;
             } catch(Exception e) {
                 RLog.Error(e);

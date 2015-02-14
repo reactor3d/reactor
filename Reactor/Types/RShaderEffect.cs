@@ -54,7 +54,6 @@ namespace Reactor.Types
 
 
             }
-            REngine.CheckGLError();
             GL.ShaderSource(Id, EffectSource);
             REngine.CheckGLError();
             GL.CompileShader(Id);

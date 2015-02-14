@@ -14,8 +14,6 @@ namespace RFont_Generator
         public int Size;
         public string Name;
         public bool Kerning;
-        public bool Bold;
-        public bool Italic;
         public int LineHeight;
         public int SpaceWidth;
         public int Ascent;
@@ -28,8 +26,6 @@ namespace RFont_Generator
             stream.Write(Size);
             stream.Write(Name);
             stream.Write(Kerning);
-            stream.Write(Bold);
-            stream.Write(Italic);
             stream.Write(LineHeight);
             stream.Write(SpaceWidth);
             stream.Write(Ascent);
@@ -46,8 +42,6 @@ namespace RFont_Generator
             Size = stream.ReadInt32();
             Name = stream.ReadString();
             Kerning = stream.ReadBoolean();
-            Bold = stream.ReadBoolean();
-            Italic = stream.ReadBoolean();
             LineHeight = stream.ReadInt32();
             SpaceWidth = stream.ReadInt32();
             Ascent = stream.ReadInt32();
