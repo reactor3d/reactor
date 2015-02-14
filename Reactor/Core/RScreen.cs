@@ -171,11 +171,10 @@ namespace Reactor
             RViewport viewport = REngine.Instance._viewport;
             UpdateQuad(bounds);
             blendState.PlatformApplyState();
-            if(font)
-            {
+
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            }
+
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
             vertexQuad2D.Bind();

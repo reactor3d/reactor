@@ -89,7 +89,7 @@ namespace Reactor.Types
                         RLog.Info(node.ToString());
                         sprite.ScaledBounds = node.bounds;
 
-                        Pack(sprite, sprite.GetPixelFormat());
+                        //Pack(sprite, sprite.GetPixelFormat());
                     } else {
                         unclaimed++;
                     }

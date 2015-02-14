@@ -198,8 +198,8 @@ namespace Reactor.Types.States
             _alphaBlend = new Utilities.ObjectFactory<RBlendState>(() => new RBlendState()
             {
                 Name = "BlendState.AlphaBlend",
-                ColorSourceBlend = RBlend.One,
-                AlphaSourceBlend = RBlend.One,
+                ColorSourceBlend = RBlend.SourceAlpha,
+                AlphaSourceBlend = RBlend.SourceAlpha,
                 ColorDestinationBlend = RBlend.InverseSourceAlpha,
                 AlphaDestinationBlend = RBlend.InverseSourceAlpha
             });
@@ -233,6 +233,8 @@ namespace Reactor.Types.States
         internal void PlatformApplyState()
         {
 
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(this.ColorSourceBlend.GetBlendFactorSrc(), this.ColorDestinationBlend.GetBlendFactorDest());
 
             GL.BlendColor(
                 this.BlendFactor.R / 255.0f,      
