@@ -33,46 +33,55 @@ using OpenTK;
 
 namespace Reactor.Types
 {
-    internal class RMeshPart : RNode
+    internal class RMeshPart : RNode, IDisposable
     {
         internal RVertexBuffer VertexBuffer { get; set; }
         internal RIndexBuffer IndexBuffer { get; set; }
         public BoundingSphere BoundingSphere { get; set; }
         public BoundingBox BoundingBox { get; set; }
+
+        public RMaterial Material { get; set; }
         RMeshPart()
         {
-            
+            Material = RMaterial.defaultMaterial;
         }
-        internal void Draw(RMaterial material, PrimitiveType primitiveType, Matrix world)
+
+        internal void Draw(PrimitiveType primitiveType, Matrix world)
         {
             Threading.EnsureUIThread();
+            Material.Apply();
 
-            var shortIndices = IndexBuffer.IndexElementSize == RIndexElementSize.SixteenBits;
-            var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
-            var indexElementSize = shortIndices ? 2 : 4;
-            var indexOffsetInBytes = (IntPtr)(indexElementSize);
-            var indexElementCount = IndexBuffer.GetElementCountArray(primitiveType, VertexBuffer.VertexCount / 3);
-            var vertexOffset = (IntPtr)(VertexBuffer.VertexDeclaration.VertexStride * 0);
             VertexBuffer.BindVertexArray();
             VertexBuffer.Bind();
             IndexBuffer.Bind();
-            VertexBuffer.VertexDeclaration.Apply(material.Shader, IntPtr.Zero);
+            VertexBuffer.VertexDeclaration.Apply(Material.Shader, IntPtr.Zero);
 
             REngine.CheckGLError();
-            material.Shader.Bind();
-            material.Shader.SetUniformValue("world", world);
-            material.Shader.SetUniformValue("view", REngine.camera.View);
-            material.Shader.SetUniformValue("projection", REngine.camera.Projection);
+            Material.Shader.Bind();
+            REngine.CheckGLError();
+            Material.Shader.SetUniformValue("world", world);
+            REngine.CheckGLError();
+            Material.Shader.SetUniformValue("view", REngine.camera.View);
+            REngine.CheckGLError();
+            Material.Shader.SetUniformValue("projection", REngine.camera.Projection);
+            REngine.CheckGLError();
 
-            GL.DrawElements(primitiveType, IndexBuffer.IndexCount, indexElementType, IntPtr.Zero);
+            GL.DrawElements(primitiveType, IndexBuffer.IndexCount, DrawElementsType.UnsignedInt , IntPtr.Zero);
 
-            material.Shader.Unbind();
+            Material.Shader.Unbind();
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
             VertexBuffer.UnbindVertexArray();
 
         }
-        
+
+
+        public void Dispose()
+        {
+            Material.Dispose();
+            VertexBuffer.Dispose();
+            IndexBuffer.Dispose();
+        }
     }
 }
 

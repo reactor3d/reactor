@@ -317,6 +317,8 @@ namespace Reactor.Types
             SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
             REngine.CheckGLError();
         }
+
+        internal static RTexture2D defaultWhite = new RTexture2D(true);
     }
 
     public enum RTextureMagFilter

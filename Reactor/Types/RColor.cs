@@ -161,7 +161,7 @@ namespace Reactor.Types
 	// ARGB
         private uint _packedValue;
 	  
-        private RColor(uint packedValue)
+        public RColor(uint packedValue)
         {
             _packedValue = packedValue;
 			// ARGB

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Reactor</id>
+        <version>0.0.2</version>
+        <authors>Gabriel Reiser</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>The Reactor 3D Game Engine</description>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Reactor.AssimpNet" version="3.3.1" />
+                <dependency id="SharpFont" version="2.5.3.0" />
+                <dependency id="OpenTK" version="1.1.1589.5942" />
+                <dependency id="OpenTK.GLControl" version="1.1.1589.5942" />
+                <dependency id="Newtonsoft.Json" version="6.0.8" />
+                <dependency id="DotNetZip" version="1.9.3" />
+            </group>
+        </dependencies>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Drawing" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Windows.Forms" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="build\Reactor.targets" target="build\Reactor.targets" />
+        <file src="bin\x86\Debug\Reactor.dll" target="lib\Reactor.dll" />
+        <file src="bin\x86\Debug\Reactor.xml" target="lib\Reactor.xml" />
+    </files>
+</package>

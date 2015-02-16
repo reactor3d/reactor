@@ -96,7 +96,7 @@ namespace Reactor.Loaders
                             }
                         }
                     }
-
+                    
 
 
 
@@ -112,10 +112,23 @@ namespace Reactor.Loaders
 
                     rmeshpart.VertexBuffer = vbuffer;
                     rmeshpart.IndexBuffer = ibuffer;
+
+                    RMaterial material = new RMaterial(rmesh.Name + ":Material");
+
+                    if (scene.HasMaterials)
+                    {
+                        Material mat = scene.Materials[mesh.MaterialIndex];
+                        material.Shininess = mat.Shininess;
+                        material.SetColor(RMaterialColor.DIFFUSE, new RColor(mat.ColorDiffuse.R, mat.ColorDiffuse.G, mat.ColorDiffuse.B, mat.ColorDiffuse.A));
+                        if (mat.HasTextureDiffuse)
+                        {
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(rmesh.Name + ":Material:Diffuse", mat.TextureDiffuse.FilePath);
+                            material.SetTexture((int)RTextureLayer.DIFFUSE, tex);
+                        }
+                    }
+                    rmeshpart.Material = material;
                     rmesh.Parts.Add(rmeshpart);
-
-
-
+                    
                 }
                 //return rmesh;
             }

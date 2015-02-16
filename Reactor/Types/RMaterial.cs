@@ -9,14 +9,21 @@ namespace Reactor.Types
 {
     public class RMaterial : IDisposable
     {
+
+        //Needs to be set based on number of RMaterialLayer enum values!
+        internal static int MAX_MATERIAL_LAYERS = 7;
+        internal static int MAX_MATERIAL_COLOR_LAYERS = 5;
+
+        internal static RMaterial defaultMaterial = RMaterials.Instance.CreateMaterial("default");
+
         [JsonIgnore]
         public int Id { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("textures")]
-        public List<RTexture> Textures { get; set; }
+        public RTexture[] Textures { get; set; }
         [JsonProperty("colors")]
-        public List<RColor> Colors { get; set; }
+        public RColor[] Colors { get; set; }
         [JsonProperty("shininess")]
         public float Shininess { get; set; }
         [JsonProperty("specularPower")]
@@ -27,8 +34,12 @@ namespace Reactor.Types
         internal RMaterial(string name)
         {
             Name = name;
-            Textures = new List<RTexture>(MAX_MATERIAL_LAYERS);
-            Colors = new List<RColor>(MAX_MATERIAL_COLOR_LAYERS);
+            Textures = new RTexture[MAX_MATERIAL_LAYERS];
+            for (int i = 0; i < Textures.Length; i++)
+            {
+                Textures[i] = RTexture.defaultWhite;
+            }
+            Colors = new RColor[MAX_MATERIAL_COLOR_LAYERS];
             Shininess = 1;
             SpecularPower = 1;
             Shader = RShader.basicShader;
@@ -76,25 +87,56 @@ namespace Reactor.Types
 
         }
 
+        public void SetColor(RMaterialColor materialColorLayer, RColor color)
+        {
+            Colors[(int)materialColorLayer] = color;
+        }
+        public void SetColor(int materialColorLayer, RColor color)
+        {
+            Colors[materialColorLayer] = color;
+        }
+
+        public void SetColor(int materialColorLayer, int color)
+        {
+            Colors[materialColorLayer] = new RColor((uint)color);
+        }
+
+        public RColor GetColor(RMaterialColor materialColorLayer)
+        {
+            return GetColor((int)materialColorLayer);
+        }
+
+        public RColor GetColor(int materialColorLayer)
+        {
+            if (Colors[materialColorLayer] != null)
+                return Colors[materialColorLayer];
+            else
+                throw new InvalidOperationException("Attempted to retrieve a color from a material that has no color for that slot");
+        }
+
         internal void Apply()
         {
             Shader.Bind();
-            for(int i=0; i<Textures.Count; i++)
+            for(int i=0; i<Textures.Length; i++)
             {
-                GL.ActiveTexture(TextureUnit.Texture0 + i);
-                Textures[i].Bind();
-                Shader.SetSamplerValue(RTextureLayer.DIFFUSE + i, Textures[i]);
+                if(Textures[i]!=null)
+                {
+                    GL.ActiveTexture(TextureUnit.Texture0 + i);
+                    Textures[i].Bind();
+                    Shader.SetSamplerValue(RTextureLayer.DIFFUSE + i, Textures[i]);
+                }
+                
             }
-            for(int i=0; i<Colors.Count; i++)
+            for(int i=0; i<Colors.Length; i++)
             {
-                Shader.SetUniformValue(GetMaterialColorName(RMaterialColor.DIFFUSE + i), Colors[i]);
+                if(Colors[i]!=null)
+                {
+                    Shader.SetUniformValue(GetMaterialColorName(RMaterialColor.DIFFUSE + i), Colors[i]);
+                }
+                
             }
-            Shader.Unbind();
         }
-        internal static RMaterial defaultMaterial = RMaterials.Instance.CreateMaterial("default");
-        //Needs to be set based on number of RMaterialLayer enum values!
-        internal static int MAX_MATERIAL_LAYERS = 7;
-        internal static int MAX_MATERIAL_COLOR_LAYERS = 5;
+
 
 
         internal string GetMaterialColorName(RMaterialColor materialColor)

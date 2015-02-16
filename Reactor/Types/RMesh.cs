@@ -13,16 +13,14 @@ namespace Reactor.Types
 
         internal List<RMeshPart> Parts { get; set; }
 
-        internal RMaterial Material { get; set; }
         RMesh()
         {
             this.Matrix = Matrix.Identity;
             this.Position = Vector3.Zero;
             this.Rotation = Quaternion.Identity;
             Parts = new List<RMeshPart>();
-            Material = RMaterial.defaultMaterial;
-            this.CullEnable = true;
-            this.CullMode = Reactor.Types.States.RCullMode.CullClockwiseFace;
+            this.CullEnable = false;
+            this.CullMode = Reactor.Types.States.RCullMode.None;
             this.BlendEnable = false;
             this.DepthWrite= true;
 
@@ -33,7 +31,6 @@ namespace Reactor.Types
         {
             Parts.Clear();
             Parts = null;
-            Material.Dispose();
         }
         #endregion
 
@@ -47,13 +44,12 @@ namespace Reactor.Types
         {
 
             ApplyState();
-            Material.Apply();
+            GL.Disable(EnableCap.CullFace);
             foreach(RMeshPart part in Parts)
             {
                 
-                part.Draw(Material, PrimitiveType.Triangles, this.Matrix);
+                part.Draw(PrimitiveType.Triangles, this.Matrix);
             }
-            Material.Shader.Unbind();
         }
     }
 }

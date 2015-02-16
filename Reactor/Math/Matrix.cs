@@ -991,22 +991,8 @@ namespace Reactor.Math
 
         public static void CreateTranslation(ref Vector3 position, out Matrix result)
         {
-            result.M11 = 1;
-            result.M12 = 0;
-            result.M13 = 0;
-            result.M14 = 0;
-            result.M21 = 0;
-            result.M22 = 1;
-            result.M23 = 0;
-            result.M24 = 0;
-            result.M31 = 0;
-            result.M32 = 0;
-            result.M33 = 1;
-            result.M34 = 0;
-            result.M41 = position.X;
-            result.M42 = position.Y;
-            result.M43 = position.Z;
-            result.M44 = 1;
+            result = Identity;
+            result.Translation = position;
         }
 
 
@@ -1020,22 +1006,10 @@ namespace Reactor.Math
 
         public static void CreateTranslation(float xPosition, float yPosition, float zPosition, out Matrix result)
         {
-            result.M11 = 1;
-            result.M12 = 0;
-            result.M13 = 0;
-            result.M14 = 0;
-            result.M21 = 0;
-            result.M22 = 1;
-            result.M23 = 0;
-            result.M24 = 0;
-            result.M31 = 0;
-            result.M32 = 0;
-            result.M33 = 1;
-            result.M34 = 0;
+            result = Identity;
             result.M41 = xPosition;
             result.M42 = yPosition;
             result.M43 = zPosition;
-            result.M44 = 1;
         }
 
         public static Matrix CreateReflection(Plane value)

@@ -36,9 +36,10 @@ namespace Reactor.Types
         {
             //rotation = Quaternion.FromAxisAngle(Vector3.UnitX, rotation.X) * Quaternion.FromAxisAngle(Vector3.UnitY, rotation.Y) * Quaternion.FromAxisAngle(Vector3.UnitZ, rotation.Z);
             //rotation.Normalize();
-            matrix = BuildScalingMatrix(Matrix.Identity);
-            matrix = BuildRotationMatrix(matrix);
-            matrix = BuildPositionMatrix(matrix);
+            matrix = Matrix.Identity;
+            BuildScalingMatrix(ref matrix);
+            BuildRotationMatrix(ref matrix);
+            BuildPositionMatrix(ref matrix);
 
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -158,23 +159,23 @@ namespace Reactor.Types
             //UpdateMatrix();
 
         }
-        internal Matrix BuildRotationMatrix(Matrix m)
+        internal void BuildRotationMatrix(ref Matrix m)
         {   
             m *= Matrix.CreateRotationX(Rotation.X);
             m *= Matrix.CreateRotationY(Rotation.Y);
             m *= Matrix.CreateRotationZ(Rotation.Z);
-            return m;
+            //return m;
         }
-        internal Matrix BuildScalingMatrix(Matrix m)
+        internal void BuildScalingMatrix(ref Matrix m)
         {
             m *= Matrix.CreateScale(Scale);
-            return m;
+            //return m;
         }
-        internal Matrix BuildPositionMatrix(Matrix m)
+        internal void BuildPositionMatrix(ref Matrix m)
         {
             m *= Matrix.CreateTranslation(Position);
             //_transforms[_model.Meshes[0].ParentBone.Index] = m;
-            return m;
+            //return m;
         }
     }
 }

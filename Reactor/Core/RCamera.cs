@@ -55,11 +55,11 @@ namespace Reactor
                     matrix.M11, matrix.M12, matrix.M13, 0,
                     matrix.M21, matrix.M22, matrix.M23, 0,
                     matrix.M31, matrix.M32, matrix.M33, 0,
-                    Vector3.Dot(Position, matrix.Right), Vector3.Dot(Position, matrix.Up), Vector3.Dot(Position, matrix.Forward), 1
+                    -Vector3.Dot(Position, matrix.Right), -Vector3.Dot(Position, matrix.Up), -Vector3.Dot(Position, matrix.Forward), 1
                 );
+                //viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + matrix.Forward, matrix.Up);
 
-
-                ViewDirection = new Vector3(viewMatrix.M31, viewMatrix.M32, viewMatrix.M33);
+                ViewDirection = viewMatrix.Forward;
                 RViewport viewport = REngine.Instance._viewport;
                 projMatrix = Matrix.Identity * Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), viewport.AspectRatio, Near, Far);
             };

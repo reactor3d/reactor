@@ -8,6 +8,18 @@ namespace Reactor.Types
 {
     public class RTexture2D : RTexture
     {
+        public RTexture2D():base()
+        {
+
+        }
+        internal RTexture2D(bool defaultWhite):base()
+        {
+
+                Create(1, 1, RPixelFormat.Rgba);
+                SetData<RColor>(new RColor[] { new RColor(1f, 1f, 1f, 1f) }, RPixelFormat.Rgba, 0, 0, 1, 1, true);
+                REngine.CheckGLError();
+
+        }
         public void Create(int width, int height, RPixelFormat format, bool multisample = false)
         {
 
@@ -15,7 +27,7 @@ namespace Reactor.Types
             if (multisample){
                 textureTarget = TextureTarget.Texture2DMultisample;
                 GL.BindTexture(TextureTarget.Texture2DMultisample, Id);
-                GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Alpha, width, height, true);
+                GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Rgba, width, height, true);
                 REngine.CheckGLError();
                 CreateProperties(TextureTarget.Texture2DMultisample, true);
                 REngine.CheckGLError();
@@ -24,6 +36,7 @@ namespace Reactor.Types
             {
                 textureTarget = TextureTarget.Texture2D;
                 GL.BindTexture(TextureTarget.Texture2D, Id);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, (PixelFormat)format, PixelType.UnsignedByte, IntPtr.Zero);
                 REngine.CheckGLError();
                 CreateProperties(TextureTarget.Texture2D, false);
                 REngine.CheckGLError();
