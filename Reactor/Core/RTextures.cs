@@ -15,6 +15,8 @@ namespace Reactor
         }
         public RTexture CreateTexture<TRTexture>(byte[] data, string name, bool isCompressed) where TRTexture : RTexture, new()
         {
+            if (Textures.ContainsKey(name))
+                return Textures[name];
             RTexture texture = new TRTexture();
             texture.Name = name;
             texture.LoadFromData(data, name, isCompressed);
@@ -23,6 +25,8 @@ namespace Reactor
         }
         public RTexture CreateTexture<TRTexture>(string name, string filename) where TRTexture : RTexture, new()
         {
+            if (Textures.ContainsKey(name))
+                return Textures[name];
             RTexture texture = new TRTexture();
             texture.Name = name;
             texture.LoadFromDisk(filename);

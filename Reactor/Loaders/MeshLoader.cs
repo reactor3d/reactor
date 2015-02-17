@@ -31,6 +31,7 @@ using Reactor.Geometry;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
+using System.IO;
 
 namespace Reactor.Loaders
 {
@@ -45,10 +46,10 @@ namespace Reactor.Loaders
                 PostProcessSteps.FindInvalidData |
                 PostProcessSteps.FindDegenerates |
                 PostProcessSteps.GenerateSmoothNormals |
-                PostProcessSteps.RemoveRedundantMaterials |
                 PostProcessSteps.Triangulate |
                 PostProcessSteps.GenerateUVCoords |
-                PostProcessSteps.CalculateTangentSpace);
+                PostProcessSteps.CalculateTangentSpace |
+                PostProcessSteps.PreTransformVertices);
 
             if(scene.HasMeshes)
             {
@@ -58,6 +59,7 @@ namespace Reactor.Loaders
                         continue;
                     }
                     RMeshPart rmeshpart = RMeshPart.Create<RMeshPart>();
+                    
                     RVertexData[] data = new RVertexData[mesh.VertexCount];
 
                     List<int> indicesList = new List<int>();
@@ -74,7 +76,7 @@ namespace Reactor.Loaders
                                 if(mesh.HasTextureCoords(0))
                                 {
                                     Vector3D t = mesh.TextureCoordinateChannels[0][index];
-                                    data[index].TexCoord = new Vector2(t.X, t.Y);
+                                    data[index].TexCoord = new Vector2(t.X, -t.Y);
                                 }
 
                                 if(mesh.HasNormals)
@@ -122,8 +124,58 @@ namespace Reactor.Loaders
                         material.SetColor(RMaterialColor.DIFFUSE, new RColor(mat.ColorDiffuse.R, mat.ColorDiffuse.G, mat.ColorDiffuse.B, mat.ColorDiffuse.A));
                         if (mat.HasTextureDiffuse)
                         {
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(rmesh.Name + ":Material:Diffuse", mat.TextureDiffuse.FilePath);
-                            material.SetTexture((int)RTextureLayer.DIFFUSE, tex);
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
+                            tex.SetTextureMinFilter(RTextureMinFilter.Linear);
+                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            tex.GenerateMipmaps();
+                            material.SetTexture(RTextureLayer.DIFFUSE, tex);
+                        }
+                        if (mat.HasTextureNormal)
+                        {
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
+                            tex.SetTextureMinFilter(RTextureMinFilter.Linear);
+                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            material.SetTexture(RTextureLayer.NORMAL, tex);
+                        }
+                        if (mat.HasTextureAmbient)
+                        {
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
+                            tex.SetTextureMinFilter(RTextureMinFilter.Linear);
+                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            material.SetTexture(RTextureLayer.AMBIENT, tex);
+                        }
+                        if (mat.HasTextureHeight)
+                        {
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
+                            tex.SetTextureMinFilter(RTextureMinFilter.Linear);
+                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            material.SetTexture(RTextureLayer.HEIGHT, tex);
+                        }
+                        if (mat.HasTextureEmissive)
+                        {
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
+                            tex.SetTextureMinFilter(RTextureMinFilter.Linear);
+                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            material.SetTexture(RTextureLayer.GLOW, tex);
+                        }
+                        if (mat.HasTextureSpecular)
+                        {
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
+                            tex.SetTextureMinFilter(RTextureMinFilter.Linear);
+                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            material.SetTexture(RTextureLayer.SPECULAR, tex);
                         }
                     }
                     rmeshpart.Material = material;

@@ -117,11 +117,13 @@ namespace Reactor.Types
                 }catch(Exception e){
                     RLog.Error("Error loading texture from: "+filename);
                     RLog.Error(e);
+                    return;
                 }
             }
             if ( Id == 0 || textureTarget == 0)
             {
                 RLog.Error("Error generating OpenGL texture from: "+filename);
+                return;
 
             }
 
@@ -295,6 +297,14 @@ namespace Reactor.Types
             REngine.CheckGLError();
             Unbind();
             REngine.CheckGLError();
+        }
+
+        public void GenerateMipmaps()
+        {
+            Bind();
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+            Unbind();
+
         }
         #region IDisposable implementation
 

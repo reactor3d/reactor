@@ -9,7 +9,7 @@
 
 };
 
-uniform Light r_Lights[4];
+uniform Light r_Lights[6];
 
 uniform sampler2D diffuse;
 uniform sampler2D ambient;
@@ -17,6 +17,7 @@ uniform sampler2D normal;
 uniform sampler2D specular;
 uniform sampler2D glow;
 uniform sampler2D detail;
+uniform sampler2D height;
 
 uniform vec4 diffuse_color;
 uniform vec4 ambient_color;

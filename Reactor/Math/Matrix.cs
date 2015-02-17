@@ -214,7 +214,7 @@ namespace Reactor.Math
         {
             get
             {
-                return new Vector3(this.M31, this.M32, this.M33);
+                return Vector3.Normalize(new Vector3(this.M31, this.M32, this.M33));
             }
             set
             {
@@ -229,7 +229,7 @@ namespace Reactor.Math
         {
             get
             {
-                return new Vector3(-this.M21, -this.M22, -this.M23);
+                return Vector3.Normalize(new Vector3(-this.M21, -this.M22, -this.M23));
             }
             set
             {
@@ -244,7 +244,7 @@ namespace Reactor.Math
         {
             get
             {
-                return new Vector3(-this.M31, -this.M32, -this.M33);
+                return Vector3.Normalize(new Vector3(-this.M31, -this.M32, -this.M33));
             }
             set
             {
@@ -280,7 +280,7 @@ namespace Reactor.Math
         {
             get
             {
-                return new Vector3(-this.M11, -this.M12, -this.M13);
+                return Vector3.Normalize(new Vector3(-this.M11, -this.M12, -this.M13));
             }
             set
             {
@@ -295,7 +295,7 @@ namespace Reactor.Math
         {
             get
             {
-                return new Vector3(this.M11, this.M12, this.M13);
+                return Vector3.Normalize(new Vector3(this.M11, this.M12, this.M13));
             }
             set
             {
@@ -325,7 +325,7 @@ namespace Reactor.Math
         {
             get
             {
-                return new Vector3(this.M21, this.M22, this.M23);
+                return Vector3.Normalize(new Vector3(this.M21, this.M22, this.M23));
             }
             set
             {

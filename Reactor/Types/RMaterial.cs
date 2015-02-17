@@ -57,31 +57,31 @@ namespace Reactor.Types
         }
         public void SetTexture(int TextureLayer, RTexture texture)
         {
-            Textures[TextureLayer] = texture;
+            Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] = texture;
         }
 
         public void SetTexture(RTextureLayer TextureLayer, RTexture texture)
         {
-            Textures[(int)TextureLayer] = texture;
+            Textures[GetTextureLayerIndex(TextureLayer)] = texture;
         }
 
         public void SetTexture(int TextureLayer, uint TextureId)
         {
             RTexture texture = RTextures.GetTexture(TextureId);
-            Textures[TextureLayer] = texture;
+            Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] = texture;
         }
         public RTexture GetTexture(RTextureLayer TextureLayer)
         {
-            if (Textures[(int)TextureLayer] != null)
-                return Textures[(int)TextureLayer];
+            if (Textures[GetTextureLayerIndex(TextureLayer)] != null)
+                return Textures[GetTextureLayerIndex(TextureLayer)];
             else
                 return null;
         }
 
         public RTexture GetTexture(int TextureLayer)
         {
-            if(Textures[TextureLayer] != null)
-                return Textures[TextureLayer];
+            if(Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] != null)
+                return Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)];
             else
                 return null;
 
@@ -116,7 +116,6 @@ namespace Reactor.Types
 
         internal void Apply()
         {
-            Shader.Bind();
             for(int i=0; i<Textures.Length; i++)
             {
                 if(Textures[i]!=null)
@@ -138,7 +137,46 @@ namespace Reactor.Types
         }
 
 
-
+        internal int GetTextureLayerIndex(RTextureLayer layer)
+        {
+            switch(layer)
+            {
+                case RTextureLayer.DIFFUSE:
+                    return 0;
+                case RTextureLayer.NORMAL:
+                    return 1;
+                case RTextureLayer.AMBIENT:
+                    return 2;
+                case RTextureLayer.SPECULAR:
+                    return 3;
+                case RTextureLayer.GLOW:
+                    return 4;
+                case RTextureLayer.HEIGHT:
+                    return 5;
+                case RTextureLayer.DETAIL:
+                    return 6;
+                case RTextureLayer.TEXTURE7:
+                    return 7;
+                case RTextureLayer.TEXTURE8:
+                    return 8;
+                case RTextureLayer.TEXTURE9:
+                    return 9;
+                case RTextureLayer.TEXTURE10:
+                    return 10;
+                case RTextureLayer.TEXTURE11:
+                    return 11;
+                case RTextureLayer.TEXTURE12:
+                    return 12;
+                case RTextureLayer.TEXTURE13:
+                    return 13;
+                case RTextureLayer.TEXTURE14:
+                    return 14;
+                case RTextureLayer.TEXTURE15:
+                    return 15;
+                default:
+                    return 0;
+            }
+        }
         internal string GetMaterialColorName(RMaterialColor materialColor)
         {
             switch(materialColor)

@@ -42,7 +42,7 @@ namespace Reactor.Types
         internal RIndexBuffer _index;
         
         internal int vertCount = 0;
-        internal uint texture = 0;
+        internal RTexture texture;
         #endregion
 
         internal RShader Shader { get; set; }
@@ -62,7 +62,7 @@ namespace Reactor.Types
                 _material.SetTexture(layer, texture);
             else
             {
-                this.texture = texture.Id;
+                this.texture = texture;
             }
 
         }
@@ -370,7 +370,10 @@ namespace Reactor.Types
             Shader.Bind();
             VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
             RViewport viewport = REngine.Instance._viewport;
-
+            if(texture != null)
+            {
+                Shader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
+            }
             Shader.SetUniformValue("world", Matrix.Identity);
             Shader.SetUniformValue("view", REngine.camera.View);
             Shader.SetUniformValue("projection", REngine.camera.Projection);

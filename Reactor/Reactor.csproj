@@ -149,6 +149,7 @@
     <Compile Include="Audio\RAudioStream.cs" />
     <Compile Include="Audio\RAudioStreamer.cs" />
     <Compile Include="Audio\RMusic.cs" />
+    <Compile Include="Core\RAtmosphere.cs" />
     <Compile Include="Core\RPackage.cs" />
     <Compile Include="Platform\Threading.cs" />
     <Compile Include="Core\RCamera2d.cs" />
@@ -287,6 +288,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Shaders\lighting.glsl" />
+    <None Include="Shaders\phong.frag.glsl" />
+    <None Include="Shaders\phong.vert.glsl" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

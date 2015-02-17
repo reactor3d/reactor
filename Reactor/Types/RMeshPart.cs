@@ -49,6 +49,7 @@ namespace Reactor.Types
         internal void Draw(PrimitiveType primitiveType, Matrix world)
         {
             Threading.EnsureUIThread();
+            Material.Shader.Bind();
             Material.Apply();
 
             VertexBuffer.BindVertexArray();
@@ -56,8 +57,6 @@ namespace Reactor.Types
             IndexBuffer.Bind();
             VertexBuffer.VertexDeclaration.Apply(Material.Shader, IntPtr.Zero);
 
-            REngine.CheckGLError();
-            Material.Shader.Bind();
             REngine.CheckGLError();
             Material.Shader.SetUniformValue("world", world);
             REngine.CheckGLError();

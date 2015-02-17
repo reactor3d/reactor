@@ -51,13 +51,13 @@ namespace Reactor
             IsEnabled = true;
             OnUpdate += (sender, e) => {
                 //ViewDirection = Vector3.Transform(new Vector3(0, 0, -1f), GetRotation());
-                viewMatrix = new Matrix(
+                /*viewMatrix = new Matrix(
                     matrix.M11, matrix.M12, matrix.M13, 0,
                     matrix.M21, matrix.M22, matrix.M23, 0,
                     matrix.M31, matrix.M32, matrix.M33, 0,
                     -Vector3.Dot(Position, matrix.Right), -Vector3.Dot(Position, matrix.Up), -Vector3.Dot(Position, matrix.Forward), 1
-                );
-                //viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + matrix.Forward, matrix.Up);
+                );*/
+                viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + -matrix.Forward, matrix.Up);
 
                 ViewDirection = viewMatrix.Forward;
                 RViewport viewport = REngine.Instance._viewport;

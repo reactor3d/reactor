@@ -63,20 +63,20 @@ namespace Reactor.Types
         public void SetRotation(ref Quaternion rotation)
         {
             this.rotation = rotation;
-            //UpdateMatrix();
+            UpdateMatrix();
             
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateX(float value)
         {
             Rotate(value, 0, 0);
-            //UpdateMatrix();
+            UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateY(float value)
         {
             Rotate(0, value, 0);
-            //UpdateMatrix();
+            UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateZ(float value)
@@ -87,18 +87,17 @@ namespace Reactor.Types
         public void Rotate(Quaternion value)
         {
             rotation = value;
-            //UpdateMatrix();
+            UpdateMatrix();
         }
         public void Rotate(float x, float y, float z)
         {
+            
             float dx = MathHelper.ToRadians(x);
             float dy = MathHelper.ToRadians(y);
             float dz = MathHelper.ToRadians(z);
-
-            rotation.X += dx;
-            rotation.Y += dy;
-            rotation.Z += dz;
-            matrix *= Matrix.CreateFromQuaternion(rotation);
+            //rotation = Quaternion.CreateFromRotationMatrix(Matrix.CreateFromYawPitchRoll(y,x,z));
+            rotation += Quaternion.CreateFromYawPitchRoll(dy, dx, dz);
+            //UpdateMatrix();
         }
         public void SetPosition(Vector3 value)
         {
@@ -160,10 +159,14 @@ namespace Reactor.Types
 
         }
         internal void BuildRotationMatrix(ref Matrix m)
-        {   
-            m *= Matrix.CreateRotationX(Rotation.X);
-            m *= Matrix.CreateRotationY(Rotation.Y);
-            m *= Matrix.CreateRotationZ(Rotation.Z);
+        {
+            //rotation.Normalize();
+            m *= Matrix.CreateFromAxisAngle(Vector3.Right, Rotation.X);
+            m *= Matrix.CreateFromAxisAngle(Vector3.Up, Rotation.Y);
+            m *= Matrix.CreateFromAxisAngle(Vector3.Forward, Rotation.Z);
+            //m *= Matrix.CreateRotationX(rotation.X);
+            //m *= Matrix.CreateRotationY(rotation.Y);
+            //m *= Matrix.CreateRotationZ(rotation.Z);
             //return m;
         }
         internal void BuildScalingMatrix(ref Matrix m)

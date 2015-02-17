@@ -60,6 +60,13 @@ namespace Reactor
             return Mouse.GetState().IsButtonDown(button);
         }
 
+        public void CenterMouse()
+        {
+            Mouse.SetPosition(REngine.Instance._viewport.Width / 2, REngine.Instance._viewport.Height / 2);
+        }
+
+
+
         public bool IsMouseButtonUp(MouseButton button)
         {
             return Mouse.GetState().IsButtonUp(button);
