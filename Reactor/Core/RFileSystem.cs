@@ -45,7 +45,7 @@ namespace Reactor
             return Path.GetFullPath(AssemblyDirectory+relativeFilename);
         }
 
-        public FileStream GetFile(string relativeFilename)
+        public Stream GetFile(string relativeFilename)
         {
             string absolutePath = GetFilePath(relativeFilename);
             if(File.Exists(absolutePath))
@@ -54,6 +54,15 @@ namespace Reactor
             }
             else
             {
+                //Search the packages for the file...
+                foreach(var package in packages)
+                {
+                    if(package.ContainsEntry(relativeFilename))
+                    {
+                        var result = package.GetEntry(relativeFilename).Result;
+                        return result;
+                    }
+                }
                 return null;
             }
         }

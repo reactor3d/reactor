@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Reactor.Types
 {
@@ -23,12 +25,25 @@ namespace Reactor.Types
                     foreach(string define in defines){
                         defineSource.AppendFormat("#{0};\r\n", define);
                     }
-
-                source = source.Replace("#include \"headers.glsl\"", RShaderResources.Headers);
-                source = source.Replace("#include \"lighting.glsl\"", RShaderResources.Lighting);
+            var parsedSource = Regex.Replace(source, @"^#include ""(.*?)""", delegate(Match match){
+                if(match.Success)
+                {
+                    string fileInclude = match.Groups[1].Value;
+                    if(fileInclude.ToLower().Equals("headers.glsl"))
+                        return RShaderResources.Headers;
+                    if(fileInclude.ToLower().Equals("lighting.glsl"))
+                        return RShaderResources.Lighting;
+                    StreamReader reader = new StreamReader(RFileSystem.Instance.GetFile(match.ToString()));
+                    string inc = reader.ReadToEnd();
+                    return inc;
+                }
+                return "";
+            });
+                //source = source.Replace("#include \"headers.glsl\"", RShaderResources.Headers);
+                //source = source.Replace("#include \"lighting.glsl\"", RShaderResources.Lighting);
             //if(Type == RShaderEffectType.VERTEX)
                 //defineSource.Append(RShaderResources.Headers);
-            EffectSource = defineSource.ToString() + source;
+            EffectSource = defineSource.ToString() + parsedSource;
 
             //RLog.Info(EffectSource);
             switch (type)
