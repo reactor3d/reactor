@@ -25,6 +25,7 @@ namespace Reactor.Types
                     foreach(string define in defines){
                         defineSource.AppendFormat("#{0};\r\n", define);
                     }
+                                                      //regex for finding the file referenced inside double-quotes...
             var parsedSource = Regex.Replace(source, @"^#include ""(.*?)""", delegate(Match match){
                 if(match.Success)
                 {
