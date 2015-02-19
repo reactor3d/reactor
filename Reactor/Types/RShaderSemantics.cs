@@ -35,6 +35,8 @@ namespace Reactor.Types
         internal RShaderSemantics(ref string source)
         {
             Semantics = new Dictionary<RShaderSemanticDefinition, RShaderSemantic>();
+
+            //TODO: use-  @"uniform\s(?<type>.\w*)\s(?<name>.\w*)\s[:]\s(?<macro>.*);"
             source = Regex.Replace(source, @"uniform ([a-zA-Z]\w+)\s+([a-zA-Z]\w+)(?:\s+):(?:\s+)([\w]*);", delegate(Match match) {
 
                 RShaderSemantic semantic = new RShaderSemantic()
