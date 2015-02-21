@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reactor.Core
+namespace Reactor
 {
     public class RAtmosphere : RSingleton<RAtmosphere>
     {
@@ -23,27 +23,32 @@ namespace Reactor.Core
             skybox = new RShader();
             skybox.Load(@"
 #include ""headers.glsl""
-uniform mat4 projection;
-uniform mat4 view;
-uniform mat4 world;
-
-out vec2 texCoord;
+uniform mat4 world : WORLD;
+uniform mat4 view : VIEW;
+uniform mat4 proj : PROJECTION;
+out vec3 texCoord;
 void main()
 {
-gl_Position = gl_Vertex;
+mat4 mvp = proj * view * world;
+gl_Position = mvp * vec4(r_Position, 1.0);
+texCoord = r_Position;
 }
 ", @"
-in vec2 texCoord;
-uniform samplerCube cubemap;
+in vec3 texCoord;
+uniform samplerCube diffuse;
 void main()
 {
-gl_FragColor = textureCube(cubemap, texCoord);
+vec4 cubeColor = texture(diffuse, texCoord);
+gl_FragColor = cubeColor;
 }
 ", null);
             sky = RScene.Instance.CreateMeshBuilder("skybox");
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
-            sky.SetShader(skybox);
-            sky.SetTexture((int)RTextureLayer.DIFFUSE, skyBoxTexture);
+            sky.Matrix = Matrix.Identity;
+            RMaterial skyBoxMaterial = new RMaterial("skybox");
+            skyBoxMaterial.Shader = skybox;
+            skyBoxMaterial.SetTexture(RTextureLayer.DIFFUSE, skyBoxTexture);
+            sky.Material = skyBoxMaterial;
         }
 
         internal void Update()
@@ -51,6 +56,7 @@ gl_FragColor = textureCube(cubemap, texCoord);
             if(sky != null)
             {
                 sky.Position = REngine.Instance.GetCamera().Position;
+                sky.Scale = Vector3.One;
                 sky.Update();
             }
         }

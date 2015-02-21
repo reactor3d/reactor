@@ -31,6 +31,8 @@ namespace Reactor
         public RViewport Viewport { get { return _viewport; } }
         public RFileSystem FileSystem { get { return RFileSystem.Instance; } }
         public RScreen Screen { get { return RScreen.Instance; } }
+
+        public RAtmosphere Atmosphere { get { return RAtmosphere.Instance; } }
         internal RViewport _viewport;
         internal static RGame RGame;
         internal static string RootPath;
@@ -228,7 +230,7 @@ namespace Reactor
             else
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            //camera.Update();
+            Atmosphere.Update();
 
             REngine.CheckGLError();
             

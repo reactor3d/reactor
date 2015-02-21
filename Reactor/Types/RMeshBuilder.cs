@@ -42,10 +42,11 @@ namespace Reactor.Types
         internal RIndexBuffer _index;
         
         internal int vertCount = 0;
-        internal RTexture texture;
         #endregion
 
-        internal RShader Shader { get; set; }
+        #region Properties
+        public RMaterial Material { get { return _material; } set { _material = value; } }
+        #endregion
 
         #region Methods
         public RMeshBuilder()
@@ -56,16 +57,8 @@ namespace Reactor.Types
             this._material = RMaterial.defaultMaterial;
         }
         
-        public void SetTexture(int layer, RTexture texture)
-        {
-            if (_material != null)
-                _material.SetTexture(layer, texture);
-            else
-            {
-                this.texture = texture;
-            }
-
-        }
+        
+        
         public void CreateBox(Vector3 Center, Vector3 Size, bool FlipNormals)
         {
 
@@ -160,8 +153,6 @@ namespace Reactor.Types
             vertices = null;
             vertCount = 36;
             this.Position = Center;
-            Shader = new RShader();
-            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
 
         }
 
@@ -206,8 +197,7 @@ namespace Reactor.Types
 
             _index = new RIndexBuffer(typeof(short), 6, RBufferUsage.WriteOnly);
             _index.SetData<short>(indices);
-            Shader = new RShader();
-            Shader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
+
 
         }
 
@@ -328,28 +318,12 @@ namespace Reactor.Types
             indices = null;
 
             this.Position = Center;
-            Shader = new RShader();
-            Shader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
+
 
         }
 
-        public void SetShader(RShader shader)
-        {
-            Shader = shader;
-        }
-
-        public RShader GetShader()
-        {
-            return Shader;
-        }
         public override void Render()
         {
-            GL.Enable(EnableCap.DepthTest);
-            REngine.CheckGLError();
-            GL.DepthMask(true);
-            REngine.CheckGLError();
-            GL.DepthFunc(DepthFunction.Less);
-            REngine.CheckGLError();
 
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
@@ -363,21 +337,19 @@ namespace Reactor.Types
             GL.CullFace(CullFaceMode.FrontAndBack);
             REngine.CheckGLError();
             */
-
+            _material.Shader.Bind();
+            _material.Apply();
             VertexBuffer.BindVertexArray();
             VertexBuffer.Bind();
 
-            Shader.Bind();
-            VertexBuffer.VertexDeclaration.Apply(Shader, IntPtr.Zero);
+
+            VertexBuffer.VertexDeclaration.Apply(_material.Shader, IntPtr.Zero);
             RViewport viewport = REngine.Instance._viewport;
-            if(texture != null)
-            {
-                Shader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
-            }
-            Shader.SetUniformValue("world", Matrix.Identity);
-            Shader.SetUniformValue("view", REngine.camera.View);
-            Shader.SetUniformValue("projection", REngine.camera.Projection);
-            Shader.SetUniformValue("viewport", new Vector4(viewport.X, viewport.Y, viewport.Width, viewport.Height));
+            
+            _material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.WORLD, matrix);
+            _material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.MODEL, matrix);
+            _material.Shader.BindSemantics();
+            _material.Shader.SetUniformValue("viewport", new Vector4(viewport.X, viewport.Y, viewport.Width, viewport.Height));
             if(_index != null)
             {
 
@@ -400,7 +372,7 @@ namespace Reactor.Types
                 REngine.CheckGLError();
             }
 
-            Shader.Unbind();
+            _material.Shader.Unbind();
 
             VertexBuffer.Unbind();
             VertexBuffer.UnbindVertexArray();

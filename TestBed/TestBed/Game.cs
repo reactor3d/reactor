@@ -24,7 +24,7 @@ namespace TestBed
             Engine.SetViewport(new RViewport(0,0,800, 600));
             GameWindow.CursorVisible = false;
             sponza = Engine.Scene.Create<RMesh>("sponza");
-            sponza.LoadSourceModel("/models/sponza.fbx");
+            sponza.LoadSourceModel("/models/sponza.obj");
             sponza.CullEnable = false;
             sponza.CullMode = Reactor.Types.States.RCullMode.CullCounterClockwiseFace;
             sponza.SetScale(10f);
@@ -33,12 +33,27 @@ namespace TestBed
             cam.SetPosition(0, 20, -1f);
             cam.LookAt(Vector3.Zero);
             cam.SetClipPlanes(0.01f, 100000f);
+
+
+            RTexture2D posX = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posX", "/textures/sky-posX.png");
+            RTexture2D posY = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posY", "/textures/sky-posY.png");
+            RTexture2D posZ = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posZ", "/textures/sky-posZ.png");
+            RTexture2D negX = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("negX", "/textures/sky-negX.png");
+            RTexture2D negY = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("negY", "/textures/sky-negY.png");
+            RTexture2D negZ = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("negZ", "/textures/sky-negZ.png");
+
+            var skyboxTexture = new RTexture3D();
+            skyboxTexture.Create(RPixelFormat.Rgb, ref posX, ref posY, ref posZ, ref negX, ref negY, ref negZ);
+
+            Engine.Atmosphere.CreateSkyBox(skyboxTexture);
+            
+            
         }
 
         public override void Render()
         {
             Engine.Clear(RColor.Gray);
-
+            Engine.Atmosphere.RenderSkybox();
             sponza.Render();
             Engine.Present();
         }
@@ -73,6 +88,11 @@ namespace TestBed
             sponza.Update();
             direction *= 0.95f;
             cam.RotateX(mouse_direction.Y * 2f);
+            if (cam.Rotation.X > Math.PI/2)
+                cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
+            if (cam.Rotation.X < -Math.PI/2)
+                cam.Rotation = new Quaternion(-(float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
+                
             cam.RotateY(-mouse_direction.X * 2f);
             cam.Move(direction);
             cam.Update();

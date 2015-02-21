@@ -30,6 +30,8 @@ namespace Reactor.Types
         }
         private Attribute[] _attributes;
         private Uniform[] _uniforms;
+        
+        private readonly Dictionary<RShaderSemanticDefinition,RShaderSemantic> _semantics = new Dictionary<RShaderSemanticDefinition,RShaderSemantic>();
 
         private readonly Dictionary<string, int> _uniformLocations = new Dictionary<string, int>();
         private readonly Dictionary<string, int> _attributeLocations = new Dictionary<string, int>();
@@ -111,7 +113,22 @@ namespace Reactor.Types
                 _uniformLocations.Add(uni.name, uni.location);
 
             }
+            foreach(var effect in effects)
+            {
+                if(effect!=null)
+                {
+                    if (effect.Semantics != null)
+                    {
+                        foreach (var keyPair in effect.Semantics)
+                        {
+                            _semantics.Add(keyPair.Key, keyPair.Value);
+                        }
+                    }
 
+                    effect.Dispose();
+                }
+                
+            }
         }
         public void SetUniformValue(string name, bool value)
         {
@@ -171,9 +188,86 @@ namespace Reactor.Types
             TextureUnit unit = (TextureUnit)(int)layer;
             GL.ActiveTexture(unit);
             REngine.CheckGLError();
-            GL.BindTexture(TextureTarget.Texture2D, texture.Id);
+            texture.Bind();
             REngine.CheckGLError();
 
+        }
+
+        public int GetUniformBySemantic(RShaderSemanticDefinition semantic)
+        {
+            return GetUniformLocation(_semantics[semantic].name);
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, bool value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "bool")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, int value)
+        {
+            if(_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "int")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, double value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "double")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, float value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "float")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Vector2 value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "vec2")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Vector3 value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "vec3")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Vector4 value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "vec4")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Matrix value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "mat4")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
+        }
+        public void SetUniformBySemantic(RShaderSemanticDefinition semantic, RColor value)
+        {
+            if (_semantics.ContainsKey(semantic))
+            {
+                if (_semantics[semantic].type == "vec4")
+                    SetUniformValue(_semantics[semantic].name, value);
+            }
         }
         internal int GetTexUniformLocation(RTextureLayer layer)
         {
@@ -388,6 +482,25 @@ namespace Reactor.Types
             {
                 GL.DeleteProgram(Id);
                 Id = -1;
+            }
+        }
+
+        internal void BindSemantics()
+        {
+            foreach(var keyPair in _semantics)
+            {
+                switch(keyPair.Key)
+                {
+                    case RShaderSemanticDefinition.VIEW:
+                        SetUniformBySemantic(RShaderSemanticDefinition.VIEW, REngine.camera.View);
+                        break;
+                    case RShaderSemanticDefinition.PROJECTION:
+                        SetUniformBySemantic(RShaderSemanticDefinition.PROJECTION, REngine.camera.Projection);
+                        break;
+                    case RShaderSemanticDefinition.VIEWPROJECTION:
+                        SetUniformBySemantic(RShaderSemanticDefinition.VIEWPROJECTION, REngine.camera.View * REngine.camera.Projection);
+                        break;
+                }
             }
         }
 

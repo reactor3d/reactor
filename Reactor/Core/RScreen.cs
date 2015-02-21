@@ -154,7 +154,7 @@ namespace Reactor
         public void RenderFullscreenQuad(RShader shader)
         {
             InitCheck();
-            quad.SetShader(shader);
+            quad.Material.Shader = shader;
             quad.Render();
         }
 

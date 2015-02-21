@@ -1,4 +1,5 @@
-﻿using Reactor.Types;
+﻿using Reactor.Math;
+using Reactor.Types;
 using System;
 using System.Collections.Generic;
 
@@ -7,11 +8,13 @@ namespace Reactor
     public class RScene : RSingleton<RScene>
     {
         private RSceneNode _root;
+        private List<RLight> _lights;
         public RScene()
         {
             _root = new RSceneNode();
             _root.Children = new List<RSceneNode>();
             _root.Parent = null;
+            _lights = new List<RLight>();
         }
 
         public void LoadScene(string filename)
@@ -28,6 +31,7 @@ namespace Reactor
         {
             T node = RSceneNode.Create<T>();
             RLog.Info("Created a new node named: "+name);
+
             return node;
         }
         public RMesh CreateMesh(string name)
@@ -56,6 +60,26 @@ namespace Reactor
             mesh.Parent = parent;
             parent.Children.Add(mesh);
             return mesh;
+        }
+
+        public RLight CreateLight(RLightType lightType=RLightType.POINT)
+        {
+            var light = new RLight()
+            {
+                Id = _lights.Count,
+                Type = lightType,
+                Position = Vector3.Zero,
+                Radius = 1.0f,
+                Color = RColor.White
+            };
+            _lights.Add(light);
+            return light;
+        }
+
+        public void DestroyAll()
+        {
+            _lights.Clear();
+            _root.Children.Clear();
         }
     }
 }

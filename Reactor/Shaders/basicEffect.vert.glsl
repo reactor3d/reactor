@@ -1,8 +1,8 @@
 ﻿#include "headers.glsl"
 
-uniform mat4 world;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 world : WORLD;
+uniform mat4 view : VIEW;
+uniform mat4 projection : PROJECTION;
 out vec3 out_normal;
 out vec2 out_texcoord;
     void main() {

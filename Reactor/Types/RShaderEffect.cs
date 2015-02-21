@@ -13,6 +13,7 @@ namespace Reactor.Types
         public int Id { get; internal set; }
         public string EffectSource;
         public RShaderEffectType Type;
+        internal RShaderSemantics Semantics;
 
         public RShaderEffect(string source, int type, string[] defines)
         {
@@ -26,7 +27,7 @@ namespace Reactor.Types
                         defineSource.AppendFormat("#{0};\r\n", define);
                     }
                                                       //regex for finding the file referenced inside double-quotes...
-            var parsedSource = Regex.Replace(source, @"^#include ""(.*?)""", delegate(Match match){
+            var parsedSource = Regex.Replace(source, @"#include ""(.*?)""", delegate(Match match){
                 if(match.Success)
                 {
                     string fileInclude = match.Groups[1].Value;
@@ -44,8 +45,9 @@ namespace Reactor.Types
                 //source = source.Replace("#include \"lighting.glsl\"", RShaderResources.Lighting);
             //if(Type == RShaderEffectType.VERTEX)
                 //defineSource.Append(RShaderResources.Headers);
+            
             EffectSource = defineSource.ToString() + parsedSource;
-
+            Semantics = new RShaderSemantics(ref EffectSource);
             //RLog.Info(EffectSource);
             switch (type)
             {

@@ -29,31 +29,29 @@ using System.Collections.Generic;
 
 namespace Reactor.Types
 {
-    internal class RShaderSemantics
+    internal class RShaderSemantics : Dictionary<RShaderSemanticDefinition, RShaderSemantic>
     {
-        public Dictionary<RShaderSemanticDefinition, RShaderSemantic> Semantics;
         internal RShaderSemantics(ref string source)
         {
-            Semantics = new Dictionary<RShaderSemanticDefinition, RShaderSemantic>();
-
+            
             //TODO: use-  @"uniform\s(?<type>.\w*)\s(?<name>.\w*)\s[:]\s(?<macro>.*);"
-            source = Regex.Replace(source, @"uniform ([a-zA-Z]\w+)\s+([a-zA-Z]\w+)(?:\s+):(?:\s+)([\w]*);", delegate(Match match) {
+            source = Regex.Replace(source, @"uniform\s(?<type>.\w*)\s(?<name>.\w*)\s[:]\s(?<macro>.\w*);", delegate(Match match)
+            {
 
                 RShaderSemantic semantic = new RShaderSemantic()
                 {
-                    type = match.Groups[0].Value.ToLower(),
-                    name = match.Groups[1].Value.ToLower()
+                    type = match.Groups["type"].Value.ToLower(),
+                    name = match.Groups["name"].Value.ToLower()
                 };
-                Semantics.Add(GetSemanticDefinition(match.Groups[2].Value.ToUpper()), semantic);
-                var returnValue = String.Format("uniform {0} {1};", match.Groups[0].Value, match.Groups[1].Value);
+                Add(GetSemanticDefinition(match.Groups["macro"].Value.ToUpper()), semantic);
+                var returnValue = String.Format("uniform {0} {1};", match.Groups["type"].Value, match.Groups["name"].Value);
                 return returnValue;
             });
         }
 
         RShaderSemanticDefinition GetSemanticDefinition(string semantic)
         {
-            //Look for valid semantics to bind.
-            throw new NotImplementedException();
+            return (RShaderSemanticDefinition)Enum.Parse(typeof(RShaderSemanticDefinition), semantic, true);
         }
     }
 
@@ -63,7 +61,7 @@ namespace Reactor.Types
         public string type;
     }
 
-    internal enum RShaderSemanticDefinition
+    public enum RShaderSemanticDefinition
     {
         WORLD,
         MODEL,
@@ -76,7 +74,8 @@ namespace Reactor.Types
         MODELVIEW,
         WORLDVIEW,
         MODELVIEWPROJECTION,
-        WORLDVIEWPROJECTION
+        WORLDVIEWPROJECTION,
+        VIEWPROJECTION
     }
 }
 

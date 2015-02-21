@@ -100,7 +100,7 @@ namespace Reactor.Types
         }
         internal void LoadFromDisk(string filename)
         {
-            if(Path.GetExtension(filename).ToLower() == "dds"){
+            if(Path.GetExtension(filename).ToLower() == ".dds"){
                 try
                 {
                     ImageDDS.LoadFromDisk( RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget, out pixelFormat, out pixelType );
@@ -270,7 +270,10 @@ namespace Reactor.Types
 
         public T[] GetData<T>()where T : struct
         {
+            GL.ActiveTexture(TextureUnit.Texture0);
+            REngine.CheckGLError();
             Bind();
+            REngine.CheckGLError();
             T[] pixels = new T[Bounds.Width * Bounds.Height];
             GL.GetTexImage<T>(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, pixels);
             REngine.CheckGLError();
@@ -306,6 +309,7 @@ namespace Reactor.Types
             Unbind();
 
         }
+
         #region IDisposable implementation
 
         public void Dispose()

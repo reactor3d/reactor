@@ -343,7 +343,7 @@ namespace Reactor
                 // pf*Bitmasks should be examined here
                 #endregion
                 format = (RPixelFormat)_PixelInternalFormat;
-                type = PixelType.Bitmap;
+                type = PixelType.UnsignedByte;
                 // Works, but commented out because some texture authoring tools don't set this flag.
                 /* Safety Check, if file is only 1x 2D surface without mipmaps, eDDSCAPS.COMPLEX should not be set
                 if ( CheckFlag( dwCaps1, (uint) eDDSCAPS.COMPLEX ) )
@@ -543,10 +543,11 @@ namespace Reactor
                     #region Set States properly
                     GL.TexParameter( dimension, (TextureParameterName) All.TextureBaseLevel, 0 );
                     GL.TexParameter( dimension, (TextureParameterName) All.TextureMaxLevel, trueMipMapCount );
+                    REngine.CheckGLError();
 
                     int TexMaxLevel;
                     GL.GetTexParameter( dimension, GetTextureParameter.TextureMaxLevel, out TexMaxLevel );
-
+                    REngine.CheckGLError();
                     if ( TextureLoaderParameters.Verbose )
                         Trace.WriteLine( "Verification: GL: " + GL.GetError( ).ToString( ) + " TextureMaxLevel: " + TexMaxLevel + ( ( TexMaxLevel == trueMipMapCount ) ? " (Correct.)" : " (Wrong!)" ) );
                     #endregion Set States properly
@@ -559,7 +560,7 @@ namespace Reactor
                 GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
                 GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
 
-                GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+                //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
 
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )

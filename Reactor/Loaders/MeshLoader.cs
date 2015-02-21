@@ -60,6 +60,7 @@ namespace Reactor.Loaders
                     }
                     RMeshPart rmeshpart = RMeshPart.Create<RMeshPart>();
                     
+                    
                     RVertexData[] data = new RVertexData[mesh.VertexCount];
 
                     List<int> indicesList = new List<int>();
@@ -134,7 +135,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureNormal)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureNormal.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
@@ -143,7 +144,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureAmbient)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureAmbient.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
@@ -152,7 +153,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureHeight)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureHeight.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
@@ -161,7 +162,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureEmissive)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureEmissive.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
@@ -170,7 +171,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureSpecular)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureSpecular.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
