@@ -64,11 +64,11 @@ gl_FragColor = cubeColor;
         public void RenderSkybox()
         {
             GL.Disable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.CullFace);
+            //GL.Disable(EnableCap.CullFace);
             
             sky.Render();
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
+            //GL.Enable(EnableCap.CullFace);
         }
     }
 }

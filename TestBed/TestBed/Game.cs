@@ -20,11 +20,12 @@ namespace TestBed
         public override void Init()
         {
             Engine.InitGameWindow(1280, 720, RWindowStyle.Normal);
+            GameWindow.VSync = OpenTK.VSyncMode.On;
             Engine.SetShowFPS(true);
             Engine.SetViewport(new RViewport(0,0,800, 600));
             GameWindow.CursorVisible = false;
             sponza = Engine.Scene.Create<RMesh>("sponza");
-            sponza.LoadSourceModel("/models/sponza.obj");
+            sponza.LoadSourceModel("/models/sponza.fbx");
             sponza.CullEnable = false;
             sponza.CullMode = Reactor.Types.States.RCullMode.CullCounterClockwiseFace;
             sponza.SetScale(10f);

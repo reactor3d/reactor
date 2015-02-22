@@ -41,6 +41,17 @@ namespace Reactor.Loaders
         {
 
             AssimpContext context = new AssimpContext();
+            context.SetConfig(new Assimp.Configs.FBXImportAllMaterialsConfig(true));
+            context.SetConfig(new Assimp.Configs.FBXImportAllGeometryLayersConfig(true));
+            
+            context.SetConfig(new Assimp.Configs.FBXStrictModeConfig(false));
+            if (!context.IsImportFormatSupported(Path.GetExtension(filename)))
+                throw new ReactorException("Attempted to load a model that Assimp doesn't know how to load");
+            LogStream log = new LogStream((msg, user) =>
+            {
+                RLog.Info(msg);
+            });
+            log.Attach();
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,
                 PostProcessSteps.FindInvalidData |
@@ -186,6 +197,10 @@ namespace Reactor.Loaders
                 //return rmesh;
             }
             //return null;
+            if (rmesh.Parts.Count == 0)
+                throw new ReactorException("Attempted to load a model when Assimp couldn't find any verticies!");
+
+            context.Dispose();
         }
         internal static void CalculateTangents(IList<Vector3> positions,
             IList<int> indices,
