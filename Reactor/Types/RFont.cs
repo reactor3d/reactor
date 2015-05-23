@@ -108,7 +108,7 @@ namespace Reactor.Types
             face.SetCharSize(0, size << 6, 0, (uint)dpi);
             Name = face.FamilyName;
             face.LoadChar((uint)32, (LoadFlags.Render | LoadFlags.Monochrome | LoadFlags.Pedantic), LoadTarget.Normal);
-            SpaceWidth = face.Glyph.Metrics.HorizontalAdvance >> 6;
+            SpaceWidth = face.Glyph.Metrics.HorizontalAdvance.ToInt32() >> 6;
             LineHeight = face.Height >> 6;
             Kerning = face.HasKerning;
             Size = size;
@@ -129,8 +129,8 @@ namespace Reactor.Types
                 glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);
                 glyph.Bounds = new Reactor.Math.Rectangle(0, 0, glyph.bitmap.Width, glyph.bitmap.Height);
                 glyph.CharIndex = i;
-                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX >> 6, face.Glyph.Metrics.HorizontalBearingY >> 6);
-                glyph.Advance = face.Glyph.Advance.X >> 6;
+                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX.ToInt32() >> 6, face.Glyph.Metrics.HorizontalBearingY.ToInt32() >> 6);
+                glyph.Advance = face.Glyph.Advance.X.ToInt32() >> 6;
 
                 Glyphs.Add(glyph);
             }
