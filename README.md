@@ -1,6 +1,6 @@
 # README #
 
-Reactor is a graphics engine that runs on OpenTK and C#.  It targets Windows, Linux, OSX, iOS, and Android.  It's extremely lightweight and barebones at the moment, but work is underway to flesh it out.  This is version 2 of Reactor found here (http://www.github.com/gabereiser/reactor3d)
+Reactor is a graphics engine that runs on OpenTK and C#.  It targets Windows, Linux, OSX, iOS, and Android.  It's extremely lightweight and barebones at the moment, but work is underway to flesh it out.  This is version 2 of Reactor found here (http://www.github.com/gabereiser/reactor)
 
 ### What is this repository for? ###
 
@@ -22,4 +22,4 @@ Reactor is a graphics engine that runs on OpenTK and C#.  It targets Windows, Li
 
 ### Who do I talk to? ###
 
-* Speak with Gabriel Reiser (gabe@reisergames.com) on what is currently needed or [visit the roadmap](http://code.reisergames.com/reactor/wiki)
+* Speak with Gabriel Reiser (gabe@reisergames.com) on what is currently needed
