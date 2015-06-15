@@ -107,15 +107,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SharpFont">
-      <HintPath>packages\SharpFont.2.5.3.0\lib\net20\SharpFont.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="AssimpNet">
       <HintPath>..\ThirdParty\Windows\AssimpNet.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl">
       <HintPath>packages\OpenTK.GLControl.1.1.1589.5942\lib\NET40\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpFont">
+      <HintPath>packages\SharpFont.3.0.0\lib\net20\SharpFont.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -261,9 +261,6 @@
     <EmbeddedResource Include="Shaders\basicEffect.frag.glsl" />
     <EmbeddedResource Include="Shaders\basicEffect.vert.glsl" />
     <EmbeddedResource Include="Fonts\coders_crux.ttf" />
-    <Content Include="freetype6.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="Shaders\basic2dEffect.frag.glsl" />
     <EmbeddedResource Include="Shaders\basic2dEffect.vert.glsl" />
     <Content Include="..\ThirdParty\Windows\Assimp32.dll">
@@ -290,6 +287,9 @@
     <EmbeddedResource Include="Shaders\lighting.glsl" />
     <None Include="Shaders\phong.frag.glsl" />
     <None Include="Shaders\phong.vert.glsl" />
+    <Content Include="freetype6.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -319,4 +319,6 @@
   <ItemGroup />
   <ItemGroup />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="packages\SharpFont.Dependencies.2.5.5.1\build\SharpFont.Dependencies.props" Condition="Exists('packages\SharpFont.Dependencies.2.5.5.1\build\SharpFont.Dependencies.props')" />
+  <Import Project="packages\SharpFont.3.0.0\build\SharpFont.props" Condition="Exists('packages\SharpFont.3.0.0\build\SharpFont.props')" />
 </Project>
