@@ -15,12 +15,12 @@ namespace RFont_Generator
         public Font Build(string filename, int size, int dpi)
         {
             Face face = new Face(FreeTypeLibrary, filename);
-            face.SetCharSize(0, size<<6, 0, (uint)dpi);
+            face.SetCharSize(0, new Fixed26Dot6(size), 0, (uint)dpi);
             Font font = new Font();
             font.Name = face.FamilyName;
             face.LoadChar((uint)32, (LoadFlags.Render | LoadFlags.Monochrome | LoadFlags.Pedantic), LoadTarget.Normal);
-            font.SpaceWidth = face.Glyph.Metrics.HorizontalAdvance >> 6;
-            font.LineHeight = face.Height >> 6;
+            font.SpaceWidth = face.Glyph.Metrics.HorizontalAdvance.ToInt32();
+            font.LineHeight = face.Height;
             font.Kerning = face.HasKerning;
             font.Size = size;
             font.Ascent = face.Ascender >> 6;
@@ -34,13 +34,14 @@ namespace RFont_Generator
 
                 uint charIndex = face.GetCharIndex((uint)i);
                 face.LoadGlyph(charIndex, (LoadFlags.Render | LoadFlags.Color | LoadFlags.Pedantic ), LoadTarget.Normal);
-                
+                if (face.Glyph.Bitmap.Width == 0)
+                    continue;
                 FontGlyph glyph = new FontGlyph();
                 glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);
                 glyph.Bounds = new Reactor.Math.Rectangle(0, 0, glyph.bitmap.Width, glyph.bitmap.Height);
                 glyph.CharIndex = i;
-                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX >> 6, face.Glyph.Metrics.HorizontalBearingY >> 6);
-                glyph.Advance = face.Glyph.Advance.X >> 6;
+                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX.ToInt32(), face.Glyph.Metrics.HorizontalBearingY.ToInt32());
+                glyph.Advance = face.Glyph.Advance.X.ToInt32();
                 
                 font.Glyphs.Add(glyph);
             }
@@ -82,7 +83,7 @@ namespace RFont_Generator
                     
                     
                 }
-                width += 16;
+                width += 1;
             }
 
             if (missed > 0)

@@ -314,7 +314,7 @@ namespace Reactor
                 RLog.Info("Game Window Renderer Initialized.");
                 REngine.CheckGLError();
                 Screen.Init();
-                
+                REngine.CheckGLError();
                 return true;
             } catch(Exception e) {
                 RLog.Error(e);

@@ -12,7 +12,10 @@ namespace InitGame
     {
         public override void Init()
         {
-            Engine.InitGameWindow(800, 600, Reactor.Types.RWindowStyle.Normal, "Reactor Samples : Init Game");
+			if (!Engine.InitGameWindow (800, 600, Reactor.Types.RWindowStyle.Normal, "Reactor Samples : Init Game")) {
+				RLog.Error ("Unable to create game window!");
+				this.Dispose ();
+			}
             
         }
 

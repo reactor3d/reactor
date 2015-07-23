@@ -87,14 +87,13 @@ namespace Reactor.Types
             Bind();
             GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
             REngine.CheckGLError();
-            int MipMapCount;
-            GL.GetTexParameter( textureTarget, GetTextureParameter.TextureMaxLevel, out MipMapCount );
-            REngine.CheckGLError();
-            if ( MipMapCount == 0 ) // if no MipMaps are present, use linear Filter
-                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
-            else // MipMaps are present, use trilinear Filter
-                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
 
+            GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
+            
+            REngine.CheckGLError();
+            GL.TexParameter(textureTarget, TextureParameterName.TextureMaxLod, 0);
+            REngine.CheckGLError();
+            GL.TexParameter(textureTarget, TextureParameterName.TextureMinLod, 0);
             REngine.CheckGLError();
             Bounds = new Reactor.Math.Rectangle(0, 0, bitmap.Width, bitmap.Height);
         }
@@ -139,13 +138,11 @@ namespace Reactor.Types
                 REngine.CheckGLError();
             GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
             REngine.CheckGLError();
-            int MipMapCount;
-            GL.GetTexParameter( textureTarget, GetTextureParameter.TextureMaxLevel, out MipMapCount );
+            GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
             REngine.CheckGLError();
-            if ( MipMapCount == 0 ) // if no MipMaps are present, use linear Filter
-                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
-            else // MipMaps are present, use trilinear Filter
-                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
+            GL.TexParameter(textureTarget, TextureParameterName.TextureMaxLod, 0);
+            REngine.CheckGLError();
+            GL.TexParameter(textureTarget, TextureParameterName.TextureMinLod, 0);
             REngine.CheckGLError();
             int height, width;
             GL.GetTexLevelParameter(textureTarget, 0, GetTextureParameter.TextureHeight, out height);
@@ -196,10 +193,17 @@ namespace Reactor.Types
         {
             if(Id != 0)
             {
+                Bind();
+                try
+                {
                 GL.TexParameter(textureTarget, TextureParameterName.TextureWrapS, (int) modeS);
                 REngine.CheckGLError();
                 GL.TexParameter(textureTarget, TextureParameterName.TextureWrapT, (int) modeT);
                 REngine.CheckGLError();
+                }catch(EngineGLException ex)
+                {
+                    
+                }
             }
         }
 

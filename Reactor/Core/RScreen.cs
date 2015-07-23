@@ -36,8 +36,17 @@ using System.IO;
 
 namespace Reactor
 {
-    public class RScreen : RSingleton<RScreen>
+    public class RScreen
     {
+        private static RScreen _instance;
+        public static RScreen Instance { 
+            get { 
+                if(_instance == null) {
+                    _instance = new RScreen();
+                }
+                return _instance;
+            }
+        }
         static List<RFont> Fonts = new List<RFont>();
         static RFont defaultFont = new RFont(RFontResources.SystemFont);
         bool initialized=false;
@@ -49,7 +58,7 @@ namespace Reactor
         RIndexBuffer indexQuad2D;
         RVertexData2D[] quadVerts;
         RBlendState blendState;
-        public RScreen()
+        private RScreen()
         {
             camera2d = new RCamera2d();
             blendState = RBlendState.AlphaBlend;

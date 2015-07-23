@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileDragDrop.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Panels</SubType>
     </Compile>
     <Compile Include="FileDragDrop.Designer.cs">
       <DependentUpon>FileDragDrop.cs</DependentUpon>

@@ -59,7 +59,10 @@ namespace Reactor.Types
 
         internal RFont(Face face)
         {
-            Generate(face, 16, 72);
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+                Generate(face, 16, 72);
+            else
+                Generate(face, 16, 72);
         }
         internal void Save(ref BinaryWriter stream)
         {
@@ -105,10 +108,10 @@ namespace Reactor.Types
         }
         internal void Generate(Face face, int size, int dpi)
         {
-            face.SetCharSize(0, size << 6, 0, (uint)dpi);
+            face.SetCharSize(0, new Fixed26Dot6(size*4), 0, (uint)dpi);
             Name = face.FamilyName;
             face.LoadChar((uint)32, (LoadFlags.Render | LoadFlags.Monochrome | LoadFlags.Pedantic), LoadTarget.Normal);
-            SpaceWidth = face.Glyph.Metrics.HorizontalAdvance.ToInt32() >> 6;
+            SpaceWidth = face.Glyph.Metrics.HorizontalAdvance.ToInt32();
             LineHeight = face.Height >> 6;
             Kerning = face.HasKerning;
             Size = size;
@@ -129,8 +132,8 @@ namespace Reactor.Types
                 glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);
                 glyph.Bounds = new Reactor.Math.Rectangle(0, 0, glyph.bitmap.Width, glyph.bitmap.Height);
                 glyph.CharIndex = i;
-                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX.ToInt32() >> 6, face.Glyph.Metrics.HorizontalBearingY.ToInt32() >> 6);
-                glyph.Advance = face.Glyph.Advance.X.ToInt32() >> 6;
+                glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX.ToInt32(), face.Glyph.Metrics.HorizontalBearingY.ToInt32());
+                glyph.Advance = face.Glyph.Advance.X.ToInt32();
 
                 Glyphs.Add(glyph);
             }
