@@ -36,19 +36,10 @@ using System.IO;
 
 namespace Reactor
 {
-    public class RScreen
+    public class RScreen : RSingleton<RScreen>
     {
-        private static RScreen _instance;
-        public static RScreen Instance { 
-            get { 
-                if(_instance == null) {
-                    _instance = new RScreen();
-                }
-                return _instance;
-            }
-        }
+        
         static List<RFont> Fonts = new List<RFont>();
-        static RFont defaultFont = new RFont(RFontResources.SystemFont);
         bool initialized=false;
         RMeshBuilder quad;
         RShader defaultShader;
@@ -58,7 +49,7 @@ namespace Reactor
         RIndexBuffer indexQuad2D;
         RVertexData2D[] quadVerts;
         RBlendState blendState;
-        private RScreen()
+        public RScreen()
         {
             camera2d = new RCamera2d();
             blendState = RBlendState.AlphaBlend;
@@ -76,7 +67,7 @@ namespace Reactor
            
             defaultShader = new RShader();
             defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
-            Fonts.Add(defaultFont);
+            Fonts.Add(RFont.Default);
             quad = new RMeshBuilder();
             quad.CreateFullscreenQuad();
             quadVerts = new RVertexData2D[4];
@@ -279,7 +270,7 @@ namespace Reactor
         internal void RenderFPS(int fps)
         {
             Begin();
-            RenderText(defaultFont, new Vector2(5, 30), String.Format("{0}fps",fps));
+            RenderText(RFont.Default, new Vector2(5, 30), String.Format("{0}fps",fps));
             End();
         }
         void UpdateQuad(Rectangle placement)

@@ -90,10 +90,6 @@
     <StartupObject>RFont_Generator.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SharpFont, Version=3.0.1.200, Culture=neutral, PublicKeyToken=48add4c483071cdf, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Reactor\packages\SharpFont.3.0.1\lib\net20\SharpFont.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

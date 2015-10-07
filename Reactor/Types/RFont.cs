@@ -60,9 +60,9 @@ namespace Reactor.Types
         internal RFont(Face face)
         {
             if (Environment.OSVersion.Platform == PlatformID.Unix)
-                Generate(face, 16, 72);
+                Generate(face, 8, 220);
             else
-                Generate(face, 16, 72);
+                Generate(face, 4, 72);
         }
         internal void Save(ref BinaryWriter stream)
         {
@@ -126,7 +126,8 @@ namespace Reactor.Types
 
                 uint charIndex = face.GetCharIndex((uint)i);
                 face.LoadGlyph(charIndex, (LoadFlags.Render | LoadFlags.Color | LoadFlags.Pedantic | LoadFlags.CropBitmap), LoadTarget.Normal);
-
+                if (face.Glyph.Bitmap.PixelMode == PixelMode.None)
+                    continue;
                 RFontGlyph glyph = new RFontGlyph();
                 
                 glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\SharpFont.3.0.1\build\SharpFont.props" Condition="Exists('packages\SharpFont.3.0.1\build\SharpFont.props')" />
+  <Import Project="packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props" Condition="Exists('packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,6 +17,8 @@
     <UseMSBuildEngine>False</UseMSBuildEngine>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,9 +115,6 @@
     <Reference Include="OpenTK.GLControl">
       <HintPath>packages\OpenTK.GLControl.1.1.1589.5942\lib\NET40\OpenTK.GLControl.dll</HintPath>
     </Reference>
-    <Reference Include="SharpFont">
-      <HintPath>packages\SharpFont.3.0.1\lib\net20\SharpFont.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -150,6 +151,184 @@
     <Compile Include="Audio\RMusic.cs" />
     <Compile Include="Core\RAtmosphere.cs" />
     <Compile Include="Core\RPackage.cs" />
+    <Compile Include="Fonts\AutoHinterScript.cs" />
+    <Compile Include="Fonts\BBox.cs" />
+    <Compile Include="Fonts\Bdf\Internal\PropertyRec.cs" />
+    <Compile Include="Fonts\Bdf\Property.cs" />
+    <Compile Include="Fonts\Bdf\PropertyType.cs" />
+    <Compile Include="Fonts\BitmapGlyph.cs" />
+    <Compile Include="Fonts\BitmapSize.cs" />
+    <Compile Include="Fonts\Cache\CMapCache.cs" />
+    <Compile Include="Fonts\Cache\FaceRequester.cs" />
+    <Compile Include="Fonts\Cache\ImageCache.cs" />
+    <Compile Include="Fonts\Cache\ImageType.cs" />
+    <Compile Include="Fonts\Cache\Internal\CMapCacheRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\ImageCacheRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\ImageTypeRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\ManagerRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\NodeRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\SBitCacheRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\SBitRec.cs" />
+    <Compile Include="Fonts\Cache\Internal\ScalerRec.cs" />
+    <Compile Include="Fonts\Cache\Manager.cs" />
+    <Compile Include="Fonts\Cache\Node.cs" />
+    <Compile Include="Fonts\Cache\SBit.cs" />
+    <Compile Include="Fonts\Cache\SBitCache.cs" />
+    <Compile Include="Fonts\Cache\Scaler.cs" />
+    <Compile Include="Fonts\Cff\HintingEngine.cs" />
+    <Compile Include="Fonts\CharMap.cs" />
+    <Compile Include="Fonts\ClassicKernValidationFlags.cs" />
+    <Compile Include="Fonts\Data.cs" />
+    <Compile Include="Fonts\EmbeddingTypes.cs" />
+    <Compile Include="Fonts\Encoding.cs" />
+    <Compile Include="Fonts\Error.cs" />
+    <Compile Include="Fonts\Face.cs" />
+    <Compile Include="Fonts\FaceFlags.cs" />
+    <Compile Include="Fonts\Fixed16Dot16.cs" />
+    <Compile Include="Fonts\Fixed26Dot6.cs" />
+    <Compile Include="Fonts\Fixed2Dot14.cs" />
+    <Compile Include="Fonts\Fnt\Header.cs" />
+    <Compile Include="Fonts\Fnt\Internal\HeaderRec.cs" />
+    <Compile Include="Fonts\Fnt\WinFntID.cs" />
+    <Compile Include="Fonts\FreeTypeException.cs" />
+    <Compile Include="Fonts\FT.Internal.cs" />
+    <Compile Include="Fonts\FT.Public.cs" />
+    <Compile Include="Fonts\FTBitmap.cs" />
+    <Compile Include="Fonts\FTList.cs" />
+    <Compile Include="Fonts\FTMatrix.cs" />
+    <Compile Include="Fonts\FTSize.cs" />
+    <Compile Include="Fonts\FTStream.cs" />
+    <Compile Include="Fonts\FTUnitVector.cs" />
+    <Compile Include="Fonts\FTVector.cs" />
+    <Compile Include="Fonts\FTVector26Dot6.cs" />
+    <Compile Include="Fonts\Gasp.cs" />
+    <Compile Include="Fonts\Generic.cs" />
+    <Compile Include="Fonts\Glyph.cs" />
+    <Compile Include="Fonts\GlyphBBoxMode.cs" />
+    <Compile Include="Fonts\GlyphFormat.cs" />
+    <Compile Include="Fonts\GlyphMetrics.cs" />
+    <Compile Include="Fonts\GlyphSlot.cs" />
+    <Compile Include="Fonts\GlyphToScriptMapProperty.cs" />
+    <Compile Include="Fonts\IncreaseXHeightProperty.cs" />
+    <Compile Include="Fonts\Internal\BitmapGlyphRec.cs" />
+    <Compile Include="Fonts\Internal\BitmapRec.cs" />
+    <Compile Include="Fonts\Internal\BitmapSizeRec.cs" />
+    <Compile Include="Fonts\Internal\CharMapRec.cs" />
+    <Compile Include="Fonts\Internal\FaceMarshsaler.cs" />
+    <Compile Include="Fonts\Internal\FaceRec.cs" />
+    <Compile Include="Fonts\Internal\GenericRec.cs" />
+    <Compile Include="Fonts\Internal\GlyphMetricsRec.cs" />
+    <Compile Include="Fonts\Internal\GlyphRec.cs" />
+    <Compile Include="Fonts\Internal\GlyphSlotRec.cs" />
+    <Compile Include="Fonts\Internal\GlyphToScriptMapPropertyRec.cs" />
+    <Compile Include="Fonts\Internal\IncreaseXHeightPropertyRec.cs" />
+    <Compile Include="Fonts\Internal\ListNodeMarshaler.cs" />
+    <Compile Include="Fonts\Internal\ListNodeRec.cs" />
+    <Compile Include="Fonts\Internal\ListRec.cs" />
+    <Compile Include="Fonts\Internal\MemoryMarshaler.cs" />
+    <Compile Include="Fonts\Internal\MemoryRec.cs" />
+    <Compile Include="Fonts\Internal\ModuleClassRec.cs" />
+    <Compile Include="Fonts\Internal\ModuleMarshaler.cs" />
+    <Compile Include="Fonts\Internal\OpenArgsRec.cs" />
+    <Compile Include="Fonts\Internal\OutlineFuncsRec.cs" />
+    <Compile Include="Fonts\Internal\OutlineGlyphRec.cs" />
+    <Compile Include="Fonts\Internal\OutlineRec.cs" />
+    <Compile Include="Fonts\Internal\ParameterRec.cs" />
+    <Compile Include="Fonts\Internal\RasterFuncsRec.cs" />
+    <Compile Include="Fonts\Internal\RasterMarshaler.cs" />
+    <Compile Include="Fonts\Internal\RasterParamsMarshaler.cs" />
+    <Compile Include="Fonts\Internal\RasterParamsRec.cs" />
+    <Compile Include="Fonts\Internal\RendererClassRec.cs" />
+    <Compile Include="Fonts\Internal\SizeMetricsRec.cs" />
+    <Compile Include="Fonts\Internal\SizeRec.cs" />
+    <Compile Include="Fonts\Internal\SizeRequestRec.cs" />
+    <Compile Include="Fonts\Internal\SpanMarshaler.cs" />
+    <Compile Include="Fonts\Internal\SpanRec.cs" />
+    <Compile Include="Fonts\Internal\StreamDescRec.cs" />
+    <Compile Include="Fonts\Internal\StreamMarshaler.cs" />
+    <Compile Include="Fonts\Internal\StreamRec.cs" />
+    <Compile Include="Fonts\KerningMode.cs" />
+    <Compile Include="Fonts\LcdFilter.cs" />
+    <Compile Include="Fonts\Library.cs" />
+    <Compile Include="Fonts\ListNode.cs" />
+    <Compile Include="Fonts\LoadFlags.cs" />
+    <Compile Include="Fonts\LoadTarget.cs" />
+    <Compile Include="Fonts\Memory.cs" />
+    <Compile Include="Fonts\Module.cs" />
+    <Compile Include="Fonts\ModuleClass.cs" />
+    <Compile Include="Fonts\MultipleMasters\Internal\MMAxisRec.cs" />
+    <Compile Include="Fonts\MultipleMasters\Internal\MMVarRec.cs" />
+    <Compile Include="Fonts\MultipleMasters\Internal\MultiMasterRec.cs" />
+    <Compile Include="Fonts\MultipleMasters\Internal\VarAxisRec.cs" />
+    <Compile Include="Fonts\MultipleMasters\Internal\VarNamedStyleRec.cs" />
+    <Compile Include="Fonts\MultipleMasters\MMAxis.cs" />
+    <Compile Include="Fonts\MultipleMasters\MMVar.cs" />
+    <Compile Include="Fonts\MultipleMasters\MultiMaster.cs" />
+    <Compile Include="Fonts\MultipleMasters\VarAxis.cs" />
+    <Compile Include="Fonts\MultipleMasters\VarNamedStyle.cs" />
+    <Compile Include="Fonts\OpenArgs.cs" />
+    <Compile Include="Fonts\OpenFlags.cs" />
+    <Compile Include="Fonts\OpenTypeValidationFlags.cs" />
+    <Compile Include="Fonts\Orientation.cs" />
+    <Compile Include="Fonts\Outline.cs" />
+    <Compile Include="Fonts\OutlineFlags.cs" />
+    <Compile Include="Fonts\OutlineFuncs.cs" />
+    <Compile Include="Fonts\OutlineGlyph.cs" />
+    <Compile Include="Fonts\Parameter.cs" />
+    <Compile Include="Fonts\ParamTag.cs" />
+    <Compile Include="Fonts\PInvokeHelper.cs" />
+    <Compile Include="Fonts\PixelMode.cs" />
+    <Compile Include="Fonts\PostScript\BlendFlags.cs" />
+    <Compile Include="Fonts\PostScript\DictionaryKeys.cs" />
+    <Compile Include="Fonts\PostScript\EncodingType.cs" />
+    <Compile Include="Fonts\PostScript\FaceDict.cs" />
+    <Compile Include="Fonts\PostScript\FaceInfo.cs" />
+    <Compile Include="Fonts\PostScript\FontInfo.cs" />
+    <Compile Include="Fonts\PostScript\Internal\FaceDictRec.cs" />
+    <Compile Include="Fonts\PostScript\Internal\FaceInfoRec.cs" />
+    <Compile Include="Fonts\PostScript\Internal\FontInfoRec.cs" />
+    <Compile Include="Fonts\PostScript\Internal\PrivateRec.cs" />
+    <Compile Include="Fonts\PostScript\Private.cs" />
+    <Compile Include="Fonts\Raster.cs" />
+    <Compile Include="Fonts\RasterFlags.cs" />
+    <Compile Include="Fonts\RasterFuncs.cs" />
+    <Compile Include="Fonts\RasterParams.cs" />
+    <Compile Include="Fonts\Renderer.cs" />
+    <Compile Include="Fonts\RendererClass.cs" />
+    <Compile Include="Fonts\RenderMode.cs" />
+    <Compile Include="Fonts\SizeMetrics.cs" />
+    <Compile Include="Fonts\SizeRequest.cs" />
+    <Compile Include="Fonts\SizeRequestType.cs" />
+    <Compile Include="Fonts\Span.cs" />
+    <Compile Include="Fonts\StreamDesc.cs" />
+    <Compile Include="Fonts\Stroker.cs" />
+    <Compile Include="Fonts\StrokerBorder.cs" />
+    <Compile Include="Fonts\StrokerLineCap.cs" />
+    <Compile Include="Fonts\StrokerLineJoin.cs" />
+    <Compile Include="Fonts\StyleFlags.cs" />
+    <Compile Include="Fonts\SubGlyph.cs" />
+    <Compile Include="Fonts\SubGlyphFlags.cs" />
+    <Compile Include="Fonts\TrueTypeValidationFlags.cs" />
+    <Compile Include="Fonts\TrueType\EncodingId.cs" />
+    <Compile Include="Fonts\TrueType\EngineType.cs" />
+    <Compile Include="Fonts\TrueType\Header.cs" />
+    <Compile Include="Fonts\TrueType\HoriHeader.cs" />
+    <Compile Include="Fonts\TrueType\Internal\HeaderRec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\HoriHeaderRec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\MaxProfileRec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\OS2Rec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\PCLTRec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\PostscriptRec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\SfntNameRec.cs" />
+    <Compile Include="Fonts\TrueType\Internal\VertHeaderRec.cs" />
+    <Compile Include="Fonts\TrueType\MaxProfile.cs" />
+    <Compile Include="Fonts\TrueType\OS2.cs" />
+    <Compile Include="Fonts\TrueType\Pclt.cs" />
+    <Compile Include="Fonts\TrueType\PlatformId.cs" />
+    <Compile Include="Fonts\TrueType\Postscript.cs" />
+    <Compile Include="Fonts\TrueType\SfntName.cs" />
+    <Compile Include="Fonts\TrueType\SfntTag.cs" />
+    <Compile Include="Fonts\TrueType\VertHeader.cs" />
     <Compile Include="Platform\Threading.cs" />
     <Compile Include="Core\RCamera2d.cs" />
     <Compile Include="Core\RFrameBuffer.cs" />
@@ -256,6 +435,9 @@
     <Compile Include="Types\RShaderSemantics.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="freetype.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <EmbeddedResource Include="Shaders\headers.glsl" />
     <EmbeddedResource Include="Shaders\basicEffect.frag.glsl" />
@@ -277,15 +459,10 @@
     <Content Include="..\ThirdParty\OSX\libassimp64.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SharpFont.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="Shaders\lighting.glsl" />
+    <None Include="Reactor.dll.config" />
     <None Include="Shaders\phong.frag.glsl" />
     <None Include="Shaders\phong.vert.glsl" />
-    <Content Include="freetype6.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -315,6 +492,11 @@
   <ItemGroup />
   <ItemGroup />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="packages\SharpFont.3.0.1\build\SharpFont.props" Condition="Exists('packages\SharpFont.3.0.1\build\SharpFont.props')" />
-  <Import Project="packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props" Condition="Exists('packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props'))" />
+    <Error Condition="!Exists('packages\SharpFont.3.0.1\build\SharpFont.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SharpFont.3.0.1\build\SharpFont.props'))" />
+  </Target>
 </Project>
