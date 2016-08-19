@@ -1,10 +1,7 @@
-﻿//
-// TextureLoaderParameters.cs
+﻿// Author:
+//       Gabriel Reiser <gabe@reisergames.com>
 //
-// Author:
-//       Gabriel Reiser <gabriel@reisergames.com>
-//
-// Copyright (c) 2015 2014
+// Copyright (c) 2010-2016 Reiser Games, LLC.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +47,7 @@ namespace Reactor
         public static TextureMagFilter MagnificationFilter = TextureMagFilter.Linear;
 
         /// <summary>Selects the Minification filter for following Textures to be loaded. (Default: Nearest)</summary>
-        public static TextureMinFilter MinificationFilter = TextureMinFilter.Linear;
+        public static TextureMinFilter MinificationFilter = TextureMinFilter.LinearMipmapLinear;
 
         /// <summary>Selects the S Wrapping for following Textures to be loaded. (Default: Repeat)</summary>
         public static TextureWrapMode WrapModeS = TextureWrapMode.ClampToEdge;

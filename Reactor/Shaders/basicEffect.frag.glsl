@@ -2,6 +2,7 @@
 
 in vec2 out_texcoord;
 in vec3 out_normal;
+in float logz;
 out vec4 color;
 void main()
 {
@@ -9,4 +10,5 @@ void main()
    vec4 n = texture(normal, out_texcoord) + texture(height, out_texcoord);
    color = ambient_color;
    color += d * diffuse_color;
+   gl_FragDepth = logz;
 }

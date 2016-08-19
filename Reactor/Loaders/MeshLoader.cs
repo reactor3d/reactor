@@ -1,10 +1,7 @@
-﻿//
-// MeshLoader.cs
+﻿// Author:
+//       Gabriel Reiser <gabe@reisergames.com>
 //
-// Author:
-//       Gabriel Reiser <gabriel@reisergames.com>
-//
-// Copyright (c) 2015 2014
+// Copyright (c) 2010-2016 Reiser Games, LLC.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,19 +40,18 @@ namespace Reactor.Loaders
             AssimpContext context = new AssimpContext();
             context.SetConfig(new Assimp.Configs.FBXImportAllMaterialsConfig(true));
             context.SetConfig(new Assimp.Configs.FBXImportAllGeometryLayersConfig(true));
-            
+            context.SetConfig(new Assimp.Configs.MultithreadingConfig(2));
             context.SetConfig(new Assimp.Configs.FBXStrictModeConfig(false));
             if (!context.IsImportFormatSupported(Path.GetExtension(filename)))
                 throw new ReactorException("Attempted to load a model that Assimp doesn't know how to load");
             LogStream log = new LogStream((msg, user) =>
             {
-                RLog.Info(msg);
+                RLog.Info(msg.Remove(msg.Length-2));
             });
             log.Attach();
             int platform = (int)Environment.OSVersion.Platform;
             Scene scene = context.ImportFile(filename,
                 PostProcessSteps.FindInvalidData |
-                PostProcessSteps.FindDegenerates |
                 PostProcessSteps.GenerateSmoothNormals |
                 PostProcessSteps.Triangulate |
                 PostProcessSteps.GenerateUVCoords |
@@ -138,19 +134,24 @@ namespace Reactor.Loaders
                         {
                             var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.Bind();
+                            tex.GenerateMipmaps();
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
                             tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            tex.GenerateMipmaps();
+                            tex.Unbind();
                             material.SetTexture(RTextureLayer.DIFFUSE, tex);
                         }
                         if (mat.HasTextureNormal)
                         {
                             var texFileName = Path.GetFileName(mat.TextureNormal.FilePath);
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
+                            tex.Bind();
+                            tex.GenerateMipmaps();
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.Linear);
                             tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+                            tex.Unbind();
                             material.SetTexture(RTextureLayer.NORMAL, tex);
                         }
                         if (mat.HasTextureAmbient)

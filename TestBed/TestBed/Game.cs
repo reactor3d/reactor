@@ -26,14 +26,14 @@ namespace TestBed
             GameWindow.CursorVisible = false;
             sponza = Engine.Scene.Create<RMesh>("sponza");
             sponza.LoadSourceModel("/models/sponza.fbx");
-            sponza.CullEnable = false;
+            sponza.CullEnable = true;
             sponza.CullMode = Reactor.Types.States.RCullMode.CullCounterClockwiseFace;
-            sponza.SetScale(10f);
+            sponza.SetScale(1f);
             sponza.SetPosition(0, 0, 0);
             var cam = Engine.GetCamera();
             cam.SetPosition(0, 20, -1f);
             cam.LookAt(Vector3.Zero);
-            cam.SetClipPlanes(0.01f, 100000f);
+            cam.SetClipPlanes(0.0001f, 1000000f);
 
 
             RTexture2D posX = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posX", "/textures/sky-posX.png");
@@ -87,7 +87,7 @@ namespace TestBed
             panning.X += -mouse_direction.X * 2f;
             panning.Y += mouse_direction.Y * 2f;
             sponza.Update();
-            direction *= 0.95f;
+            direction *= 0.90f;
             cam.RotateX(mouse_direction.Y * 2f);
             if (cam.Rotation.X > Math.PI/2)
                 cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);

@@ -1,10 +1,9 @@
 ﻿//
 // RGameWindow.cs
-//
 // Author:
-//       Gabriel Reiser <gabriel@reisergames.com>
+//       Gabriel Reiser <gabe@reisergames.com>
 //
-// Copyright (c) 2015 2014
+// Copyright (c) 2010-2016 Reiser Games, LLC.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,12 +32,12 @@ namespace Reactor
     {
 
 
-        public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 3, GraphicsContextFlags.Default){
+        public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 5, GraphicsContextFlags.ForwardCompatible){
 
         }
 
         public RGameWindow(int width, int height)
-            : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 3, GraphicsContextFlags.Default)
+            : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 5, GraphicsContextFlags.ForwardCompatible)
         {
 
         }

@@ -1,4 +1,26 @@
-﻿using Reactor.Math;
+﻿// Author:
+//       Gabriel Reiser <gabe@reisergames.com>
+//
+// Copyright (c) 2010-2016 Reiser Games, LLC.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+using Reactor.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +29,21 @@ using OpenTK.Graphics.OpenGL;
 using Reactor;
 using System.IO;
 using System.Drawing;
-
+using Newtonsoft.Json;
 
 namespace Reactor.Types
 {
     public class RTexture : IDisposable
     {
+        [JsonIgnore]
         public uint Id;
+        [JsonProperty("name")]
         public string Name;
+        [JsonProperty("filename")]
         public string Filename;
+        [JsonIgnore]
         public Reactor.Math.Rectangle Bounds;
-
+        [JsonIgnore]
         bool bound;
         protected TextureTarget textureTarget;
         protected RPixelFormat pixelFormat = RPixelFormat.Rgba;
@@ -84,7 +110,7 @@ namespace Reactor.Types
 
             }
             // load succeeded, Texture can be used.
-            Bind();
+            /*Bind();
             GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
             REngine.CheckGLError();
 
@@ -95,6 +121,7 @@ namespace Reactor.Types
             REngine.CheckGLError();
             GL.TexParameter(textureTarget, TextureParameterName.TextureMinLod, 0);
             REngine.CheckGLError();
+            */
             Bounds = new Reactor.Math.Rectangle(0, 0, bitmap.Width, bitmap.Height);
         }
         internal void LoadFromDisk(string filename)
@@ -308,10 +335,7 @@ namespace Reactor.Types
 
         public void GenerateMipmaps()
         {
-            Bind();
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-            Unbind();
-
         }
 
         #region IDisposable implementation

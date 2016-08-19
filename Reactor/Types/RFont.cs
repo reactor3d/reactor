@@ -1,10 +1,7 @@
-﻿//
-// RFont.cs
+﻿// Author:
+//       Gabriel Reiser <gabe@reisergames.com>
 //
-// Author:
-//       Gabriel Reiser <gabriel@reisergames.com>
-//
-// Copyright (c) 2015 2014
+// Copyright (c) 2010-2016 Reiser Games, LLC.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Reflection;
 using System.Collections.Generic;
@@ -187,7 +185,7 @@ namespace Reactor.Types
         }
         internal void Render(ref RShader shader, ref RVertexBuffer vertexBuffer, ref RIndexBuffer indexBuffer, string text, Vector2 location, RColor color, Matrix matrix)
         {
-            Vector2 pen = new Vector2();
+            Vector2 pen = location;
             pen.Y += MeasureString(text).Height;
             float x = pen.X;
             List<RVertexData2D> quads = new List<RVertexData2D>();

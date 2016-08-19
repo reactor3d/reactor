@@ -1,10 +1,7 @@
-﻿//
-// GDILoader.cs
+﻿// Author:
+//       Gabriel Reiser <gabe@reisergames.com>
 //
-// Author:
-//       Gabriel Reiser <gabriel@reisergames.com>
-//
-// Copyright (c) 2015 2014
+// Copyright (c) 2010-2016 Reiser Games, LLC.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -131,7 +128,7 @@ namespace Reactor
                 format = (RPixelFormat)pf;
                 type = pt;
                 BitmapData Data = CurrentBitmap.LockBits( new System.Drawing.Rectangle( 0, 0, CurrentBitmap.Width, CurrentBitmap.Height ), ImageLockMode.ReadOnly, CurrentBitmap.PixelFormat );
-                Setup(dimension);
+                
                 if ( Data.Height > 1 )
                 { // image is 2D
                     if (TextureLoaderParameters.BuildMipmapsForUncompressed)
@@ -161,7 +158,7 @@ namespace Reactor
 
                 CurrentBitmap.UnlockBits( Data );
                 #endregion Load Texture
-
+                Setup(dimension);
 
 
                 return; // success
@@ -180,6 +177,7 @@ namespace Reactor
         static void Setup(TextureTarget dimension)
         {
             #region Set Texture Parameters
+            GL.GenerateMipmap(GetMipmapTargetForTextureTarget(dimension));
             GL.TexParameter( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
             GL.TexParameter( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
 
@@ -194,6 +192,39 @@ namespace Reactor
                 RLog.Info( "Error setting Texture Parameters. GL Error: " + GLError );
             }
             #endregion Set Texture Parameters
+        }
+
+        static GenerateMipmapTarget GetMipmapTargetForTextureTarget(TextureTarget target)
+        {
+            switch (target)
+            {
+                case TextureTarget.Texture1D:
+                    return GenerateMipmapTarget.Texture1D;
+                case TextureTarget.Texture1DArray:
+                    return GenerateMipmapTarget.Texture1DArray;
+                case TextureTarget.Texture2D:
+                case TextureTarget.TextureCubeMapNegativeX:
+                case TextureTarget.TextureCubeMapNegativeY:
+                case TextureTarget.TextureCubeMapNegativeZ:
+                case TextureTarget.TextureCubeMapPositiveX:
+                case TextureTarget.TextureCubeMapPositiveY:
+                case TextureTarget.TextureCubeMapPositiveZ:
+                    return GenerateMipmapTarget.Texture2D;
+                case TextureTarget.Texture2DArray:
+                    return GenerateMipmapTarget.Texture2DArray;
+                case TextureTarget.Texture2DMultisample:
+                    return GenerateMipmapTarget.Texture2DMultisample;
+                case TextureTarget.Texture2DMultisampleArray:
+                    return GenerateMipmapTarget.Texture2DMultisampleArray;
+                case TextureTarget.Texture3D:
+                    return GenerateMipmapTarget.Texture3D;
+                case TextureTarget.TextureCubeMap:
+                    return GenerateMipmapTarget.TextureCubeMap;
+                case TextureTarget.TextureCubeMapArray:
+                    return GenerateMipmapTarget.TextureCubeMapArray;
+                default:
+                    return GenerateMipmapTarget.Texture2D;
+            }
         }
 
     }
