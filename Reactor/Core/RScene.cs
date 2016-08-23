@@ -138,6 +138,7 @@ namespace Reactor
             }
             return affectedLights;
         }
+
         public void DestroyAll()
         {
             _lights.Clear();
@@ -288,16 +289,16 @@ namespace Reactor
             return this;
         }
 
-        public int Draw(Matrix view, Matrix projection, List<RSceneNode> objects)
+        public int Draw(Matrix view, Matrix projection, ref List<RSceneNode> objects)
         {
             BoundingFrustum frustum = new BoundingFrustum(view * projection);
             ContainmentType containment = frustum.Contains(this.bounds);
 
-            return this.Draw(frustum, view, projection, containment, objects);
+            return this.Draw(frustum, view, projection, containment, ref objects);
         }
 
         private int Draw(BoundingFrustum frustum, Matrix view, Matrix projection,
-            ContainmentType containment, List<RSceneNode> objects)
+            ContainmentType containment, ref List<RSceneNode> objects)
         {
             int count = 0;
 
@@ -312,7 +313,10 @@ namespace Reactor
                 // Draw the octree's bounds if there are objects in the octree.
                 if (this.objects.Count > 0)
                 {
-                    objects.AddRange(this.objects);
+                    foreach(var obj in this.objects)
+                    {
+                        obj.Render();
+                    }
                     count++;
                 }
 
@@ -321,7 +325,7 @@ namespace Reactor
                 {
                     foreach (ROctree child in this.children)
                     {
-                        count += child.Draw(frustum, view, projection, containment, objects);
+                        count += child.Draw(frustum, view, projection, containment, ref objects);
                     }
                 }
             }

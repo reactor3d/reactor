@@ -38,12 +38,12 @@ namespace Reactor
         public float Width;
         public float Height;
         public float AspectRatio;
-        public RViewport(int x, int y)
+        public RViewport(int width, int height)
         {
-            X = x;
-            Y = y;
-            Width = 800;
-            Height = 600;
+            X = 0;
+            Y = 0;
+            Width = width;
+            Height = height;
             AspectRatio = (float)Width / (float)Height;
         }
 

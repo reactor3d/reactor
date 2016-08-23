@@ -1,4 +1,4 @@
-﻿precision mediump float;
+﻿precision highp float;
 
 in vec3 normalInterp;
 in vec3 vertPos;

@@ -55,6 +55,7 @@ namespace Reactor
                     -Vector3.Dot(Position, matrix.Right), -Vector3.Dot(Position, matrix.Up), -Vector3.Dot(Position, matrix.Forward), 1
                 );*/
                 viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + -matrix.Forward, matrix.Up);
+                
 
                 ViewDirection = viewMatrix.Forward;
                 RViewport viewport = REngine.Instance._viewport;

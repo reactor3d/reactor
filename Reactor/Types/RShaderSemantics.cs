@@ -75,7 +75,8 @@ namespace Reactor.Types
         WORLDVIEWPROJECTION,
         VIEWPROJECTION,
         FAR_PLANE,
-        NEAR_PLANE
+        NEAR_PLANE,
+        TIME
     }
 }
 

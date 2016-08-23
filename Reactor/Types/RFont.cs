@@ -57,10 +57,11 @@ namespace Reactor.Types
 
         internal RFont(Face face)
         {
+            Vector2 dpi = RScreen.GetDPI();
             if (Environment.OSVersion.Platform == PlatformID.Unix)
-                Generate(face, 8, 220);
+                Generate(face, 16, (int)dpi.X);
             else
-                Generate(face, 4, 72);
+                Generate(face, 16, (int)dpi.Y);
         }
         internal void Save(ref BinaryWriter stream)
         {
@@ -106,7 +107,7 @@ namespace Reactor.Types
         }
         internal void Generate(Face face, int size, int dpi)
         {
-            face.SetCharSize(0, new Fixed26Dot6(size*4), 0, (uint)dpi);
+            face.SetCharSize(0, new Fixed26Dot6(size), 0, (uint)dpi);
             Name = face.FamilyName;
             face.LoadChar((uint)32, (LoadFlags.Render | LoadFlags.Monochrome | LoadFlags.Pedantic), LoadTarget.Normal);
             SpaceWidth = face.Glyph.Metrics.HorizontalAdvance.ToInt32();

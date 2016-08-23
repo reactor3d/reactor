@@ -29,7 +29,7 @@ using Reactor.Math;
 using OpenTK.Graphics.OpenGL;
 using Reactor.Types.States;
 using System.IO;
-
+using System.Drawing;
 
 namespace Reactor
 {
@@ -46,6 +46,7 @@ namespace Reactor
         RIndexBuffer indexQuad2D;
         RVertexData2D[] quadVerts;
         RBlendState blendState;
+        static Vector2 DPI;
         public RScreen()
         {
             camera2d = new RCamera2d();
@@ -58,7 +59,19 @@ namespace Reactor
             set { camera2d = value; }
         }
 
-        public void Init()
+        public static Vector2 GetDPI()
+        {
+            if(DPI == null)
+            {
+                using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
+                {
+                    DPI = new Vector2(graphics.DpiX, graphics.DpiY);
+                }
+            }
+            return DPI;
+        }
+
+        internal void Init()
         {
             REngine.CheckGLError();
            
@@ -106,7 +119,7 @@ namespace Reactor
             REngine.Instance.SetCamera(oldCamera);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
-            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.FrontFace(FrontFaceDirection.Cw);
             GL.CullFace(CullFaceMode.Back);
             GL.DepthFunc(DepthFunction.Less);
             GL.Disable(EnableCap.Blend);
@@ -122,11 +135,11 @@ namespace Reactor
                 throw new ReactorException("You must first call Init() before using RScreen.");
         }
 
-        public RFont LoadFont(string path, int size, int dpi = 72)
+        public RFont LoadFont(string path, int size)
         {
             InitCheck();
             RFont font = new RFont();
-            font.Generate(RFileSystem.Instance.GetFilePath(path),size, dpi);
+            font.Generate(RFileSystem.Instance.GetFilePath(path),size, (int)DPI.X);
             return font;
 
         }
@@ -155,15 +168,15 @@ namespace Reactor
             quad.Render();
         }
 
-        public void RenderTexture(RTexture texture, Rectangle bounds)
+        public void RenderTexture(RTexture texture, Math.Rectangle bounds)
         {
             RenderTexture(texture, bounds, RColor.White);
         }
-        public void RenderTexture(RTexture texture, Rectangle bounds, RColor color)
+        public void RenderTexture(RTexture texture, Math.Rectangle bounds, RColor color)
         {
            RenderTexture(texture, bounds, color, Matrix.Identity, false);
         }
-        public void RenderTexture(RTexture texture, Rectangle bounds, RColor color, Matrix matrix, bool font)
+        public void RenderTexture(RTexture texture, Math.Rectangle bounds, RColor color, Matrix matrix, bool font)
         {
             RViewport viewport = REngine.Instance._viewport;
             UpdateQuad(bounds);
@@ -270,7 +283,23 @@ namespace Reactor
             RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps",fps));
             End();
         }
-        void UpdateQuad(Rectangle placement)
+        internal void RenderFPS(float fps)
+        {
+            if (float.IsInfinity(fps))
+                return;
+            Begin();
+            RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps", System.Math.Round(fps)));
+            End();
+        }
+        internal void RenderFPS(double fps)
+        {
+            if (double.IsInfinity(fps))
+                return;
+            Begin();
+            RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps", System.Math.Round(fps)));
+            End();
+        }
+        void UpdateQuad(Math.Rectangle placement)
         {
             quadVerts[0].Position = new Vector2(placement.X, placement.Y);
             quadVerts[0].TexCoord = new Vector2(0, 0);

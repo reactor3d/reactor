@@ -1,5 +1,6 @@
 ﻿using Reactor;
 using Reactor.Math;
+using Reactor.Platform;
 using Reactor.Types;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace TestBed
     class Game : RGame
     {
         RMesh sponza;
+        RFont font;
         public override void Dispose()
         {
             
@@ -20,21 +22,22 @@ namespace TestBed
         public override void Init()
         {
             Engine.InitGameWindow(1280, 720, RWindowStyle.Normal);
-            GameWindow.VSync = OpenTK.VSyncMode.On;
+            //GameWindow.VSync = OpenTK.VSyncMode.On;
             Engine.SetShowFPS(true);
             Engine.SetViewport(new RViewport(0,0,800, 600));
-            GameWindow.CursorVisible = false;
+            //GameWindow.CursorVisible = false;
             sponza = Engine.Scene.Create<RMesh>("sponza");
             sponza.LoadSourceModel("/models/sponza.fbx");
             sponza.CullEnable = true;
-            sponza.CullMode = Reactor.Types.States.RCullMode.CullCounterClockwiseFace;
+            sponza.CullMode = Reactor.Types.States.RCullMode.CullClockwiseFace;
             sponza.SetScale(1f);
             sponza.SetPosition(0, 0, 0);
             var cam = Engine.GetCamera();
-            cam.SetPosition(0, 20, -1f);
+            cam.SetPosition(0, 20, 1f);
             cam.LookAt(Vector3.Zero);
             cam.SetClipPlanes(0.0001f, 1000000f);
 
+            font = RScreen.Instance.LoadFont("/vcr_osd_mono.ttf", 21);
 
             RTexture2D posX = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posX", "/textures/sky-posX.png");
             RTexture2D posY = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posY", "/textures/sky-posY.png");
@@ -53,9 +56,17 @@ namespace TestBed
 
         public override void Render()
         {
-            Engine.Clear(RColor.Gray);
+            Engine.Clear();
             Engine.Atmosphere.RenderSkybox();
             sponza.Render();
+
+            RScreen.Instance.Begin();
+
+            RScreen.Instance.RenderText(font, new Vector2(5, 30), String.Format("{0} MB P", Profiler.GetPhysicalMemory()));
+            RScreen.Instance.RenderText(font, new Vector2(5, 50), String.Format("{0} MB V", Profiler.GetVirtualMemory()));
+            RScreen.Instance.RenderText(font, new Vector2(5, 70), String.Format("{0} MB GC", Profiler.GetGCMemory()));
+
+            RScreen.Instance.End();
             Engine.Present();
         }
 

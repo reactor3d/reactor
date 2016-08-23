@@ -29,58 +29,41 @@ namespace Reactor
     {
         internal static bool Enabled = false;
         internal static string LogPath = REngine.RootPath + "/debug.log";
-        internal static StreamWriter Writer;
         internal static object mutex = new object();
 
         static void WriteLine(string output)
         {
-
-            lock(mutex)
-            {
                 if(Enabled)
                 {
-                    Writer = new StreamWriter(new FileStream(LogPath, FileMode.OpenOrCreate));
+                    StreamWriter Writer = new StreamWriter(new FileStream(LogPath, FileMode.OpenOrCreate));
                     Writer.WriteLine(output);
                     Writer.Flush();
                     Writer.Close();
+                    Console.WriteLine(output);
                 }
-            }
         }
         
         public static void Info(string message)
         {
-            #if DEBUG
-            lock(mutex)
-            {
-                string output = String.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
-                WriteLine(output);
-                System.Diagnostics.Debug.WriteLine(output);
-            }
-            #endif
+            string output = String.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
+            WriteLine(output);
+            System.Diagnostics.Debug.WriteLine(output);
         }
 
         public static void Warn(string message)
         {
-            #if DEBUG
-            lock(mutex)
-            {
-                string output = String.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
-                WriteLine(output);
-                System.Diagnostics.Debug.WriteLine(output);
-            }
-            #endif
+            string output = String.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
+            WriteLine(output);
+            System.Diagnostics.Debug.WriteLine(output);
+
         }
 
         public static void Error(string message)
         {
-            #if DEBUG
-            lock(mutex)
-            {
-                string output = String.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
-                WriteLine(output);
-                System.Diagnostics.Debug.WriteLine(output);
-            }
-            #endif
+            string output = String.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
+            WriteLine(output);
+            System.Diagnostics.Debug.WriteLine(output);
+
         }
 
         public static void Error(Exception e)
@@ -93,14 +76,11 @@ namespace Reactor
 
         public static void Debug(string message)
         {
-            #if DEBUG
-            lock(mutex)
-            {
-                string output = String.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
-                WriteLine(output);
-                System.Diagnostics.Debug.WriteLine(output);
-            }
-            #endif
+#if DEBUG
+            string output = String.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
+            WriteLine(output);
+            System.Diagnostics.Debug.WriteLine(output);
+#endif
         }
     }
 }

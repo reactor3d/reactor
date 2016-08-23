@@ -60,11 +60,19 @@ namespace Reactor.Types
         public int Id { get; internal set; }
         RShaderEffect[] effects = new RShaderEffect[6];
 
-
-        public void Load(string vertSource, string fragSource, string[] defines)
+        public void Load(string vertSource, string fragSource) {
+            Load(vertSource, fragSource, null, null);
+        }
+        public void Load(string vertSource, string fragSource, string geomSource) {
+            Load(vertSource, fragSource, geomSource, null);
+        }
+        public void Load(string vertSource, string fragSource, string geomSource, string[] defines)
         {
             effects[(int)RShaderEffectType.VERTEX] = new RShaderEffect(vertSource, (int)RShaderEffectType.VERTEX, defines);
             effects[(int)RShaderEffectType.FRAGMENT] = new RShaderEffect(fragSource, (int)RShaderEffectType.FRAGMENT, defines);
+            if(geomSource != null) {
+                effects[(int)RShaderEffectType.GEOMETRY] = new RShaderEffect(geomSource, (int)RShaderEffectType.GEOMETRY, defines);
+            }
             Id = GL.CreateProgram();
             foreach (RShaderEffect effect in effects)
             {
@@ -88,13 +96,13 @@ namespace Reactor.Types
                 return;
             }
 
-#if DEBUG && WINDOWS
+
             
             int status;
             GL.ValidateProgram(Id);
             GL.GetProgram(Id, GetProgramParameterName.ValidateStatus, out status);
             if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
-#endif
+
             REngine.CheckGLError();
             int numAttributes;
             GL.GetProgram(Id, GetProgramParameterName.ActiveAttributes, out numAttributes);
@@ -151,6 +159,7 @@ namespace Reactor.Types
                 }
                 
             }
+            REngine.CheckGLError();
         }
         public void SetUniformValue(string name, bool value)
         {
@@ -478,7 +487,7 @@ namespace Reactor.Types
             string name = GL.GetActiveAttrib(Id, usageIndex, out size, out type);
             return GL.GetAttribLocation(Id, name);
         }
-        internal void Bind()
+        public void Bind()
         {
             if (Id != 0)
             {
@@ -491,7 +500,7 @@ namespace Reactor.Types
             }
         }
 
-        internal void Unbind()
+        public void Unbind()
         {
             GL.UseProgram(0);
             REngine.CheckGLError();
@@ -507,20 +516,44 @@ namespace Reactor.Types
             }
         }
 
-        internal void BindSemantics()
+        internal void BindSemantics(Matrix Model, Matrix View, Matrix Projection)
         {
             foreach(var keyPair in _semantics)
             {
                 switch(keyPair.Key)
                 {
                     case RShaderSemanticDefinition.VIEW:
-                        SetUniformBySemantic(RShaderSemanticDefinition.VIEW, REngine.camera.View);
+                        SetUniformBySemantic(RShaderSemanticDefinition.VIEW, View);
                         break;
                     case RShaderSemanticDefinition.PROJECTION:
-                        SetUniformBySemantic(RShaderSemanticDefinition.PROJECTION, REngine.camera.Projection);
+                        SetUniformBySemantic(RShaderSemanticDefinition.PROJECTION, Projection);
                         break;
                     case RShaderSemanticDefinition.VIEWPROJECTION:
-                        SetUniformBySemantic(RShaderSemanticDefinition.VIEWPROJECTION, REngine.camera.View * REngine.camera.Projection);
+                        SetUniformBySemantic(RShaderSemanticDefinition.VIEWPROJECTION, View * Projection);
+                        break;
+                    case RShaderSemanticDefinition.MODEL:
+                        SetUniformBySemantic(RShaderSemanticDefinition.MODEL, Model);
+                        break;
+                    case RShaderSemanticDefinition.WORLD:
+                        SetUniformBySemantic(RShaderSemanticDefinition.WORLD, Model);
+                        break;
+                    case RShaderSemanticDefinition.MODELVIEW:
+                        SetUniformBySemantic(RShaderSemanticDefinition.MODELVIEW, Model * View);
+                        break;
+                    case RShaderSemanticDefinition.MODELVIEWPROJECTION:
+                        SetUniformBySemantic(RShaderSemanticDefinition.MODELVIEWPROJECTION, Model * View * Projection);
+                        break;
+                    case RShaderSemanticDefinition.INVERSE_VIEW:
+                        SetUniformBySemantic(RShaderSemanticDefinition.INVERSE_VIEW, Matrix.Invert(View));
+                        break;
+                    case RShaderSemanticDefinition.INVERSE_PROJECTION:
+                        SetUniformBySemantic(RShaderSemanticDefinition.INVERSE_PROJECTION, Matrix.Invert(Projection));
+                        break;
+                    case RShaderSemanticDefinition.FAR_PLANE:
+                        SetUniformBySemantic(RShaderSemanticDefinition.FAR_PLANE, REngine.camera.Far);
+                        break;
+                    case RShaderSemanticDefinition.NEAR_PLANE:
+                        SetUniformBySemantic(RShaderSemanticDefinition.NEAR_PLANE, REngine.camera.Near);
                         break;
                 }
             }
@@ -549,6 +582,7 @@ namespace Reactor.Types
         }
         internal static string Headers = GetResourceString("Reactor.Shaders.headers.glsl");
         internal static string Lighting = GetResourceString("Reactor.Shaders.lighting.glsl");
+        internal static string Noise = GetResourceString("Reactor.Shaders.noise.glsl");
 
         internal static string BasicEffectVert = GetResourceString("Reactor.Shaders.basicEffect.vert.glsl");
         internal static string BasicEffectFrag = GetResourceString("Reactor.Shaders.basicEffect.frag.glsl");

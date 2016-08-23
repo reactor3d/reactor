@@ -64,11 +64,13 @@ namespace Reactor
         private float _lastFps = 0;
         private float _fps = 0;
         private TimeSpan lastFrameTime;
+
         public REngine()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Info("Engine startup sequence activated.");
 
+            
             _stopWatch = new Stopwatch();
             _fpsTimer = new System.Timers.Timer();
 
@@ -90,6 +92,8 @@ namespace Reactor
             _fps = 0;
             lastFrameTime = _stopWatch.Elapsed;
             _stopWatch.Restart();
+
+
         }
 
         ~REngine()
@@ -109,13 +113,17 @@ namespace Reactor
         {
             _fps += t;
         }
-        public double GetFPS()
+        public float GetFPS()
         {
             return _lastFps;
         }
-        public double GetTime()
+        public double GetRenderTime()
         {
             return lastFrameTime.TotalMilliseconds;
+        }
+        public double GetTime() 
+        {
+            return RGame.GameTime.TotalGameTime.TotalMilliseconds;
         }
         public static void CheckGLError()
         {
@@ -236,19 +244,27 @@ namespace Reactor
         }
         public void Clear()
         {
-            Clear(RColor.Black, false);
+            Clear(RColor.Black, true);
         }
-        public void Clear(RColor color, bool onlyDepth = false)
+        public void ClearDepth()
+        {
+            GL.Clear(ClearBufferMask.DepthBufferBit);
+        }
+        public void Clear(RColor color, bool depth = true)
         {
             StartClock();
             
             
             _viewport.Bind();
-            
+            GL.Enable(EnableCap.CullFace);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.DepthTest);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.Enable(EnableCap.Dither);
             Reactor.Math.Vector4 clearColor = color.ToVector4();
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
-            if (onlyDepth)
-                GL.Clear(ClearBufferMask.DepthBufferBit);
+            if (!depth)
+                GL.Clear(ClearBufferMask.ColorBufferBit);
             else
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -257,12 +273,32 @@ namespace Reactor
             REngine.CheckGLError();
             
         }
+        public void Clear(RColor color, bool depth = false, bool stencil = false)
+        {
+            StartClock();
+
+
+            _viewport.Bind();
+
+            Reactor.Math.Vector4 clearColor = color.ToVector4();
+            GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
+            ClearBufferMask mask = ClearBufferMask.ColorBufferBit;
+            if (depth)
+                mask |= ClearBufferMask.DepthBufferBit;
+            if (stencil)
+                mask |= ClearBufferMask.StencilBufferBit;
+            GL.Clear(mask);
+
+            Atmosphere.Update();
+
+            REngine.CheckGLError();
+        }
 
         public void Present()
         {
             Tick(1);
             if(showFps)
-                Screen.RenderFPS((int)GetFPS());
+                Screen.RenderFPS(GetFPS());
             _renderControl.SwapBuffers();
         }
 

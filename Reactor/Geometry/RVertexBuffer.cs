@@ -253,29 +253,47 @@ namespace Reactor.Geometry
             dataHandle.Free();
         }
 
-        internal void Bind()
+        public void Bind()
         {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            REngine.CheckGLError();
+            if (Threading.IsOnUIThread())
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+                REngine.CheckGLError();
+            }else {
+                Threading.BlockOnUIThread(() => { Bind(); });
+            }
         }
 
-        internal void Unbind()
+        public void Unbind()
         {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            REngine.CheckGLError();
+            if (Threading.IsOnUIThread())
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+                REngine.CheckGLError();
+            } else {
+                Threading.BlockOnUIThread(() => { Unbind(); });
+            }
         }
-        internal void BindVertexArray()
+        public void BindVertexArray()
         {
-            GenerateIfRequired();
-            REngine.CheckGLError();
-            GL.BindVertexArray(vao);
-            REngine.CheckGLError();
+            if (!Threading.IsOnUIThread()) { Threading.BlockOnUIThread(() => { BindVertexArray(); }); }
+            else
+            {
+                GenerateIfRequired();
+                REngine.CheckGLError();
+                GL.BindVertexArray(vao);
+                REngine.CheckGLError();
+            }
         }
 
-        internal void UnbindVertexArray()
+        public void UnbindVertexArray()
         {
-            GL.BindVertexArray(0);
-            REngine.CheckGLError();
+            if (!Threading.IsOnUIThread()) { Threading.BlockOnUIThread(() => { UnbindVertexArray(); }); }
+            else
+            {
+                GL.BindVertexArray(0);
+                REngine.CheckGLError();
+            }
         }
         public void Dispose()
         {

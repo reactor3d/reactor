@@ -42,7 +42,7 @@ namespace Reactor.Types
             Type = (RShaderEffectType)type;
 
                 StringBuilder defineSource = new StringBuilder();
-                defineSource.Append("#version 330\r\n");
+                defineSource.Append("#version 420\r\n");
 
                 if(defines != null)
                     foreach(string define in defines){
@@ -57,6 +57,8 @@ namespace Reactor.Types
                         return RShaderResources.Headers;
                     if(fileInclude.ToLower().Equals("lighting.glsl"))
                         return RShaderResources.Lighting;
+                    if (fileInclude.ToLower().Equals("noise.glsl"))
+                        return RShaderResources.Noise;
                     StreamReader reader = new StreamReader(RFileSystem.Instance.GetFile(match.ToString()));
                     string inc = reader.ReadToEnd();
                     return inc;
@@ -92,7 +94,7 @@ namespace Reactor.Types
                     Id = GL.CreateShader(ShaderType.ComputeShader);
                     break;
                 default:
-                    Id = GL.CreateShader(ShaderType.ComputeShader);
+                    Id = GL.CreateShader(ShaderType.FragmentShader);
                     break;
 
 

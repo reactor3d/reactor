@@ -39,6 +39,8 @@ namespace Reactor
 
         private RColor globalSunLight;
         private RColor globalAmbientLight;
+        private Vector3 sunDir;
+        private RTexture2D[] lensFlares;
         
         public void CreateSkyBox(RTexture3D skyBoxTexture)
         {
@@ -73,6 +75,27 @@ gl_FragColor = cubeColor;
             sky.Material = skyBoxMaterial;
         }
 
+        public void CreateSkyBox(RShader skyBoxShader, RTexture3D skyBoxTexture)
+        {
+            sky = RScene.Instance.CreateMeshBuilder("skybox");
+            sky.CreateBox(Vector3.Zero, Vector3.One, true);
+            sky.Matrix = Matrix.Identity;
+            RMaterial skyBoxMaterial = new RMaterial("skybox");
+            skyBoxMaterial.Shader = skyBoxShader;
+            skyBoxMaterial.SetTexture(RTextureLayer.DIFFUSE, skyBoxTexture);
+            sky.Material = skyBoxMaterial;
+        }
+
+        public void CreateSkyBox(RShader skyBoxShader)
+        {
+            sky = RScene.Instance.CreateMeshBuilder("skybox");
+            sky.CreateBox(Vector3.Zero, Vector3.One, true);
+            sky.Matrix = Matrix.Identity;
+            RMaterial skyBoxMaterial = new RMaterial("skybox");
+            skyBoxMaterial.Shader = skyBoxShader;
+            sky.Material = skyBoxMaterial;
+        }
+
         internal void Update()
         {
             if(sky != null)
@@ -86,11 +109,11 @@ gl_FragColor = cubeColor;
         public void RenderSkybox()
         {
             GL.Disable(EnableCap.DepthTest);
-            //GL.Disable(EnableCap.CullFace);
+            GL.Disable(EnableCap.CullFace);
             
             sky.Render();
             GL.Enable(EnableCap.DepthTest);
-            //GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.CullFace);
         }
     }
 }

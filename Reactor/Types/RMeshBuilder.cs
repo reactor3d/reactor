@@ -31,7 +31,7 @@ namespace Reactor.Types
     /// <summary>
     /// The RMeshBuilder provides basic geometry building methods and represents a Mesh in it's basic form.  A vertex buffer, and index buffer, and a shader.
     /// </summary>
-    public class RMeshBuilder : RRenderNode
+    public class RMeshBuilder : RRenderNode, IDisposable
     {
         #region Members
         internal RMaterial _material;
@@ -43,6 +43,7 @@ namespace Reactor.Types
 
         #region Properties
         public RMaterial Material { get { return _material; } set { _material = value; } }
+        public RPrimitiveType PrimitiveType { get; set; }
         #endregion
 
         #region Methods
@@ -52,6 +53,12 @@ namespace Reactor.Types
             this.Rotation = Quaternion.Identity;
             this.Position = Vector3.Zero;
             this._material = RMaterial.defaultMaterial;
+            this.IsDrawable = true;
+            this.CullEnable = true;
+            this.CullMode = States.RCullMode.CullClockwiseFace;
+            this.DepthWrite = true;
+            this.BlendEnable = true;
+            this.PrimitiveType = RPrimitiveType.Triangles;
         }
         
         
@@ -319,66 +326,79 @@ namespace Reactor.Types
 
         }
 
+        public void CreatePoints(Vector3[] points, RColor[] colors) {
+
+        }
+
         public override void Render()
         {
-
-            GL.FrontFace(FrontFaceDirection.Cw);
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            REngine.CheckGLError();
-            GL.Disable(EnableCap.CullFace);
-            /*
-            GL.Enable(EnableCap.CullFace);
-            REngine.CheckGLError();
-            GL.FrontFace(FrontFaceDirection.Ccw);
-            REngine.CheckGLError();
-            GL.CullFace(CullFaceMode.FrontAndBack);
-            REngine.CheckGLError();
-            */
-            _material.Shader.Bind();
-            _material.Apply();
-            VertexBuffer.BindVertexArray();
-            VertexBuffer.Bind();
-
-
-            VertexBuffer.VertexDeclaration.Apply(_material.Shader, IntPtr.Zero);
-            RViewport viewport = REngine.Instance._viewport;
-            
-            _material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.WORLD, matrix);
-            _material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.MODEL, matrix);
-            _material.Shader.BindSemantics();
-            _material.Shader.SetUniformValue("viewport", new Vector4(viewport.X, viewport.Y, viewport.Width, viewport.Height));
-            if(_index != null)
+            if (IsDrawable)
             {
+                ApplyState();
+                base.Render();
+                /*
+                GL.Enable(EnableCap.CullFace);
+                REngine.CheckGLError();
+                GL.FrontFace(FrontFaceDirection.Ccw);
+                REngine.CheckGLError();
+                GL.CullFace(CullFaceMode.FrontAndBack);
+                REngine.CheckGLError();
+                */
+                _material.Shader.Bind();
+                _material.Apply();
+                VertexBuffer.BindVertexArray();
+                VertexBuffer.Bind();
 
-                var shortIndices = _index.IndexElementSize == RIndexElementSize.SixteenBits;
-                var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
-                var indexElementSize = shortIndices ? 2 : 4;
-                var indexOffsetInBytes = (IntPtr)(indexElementSize);
-                var indexElementCount = _index.GetElementCountArray(PrimitiveType.Triangles, vertCount*2);
-                _index.Bind();
-                REngine.CheckGLError();
-                GL.DrawElements(PrimitiveType.TriangleStrip, _index.IndexCount, indexElementType, indexOffsetInBytes);
-                REngine.CheckGLError();
-                _index.Unbind();
-                REngine.CheckGLError();
+
+                VertexBuffer.VertexDeclaration.Apply(_material.Shader, IntPtr.Zero);
+
+                _material.Shader.BindSemantics(matrix, REngine.camera.viewMatrix, REngine.camera.projMatrix);
+                if (PrimitiveType == RPrimitiveType.Points) {
+                    GL.PointParameter(PointParameterName.PointSizeMin, 0.0f);
+                    GL.PointParameter(PointParameterName.PointSizeMax, 1024.0f);
+                    GL.Enable(EnableCap.PointSprite);
+                    GL.Enable(EnableCap.PointSmooth);
+                    GL.Enable(EnableCap.ProgramPointSize);
+                }
+                if (_index != null)
+                {
+
+                    var shortIndices = _index.IndexElementSize == RIndexElementSize.SixteenBits;
+                    var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
+                    var indexElementSize = shortIndices ? 2 : 4;
+                    var indexOffsetInBytes = (IntPtr)(indexElementSize);
+                    var indexElementCount = _index.GetElementCountArray((PrimitiveType)PrimitiveType, vertCount);
+                    _index.Bind();
+                    REngine.CheckGLError();
+                    GL.DrawRangeElements((PrimitiveType)PrimitiveType,0,1, _index.IndexCount, indexElementType, indexOffsetInBytes);
+                    REngine.CheckGLError();
+                    _index.Unbind();
+                    REngine.CheckGLError();
+                }
+                else
+                {
+                    GL.DrawArrays((PrimitiveType)PrimitiveType, 0, VertexBuffer.VertexCount);
+                    REngine.CheckGLError();
+                }
+                if (PrimitiveType == RPrimitiveType.Points)
+                {
+                    GL.Disable(EnableCap.PointSprite);
+                    GL.Disable(EnableCap.PointSmooth);
+                    GL.Disable(EnableCap.ProgramPointSize);
+                }
+                _material.Shader.Unbind();
+
+                VertexBuffer.Unbind();
+                VertexBuffer.UnbindVertexArray();
             }
-            else 
-            {
-
-                GL.DrawArrays(PrimitiveType.Triangles, 0, VertexBuffer.VertexCount);
-                REngine.CheckGLError();
-            }
-
-            _material.Shader.Unbind();
-
-            VertexBuffer.Unbind();
-            VertexBuffer.UnbindVertexArray();
 
         }
         
         public void Dispose()
         {
-            _index.Dispose();
+            if(_index != null)
+                _index.Dispose();
+            VertexBuffer.Dispose();
 
         }
 

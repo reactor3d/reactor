@@ -33,6 +33,7 @@ namespace Reactor.Types
     {
         public RVertexBuffer VertexBuffer { get; set; }
         private RBlendState blendState = RBlendState.Opaque;
+        public RBlendState BlendState { get { return blendState; } set { blendState = value; } }
         public virtual void Render()
         {
             if (IsDrawable)

@@ -56,12 +56,8 @@ namespace Reactor.Types
             VertexBuffer.VertexDeclaration.Apply(Material.Shader, IntPtr.Zero);
 
             REngine.CheckGLError();
-            Material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.WORLD, world);
-            Material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.MODEL, world);
-            Material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.FAR_PLANE, REngine.camera.Far);
-            Material.Shader.SetUniformBySemantic(RShaderSemanticDefinition.NEAR_PLANE, REngine.camera.Near);
-            REngine.CheckGLError();
-            Material.Shader.BindSemantics();
+            
+            Material.Shader.BindSemantics(world, REngine.camera.viewMatrix, REngine.camera.projMatrix);
             REngine.CheckGLError();
 
             GL.DrawElements(primitiveType, IndexBuffer.IndexCount, DrawElementsType.UnsignedInt , IntPtr.Zero);

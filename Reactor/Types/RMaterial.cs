@@ -136,7 +136,7 @@ namespace Reactor.Types
                 throw new InvalidOperationException("Attempted to retrieve a color from a material that has no color for that slot");
         }
 
-        internal void Apply()
+        public void Apply()
         {
             for(int i=0; i<Textures.Length; i++)
             {

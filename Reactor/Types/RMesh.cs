@@ -41,10 +41,11 @@ namespace Reactor.Types
             this.Position = Vector3.Zero;
             this.Rotation = Quaternion.Identity;
             Parts = new List<RMeshPart>();
-            this.CullEnable = false;
-            this.CullMode = Reactor.Types.States.RCullMode.None;
-            this.BlendEnable = false;
+            this.CullEnable = true;
+            this.CullMode = Reactor.Types.States.RCullMode.CullCounterClockwiseFace;
+            this.BlendEnable = true;
             this.DepthWrite= true;
+            this.IsDrawable = true;
 
         }
 
@@ -64,13 +65,14 @@ namespace Reactor.Types
 
         public override void Render()
         {
-
-            ApplyState();
-            GL.Disable(EnableCap.CullFace);
-            foreach(RMeshPart part in Parts)
+            if (IsDrawable)
             {
-                
-                part.Draw(PrimitiveType.Triangles, this.Matrix);
+                ApplyState();
+                base.Render();
+                foreach (RMeshPart part in Parts)
+                {
+                    part.Draw(PrimitiveType.Triangles, this.Matrix);
+                }
             }
         }
     }

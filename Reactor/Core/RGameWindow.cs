@@ -25,21 +25,45 @@
 using System;
 using OpenTK;
 using OpenTK.Graphics;
-
+using OpenTK.Graphics.OpenGL4;
 namespace Reactor
 {
-    public class RGameWindow : GameWindow
+    public sealed class RGameWindow : GameWindow
     {
 
 
         public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 5, GraphicsContextFlags.ForwardCompatible){
-
+            
         }
 
         public RGameWindow(int width, int height)
             : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 5, GraphicsContextFlags.ForwardCompatible)
         {
 
+        }
+
+        public void DoExit()
+        {
+            base.Exit();
+        }
+
+        public bool Focused
+        {
+            get
+            {
+                return base.Focused;
+            }
+        }
+
+        public int Width
+        {
+            get { return base.Width; }
+            set { base.Width = value; }
+        }
+        public int Height
+        {
+            get { return base.Height; }
+            set { base.Width = value; }
         }
     }
 }

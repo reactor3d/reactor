@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using OpenTK;
+using Reactor.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +30,15 @@ using System.Text;
 namespace Reactor
 {
     /// <summary>
-    /// Provides a facility for creating a main Game complete with a <see cref="Reactor.RGameWindow"/>.
+    /// Provides a facility for creating a main Game complete with a <see cref="RGameWindow"/>.
     /// This class must be inherited in your game as the main component.
     /// </summary>
     public abstract class RGame : IDisposable
     {
+        public RGameTime GameTime { get { return gameTime; } }
+        private RGameTime gameTime;
+        private DateTime startTime;
+        private DateTime lastTime;
         /// <summary>
         /// The internal game window.
         /// </summary>
@@ -42,16 +47,18 @@ namespace Reactor
         private RGameWindow gameWindow;
 
         /// <summary>
-        /// Main Reactor Engine reference.  Use this within your <see cref="Reactor.RGame"/> class. 
+        /// Main Reactor Engine reference.  Use this within your <see cref="RGame"/> class. 
         /// </summary>
         /// <value>The engine.</value>
         public REngine Engine { get { return REngine.Instance; } }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Reactor.RGame"/> class.
+        /// Initializes a new instance of the <see cref="RGame"/> class.
         /// </summary>
         public RGame()
         {
+            gameTime = new RGameTime();
+            startTime = DateTime.UtcNow;
             REngine.RGame = this;
             gameWindow = new RGameWindow(800, 600);
             REngine.Instance.SetViewport(new RViewport(0, 0, 800, 600));
@@ -142,7 +149,11 @@ namespace Reactor
 
         void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
         {
+            var now = DateTime.UtcNow;
+            gameTime.TotalGameTime += (now - startTime);
+            gameTime.ElapsedGameTime = (now - lastTime);
             Update();
+            lastTime = now;
         }
 
         void GameWindow_RenderFrame(object sender, FrameEventArgs e)

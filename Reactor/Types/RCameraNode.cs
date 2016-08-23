@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK;
 
 namespace Reactor.Types
 {
@@ -38,5 +37,36 @@ namespace Reactor.Types
         public Matrix Projection { get { return projMatrix; } set { projMatrix = value; } }
 
         public Matrix View { get { return viewMatrix; } set { viewMatrix = value; } }
+
+        public virtual Vector3 Unproject(RViewport viewport, int x, int y, float depth)
+        {
+            Vector4 screen = new Vector4((x - viewport.X) / viewport.Width, (y - viewport.Y) / viewport.Height, depth, 1.0f);
+            screen.X = screen.X * 2.0f - 1.0f;
+            screen.Y = screen.Y * 2.0f - 1.0f;
+            screen.Z = screen.Z * 2.0f - 1.0f;
+
+            var inverseViewProjection = Matrix.Invert(projMatrix * viewMatrix);
+            screen = inverseViewProjection * screen;
+
+            if(screen.W != 0.0f)
+            {
+                screen.X /= screen.W;
+                screen.Y /= screen.W;
+                screen.Z /= screen.W;
+            }
+            return new Vector3(screen.X, screen.Y, screen.Z);
+        }
+
+        public virtual Ray MousePick(RViewport viewport, int x, int y)
+        {
+            Vector3 nearPoint = Unproject(viewport, x, y, 0.0f);
+
+            Vector3 farPoint = Unproject(viewport, x, y, 1.0f);
+
+            Vector3 direction = farPoint - nearPoint;
+            direction.Normalize();
+
+            return new Ray(nearPoint, direction);
+        }
     }
 }

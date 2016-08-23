@@ -29,14 +29,19 @@ namespace Reactor.Platform
     public static class Profiler
     {
         static Process process = Process.GetCurrentProcess();
-        public static double GetUsedMemory()
+
+        public static double GetVirtualMemory()
         {
-            return (double)process.WorkingSet64 / 1024.0 / 1024.0;
+            return process.VirtualMemorySize64 / 1024.0 / 1024.0;
+        }
+        public static double GetPhysicalMemory()
+        {
+            return process.WorkingSet64 / 1024.0 / 1024.0;
         }
 
         public static double GetGCMemory()
         {
-            return (double)GC.GetTotalMemory(false) / 1024.0 / 1024.0;
+            return GC.GetTotalMemory(false) / 1024.0 / 1024.0;
         }
     }
 }
