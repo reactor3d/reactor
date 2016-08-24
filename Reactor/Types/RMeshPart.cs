@@ -47,6 +47,12 @@ namespace Reactor.Types
         internal void Draw(PrimitiveType primitiveType, Matrix world)
         {
             Threading.EnsureUIThread();
+            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.CullFace(CullFaceMode.Back);
+            
+            GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.DepthTest);
+            GL.DepthFunc(DepthFunction.Less);
             Material.Shader.Bind();
             Material.Apply();
 
@@ -57,9 +63,10 @@ namespace Reactor.Types
 
             REngine.CheckGLError();
             
-            Material.Shader.BindSemantics(world, REngine.camera.viewMatrix, REngine.camera.projMatrix);
+            Material.Shader.BindSemantics(Matrix.Identity * world, REngine.camera.viewMatrix, REngine.camera.projMatrix);
             REngine.CheckGLError();
 
+            
             GL.DrawElements(primitiveType, IndexBuffer.IndexCount, DrawElementsType.UnsignedInt , IntPtr.Zero);
 
             Material.Shader.Unbind();

@@ -2,6 +2,7 @@
 using Reactor.Math;
 using Reactor.Platform;
 using Reactor.Types;
+using Reactor.Types.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,22 +23,24 @@ namespace TestBed
         public override void Init()
         {
             Engine.InitGameWindow(1280, 720, RWindowStyle.Normal);
-            //GameWindow.VSync = OpenTK.VSyncMode.On;
+            GameWindow.VSync = OpenTK.VSyncMode.On;
             Engine.SetShowFPS(true);
-            Engine.SetViewport(new RViewport(0,0,800, 600));
+            Engine.SetViewport(new RViewport(0,0,1280, 720));
+            Engine.InitHDR();
             //GameWindow.CursorVisible = false;
             sponza = Engine.Scene.Create<RMesh>("sponza");
             sponza.LoadSourceModel("/models/sponza.fbx");
-            sponza.CullEnable = true;
-            sponza.CullMode = Reactor.Types.States.RCullMode.CullClockwiseFace;
+            sponza.CullEnable = false;
+            sponza.CullMode = RCullMode.None;
             sponza.SetScale(1f);
             sponza.SetPosition(0, 0, 0);
+            sponza.BlendEnable = false;
             var cam = Engine.GetCamera();
             cam.SetPosition(0, 20, 1f);
             cam.LookAt(Vector3.Zero);
-            cam.SetClipPlanes(0.0001f, 1000000f);
+            cam.SetClipPlanes(0.01f, 10000f);
 
-            font = RScreen.Instance.LoadFont("/vcr_osd_mono.ttf", 21);
+            font = RScreen.Instance.LoadFont("/vcr_osd_mono.ttf", 16);
 
             RTexture2D posX = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posX", "/textures/sky-posX.png");
             RTexture2D posY = (RTexture2D)Engine.Textures.CreateTexture<RTexture2D>("posY", "/textures/sky-posY.png");
@@ -56,17 +59,25 @@ namespace TestBed
 
         public override void Render()
         {
-            Engine.Clear();
+            Engine.Clear(RColor.Black, true, true);
+            var cam = Engine.GetCamera();
+
+            Engine.BeginHDR();
+            Engine.Clear(RColor.Black, true);
+            //cam.SetClipPlanes(0.01f, 10000f);
             Engine.Atmosphere.RenderSkybox();
             sponza.Render();
+            Engine.EndHDR();
 
-            RScreen.Instance.Begin();
+            Engine.DrawHDR();
 
-            RScreen.Instance.RenderText(font, new Vector2(5, 30), String.Format("{0} MB P", Profiler.GetPhysicalMemory()));
-            RScreen.Instance.RenderText(font, new Vector2(5, 50), String.Format("{0} MB V", Profiler.GetVirtualMemory()));
-            RScreen.Instance.RenderText(font, new Vector2(5, 70), String.Format("{0} MB GC", Profiler.GetGCMemory()));
+            Engine.Screen.Begin();
 
-            RScreen.Instance.End();
+            Engine.Screen.RenderText(font, new Vector2(5, 30), String.Format("{0} MB P", Profiler.GetPhysicalMemory()));
+            Engine.Screen.RenderText(font, new Vector2(5, 50), String.Format("{0} MB V", Profiler.GetVirtualMemory()));
+            Engine.Screen.RenderText(font, new Vector2(5, 70), String.Format("{0} MB GC", Profiler.GetGCMemory()));
+
+            Engine.Screen.End();
             Engine.Present();
         }
 
@@ -88,18 +99,18 @@ namespace TestBed
             mouse_direction *= 80f;
             var cam = Engine.GetCamera();
             if (Engine.Input.IsKeyDown(RKey.W))
-                direction -= cam.Matrix.Forward * 0.1f;
+                direction += cam.Matrix.Forward * 0.1f;
             if (Engine.Input.IsKeyDown(RKey.S))
-                direction -= cam.Matrix.Backward * 0.1f;
+                direction += cam.Matrix.Backward * 0.1f;
             if (Engine.Input.IsKeyDown(RKey.A))
-                direction -= cam.Matrix.Left * 0.1f;
+                direction += cam.Matrix.Left * 0.1f;
             if (Engine.Input.IsKeyDown(RKey.D))
-                direction -= cam.Matrix.Right * 0.1f;
-            panning.X += -mouse_direction.X * 2f;
+                direction += cam.Matrix.Right * 0.1f;
+            panning.X += mouse_direction.X * 2f;
             panning.Y += mouse_direction.Y * 2f;
             sponza.Update();
             direction *= 0.90f;
-            cam.RotateX(mouse_direction.Y * 2f);
+            cam.RotateX(-mouse_direction.Y * 2f);
             if (cam.Rotation.X > Math.PI/2)
                 cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
             if (cam.Rotation.X < -Math.PI/2)

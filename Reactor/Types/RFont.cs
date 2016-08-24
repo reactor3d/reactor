@@ -179,7 +179,7 @@ namespace Reactor.Types
             Texture = new RTexture2D();
             Texture.LoadFromBitmap(b);
             Texture.SetTextureMagFilter(RTextureMagFilter.Linear);
-            Texture.SetTextureMinFilter(RTextureMinFilter.Linear);
+            Texture.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
             Texture.SetTextureWrapMode(RTextureWrapMode.Clamp, RTextureWrapMode.Clamp);
             REngine.CheckGLError();
 

@@ -45,7 +45,7 @@ namespace Reactor.Types
         public Reactor.Math.Rectangle Bounds;
         [JsonIgnore]
         bool bound;
-        protected TextureTarget textureTarget;
+        internal TextureTarget textureTarget;
         protected RPixelFormat pixelFormat = RPixelFormat.Rgba;
         protected PixelType pixelType = PixelType.UnsignedByte;
         internal void LoadFromData(byte[] data, string name, bool isCompressed)

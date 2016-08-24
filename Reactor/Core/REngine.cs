@@ -53,7 +53,8 @@ namespace Reactor
         public RViewport Viewport { get { return _viewport; } }
         public RFileSystem FileSystem { get { return RFileSystem.Instance; } }
         public RScreen Screen { get { return RScreen.Instance; } }
-
+        private RFrameBuffer hdrFrameBuffer;
+        private RShader hdrShader;
         public RAtmosphere Atmosphere { get { return RAtmosphere.Instance; } }
         internal RViewport _viewport;
         internal static RGame RGame;
@@ -130,6 +131,7 @@ namespace Reactor
             ErrorCode error = GL.GetError();
             if (error != ErrorCode.NoError)
             {
+                
                 StackTrace trace = new StackTrace(true);
                 StackFrame[] frames = trace.GetFrames();
                 RLog.Error("Stack Trace:");
@@ -242,44 +244,55 @@ namespace Reactor
         {
             showFps = value;
         }
+        public void InitHDR() 
+        {
+            
+            hdrFrameBuffer = new RFrameBuffer((int)_viewport.Width, (int)_viewport.Height, false, RSurfaceFormat.Vector4, RDepthFormat.Depth32Stencil8);
+            hdrShader = new RShader();
+            hdrShader.Load(RShaderResources.HDRVert, RShaderResources.HDRFrag);
+
+            
+        }
+        public void BeginHDR()
+        {
+            hdrFrameBuffer.Bind();
+            _viewport.Bind();
+           
+        }
+        public void EndHDR()
+        {
+
+            hdrFrameBuffer.Unbind();
+            hdrShader.Bind();
+            hdrShader.SetSamplerValue(RTextureLayer.DIFFUSE, hdrFrameBuffer);
+            hdrShader.Unbind();
+
+        }
+        public void DrawHDR()
+        {
+            Screen.Begin();
+            Screen.RenderFullscreenQuad(hdrShader);
+            Screen.End();
+        }
+        public void SetClearColor(RColor color)
+        {
+            var c = color.ToVector4();
+            GL.ClearColor(c.X, c.Y, c.Z, c.W);
+        }
         public void Clear()
         {
             Clear(RColor.Black, true);
         }
-        public void ClearDepth()
-        {
-            GL.Clear(ClearBufferMask.DepthBufferBit);
-        }
+
         public void Clear(RColor color, bool depth = true)
         {
-            StartClock();
-            
-            
-            _viewport.Bind();
-            GL.Enable(EnableCap.CullFace);
-            GL.FrontFace(FrontFaceDirection.Cw);
-            GL.Enable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
-            GL.Enable(EnableCap.Dither);
-            Reactor.Math.Vector4 clearColor = color.ToVector4();
-            GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
-            if (!depth)
-                GL.Clear(ClearBufferMask.ColorBufferBit);
-            else
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Atmosphere.Update();
-
-            REngine.CheckGLError();
+            Clear(color, depth, true);
             
         }
         public void Clear(RColor color, bool depth = false, bool stencil = false)
         {
-            StartClock();
-
-
-            _viewport.Bind();
-
+            
             Reactor.Math.Vector4 clearColor = color.ToVector4();
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
             ClearBufferMask mask = ClearBufferMask.ColorBufferBit;
@@ -293,9 +306,22 @@ namespace Reactor
 
             REngine.CheckGLError();
         }
+        internal void Reset()
+        {
+            StartClock();
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GL.Enable(EnableCap.CullFace);
+            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.Enable(EnableCap.DepthTest);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            RBlendState.Opaque.PlatformApplyState();
+            _viewport.Bind();
+            
+        }
 
         public void Present()
         {
+            
             Tick(1);
             if(showFps)
                 Screen.RenderFPS(GetFPS());
@@ -333,6 +359,7 @@ namespace Reactor
                 Screen.Init();
                 RLog.Info(GetGLInfo());
                 RLog.Info("Form Renderer Initialized.");
+                PrintExtensions();
                 return true;
             }
             catch (Exception e)
@@ -343,6 +370,15 @@ namespace Reactor
 
         }
 
+        void PrintExtensions() {
+            var extensions = GL.GetString(StringName.Extensions).Split(' ');
+            foreach(var extension in extensions) {
+                if(extension.StartsWith("GL_EXT")) {
+                    RLog.Debug(extension);
+                }
+
+            }
+        }
         public bool InitGameWindow(int width, int height, RWindowStyle windowStyle, string title = "Reactor")
         {
             RDisplayMode mode = new RDisplayMode(width, height, -1);
@@ -360,7 +396,7 @@ namespace Reactor
 
                 GameWindowRenderControl control = new GameWindowRenderControl();
                 control.GameWindow = RGame.GameWindow;
-                control.GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
+                control.GameWindow.ClientSize = new System.Drawing.Size(displayMode.Width, displayMode.Height);
                 if(windowStyle == RWindowStyle.Borderless)
                     control.GameWindow.WindowBorder = WindowBorder.Hidden;
                 control.GameWindow.X = 0;
@@ -370,6 +406,7 @@ namespace Reactor
                 RShader.InitShaders();
                 RLog.Info(GetGLInfo());
                 RLog.Info("Game Window Renderer Initialized.");
+                PrintExtensions();
                 REngine.CheckGLError();
                 Screen.Init();
                 REngine.CheckGLError();
@@ -388,6 +425,7 @@ namespace Reactor
                 _renderControl.Init();
                 RLog.Info(GetGLInfo());
                 RLog.Info("Dummy Non-Renderer Initialized.");
+                PrintExtensions();
                 return true;
             } catch(Exception e) {
                 RLog.Error(e);
@@ -466,6 +504,7 @@ namespace Reactor
             try
             {
                 RLog.Info("Shutting down the engine.");
+                hdrFrameBuffer.Dispose();
                 _renderControl.Destroy();
                 RLog.Info("Shutdown complete.\r\n\r\n\r\n\r\n");
                 return true;

@@ -73,7 +73,7 @@ namespace Reactor.Types
                 */
             AtlasNode root = new AtlasNode();
             root.bounds = new Rectangle(0, 0, 512, 512);
-            Create(512, 512, textures[0].GetPixelFormat());
+            Create(512, 512, textures[0].GetPixelFormat(), RSurfaceFormat.Color);
             uint index = 0;
             int unclaimed = 0;
 

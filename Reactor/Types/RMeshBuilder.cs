@@ -163,8 +163,8 @@ namespace Reactor.Types
         public void CreateFullscreenQuad()
         {
             RViewport viewport = REngine.Instance._viewport;
-            CreateQuad(new Vector2(0, 0), new Vector2(1,1), true);
-            //CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width,viewport.Height), true);
+            //CreateQuad(new Vector2(0, 0), new Vector2(1,1), true);
+            CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width,viewport.Height), true);
         }
 
         /// <summary>
@@ -348,7 +348,6 @@ namespace Reactor.Types
                 _material.Apply();
                 VertexBuffer.BindVertexArray();
                 VertexBuffer.Bind();
-
 
                 VertexBuffer.VertexDeclaration.Apply(_material.Shader, IntPtr.Zero);
 

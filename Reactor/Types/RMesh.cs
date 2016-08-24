@@ -42,7 +42,7 @@ namespace Reactor.Types
             this.Rotation = Quaternion.Identity;
             Parts = new List<RMeshPart>();
             this.CullEnable = true;
-            this.CullMode = Reactor.Types.States.RCullMode.CullCounterClockwiseFace;
+            this.CullMode = Reactor.Types.States.RCullMode.CullClockwiseFace;
             this.BlendEnable = true;
             this.DepthWrite= true;
             this.IsDrawable = true;

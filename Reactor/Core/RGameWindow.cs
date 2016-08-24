@@ -33,13 +33,15 @@ namespace Reactor
 
 
         public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 5, GraphicsContextFlags.ForwardCompatible){
-            
+            Width = 800;
+            Height = 600;
         }
 
         public RGameWindow(int width, int height)
             : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 5, GraphicsContextFlags.ForwardCompatible)
         {
-
+            Width = width;
+            Height = height;
         }
 
         public void DoExit()
@@ -65,6 +67,7 @@ namespace Reactor
             get { return base.Height; }
             set { base.Width = value; }
         }
+
     }
 }
 

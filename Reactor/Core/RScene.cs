@@ -139,6 +139,15 @@ namespace Reactor
             return affectedLights;
         }
 
+        public List<RLight> GetClosestLights(Vector3 WorldPosition) {
+            List<RLight> list = new List<RLight>(_lights);
+            list.Sort((light1, light2) =>
+            {
+                return Vector3.Distance(light1.Position, WorldPosition).CompareTo(Vector3.Distance(light2.Position, WorldPosition));
+            });
+            return list;
+        }
+
         public void DestroyAll()
         {
             _lights.Clear();

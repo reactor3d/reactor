@@ -47,28 +47,34 @@ namespace Reactor
             skybox = new RShader();
             skybox.Load(@"
 #include ""headers.glsl""
-uniform mat4 world : WORLD;
-uniform mat4 view : VIEW;
 uniform mat4 proj : PROJECTION;
-out vec3 texCoord;
+uniform mat4 mv : MODELVIEW;
+
+smooth out vec3 eye;
+
 void main()
 {
-mat4 mvp = proj * view * world;
-gl_Position = mvp * vec4(r_Position, 1.0);
-texCoord = r_Position;
+    mat3 imv = mat3(inverse(mv));
+    mat4 inverseProjection = inverse(proj);
+    vec3 unprojected = (inverseProjection * vec4(r_Position, 1.0)).xyz;
+    eye = imv * unprojected;
+
+    gl_Position = vec4(r_Position, 1.0);
 }
 ", @"
-in vec3 texCoord;
+
+smooth in vec3 eye;
 uniform samplerCube diffuse;
+out vec4 fragColor;
 void main()
 {
-vec4 cubeColor = texture(diffuse, texCoord);
-gl_FragColor = cubeColor;
+    fragColor = texture(diffuse, eye);
 }
 ", null);
             sky = RScene.Instance.CreateMeshBuilder("skybox");
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
             sky.Matrix = Matrix.Identity;
+            sky.DepthWrite = false;
             RMaterial skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skybox;
             skyBoxMaterial.SetTexture(RTextureLayer.DIFFUSE, skyBoxTexture);
@@ -80,6 +86,7 @@ gl_FragColor = cubeColor;
             sky = RScene.Instance.CreateMeshBuilder("skybox");
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
             sky.Matrix = Matrix.Identity;
+            sky.DepthWrite = false;
             RMaterial skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skyBoxShader;
             skyBoxMaterial.SetTexture(RTextureLayer.DIFFUSE, skyBoxTexture);
@@ -91,6 +98,7 @@ gl_FragColor = cubeColor;
             sky = RScene.Instance.CreateMeshBuilder("skybox");
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
             sky.Matrix = Matrix.Identity;
+            sky.DepthWrite = false;
             RMaterial skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skyBoxShader;
             sky.Material = skyBoxMaterial;
@@ -109,11 +117,10 @@ gl_FragColor = cubeColor;
         public void RenderSkybox()
         {
             GL.Disable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.CullFace);
-            
+
             sky.Render();
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
+
         }
     }
 }

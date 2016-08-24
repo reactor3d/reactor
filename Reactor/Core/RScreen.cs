@@ -79,7 +79,7 @@ namespace Reactor
             defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
             Fonts.Add(RFont.Default);
             quad = new RMeshBuilder();
-            quad.CreateFullscreenQuad();
+            quad.CreateQuad(new Vector2(0,0), new Vector2(1,1), true);
             quadVerts = new RVertexData2D[4];
             quadVerts[0] = new RVertexData2D(new Vector2(-1, -1), new Vector2(0, 0));
             quadVerts[1] = new RVertexData2D(new Vector2(1, -1), new Vector2(1, 0));
@@ -119,7 +119,7 @@ namespace Reactor
             REngine.Instance.SetCamera(oldCamera);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
-            GL.FrontFace(FrontFaceDirection.Cw);
+            //GL.FrontFace(FrontFaceDirection.Ccw);
             GL.CullFace(CullFaceMode.Back);
             GL.DepthFunc(DepthFunction.Less);
             GL.Disable(EnableCap.Blend);
@@ -129,15 +129,10 @@ namespace Reactor
             REngine.CheckGLError();
 
         }
-        void InitCheck()
-        {
-            if(!initialized)
-                throw new ReactorException("You must first call Init() before using RScreen.");
-        }
+        
 
         public RFont LoadFont(string path, int size)
         {
-            InitCheck();
             RFont font = new RFont();
             font.Generate(RFileSystem.Instance.GetFilePath(path),size, (int)DPI.X);
             return font;
@@ -146,7 +141,6 @@ namespace Reactor
 
         public RFont LoadTextureFont(string definitionPath, string texturePath)
         {
-            InitCheck();
             RFont font = new RFont();
             BinaryReader reader = new BinaryReader(File.OpenRead(RFileSystem.Instance.GetFilePath(definitionPath)));
             font.Load(ref reader);
@@ -155,17 +149,40 @@ namespace Reactor
             return font;
         }
 
-        public void RenderFullscreenQuad()
-        {
-            InitCheck();
-            quad.Render();
-        }
 
         public void RenderFullscreenQuad(RShader shader)
         {
-            InitCheck();
-            quad.Material.Shader = shader;
-            quad.Render();
+            RViewport viewport = REngine.Instance._viewport;
+            quadVerts[0].Position = new Vector2(-1, -1);
+            quadVerts[0].TexCoord = new Vector2(0, 0);
+            quadVerts[1].Position = new Vector2(1, -1);
+            quadVerts[1].TexCoord = new Vector2(1, 0);
+            quadVerts[2].Position = new Vector2(1, 1);
+            quadVerts[2].TexCoord = new Vector2(1, 1);
+            quadVerts[3].Position = new Vector2(-1, 1);
+            quadVerts[3].TexCoord = new Vector2(0, 1);
+            vertexQuad2D.SetData<RVertexData2D>(quadVerts);
+            shader.Bind();
+            GL.Disable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.CullFace);
+            vertexQuad2D.Bind();
+            vertexQuad2D.BindVertexArray();
+            indexQuad2D.Bind();
+            
+            vertexQuad2D.VertexDeclaration.Apply(shader, IntPtr.Zero);
+
+
+            GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
+            REngine.CheckGLError();
+
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
+            indexQuad2D.Unbind();
+            vertexQuad2D.UnbindVertexArray();
+            vertexQuad2D.Unbind();
+            shader.Unbind();
         }
 
         public void RenderTexture(RTexture texture, Math.Rectangle bounds)

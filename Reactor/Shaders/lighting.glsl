@@ -10,7 +10,7 @@
 };
 
 uniform Light r_Lights[6];
-
+uniform int r_NumLights = 6;
 uniform sampler2D diffuse;
 uniform sampler2D ambient;
 uniform sampler2D normal;
@@ -24,3 +24,14 @@ uniform vec4 ambient_color;
 uniform vec4 specular_color;
 uniform vec4 glow_color;
 uniform vec4 alpha_color;
+
+float blinnPhongSpecular(
+  vec3 lightDirection,
+  vec3 viewDirection,
+  vec3 surfaceNormal,
+  float shininess) {
+
+  //Calculate Blinn-Phong power
+  vec3 H = normalize(viewDirection + lightDirection);
+  return pow(max(0.0, dot(surfaceNormal, H)), shininess);
+}

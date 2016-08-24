@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using OpenTK.Graphics.OpenGL;
+using Reactor.Types.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +38,12 @@ namespace Reactor.Types
         internal RTexture2D(bool defaultWhite):base()
         {
 
-                Create(1, 1, RPixelFormat.Rgba);
-                SetData<RColor>(new RColor[] { new RColor(1f, 1f, 1f, 1f) }, RPixelFormat.Rgba, 0, 0, 1, 1, true);
+                Create(1, 1, RPixelFormat.Rgba, RSurfaceFormat.Color);
+                SetData(new RColor[] { new RColor(1f, 1f, 1f, 1f) }, RPixelFormat.Rgba, 0, 0, 1, 1, true);
                 REngine.CheckGLError();
 
         }
-        public void Create(int width, int height, RPixelFormat format, bool multisample = false)
+        public void Create(int width, int height, RPixelFormat format, RSurfaceFormat surfaceFormat, bool multisample = false)
         {
 
             GL.GenTextures(1, out Id);
@@ -58,12 +59,70 @@ namespace Reactor.Types
             {
                 textureTarget = TextureTarget.Texture2D;
                 GL.BindTexture(TextureTarget.Texture2D, Id);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, (PixelFormat)format, PixelType.UnsignedByte, IntPtr.Zero);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, (PixelFormat)format, GetPixelTypeForSurface(surfaceFormat), IntPtr.Zero);
                 REngine.CheckGLError();
                 CreateProperties(TextureTarget.Texture2D, false);
                 REngine.CheckGLError();
             }
 
         }
+        public void CreateDepth(int width, int height, RPixelFormat format, RDepthFormat depthFormat)
+        {
+            GL.GenTextures(1, out Id);
+            textureTarget = TextureTarget.Texture2D;
+            GL.BindTexture(textureTarget, Id);
+            REngine.CheckGLError();
+            GL.TexImage2D(textureTarget, 0, GetPixelInternalForDepth(depthFormat), width, height, 0, (PixelFormat)format, GetPixelTypeForDepth(depthFormat), IntPtr.Zero);
+            REngine.CheckGLError();
+            CreateProperties(textureTarget, false);
+            REngine.CheckGLError();
+        }
+
+        PixelType GetPixelTypeForSurface(RSurfaceFormat surface) {
+            switch(surface) {
+                case RSurfaceFormat.HalfVector2:
+                case RSurfaceFormat.HalfVector4:
+                case RSurfaceFormat.HalfSingle:
+                case RSurfaceFormat.HdrBlendable:
+                    return PixelType.HalfFloat;
+                case RSurfaceFormat.Single:
+                case RSurfaceFormat.Vector2:
+                case RSurfaceFormat.Vector4:
+                    return PixelType.Float;
+                case RSurfaceFormat.Rgba64:
+                    return PixelType.UnsignedInt;
+                default:
+                    return PixelType.UnsignedByte;
+            }
+        }
+
+        PixelInternalFormat GetPixelInternalForDepth(RDepthFormat depthFormat) {
+            switch(depthFormat) {
+                case RDepthFormat.Depth16:
+                    return PixelInternalFormat.DepthComponent16;
+                case RDepthFormat.Depth24:
+                    return PixelInternalFormat.DepthComponent24;
+                case RDepthFormat.Depth24Stencil8:
+                    return PixelInternalFormat.Depth24Stencil8;
+                case RDepthFormat.Depth32Stencil8:
+                    return PixelInternalFormat.Depth32fStencil8;
+                default:
+                    return PixelInternalFormat.DepthStencil;
+            }
+        }
+        PixelType GetPixelTypeForDepth(RDepthFormat depthFormat) {
+            switch(depthFormat) {
+                case RDepthFormat.Depth16:
+                case RDepthFormat.Depth24:
+                    return PixelType.UnsignedInt;
+                case RDepthFormat.Depth24Stencil8:
+                case RDepthFormat.Depth32Stencil8:
+                    return PixelType.UnsignedInt248;
+                default:
+                    return PixelType.UnsignedInt;
+            }
+        }
     }
+
+    
 }

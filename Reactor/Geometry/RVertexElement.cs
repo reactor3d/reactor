@@ -400,19 +400,6 @@ namespace Reactor.Geometry
             }
             return 0;
         }
-        internal static string GetElementUsageName(RVertexElementUsage usage)
-        {
-            switch(usage)
-            {
-                case RVertexElementUsage.Position:
-                    return "position";
-                case RVertexElementUsage.Normal:
-                    return "normal";
-                case RVertexElementUsage.TextureCoordinate:
-                    return "texcoord";
-                default:
-                    return null;
-            }
-        }
+        
     }
 }

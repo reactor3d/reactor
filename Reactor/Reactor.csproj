@@ -340,7 +340,7 @@
     <Compile Include="Geometry\RPrimitiveType.cs" />
     <Compile Include="Platform\Threading.cs" />
     <Compile Include="Core\RCamera2d.cs" />
-    <Compile Include="Core\RFrameBuffer.cs" />
+    <Compile Include="Types\RFrameBuffer.cs" />
     <Compile Include="Types\RCameraNode.cs" />
     <Compile Include="Types\RColorWriteChannels.cs" />
     <Compile Include="Types\States\RBlend.cs" />
@@ -348,8 +348,7 @@
     <Compile Include="Types\States\RBlendState.cs" />
     <Compile Include="Types\States\RCullMode.cs" />
     <Compile Include="Types\States\RCompareFunction.cs" />
-    <Compile Include="Types\States\RDepthFormat.cs" />
-    <Compile Include="Types\RRenderTargetUsage.cs" />
+    <Compile Include="Types\RDepthFormat.cs" />
     <Compile Include="Types\RViewport.cs" />
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\BoundingFrustum.cs" />
@@ -474,6 +473,8 @@
     <EmbeddedResource Include="Shaders\noise.glsl" />
     <EmbeddedResource Include="Shaders\phong.frag.glsl" />
     <EmbeddedResource Include="Shaders\phong.vert.glsl" />
+    <EmbeddedResource Include="Shaders\hdr.frag.glsl" />
+    <EmbeddedResource Include="Shaders\hdr.vert.glsl" />
     <None Include="Shaders\reactor.glsl" />
   </ItemGroup>
   <ItemGroup>

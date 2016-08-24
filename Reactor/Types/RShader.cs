@@ -224,6 +224,10 @@ namespace Reactor.Types
 
         }
 
+        public void SetSamplerValue(RTextureLayer layer, RFrameBuffer frameBuffer) {
+            SetSamplerValue(layer, frameBuffer.BackBuffer);            
+        }
+
         public int GetUniformBySemantic(RShaderSemanticDefinition semantic)
         {
             return GetUniformLocation(_semantics[semantic].name);
@@ -589,5 +593,8 @@ namespace Reactor.Types
 
         internal static string Basic2dEffectVert = GetResourceString("Reactor.Shaders.basic2dEffect.vert.glsl");
         internal static string Basic2dEffectFrag = GetResourceString("Reactor.Shaders.basic2dEffect.frag.glsl");
+
+        internal static string HDRVert = GetResourceString("Reactor.Shaders.hdr.vert.glsl");
+        internal static string HDRFrag = GetResourceString("Reactor.Shaders.hdr.frag.glsl");
     }
 }

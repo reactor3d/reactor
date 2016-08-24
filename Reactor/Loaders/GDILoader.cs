@@ -184,7 +184,9 @@ namespace Reactor
             GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
             GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
 
-            //GL.TexEnv( TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int) TextureLoaderParameters.EnvMode );
+            float maxAniso;
+            GL.GetFloat((GetPName)ExtTextureFilterAnisotropic.MaxTextureMaxAnisotropyExt, out maxAniso);
+            GL.TexParameter(TextureTarget.Texture2D, (TextureParameterName)ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, maxAniso);
 
             ErrorCode GLError = GL.GetError( );
             if ( GLError != ErrorCode.NoError )

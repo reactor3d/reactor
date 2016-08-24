@@ -10,5 +10,5 @@ void main()
    vec4 n = texture(normal, out_texcoord) + texture(height, out_texcoord);
    color = ambient_color;
    color += d * diffuse_color;
-   gl_FragDepth = logz;
+   //gl_FragDepth = logz;
 }

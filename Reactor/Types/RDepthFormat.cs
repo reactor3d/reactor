@@ -28,10 +28,12 @@ using System.Threading.Tasks;
 
 namespace Reactor.Types
 {
-    public enum RRenderTargetUsage
+    public enum RDepthFormat
     {
-        DiscardContents,
-        PreserveContents,
-        PlatformContents
+        None = -1,
+        Depth16 = 54,
+        Depth24 = 51,
+        Depth24Stencil8 = 48,
+        Depth32Stencil8 = 49
     }
 }

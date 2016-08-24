@@ -23,7 +23,7 @@
 using System;
 using Reactor.Types;
 using Reactor.Math;
-
+using OpenTK.Graphics.OpenGL4;
 
 namespace Reactor
 {
@@ -54,7 +54,7 @@ namespace Reactor
                     matrix.M31, matrix.M32, matrix.M33, 0,
                     -Vector3.Dot(Position, matrix.Right), -Vector3.Dot(Position, matrix.Up), -Vector3.Dot(Position, matrix.Forward), 1
                 );*/
-                viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + -matrix.Forward, matrix.Up);
+                viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + matrix.Forward, matrix.Up);
                 
 
                 ViewDirection = viewMatrix.Forward;
@@ -67,6 +67,7 @@ namespace Reactor
         {
             Near = near;
             Far = far;
+            GL.DepthRange(near, far);
         }
     }
 }
