@@ -98,10 +98,10 @@ namespace Reactor.Types
 
 
             
-            int status;
-            GL.ValidateProgram(Id);
-            GL.GetProgram(Id, GetProgramParameterName.ValidateStatus, out status);
-            if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
+            //int status;
+            //GL.ValidateProgram(Id);
+            //GL.GetProgram(Id, GetProgramParameterName.ValidateStatus, out status);
+            //if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
 
             REngine.CheckGLError();
             int numAttributes;
@@ -480,7 +480,6 @@ namespace Reactor.Types
                     break;
                 default:
                     throw new NotImplementedException();
-                    break;
             }
             return GetAttribLocation(name);
         }

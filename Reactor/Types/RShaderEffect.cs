@@ -42,7 +42,7 @@ namespace Reactor.Types
             Type = (RShaderEffectType)type;
 
                 StringBuilder defineSource = new StringBuilder();
-                defineSource.Append("#version 420\r\n");
+                defineSource.Append("#version 410\r\n");
 
                 if(defines != null)
                     foreach(string define in defines){

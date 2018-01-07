@@ -34,91 +34,86 @@ namespace Reactor.Loaders
 {
     static class MeshLoader
     {
-        public static void LoadSource(this RMesh rmesh, string filename)
+        public static void LoadSource (this RMesh rmesh, string filename)
         {
 
-            AssimpContext context = new AssimpContext();
-            context.SetConfig(new Assimp.Configs.FBXImportAllMaterialsConfig(true));
-            context.SetConfig(new Assimp.Configs.FBXImportAllGeometryLayersConfig(true));
-            context.SetConfig(new Assimp.Configs.MultithreadingConfig(2));
-            context.SetConfig(new Assimp.Configs.FBXStrictModeConfig(false));
-            if (!context.IsImportFormatSupported(Path.GetExtension(filename)))
-                throw new ReactorException("Attempted to load a model that Assimp doesn't know how to load");
-            LogStream log = new LogStream((msg, user) =>
-            {
-                RLog.Info(msg.Remove(msg.Length-2));
+            AssimpContext context = new AssimpContext ();
+            context.SetConfig (new Assimp.Configs.FBXImportAllMaterialsConfig (true));
+            context.SetConfig (new Assimp.Configs.FBXImportAllGeometryLayersConfig (true));
+            context.SetConfig (new Assimp.Configs.MultithreadingConfig (2));
+            context.SetConfig (new Assimp.Configs.FBXStrictModeConfig (false));
+            if (!context.IsImportFormatSupported (Path.GetExtension (filename)))
+                throw new ReactorException ("Attempted to load a model that Assimp doesn't know how to load");
+            LogStream log = new LogStream ((msg, user) => {
+                RLog.Info (msg.Remove (msg.Length - 2));
             });
-            log.Attach();
+            log.Attach ();
             int platform = (int)Environment.OSVersion.Platform;
-            Scene scene = context.ImportFile(filename,
+            Scene scene = context.ImportFile (filename,
                 PostProcessSteps.FindInvalidData |
                 PostProcessSteps.GenerateSmoothNormals |
-                PostProcessSteps.Triangulate | 
+                PostProcessSteps.Triangulate |
                 PostProcessSteps.GenerateUVCoords |
                 PostProcessSteps.CalculateTangentSpace |
                 PostProcessSteps.PreTransformVertices);
 
-            if(scene.HasMeshes)
-            {
-                foreach(Mesh mesh in scene.Meshes)
-                {
-                    if(!mesh.HasVertices){
+            if (scene.HasMeshes) {
+                foreach (Mesh mesh in scene.Meshes) {
+                    if (!mesh.HasVertices) {
                         continue;
                     }
-                    RMeshPart rmeshpart = RMeshPart.Create<RMeshPart>();
-                    
-                    
-                    RVertexData[] data = new RVertexData[mesh.VertexCount];
+                    RMeshPart rmeshpart = RMeshPart.Create<RMeshPart> ();
 
-                    List<int> indicesList = new List<int>();
-                    
-                    if(mesh.HasFaces)
-                    {
-                        foreach(Face face in mesh.Faces)
-                        {
-                            indicesList.AddRange(face.Indices.ToArray());
-                            foreach(int index in face.Indices)
-                            {
-                                Vector3D p = mesh.Vertices[index];
-                                data[index].Position = new Vector3(p.X, p.Y, p.Z);
-                                if(mesh.HasTextureCoords(0))
-                                {
-                                    Vector3D t = mesh.TextureCoordinateChannels[0][index];
-                                    data[index].TexCoord = new Vector2(t.X, -t.Y);
+
+                    RVertexData [] data = new RVertexData [mesh.VertexCount];
+
+                    List<int> indicesList = new List<int> ();
+
+                    if (mesh.HasFaces) {
+                        foreach (Face face in mesh.Faces) {
+                            indicesList.AddRange (face.Indices.ToArray ());
+                            foreach (int index in face.Indices) {
+                                Vector3D p = mesh.Vertices [index];
+                                data [index].Position = new Vector3 (p.X, p.Y, p.Z);
+                                if (mesh.HasTextureCoords (0)) {
+                                    Vector3D t = mesh.TextureCoordinateChannels [0] [index];
+                                    data [index].TexCoord = new Vector2 (t.X, -t.Y);
                                 }
 
-                                if(mesh.HasNormals)
-                                {
-                                    Vector3D n = mesh.Normals[index];
-                                    data[index].Normal = new Vector3(n.X, n.Y, n.Z);
+                                if (mesh.HasNormals) {
+                                    Vector3D n = mesh.Normals [index];
+                                    data [index].Normal = new Vector3 (n.X, n.Y, n.Z);
                                 }
 
-                                if(mesh.HasTangentBasis)
-                                {
-                                    Vector3D b = mesh.BiTangents[index];
-                                    Vector3D t = mesh.Tangents[index];
-                                    data[index].Bitangent = new Vector3(b.X, b.Y, b.Z);
-                                    data[index].Tangent = new Vector3(t.X, t.Y, t.Z);
+                                if (mesh.HasTangentBasis) {
+                                    Vector3D b = mesh.BiTangents [index];
+                                    Vector3D t = mesh.Tangents [index];
+                                    data [index].Bitangent = new Vector3 (b.X, b.Y, b.Z);
+                                    data [index].Tangent = new Vector3 (t.X, t.Y, t.Z);
                                 }
 
-                                
+
 
                             }
                         }
                     }
-                    
 
 
 
-                    RVertexBuffer vbuffer = new RVertexBuffer(typeof(RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly, true);
 
-                    
-                    RIndexBuffer ibuffer = new RIndexBuffer(typeof(int), indicesList.Count, RBufferUsage.WriteOnly);
-                    ibuffer.SetData(indicesList.ToArray());
-                    
-                    vbuffer.SetData<RVertexData>(data);
+                    RVertexBuffer vbuffer = new RVertexBuffer (typeof (RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly, true);
 
-                        
+
+                    RIndexBuffer ibuffer = new RIndexBuffer (typeof (int), indicesList.Count, RBufferUsage.WriteOnly);
+                    ibuffer.SetData (indicesList.ToArray ());
+
+                    vbuffer.SetData<RVertexData> (data);
+
+#if WINDOWS
+                    var separator = "\\";
+#else
+                    var separator = "/";
+#endif
 
                     rmeshpart.VertexBuffer = vbuffer;
                     rmeshpart.IndexBuffer = ibuffer;
@@ -132,7 +127,7 @@ namespace Reactor.Loaders
                         material.SetColor(RMaterialColor.DIFFUSE, new RColor(mat.ColorDiffuse.R, mat.ColorDiffuse.G, mat.ColorDiffuse.B, mat.ColorDiffuse.A));
                         if (mat.HasTextureDiffuse)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath.Replace("\\", separator).Replace("/", separator));
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.Bind();
                             tex.GenerateMipmaps();
@@ -144,7 +139,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureNormal)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureNormal.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureNormal.FilePath.Replace("\\", separator).Replace("/", separator));
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.Bind();
                             tex.GenerateMipmaps();
@@ -156,7 +151,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureAmbient)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureAmbient.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureAmbient.FilePath.Replace("\\", separator).Replace("/", separator));
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
@@ -165,7 +160,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureHeight)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureHeight.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureHeight.FilePath.Replace("\\", separator).Replace("/", separator));
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
@@ -174,7 +169,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureEmissive)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureEmissive.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureEmissive.FilePath.Replace("\\", separator).Replace("/", separator));
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
@@ -183,7 +178,7 @@ namespace Reactor.Loaders
                         }
                         if (mat.HasTextureSpecular)
                         {
-                            var texFileName = Path.GetFileName(mat.TextureSpecular.FilePath);
+                            var texFileName = Path.GetFileName(mat.TextureSpecular.FilePath.Replace("\\", separator).Replace("/", separator));
                             RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
                             tex.SetTextureMagFilter(RTextureMagFilter.Linear);
                             tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);

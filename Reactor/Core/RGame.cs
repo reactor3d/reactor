@@ -152,6 +152,7 @@ namespace Reactor
             var now = DateTime.UtcNow;
             gameTime.TotalGameTime += (now - startTime);
             gameTime.ElapsedGameTime = (now - lastTime);
+
             Update();
             lastTime = now;
         }

@@ -27,7 +27,7 @@ namespace TestBed
             Engine.SetShowFPS(true);
             Engine.SetViewport(new RViewport(0,0,1280, 720));
             Engine.InitHDR();
-            //GameWindow.CursorVisible = false;
+            GameWindow.CursorVisible = true;
             sponza = Engine.Scene.Create<RMesh>("sponza");
             sponza.LoadSourceModel("/models/sponza.fbx");
             sponza.CullEnable = false;
@@ -91,12 +91,13 @@ namespace TestBed
         {
             int X,Y,Wheel = 0;
             Engine.Input.GetMouse(out X, out Y, out Wheel);
+            RLog.Info(String.Format("Mouse [ X:{0}, Y:{1} ]", X, Y));
             Vector2 center_of_window = new Vector2(GameWindow.Width / 2, GameWindow.Height / 2);
             Vector2 mouse_direction = new Vector2(X, Y);
             mouse_direction = (mouse_direction-center_of_window);
             mouse_direction.X /= GameWindow.Width;
             mouse_direction.Y /= GameWindow.Height;
-            mouse_direction *= 80f;
+            mouse_direction *= .80f;
             var cam = Engine.GetCamera();
             if (Engine.Input.IsKeyDown(RKey.W))
                 direction += cam.Matrix.Forward * 0.1f;
@@ -110,17 +111,17 @@ namespace TestBed
             panning.Y += mouse_direction.Y * 2f;
             sponza.Update();
             direction *= 0.90f;
-            cam.RotateX(-mouse_direction.Y * 2f);
-            if (cam.Rotation.X > Math.PI/2)
-                cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
-            if (cam.Rotation.X < -Math.PI/2)
-                cam.Rotation = new Quaternion(-(float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
-                
-            cam.RotateY(-mouse_direction.X * 2f);
+            //cam.RotateX(-mouse_direction.Y * 2f);
+            //if (cam.Rotation.X > Math.PI/2)
+            //    cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
+            //if (cam.Rotation.X < -Math.PI/2)
+            //    cam.Rotation = new Quaternion(-(float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
+            //    
+            //cam.RotateY(-mouse_direction.X * 2f);
             cam.Move(direction);
             cam.Update();
-            if(GameWindow.Focused)
-                Engine.Input.CenterMouse();
+            //if(GameWindow.Focused)
+                //Engine.Input.CenterMouse();
             if (Engine.Input.IsKeyDown(RKey.Escape))
                 GameWindow.Exit();
         }

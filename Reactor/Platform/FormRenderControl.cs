@@ -31,6 +31,7 @@ using System.Windows.Forms;
 
 namespace Reactor.Platform
 {
+    #if WINDOWS
     public class FormRenderControl : RenderControl
     {
         public Form Form { get; internal set; }
@@ -65,4 +66,5 @@ namespace Reactor.Platform
             WindowInfo.Dispose();
         }
     }
+    #endif
 }

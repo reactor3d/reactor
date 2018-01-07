@@ -94,9 +94,9 @@ namespace Reactor
                 switch ( CurrentBitmap.PixelFormat )
                 {
                     case System.Drawing.Imaging.PixelFormat.Format8bppIndexed: // misses glColorTable setup
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex;
-                        pt = OpenTK.Graphics.OpenGL.PixelType.Bitmap;
+                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Srgb8;
+                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
+                        pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     case System.Drawing.Imaging.PixelFormat.Format16bppArgb1555:
                     case System.Drawing.Imaging.PixelFormat.Format16bppRgb555: // does not work
@@ -111,14 +111,14 @@ namespace Reactor
                     break;
 */
                     case System.Drawing.Imaging.PixelFormat.Format24bppRgb: // works
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
+                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb;
                         pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
                         pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     case System.Drawing.Imaging.PixelFormat.Format32bppRgb: // has alpha too? wtf?
                     case System.Drawing.Imaging.PixelFormat.Canonical:
                     case System.Drawing.Imaging.PixelFormat.Format32bppArgb: // works
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
+                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
                         pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                         pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
@@ -150,6 +150,7 @@ namespace Reactor
                 }
 
                 //GL.Finish( );
+                REngine.CheckGLError();
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )
                 {

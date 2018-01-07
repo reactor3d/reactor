@@ -347,6 +347,7 @@ namespace Reactor
             }
 
         }
+        #if WINDOWS
         public bool InitForm(IntPtr handle)
         {
             try
@@ -369,7 +370,7 @@ namespace Reactor
             }
 
         }
-
+        #endif
         void PrintExtensions() {
             var extensions = GL.GetString(StringName.Extensions).Split(' ');
             foreach(var extension in extensions) {
@@ -403,10 +404,14 @@ namespace Reactor
                 control.GameWindow.Y = 0;
                 control.Context = (GraphicsContext)control.GameWindow.Context;
                 _renderControl = control;
-                RShader.InitShaders();
+
                 RLog.Info(GetGLInfo());
+                REngine.CheckGLError ();
                 RLog.Info("Game Window Renderer Initialized.");
-                PrintExtensions();
+                //PrintExtensions();
+                REngine.CheckGLError();
+
+                RShader.InitShaders ();
                 REngine.CheckGLError();
                 Screen.Init();
                 REngine.CheckGLError();

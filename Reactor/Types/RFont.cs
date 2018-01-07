@@ -180,7 +180,7 @@ namespace Reactor.Types
             Texture.LoadFromBitmap(b);
             Texture.SetTextureMagFilter(RTextureMagFilter.Linear);
             Texture.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-            Texture.SetTextureWrapMode(RTextureWrapMode.Clamp, RTextureWrapMode.Clamp);
+            Texture.SetTextureWrapMode(RTextureWrapMode.ClampToBorder, RTextureWrapMode.ClampToBorder);
             REngine.CheckGLError();
 
         }
