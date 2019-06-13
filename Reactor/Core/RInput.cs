@@ -25,6 +25,7 @@ using Reactor.Types;
 using OpenTK.Input;
 using System.Collections.Generic;
 
+
 namespace Reactor
 {
     public class RInput : RSingleton<RInput>
@@ -47,23 +48,17 @@ namespace Reactor
 
         public void GetMouse(out int X, out int Y, out int Wheel)
         {
-            var cursor = Mouse.GetCursorState();
-
-            if(cursor.IsConnected){
-                X = cursor.X;
-                Y = cursor.Y;
-                Wheel = cursor.Wheel;
-            } else {
-                X = -1;
-                Y = -1;
-                Wheel = -1;
-            }
-            RLog.Info(String.Format("Mouse Data: [X:{0},Y:{1}]", cursor.X, cursor.Y));
+            
+            var mouse = Mouse.GetState();
+            X = mouse.X;
+            Y = mouse.Y;
+            Wheel = mouse.Wheel;
+            RLog.Info(String.Format("Mouse Data X:{0} Y:{1} W:{2}", X, Y, Wheel));
         }
 
         public bool IsMouseButtonDown(MouseButton button)
         {
-            return REngine.RGame.GameWindow.Mouse.GetState().IsButtonDown(button);
+            return Mouse.GetState().IsButtonDown(button);
         }
 
         public void CenterMouse()
@@ -77,7 +72,7 @@ namespace Reactor
 
         public bool IsMouseButtonUp(MouseButton button)
         {
-            return REngine.RGame.GameWindow.Mouse.GetState().IsButtonUp(button);
+            return Mouse.GetState().IsButtonUp(button);
         }
     }
 }

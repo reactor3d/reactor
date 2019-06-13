@@ -61,7 +61,7 @@ namespace Reactor
         internal static string RootPath;
         internal static RCamera camera;
         internal static bool showFps = true;
-
+        private RDisplayMode displayMode;
         private float _lastFps = 0;
         private float _fps = 0;
         private TimeSpan lastFrameTime;
@@ -313,7 +313,7 @@ namespace Reactor
             GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.Enable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
             RBlendState.Opaque.PlatformApplyState();
             _viewport.Bind();
             
@@ -415,6 +415,7 @@ namespace Reactor
                 REngine.CheckGLError();
                 Screen.Init();
                 REngine.CheckGLError();
+
                 return true;
             } catch(Exception e) {
                 RLog.Error(e);

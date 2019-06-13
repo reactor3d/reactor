@@ -182,7 +182,7 @@ namespace Reactor.Geometry
                 // Copy from the index buffer to the temporary buffer
                 Marshal.Copy(ptr, buffer, 0, buffer.Length);
                 // Copy from the temporary buffer to the destination array
-                Buffer.BlockCopy(buffer, 0, data, startIndex * elementSizeInByte, elementCount * elementSizeInByte);
+                System.Buffer.BlockCopy(buffer, 0, data, startIndex * elementSizeInByte, elementCount * elementSizeInByte);
             }
             GL.UnmapBuffer(BufferTarget.ArrayBuffer);
             REngine.CheckGLError();

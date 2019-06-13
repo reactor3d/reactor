@@ -1,0 +1,101 @@
+﻿<Properties StartupConfiguration="{E8B6B4D9-5375-4FF2-A87C-A2BBE207E250}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core/REngine.cs">
+    <Files>
+      <File FileName="Types/RShaderEffect.cs" Line="111" Column="1" />
+      <File FileName="Types/RShader.cs" Line="574" Column="1" />
+      <File FileName="Platform/GameWindowRenderControl.cs" Line="34" Column="22" />
+      <File FileName="Platform/FormRenderControl.cs" Line="67" Column="10" />
+      <File FileName="Platform/RenderControl.cs" Line="1" Column="1" />
+      <File FileName="../TestBed/TestBed/Game.cs" Line="27" Column="1" />
+      <File FileName="Core/REngine.cs" Line="416" Column="1" />
+      <File FileName="Core/RGameWindow.cs" Line="44" Column="1" />
+      <File FileName="Shaders/headers.glsl" Line="1" Column="1" />
+      <File FileName="Loaders/MeshLoader.cs" Line="131" Column="83" />
+      <File FileName="Reactor.dll.config" Line="1" Column="1" />
+      <File FileName="../TestBed/TestBed/app.config" Line="1" Column="1" />
+      <File FileName="../TestBed/TestBed/Properties/Resources.resx" Line="1" Column="1" />
+      <File FileName="Core/RTextures.cs" Line="51" Column="1" />
+      <File FileName="Loaders/GDILoader.cs" Line="126" Column="1" />
+      <File FileName="Types/RMeshPart.cs" Line="56" Column="1" />
+      <File FileName="Types/RMaterial.cs" Line="143" Column="30" />
+      <File FileName="Types/RTexture.cs" Line="146" Column="1" />
+      <File FileName="Types/RFont.cs" Line="180" Column="1" />
+      <File FileName="Core/RInput.cs" Line="71" Column="9" />
+      <File FileName="Core/RGame.cs" Line="141" Column="1" />
+      <File FileName="../Samples/2 - Init Form/2 - Init Form/Form1.cs" Line="37" Column="20" />
+      <File FileName="Types/States/RBlendState.cs" Line="263" Column="46" />
+      <File FileName="Fonts/BBox.cs" Line="42" Column="30" />
+      <File FileName="Loaders/DDSLoader.cs" Line="470" Column="48" />
+      <File FileName="Geometry/RIndexBuffer.cs" Line="184" Column="25" />
+      <File FileName="Core/RScreen.cs" Line="53" Column="1" />
+      <File FileName="Types/RViewport.cs" Line="57" Column="1" />
+      <File FileName="../TestBed/TestBed/Program.cs" Line="18" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Reactor" expanded="True">
+            <Node name="Samples" expanded="True">
+              <Node name="2 - Init Form" expanded="True" />
+            </Node>
+            <Node name="TestBed" expanded="True">
+              <Node name="TestBed" expanded="True">
+                <Node name="References" expanded="True" />
+                <Node name="Packages" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="Reactor" expanded="True">
+              <Node name="Packages" expanded="True" />
+              <Node name="Core" expanded="True">
+                <Node name="REngine.cs" selected="True" />
+              </Node>
+              <Node name="Fonts" expanded="True" />
+              <Node name="Geometry" expanded="True" />
+              <Node name="Loaders" expanded="True" />
+              <Node name="Platform" expanded="True" />
+              <Node name="Types" expanded="True">
+                <Node name="States" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.TestBed.TestBed PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/TestBed/TestBed/Game.cs" line="61" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/REngine.cs" relfile="Core/REngine.cs" line="421" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/REngine.cs" relfile="Core/REngine.cs" line="396" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/REngine.cs" relfile="Core/REngine.cs" line="416" column="26" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="79" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="81" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="92" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="78" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="76" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="97" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="136" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="144" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="39" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="52" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="53" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="75" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/REngine.cs" relfile="Core/REngine.cs" line="417" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/REngine.cs" relfile="Core/REngine.cs" line="419" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="119" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="155" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="42" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="43" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="44" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Core/RScreen.cs" relfile="Core/RScreen.cs" line="45" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/TestBed/TestBed/Game.cs" line="27" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Types/RShader.cs" relfile="Types/RShader.cs" line="572" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Types/RShader.cs" relfile="Types/RShader.cs" line="573" column="1" />
+      <Breakpoint file="/Users/greiser/Projects/reisergames/reactor/Reactor/Types/RShader.cs" relfile="Types/RShader.cs" line="574" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -71,7 +71,7 @@ namespace Reactor
             return DPI;
         }
 
-        internal void Init()
+        public void Init()
         {
             REngine.CheckGLError();
            
@@ -102,7 +102,7 @@ namespace Reactor
             //blendState.ColorWriteChannels = RColorWriteChannels.All;
             GL.Enable(EnableCap.Blend);
             blendState.PlatformApplyState();
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             //GL.FrontFace(FrontFaceDirection.Ccw);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             REngine.CheckGLError();
@@ -123,7 +123,7 @@ namespace Reactor
             GL.CullFace(CullFaceMode.Back);
             GL.DepthFunc(DepthFunction.Less);
             GL.Disable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.Zero);
             REngine.CheckGLError();
             GL.DepthMask(true);
             REngine.CheckGLError();
@@ -175,7 +175,7 @@ namespace Reactor
             GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
             
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
@@ -200,7 +200,7 @@ namespace Reactor
             blendState.PlatformApplyState();
 
                 GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
@@ -220,7 +220,7 @@ namespace Reactor
             GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
             GL.Disable(EnableCap.Blend);
             indexQuad2D.Unbind();
             vertexQuad2D.UnbindVertexArray();
@@ -239,7 +239,7 @@ namespace Reactor
 
             blendState.PlatformApplyState();
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Disable(EnableCap.CullFace);
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, font.Texture);
@@ -254,7 +254,7 @@ namespace Reactor
             
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
             GL.Disable(EnableCap.Blend);
             
             defaultShader.Unbind();

@@ -22,10 +22,13 @@ namespace TestBed
 
         public override void Init()
         {
-            Engine.InitGameWindow(1280, 720, RWindowStyle.Normal);
+            var displayMode = new RDisplayMode(1280, 720, 60);
+
+            Engine.InitGameWindow(displayMode, "TestBed");
+            //Engine.ToggleFullscreen(new RDisplayMode(1920, 1080, 60));
             GameWindow.VSync = OpenTK.VSyncMode.On;
             Engine.SetShowFPS(true);
-            Engine.SetViewport(new RViewport(0,0,1280, 720));
+            Engine.SetViewport(new RViewport(0,0,displayMode.Width, displayMode.Height));
             Engine.InitHDR();
             GameWindow.CursorVisible = true;
             sponza = Engine.Scene.Create<RMesh>("sponza");
@@ -91,7 +94,6 @@ namespace TestBed
         {
             int X,Y,Wheel = 0;
             Engine.Input.GetMouse(out X, out Y, out Wheel);
-            RLog.Info(String.Format("Mouse [ X:{0}, Y:{1} ]", X, Y));
             Vector2 center_of_window = new Vector2(GameWindow.Width / 2, GameWindow.Height / 2);
             Vector2 mouse_direction = new Vector2(X, Y);
             mouse_direction = (mouse_direction-center_of_window);
