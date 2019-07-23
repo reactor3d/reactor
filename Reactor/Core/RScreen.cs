@@ -102,11 +102,13 @@ namespace Reactor
             //blendState.ColorWriteChannels = RColorWriteChannels.All;
             GL.Enable(EnableCap.Blend);
             blendState.PlatformApplyState();
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            //GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
+            REngine.CheckGLError ();
+            GL.CullFace(CullFaceMode.Back);
+            REngine.CheckGLError ();
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             REngine.CheckGLError();
-            GL.Disable(EnableCap.CullFace);
+            //GL.Disable(EnableCap.CullFace);
 
             camera2d.Update();
 
@@ -239,7 +241,7 @@ namespace Reactor
 
             blendState.PlatformApplyState();
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
             GL.Disable(EnableCap.CullFace);
             defaultShader.Bind();
             defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, font.Texture);

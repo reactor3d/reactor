@@ -104,6 +104,7 @@ namespace Reactor.Types
         public void RotateZ(float value)
         {
             Rotate(0, 0, value);
+            UpdateMatrix();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rotate(Quaternion value)

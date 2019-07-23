@@ -31,12 +31,10 @@ namespace Reactor.Types
 {
     public class RCameraNode : RUpdateNode
     {
-        internal Matrix viewMatrix;
-        internal Matrix projMatrix;
 
-        public Matrix Projection { get { return projMatrix; } set { projMatrix = value; } }
+        public Matrix Projection { get; set; }
 
-        public Matrix View { get { return viewMatrix; } set { viewMatrix = value; } }
+        public Matrix View { get { return Matrix; } }
 
         public virtual Vector3 Unproject(RViewport viewport, int x, int y, float depth)
         {
@@ -45,7 +43,7 @@ namespace Reactor.Types
             screen.Y = screen.Y * 2.0f - 1.0f;
             screen.Z = screen.Z * 2.0f - 1.0f;
 
-            var inverseViewProjection = Matrix.Invert(projMatrix * viewMatrix);
+            var inverseViewProjection = Matrix.Invert(Projection * Matrix);
             screen = inverseViewProjection * screen;
 
             if(screen.W != 0.0f)

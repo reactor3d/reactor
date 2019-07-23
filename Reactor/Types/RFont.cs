@@ -140,13 +140,13 @@ namespace Reactor.Types
             Glyphs.Sort(new FontGlyphSizeSorter());
             var missed = -1;
             var width = 16;
-            Bitmap b = new Bitmap(1, 1);
+            Bitmap b = new Bitmap (1, 1);
             while (missed != 0)
             {
                 missed = 0;
                 AtlasNode root = new AtlasNode();
                 root.bounds = new Reactor.Math.Rectangle(0, 0, width, width);
-                b.Dispose();
+                b.Dispose ();
                 b = new Bitmap(width, width);
                 Graphics g = Graphics.FromImage(b);
                 g.Clear(Color.Transparent);

@@ -42,7 +42,6 @@ namespace Reactor
         {
             RViewport viewport = REngine.Instance._viewport;
             this.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height,0, Near, Far);
-            this.View = Matrix.Identity;
         }
 
     }

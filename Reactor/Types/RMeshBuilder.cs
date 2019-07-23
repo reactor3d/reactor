@@ -351,7 +351,7 @@ namespace Reactor.Types
 
                 VertexBuffer.VertexDeclaration.Apply(_material.Shader, IntPtr.Zero);
 
-                _material.Shader.BindSemantics(matrix, REngine.camera.viewMatrix, REngine.camera.projMatrix);
+                _material.Shader.BindSemantics(matrix, REngine.camera.View, REngine.camera.Projection);
                 if (PrimitiveType == RPrimitiveType.Points) {
                     GL.PointParameter(PointParameterName.PointSizeMin, 0.0f);
                     GL.PointParameter(PointParameterName.PointSizeMax, 1024.0f);

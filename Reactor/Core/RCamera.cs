@@ -35,7 +35,7 @@ namespace Reactor
     public class RCamera : RCameraNode
     {
         public Vector3 ViewDirection { get; set; }
-
+        public Vector3 Up { get; set; }
         public float FieldOfView { get; set; }
 
         public float Near { get; set; }
@@ -46,23 +46,13 @@ namespace Reactor
             Far = 100.0f;
             FieldOfView = 70f;
             IsEnabled = true;
+            ViewDirection = Vector3.UnitZ;
+            Up = -Vector3.UnitY;
             OnUpdate += (sender, e) => {
-                //ViewDirection = Vector3.Transform(new Vector3(0, 0, -1f), GetRotation());
-                /*viewMatrix = new Matrix(
-                    matrix.M11, matrix.M12, matrix.M13, 0,
-                    matrix.M21, matrix.M22, matrix.M23, 0,
-                    matrix.M31, matrix.M32, matrix.M33, 0,
-                    -Vector3.Dot(Position, matrix.Right), -Vector3.Dot(Position, matrix.Up), -Vector3.Dot(Position, matrix.Forward), 1
-                );*/
-                viewMatrix = Matrix.CreateLookAt(this.Position, this.Position + matrix.Forward, matrix.Up);
-                
 
-                ViewDirection = viewMatrix.Forward;
+                Matrix = Matrix.CreateLookAt(Position, Position + ViewDirection, Up);
                 RViewport viewport = REngine.Instance._viewport;
-                viewport.Bind ();
-                RLog.Info (String.Format ("Viewport {0} {1}", viewport.Width, viewport.Height));
-                //viewMatrix = Matrix.Identity * Matrix.
-                projMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), viewport.AspectRatio, Near, Far);
+                Projection = Matrix.CreatePerspectiveFieldOfView (MathHelper.PiOver4, viewport.AspectRatio, Near, Far);
             };
         }
 
@@ -72,6 +62,7 @@ namespace Reactor
             Far = far;
             GL.DepthRange(near, far);
         }
+
     }
 }
 

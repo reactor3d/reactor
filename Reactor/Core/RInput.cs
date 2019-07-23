@@ -55,6 +55,11 @@ namespace Reactor
             }
         }
 
+        public MouseState GetMouseState ()
+        {
+            return Mouse.GetState ();
+        }
+
         public bool IsMouseButtonDown(MouseButton button)
         {
             return Mouse.GetState().IsButtonDown(button);
@@ -63,8 +68,9 @@ namespace Reactor
         public void CenterMouse()
         {
             RGameWindow window = REngine.RGame.GameWindow;
-            var x = window.Location.X + (window.Width / 2);
-            var y = window.Location.Y + (window.Height / 2);
+            var x = window.Location.X + (window.ClientRectangle.Width / 2);
+            var y = window.Location.Y + (window.ClientRectangle.Height / 2);
+            RLog.Info (String.Format ("Set MouseCenter to {0} {1}", x, y));
             Mouse.SetPosition(x, y);
         }
 

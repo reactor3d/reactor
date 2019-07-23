@@ -749,12 +749,28 @@ namespace Reactor.Math
             value.Z *= scaleFactor;
             return value;
         }
+        [MethodImpl (MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator * (Vector3 value, double scaleFactor)
+        {
+            value.X *= (float)scaleFactor;
+            value.Y *= (float)scaleFactor;
+            value.Z *= (float)scaleFactor;
+            return value;
+        }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(float scaleFactor, Vector3 value)
         {
             value.X *= scaleFactor;
             value.Y *= scaleFactor;
             value.Z *= scaleFactor;
+            return value;
+        }
+        [MethodImpl (MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator * (double scaleFactor, Vector3 value)
+        {
+            value.X *= (float)scaleFactor;
+            value.Y *= (float)scaleFactor;
+            value.Z *= (float)scaleFactor;
             return value;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -776,7 +792,16 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator /(Vector3 value, float divider)
         {
-            float factor = 1 / divider;
+            float factor = 1.0f / divider;
+            value.X *= factor;
+            value.Y *= factor;
+            value.Z *= factor;
+            return value;
+        }
+        [MethodImpl (MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator / (Vector3 value, double divider)
+        {
+            float factor = 1.0f / (float)divider;
             value.X *= factor;
             value.Y *= factor;
             value.Z *= factor;

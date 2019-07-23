@@ -63,7 +63,7 @@ namespace Reactor.Types
 
             REngine.CheckGLError();
             
-            Material.Shader.BindSemantics(Matrix.Identity * world, REngine.camera.viewMatrix, REngine.camera.projMatrix);
+            Material.Shader.BindSemantics(Matrix.Identity * world, REngine.camera.View, REngine.camera.Projection);
             REngine.CheckGLError();
 
             
