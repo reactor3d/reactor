@@ -68,7 +68,7 @@ namespace Reactor
         private static int _Width, _Height, _Depth, _MipMapCount;
         private static int _BytesForMainSurface; // must be handled with care when implementing uncompressed formats!
         private static byte _BytesPerBlock;
-        private static PixelInternalFormat _PixelInternalFormat;
+        private static InternalFormat _PixelInternalFormat;
         #endregion Simplified In-Memory representation of the Image
 
         #region Flag Enums
@@ -235,7 +235,7 @@ namespace Reactor
             _MipMapCount = 0;
             _BytesForMainSurface = 0;
             _BytesPerBlock = 0;
-            _PixelInternalFormat = PixelInternalFormat.Rgba8;
+            _PixelInternalFormat = InternalFormat.Rgba8;
 
             #endregion
 
@@ -317,19 +317,19 @@ namespace Reactor
                     switch ( (eFOURCC) pfFourCC )
                 {
                     case eFOURCC.DXT1:
-                        _PixelInternalFormat = (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext;
+                        _PixelInternalFormat = (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext;
                         _BytesPerBlock = 8;
                         _IsCompressed = true;
                         break;
                         //case eFOURCC.DXT2:
                     case eFOURCC.DXT3:
-                        _PixelInternalFormat = (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext;
+                        _PixelInternalFormat = (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext;
                         _BytesPerBlock = 16;
                         _IsCompressed = true;
                         break;
                         //case eFOURCC.DXT4:
                     case eFOURCC.DXT5:
-                        _PixelInternalFormat = (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext;
+                        _PixelInternalFormat = (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext;
                         _BytesPerBlock = 16;
                         _IsCompressed = true;
                         break;
@@ -399,7 +399,7 @@ namespace Reactor
                                         #region Swap Bytes
                                         switch ( _PixelInternalFormat )
                                         {
-                                            case (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext:
+                                            case (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext:
                                                 // Color only
                                                 RawDataOfSurface[target + 0] = data[source + 0];
                                                 RawDataOfSurface[target + 1] = data[source + 1];
@@ -410,7 +410,7 @@ namespace Reactor
                                                 RawDataOfSurface[target + 6] = data[source + 5];
                                                 RawDataOfSurface[target + 7] = data[source + 4];
                                                 break;
-                                            case (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext:
+                                            case (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext:
                                                 // Alpha
                                                 RawDataOfSurface[target + 0] = data[source + 6];
                                                 RawDataOfSurface[target + 1] = data[source + 7];
@@ -431,7 +431,7 @@ namespace Reactor
                                                 RawDataOfSurface[target + 14] = data[source + 13];
                                                 RawDataOfSurface[target + 15] = data[source + 12];
                                                 break;
-                                            case (PixelInternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext:
+                                            case (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext:
                                                 // Alpha, the first 2 bytes remain 
                                                 RawDataOfSurface[target + 0] = data[source + 0];
                                                 RawDataOfSurface[target + 1] = data[source + 1];

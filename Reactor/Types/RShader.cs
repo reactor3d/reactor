@@ -113,10 +113,10 @@ namespace Reactor.Types
                 int size;
                 ActiveAttribType type;
                 int length;
-                StringBuilder name = new StringBuilder();
-                GL.GetActiveAttrib(Id, i, 4096, out length, out size, out type, name);
+                string name;
+                GL.GetActiveAttrib(Id, i, 4096, out length, out size, out type, out name);
                 Attribute attrib = new Attribute();
-                attrib.name = name.ToString();
+                attrib.name = name;
                 attrib.index = i;
                 attrib.location = GL.GetAttribLocation(Id, attrib.name);
                 attrib.type = type;
@@ -132,8 +132,8 @@ namespace Reactor.Types
                 int size;
                 ActiveUniformType type;
                 int length;
-                StringBuilder name = new StringBuilder();
-                GL.GetActiveUniform(Id, i, 4096, out length, out size, out type, name);
+                string name;
+                GL.GetActiveUniform(Id, i, 4096, out length, out size, out type, out name);
                 Uniform uni = new Uniform();
                 uni.index = i;
                 uni.name = name.ToString();

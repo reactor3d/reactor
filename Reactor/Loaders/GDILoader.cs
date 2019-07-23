@@ -94,8 +94,8 @@ namespace Reactor
                 switch ( CurrentBitmap.PixelFormat )
                 {
                     case System.Drawing.Imaging.PixelFormat.Format8bppIndexed: // misses glColorTable setup
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Srgb8;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
+                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.R8;
+                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Red;
                         pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     case System.Drawing.Imaging.PixelFormat.Format16bppArgb1555:

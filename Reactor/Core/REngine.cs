@@ -313,7 +313,7 @@ namespace Reactor
             GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.Enable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
             RBlendState.Opaque.PlatformApplyState();
             _viewport.Bind();
             
@@ -598,6 +598,35 @@ namespace Reactor
             }
         }
 
+        public static BlendingFactor GetBlendFactor(this RBlend blend)
+        {
+            switch (blend) {
+            case RBlend.DestinationAlpha:
+                return BlendingFactor.DstAlpha;
+            case RBlend.DestinationColor:
+                return BlendingFactor.DstColor;
+            case RBlend.InverseDestinationAlpha:
+                return BlendingFactor.OneMinusDstAlpha;
+            case RBlend.InverseDestinationColor:
+                return BlendingFactor.OneMinusDstColor;
+            case RBlend.InverseSourceAlpha:
+                return BlendingFactor.OneMinusSrcAlpha;
+            case RBlend.InverseSourceColor:
+                return (BlendingFactor)All.OneMinusSrcColor;
+            case RBlend.One:
+                return BlendingFactor.One;
+            case RBlend.SourceAlpha:
+                return BlendingFactor.SrcAlpha;
+            case RBlend.SourceAlphaSaturation:
+                return BlendingFactor.SrcAlphaSaturate;
+            case RBlend.SourceColor:
+                return (BlendingFactor)All.SrcColor;
+            case RBlend.Zero:
+                return BlendingFactor.Zero;
+            default:
+                return BlendingFactor.One;
+            }
+        }
         public static BlendingFactorSrc GetBlendFactorSrc(this RBlend blend)
         {
             switch (blend)

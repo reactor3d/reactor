@@ -28,6 +28,7 @@ namespace TestBed
             Engine.SetViewport(new RViewport(0,0,1280, 720));
             Engine.InitHDR();
             GameWindow.CursorVisible = true;
+            GameWindow.Location = new System.Drawing.Point(0, 0);
             sponza = Engine.Scene.Create<RMesh>("sponza");
             sponza.LoadSourceModel("/models/sponza.fbx");
             sponza.CullEnable = false;
@@ -91,10 +92,12 @@ namespace TestBed
         {
             int X,Y,Wheel = 0;
             Engine.Input.GetMouse(out X, out Y, out Wheel);
-            RLog.Info(String.Format("Mouse [ X:{0}, Y:{1} ]", X, Y));
-            Vector2 center_of_window = new Vector2(GameWindow.Width / 2, GameWindow.Height / 2);
-            Vector2 mouse_direction = new Vector2(X, Y);
-            mouse_direction = (mouse_direction-center_of_window);
+            var window_bounds = OpenTK.DisplayDevice.GetDisplay(OpenTK.DisplayIndex.Default).Bounds;
+            Vector2 window_location = new Vector2(GameWindow.Location.X, GameWindow.Location.Y);
+            Vector2 center_of_window = new Vector2(window_bounds.Width / 2, window_bounds.Height / 2);
+            Vector2 mouse_position = new Vector2(X, Y);
+            Vector2 mouse_direction = (mouse_position-center_of_window);
+            RLog.Info(String.Format("Mouse [ X:{0}, Y:{1} ]", mouse_direction.X, mouse_direction.Y));
             mouse_direction.X /= GameWindow.Width;
             mouse_direction.Y /= GameWindow.Height;
             mouse_direction *= .80f;
@@ -110,20 +113,21 @@ namespace TestBed
             panning.X += mouse_direction.X * 2f;
             panning.Y += mouse_direction.Y * 2f;
             sponza.Update();
-            direction *= 0.90f;
-            //cam.RotateX(-mouse_direction.Y * 2f);
-            //if (cam.Rotation.X > Math.PI/2)
-            //    cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
-            //if (cam.Rotation.X < -Math.PI/2)
-            //    cam.Rotation = new Quaternion(-(float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
-            //    
-            //cam.RotateY(-mouse_direction.X * 2f);
+            direction *= 0.70f;
+            cam.RotateX(-mouse_direction.Y * 2f);
+            if (cam.Rotation.X > Math.PI/2)
+                cam.Rotation = new Quaternion((float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
+            if (cam.Rotation.X < -Math.PI/2)
+                cam.Rotation = new Quaternion(-(float)Math.PI/2, cam.Rotation.Y, cam.Rotation.Z, cam.Rotation.W);
+                
+            cam.RotateY(-mouse_direction.X * 2f);
             cam.Move(direction);
             cam.Update();
             //if(GameWindow.Focused)
                 //Engine.Input.CenterMouse();
             if (Engine.Input.IsKeyDown(RKey.Escape))
                 GameWindow.Exit();
+            
         }
     }
 }

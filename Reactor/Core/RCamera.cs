@@ -59,7 +59,10 @@ namespace Reactor
 
                 ViewDirection = viewMatrix.Forward;
                 RViewport viewport = REngine.Instance._viewport;
-                projMatrix = Matrix.Identity * Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), viewport.AspectRatio, Near, Far);
+                viewport.Bind ();
+                RLog.Info (String.Format ("Viewport {0} {1}", viewport.Width, viewport.Height));
+                //viewMatrix = Matrix.Identity * Matrix.
+                projMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), viewport.AspectRatio, Near, Far);
             };
         }
 

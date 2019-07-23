@@ -29,11 +29,6 @@ namespace Reactor
 {
     public class RInput : RSingleton<RInput>
     {
-        
-        public RInput()
-        {
-
-        }
 
         public bool IsKeyDown(RKey key)
         {
@@ -58,26 +53,26 @@ namespace Reactor
                 Y = -1;
                 Wheel = -1;
             }
-            RLog.Info(String.Format("Mouse Data: [X:{0},Y:{1}]", cursor.X, cursor.Y));
         }
 
         public bool IsMouseButtonDown(MouseButton button)
         {
-            return REngine.RGame.GameWindow.Mouse.GetState().IsButtonDown(button);
+            return Mouse.GetState().IsButtonDown(button);
         }
 
         public void CenterMouse()
         {
             RGameWindow window = REngine.RGame.GameWindow;
-
-            Mouse.SetPosition(window.Location.X + (window.Width / 2), window.Location.Y + (window.Height / 2));
+            var x = window.Location.X + (window.Width / 2);
+            var y = window.Location.Y + (window.Height / 2);
+            Mouse.SetPosition(x, y);
         }
 
 
 
         public bool IsMouseButtonUp(MouseButton button)
         {
-            return REngine.RGame.GameWindow.Mouse.GetState().IsButtonUp(button);
+            return Mouse.GetState().IsButtonUp(button);
         }
     }
 }

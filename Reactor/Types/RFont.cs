@@ -285,7 +285,8 @@ namespace Reactor.Types
         internal static Library FreetypeLibrary = new Library();
         internal static Assembly Assembly = Assembly.GetAssembly(typeof(RFontResources));
         internal static Face GetResource(string resource){
-            System.IO.BinaryReader reader = new System.IO.BinaryReader(Assembly.GetManifestResourceStream(resource));
+            Stream stream = Assembly.GetManifestResourceStream(resource);
+            System.IO.BinaryReader reader = new System.IO.BinaryReader(stream);
             byte[] buffer = new byte[reader.BaseStream.Length];
             reader.Read(buffer, 0, buffer.Length);
             reader.Close();

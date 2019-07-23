@@ -256,7 +256,7 @@ namespace Reactor.Types.States
         {
 
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(this.ColorSourceBlend.GetBlendFactorSrc(), this.ColorDestinationBlend.GetBlendFactorDest());
+            GL.BlendFunc(this.ColorSourceBlend.GetBlendFactor(), this.ColorDestinationBlend.GetBlendFactor());
 
             GL.BlendColor(
                 this.BlendFactor.R / 255.0f,      
