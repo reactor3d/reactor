@@ -70,8 +70,8 @@ namespace Reactor
             RGameWindow window = REngine.RGame.GameWindow;
             var x = window.Location.X + (window.ClientRectangle.Width / 2);
             var y = window.Location.Y + (window.ClientRectangle.Height / 2);
-            RLog.Info (String.Format ("Set MouseCenter to {0} {1}", x, y));
-            Mouse.SetPosition(x, y);
+            RLog.Info (String.Format ("Set MouseCenter to {0} {1}", x/2, y/2));
+            Mouse.SetPosition(x/2, y/2);
         }
 
 

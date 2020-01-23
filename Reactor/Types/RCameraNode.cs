@@ -34,7 +34,7 @@ namespace Reactor.Types
 
         public Matrix Projection { get; set; }
 
-        public Matrix View { get { return Matrix; } }
+        public Matrix View { get { return Matrix; } set { Matrix = value; } }
 
         public virtual Vector3 Unproject(RViewport viewport, int x, int y, float depth)
         {

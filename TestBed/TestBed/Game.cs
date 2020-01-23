@@ -39,7 +39,7 @@ namespace TestBed
             sponza.BlendEnable = false;
             var cam = Engine.GetCamera();
             cam.SetPosition(0, 20, 1f);
-            cam.LookAt(Vector3.Zero);
+            cam.LookAt(Vector3.Zero - Vector3.UnitZ);
             cam.SetClipPlanes(0.01f, 10000f);
 
             font = RScreen.Instance.LoadFont("/vcr_osd_mono.ttf", 16);
@@ -100,7 +100,7 @@ namespace TestBed
             var window_bounds = GameWindow.ClientRectangle;
             Vector2 mouse_position = new Vector2(X, Y);
             Vector2 mouse_direction = mouse_position - prev_mouse;
-            //RLog.Info(String.Format("Mouse [ X:{0}, Y:{1} ]", X, Y));
+            RLog.Info(String.Format("Mouse [ X:{0}, Y:{1} ]", mouse_direction.X, mouse_direction.Y));
 
             var cam = Engine.GetCamera();
 
@@ -115,21 +115,22 @@ namespace TestBed
 
             sponza.Update();
             cam.Position = position;
-
+            
             cam.ViewDirection = Vector3.Transform(cam.ViewDirection, Matrix.CreateFromAxisAngle(
                                 cam.Up, (-MathHelper.PiOver4 / 150) * mouse_direction.X));
 
             cam.ViewDirection = Vector3.Transform(cam.ViewDirection, Matrix.CreateFromAxisAngle(
                                 Vector3.Cross(cam.Up, cam.ViewDirection),
-                                (MathHelper.PiOver4 / 150) * mouse_direction.Y));
+                                (MathHelper.PiOver4 / 100) * mouse_direction.Y));
 
             cam.Up = Vector3.Transform(cam.Up, Matrix.CreateFromAxisAngle(Vector3.Cross(cam.Up, cam.ViewDirection),
-                      (MathHelper.PiOver4 / 150) * mouse_direction.Y));
-            cam.Matrix = Matrix.CreateLookAt(cam.Position, cam.Position + cam.ViewDirection, cam.Up);
-            cam.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians( 70f ), Engine.GetViewport().AspectRatio, 0.1f, 1000f);
-            //cam.Update();
+                      (MathHelper.PiOver4 / 100) * mouse_direction.Y));
+            cam.View = Matrix.CreateLookAt(cam.Position, cam.Position + cam.ViewDirection, cam.Up);
+            cam.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(70f), Engine.GetViewport().AspectRatio, 0.1f, 1000f);
+
 
             prev_mouse = mouse_position;
+            Engine.Input.CenterMouse();
 
             if (Engine.Input.IsKeyDown(RKey.Escape))
                 GameWindow.Exit();
