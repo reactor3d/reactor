@@ -4,3 +4,6 @@
 [submodule "ThirdParty/freetype2"]
 	path = ThirdParty/freetype2
 	url = https://github.com/freetype/freetype2
+[submodule "ThirdParty/assimp"]
+	path = ThirdParty/assimp
+	url = https://github.com/assimp/assimp
