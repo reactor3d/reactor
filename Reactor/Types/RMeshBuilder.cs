@@ -24,7 +24,7 @@ using Reactor.Geometry;
 using Reactor.Math;
 using System;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics.OpenGL;
 
 namespace Reactor.Types
 {

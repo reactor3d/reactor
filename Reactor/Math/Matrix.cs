@@ -224,9 +224,9 @@ namespace Reactor.Math
         #region Private Members
 
         private static Matrix identity = new Matrix(1f, 0f, 0f, 0f, 
-                                             0f, 1f, 0f, 0f, 
-                                             0f, 0f, 1f, 0f, 
-                                             0f, 0f, 0f, 1f);
+                                                    0f, 1f, 0f, 0f, 
+                                                    0f, 0f, 1f, 0f, 
+                                                    0f, 0f, 0f, 1f);
 
         #endregion Private Members
 
@@ -1255,7 +1255,18 @@ namespace Reactor.Math
 
         public override int GetHashCode()
         {
-            return (((((((((((((((this.M11.GetHashCode() + this.M12.GetHashCode()) + this.M13.GetHashCode()) + this.M14.GetHashCode()) + this.M21.GetHashCode()) + this.M22.GetHashCode()) + this.M23.GetHashCode()) + this.M24.GetHashCode()) + this.M31.GetHashCode()) + this.M32.GetHashCode()) + this.M33.GetHashCode()) + this.M34.GetHashCode()) + this.M41.GetHashCode()) + this.M42.GetHashCode()) + this.M43.GetHashCode()) + this.M44.GetHashCode());
+            unchecked
+            {
+                var row0 = (M11.GetHashCode() ^ M12.GetHashCode() ^ M13.GetHashCode() ^ M14.GetHashCode());
+                var row1 = (M21.GetHashCode() ^ M22.GetHashCode() ^ M23.GetHashCode() ^ M24.GetHashCode());
+                var row2 = (M31.GetHashCode() ^ M32.GetHashCode() ^ M33.GetHashCode() ^ M34.GetHashCode());
+                var row3 = (M41.GetHashCode() ^ M42.GetHashCode() ^ M43.GetHashCode() ^ M44.GetHashCode());
+                var hashCode = row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ row2.GetHashCode();
+                hashCode = (hashCode * 397) ^ row3.GetHashCode();
+                return hashCode;
+            }
         }
 
 
@@ -1897,17 +1908,6 @@ namespace Reactor.Math
             minor10 = (float)det10;
             minor11 = (float)det11;
             minor12 = (float)det12;
-        }
-
-        public static implicit operator OpenTK.Matrix4(Matrix value)
-        {
-            return new OpenTK.Matrix4(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
-        }
-
-            
-        public static implicit operator Matrix(OpenTK.Matrix4 value)
-        {
-            return new Matrix(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
         }
 
         #endregion Private Static Methods

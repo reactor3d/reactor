@@ -23,9 +23,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
+using Reactor.Graphics;
+using Reactor.Graphics.OpenGL4;
+using Reactor.Platform;
 namespace Reactor
 {
     public sealed class RGameWindow : GameWindow

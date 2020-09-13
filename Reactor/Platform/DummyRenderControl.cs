@@ -20,13 +20,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics;
-using OpenTK.Platform;
+using Reactor.Graphics;
+using Reactor.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reactor.Platform.Dummy;
+using Reactor.Platform.Windows;
 
 namespace Reactor.Platform
 {
@@ -38,8 +40,9 @@ namespace Reactor.Platform
 
         public override void Init()
         {
-            WindowInfo = OpenTK.Platform.Utilities.CreateDummyWindowInfo();
-            Context = new GraphicsContext(GraphicsMode.Default, WindowInfo, 3, 2, GraphicsContextFlags.ForwardCompatible);
+            var dummy = new DummyGLContext();
+            WindowInfo = Reactor.Platform.Utilities.CreateDummyWindowInfo();
+            Context = new GraphicsContext(dummy.Context, WindowInfo);
             Context.MakeCurrent(WindowInfo);
             //Load OpenGL function entry points into OpenTK.
             Context.LoadAll();

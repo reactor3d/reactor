@@ -22,7 +22,6 @@
 // THE SOFTWARE.
 using System;
 using Reactor.Types;
-using Assimp;
 using Reactor.Math;
 using Reactor.Geometry;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace Reactor.Loaders
     {
         public static void LoadSource (this RMesh rmesh, string filename)
         {
-
+/*
             AssimpContext context = new AssimpContext ();
             context.SetConfig (new Assimp.Configs.FBXImportAllMaterialsConfig (true));
             context.SetConfig (new Assimp.Configs.FBXImportAllGeometryLayersConfig (true));
@@ -197,6 +196,7 @@ namespace Reactor.Loaders
                 throw new ReactorException("Attempted to load a model when Assimp couldn't find any verticies!");
 
             context.Dispose();
+            */
         }
         internal static void CalculateTangents(IList<Vector3> positions,
             IList<int> indices,

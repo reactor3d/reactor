@@ -23,7 +23,7 @@
 using System;
 using Reactor.Types;
 using Reactor.Math;
-using OpenTK.Graphics.OpenGL4;
+using Reactor.Graphics.OpenGL4;
 
 namespace Reactor
 {
@@ -37,31 +37,51 @@ namespace Reactor
         public Vector3 ViewDirection { get; set; }
         public Vector3 Up { get; set; }
         public float FieldOfView { get; set; }
+        public float Zoom { get; set; }
 
-        public float Near { get; set; }
-        public float Far { get; set; }
+
         public RCamera()
         {
             Near = 1.0f;
             Far = 100.0f;
             FieldOfView = 70f;
-            IsEnabled = true;
-            ViewDirection = Vector3.UnitZ;
-            Up = -Vector3.UnitY;
-            OnUpdate += (sender, e) => {
-
-                Matrix = Matrix.CreateLookAt(Position, Position + ViewDirection, Up);
-                RViewport viewport = REngine.Instance._viewport;
-                Projection = Matrix.CreatePerspectiveFieldOfView (MathHelper.PiOver4, viewport.AspectRatio, Near, Far);
-            };
+            Zoom = 1.0f;
+            Up = Vector3.UnitY;
+            View = Matrix.CreateLookAt (Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
+            ViewDirection = View.Forward;
+            Projection = Matrix.CreatePerspectiveFieldOfView (MathHelper.ToRadians (FieldOfView),
+                    REngine.Instance.GetViewport().AspectRatio, Near, Far);
+            Position = Vector3.Zero;
+            GL.DepthRange (Near, Far);
         }
 
-        public void SetClipPlanes(float near, float far)
+        public RCamera(float AspectRatio)
         {
-            Near = near;
-            Far = far;
-            GL.DepthRange(near, far);
+            Near = 1.0f;
+            Far = 100.0f;
+            FieldOfView = 70f;
+            Zoom = 1.0f;
+            Up = Vector3.UnitY;
+            View = Matrix.CreateLookAt (Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
+            ViewDirection = View.Forward;
+            Projection = Matrix.CreatePerspectiveFieldOfView (MathHelper.ToRadians (FieldOfView),
+                                AspectRatio, Near, Far);
+            Position = Vector3.Zero;
+            GL.DepthRange (Near, Far);
         }
+
+        public override void Update()
+        {
+            
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians (FieldOfView),
+                                REngine.Instance.GetViewport().AspectRatio, Near, Far);
+            View = Matrix.CreateLookAt(Position, Position + ViewDirection, Up);
+            
+            Matrix = View;
+
+            GL.DepthRange (Near, Far);
+        }
+        
 
     }
 }

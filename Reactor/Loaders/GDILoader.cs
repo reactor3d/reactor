@@ -38,9 +38,8 @@ using System.Drawing.Imaging;
 
 using System;
 using System.Diagnostics;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics;
+using Reactor.Graphics.OpenGL;
 
 namespace Reactor
 {
@@ -86,41 +85,41 @@ namespace Reactor
                 GL.BindTexture( dimension, texturehandle );
 
                 #region Load Texture
-                OpenTK.Graphics.OpenGL.PixelInternalFormat pif;
-                OpenTK.Graphics.OpenGL.PixelFormat pf;
-                OpenTK.Graphics.OpenGL.PixelType pt;
+                Reactor.Graphics.OpenGL.PixelInternalFormat pif;
+                Reactor.Graphics.OpenGL.PixelFormat pf;
+                Reactor.Graphics.OpenGL.PixelType pt;
 
 
                 switch ( CurrentBitmap.PixelFormat )
                 {
                     case System.Drawing.Imaging.PixelFormat.Format8bppIndexed: // misses glColorTable setup
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.R8;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Red;
-                        pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                        pif = Reactor.Graphics.OpenGL.PixelInternalFormat.R8;
+                        pf = Reactor.Graphics.OpenGL.PixelFormat.Red;
+                        pt = Reactor.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     case System.Drawing.Imaging.PixelFormat.Format16bppArgb1555:
                     case System.Drawing.Imaging.PixelFormat.Format16bppRgb555: // does not work
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb5A1;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
-                        pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedShort5551Ext;
+                        pif = Reactor.Graphics.OpenGL.PixelInternalFormat.Rgb5A1;
+                        pf = Reactor.Graphics.OpenGL.PixelFormat.Bgr;
+                        pt = Reactor.Graphics.OpenGL.PixelType.UnsignedShort5551Ext;
                         break;
                         /*  case System.Drawing.Imaging.PixelFormat.Format16bppRgb565:
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.R5G6B5IccSgix;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.R5G6B5IccSgix;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                    pif = Reactor.Graphics.OpenGL.PixelInternalFormat.R5G6B5IccSgix;
+                    pf = Reactor.Graphics.OpenGL.PixelFormat.R5G6B5IccSgix;
+                    pt = Reactor.Graphics.OpenGL.PixelType.UnsignedByte;
                     break;
 */
                     case System.Drawing.Imaging.PixelFormat.Format24bppRgb: // works
-                        pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
-                        pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                        pif = Reactor.Graphics.OpenGL.PixelInternalFormat.Rgb;
+                        pf = Reactor.Graphics.OpenGL.PixelFormat.Bgr;
+                        pt = Reactor.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     case System.Drawing.Imaging.PixelFormat.Format32bppRgb: // has alpha too? wtf?
                     case System.Drawing.Imaging.PixelFormat.Canonical:
                     case System.Drawing.Imaging.PixelFormat.Format32bppArgb: // works
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
-                        pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
-                        pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                    pif = Reactor.Graphics.OpenGL.PixelInternalFormat.Rgba;
+                        pf = Reactor.Graphics.OpenGL.PixelFormat.Bgra;
+                        pt = Reactor.Graphics.OpenGL.PixelType.UnsignedByte;
                         break;
                     default:
                         throw new ArgumentException( "ERROR: Unsupported Pixel Format " + CurrentBitmap.PixelFormat );

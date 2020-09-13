@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
+using SharpFont;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
@@ -28,11 +28,10 @@ using System.Drawing;
 using System.Text;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
-using SharpFont;
 using System.IO;
 using Reactor.Math;
 using Reactor.Geometry;
-using OpenTK.Graphics.OpenGL4;
+using Reactor.Graphics.OpenGL4;
 
 
 namespace Reactor.Types
@@ -148,7 +147,7 @@ namespace Reactor.Types
                 root.bounds = new Reactor.Math.Rectangle(0, 0, width, width);
                 b.Dispose ();
                 b = new Bitmap(width, width);
-                Graphics g = Graphics.FromImage(b);
+                System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(b);
                 g.Clear(Color.Transparent);
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 for (var i = 0; i < Glyphs.Count; i++)

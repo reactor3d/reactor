@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +64,7 @@ namespace Reactor.Types
 
             Bounds = posX.Bounds;
             GL.GenTextures(1, out Id);
-            textureTarget = OpenTK.Graphics.OpenGL.TextureTarget.TextureCubeMap;
+            textureTarget = Reactor.Graphics.OpenGL.TextureTarget.TextureCubeMap;
             GL.BindTexture(textureTarget, Id);
             SetTextureMagFilter(RTextureMagFilter.Nearest);
             SetTextureMinFilter(RTextureMinFilter.Nearest);

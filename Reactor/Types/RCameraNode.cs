@@ -31,10 +31,11 @@ namespace Reactor.Types
 {
     public class RCameraNode : RUpdateNode
     {
-
         public Matrix Projection { get; set; }
-
-        public Matrix View { get { return Matrix; } set { Matrix = value; } }
+        public Matrix View { get; set; }
+        
+        public float Near { get; set; }
+        public float Far { get; set; }
 
         public virtual Vector3 Unproject(RViewport viewport, int x, int y, float depth)
         {
@@ -43,7 +44,7 @@ namespace Reactor.Types
             screen.Y = screen.Y * 2.0f - 1.0f;
             screen.Z = screen.Z * 2.0f - 1.0f;
 
-            var inverseViewProjection = Matrix.Invert(Projection * Matrix);
+            var inverseViewProjection = Matrix.Invert(Matrix.Multiply(View, Projection));
             screen = inverseViewProjection * screen;
 
             if(screen.W != 0.0f)
@@ -53,6 +54,20 @@ namespace Reactor.Types
                 screen.Z /= screen.W;
             }
             return new Vector3(screen.X, screen.Y, screen.Z);
+        }
+
+        public virtual Vector3 Project(RViewport viewport, Vector3 worldPoint)
+        {
+            Matrix matrix = Matrix.Multiply(View, Projection);
+            Vector3 vector = Vector3.Transform (worldPoint, matrix);
+            float a = (((worldPoint.X * matrix.M14) + (worldPoint.Y * matrix.M24)) + (worldPoint.Z * matrix.M34)) + matrix.M44;
+            if (!WithinEpsilon (a, 1f)) {
+                vector /= a;
+            }
+            vector.X = (((vector.X + 1f) * 0.5f) * viewport.Width) + viewport.X;
+            vector.Y = (((-vector.Y + 1f) * 0.5f) * viewport.Height) + viewport.Y;
+            vector.Z = (vector.Z * (Near - Far)) + Near;
+            return vector;
         }
 
         public virtual Ray MousePick(RViewport viewport, int x, int y)
@@ -65,6 +80,17 @@ namespace Reactor.Types
             direction.Normalize();
 
             return new Ray(nearPoint, direction);
+        }
+
+        private static bool WithinEpsilon(float a, float b)
+        {
+            float num = a - b;
+            return ((-1.401298E-45f <= num) && (num <= float.Epsilon));
+        }
+
+        public override void Update()
+        {
+            base.Update();
         }
     }
 }

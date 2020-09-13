@@ -26,7 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using Reactor.Platform;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics.OpenGL;
 
 namespace Reactor.Geometry
 {

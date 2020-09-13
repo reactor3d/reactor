@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 using System;
 using Reactor.Types;
-using OpenTK.Input;
+using Reactor.Input;
 using System.Collections.Generic;
 
 namespace Reactor
@@ -68,10 +68,10 @@ namespace Reactor
         public void CenterMouse()
         {
             RGameWindow window = REngine.RGame.GameWindow;
-            var x = window.Location.X + (window.ClientRectangle.Width / 2);
-            var y = window.Location.Y + (window.ClientRectangle.Height / 2);
-            RLog.Info (String.Format ("Set MouseCenter to {0} {1}", x/2, y/2));
-            Mouse.SetPosition(x/2, y/2);
+            var x = window.Location.X + (window.ClientSize.Width / 2);
+            var y = window.Location.Y + (window.ClientSize.Height / 2);
+            RLog.Info (String.Format ("Set MouseCenter to {0} {1}", x, y));
+            Mouse.SetPosition(x, y);
         }
 
 

@@ -26,7 +26,7 @@ using System.Drawing.Text;
 using Reactor.Types;
 using Reactor.Geometry;
 using Reactor.Math;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics.OpenGL;
 using Reactor.Types.States;
 using System.IO;
 using System.Drawing;
@@ -63,7 +63,7 @@ namespace Reactor
         {
             if(DPI == null)
             {
-                using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
+                using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromHwnd(IntPtr.Zero))
                 {
                     DPI = new Vector2(graphics.DpiX, graphics.DpiY);
                 }

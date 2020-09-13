@@ -21,20 +21,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics;
+using Reactor.Graphics.OpenGL;
 using Reactor.Platform;
 using Reactor.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if WINDOWS
 using System.Windows.Forms;
+#endif
 using System.IO;
 using System.Reflection;
 using Reactor.Math;
 using System.Diagnostics;
-using OpenTK;
 using Reactor.Types.States;
 using System.Timers;
 
@@ -80,7 +81,7 @@ namespace Reactor
             _fpsTimer.Start();
 
             _viewport = new RViewport(0,0,800,600);
-            camera = new RCamera();
+            camera = new RCamera(_viewport.AspectRatio);
             lastFrameTime = new TimeSpan();
             
 
@@ -122,10 +123,15 @@ namespace Reactor
         {
             return lastFrameTime.TotalMilliseconds;
         }
-        public double GetTime() 
+        public double GetTotalTime() 
         {
             return RGame.GameTime.TotalGameTime.TotalMilliseconds;
         }
+        public double GetElapsedTime()
+        {
+            return RGame.GameTime.ElapsedGameTime.TotalMilliseconds;
+        }
+        
         public static void CheckGLError()
         {
             ErrorCode error = GL.GetError();
@@ -148,7 +154,9 @@ namespace Reactor
         {
             get
             {
-                return new RDisplayMode(OpenTK.DisplayDevice.Default.Width, OpenTK.DisplayDevice.Default.Height, (int)OpenTK.DisplayDevice.Default.RefreshRate);
+                return new RDisplayMode(Reactor.Platform.DisplayDevice.Default.Width,
+                    Reactor.Platform.DisplayDevice.Default.Height,
+                    (int)Reactor.Platform.DisplayDevice.Default.RefreshRate);
             }
         }
         public RDisplayModes SupportedDisplayModes
@@ -162,29 +170,29 @@ namespace Reactor
 
 
                     //IList<OpenTK.DisplayDevice> displays = OpenTK.DisplayDevice.AvailableDisplays;
-                    var displays = new List<OpenTK.DisplayDevice>();
+                    var displays = new List<Reactor.Platform.DisplayDevice>();
 
-                    OpenTK.DisplayIndex[] displayIndices = {
-						OpenTK.DisplayIndex.First,
-						OpenTK.DisplayIndex.Second,
-						OpenTK.DisplayIndex.Third,
-						OpenTK.DisplayIndex.Fourth,
-						OpenTK.DisplayIndex.Fifth,
-						OpenTK.DisplayIndex.Sixth,
+                    Reactor.Platform.DisplayIndex[] displayIndices = {
+                        Reactor.Platform.DisplayIndex.First,
+                        Reactor.Platform.DisplayIndex.Second,
+                        Reactor.Platform.DisplayIndex.Third,
+                        Reactor.Platform.DisplayIndex.Fourth,
+                        Reactor.Platform.DisplayIndex.Fifth,
+                        Reactor.Platform.DisplayIndex.Sixth,
 					};
 
                     foreach (var displayIndex in displayIndices)
                     {
-                        var currentDisplay = OpenTK.DisplayDevice.GetDisplay(displayIndex);
+                        var currentDisplay = Reactor.Platform.DisplayDevice.GetDisplay(displayIndex);
                         if (currentDisplay != null) displays.Add(currentDisplay);
                     }
 
                     if (displays.Count > 0)
                     {
                         modes.Clear();
-                        foreach (OpenTK.DisplayDevice display in displays)
+                        foreach (Reactor.Platform.DisplayDevice display in displays)
                         {
-                            foreach (OpenTK.DisplayResolution resolution in display.AvailableResolutions)
+                            foreach (Reactor.Platform.DisplayResolution resolution in display.AvailableResolutions)
                             {
                                 RSurfaceFormat format = RSurfaceFormat.Color;
                                 switch (resolution.BitsPerPixel)
@@ -328,6 +336,7 @@ namespace Reactor
             _renderControl.SwapBuffers();
         }
 
+        /*
         public bool InitPictureBox(IntPtr handle)
         {
             try
@@ -346,7 +355,7 @@ namespace Reactor
                 return false;
             }
 
-        }
+        }*/
         #if WINDOWS
         public bool InitForm(IntPtr handle)
         {
@@ -694,10 +703,10 @@ namespace Reactor
 
 
         /// <summary>
-        /// Convert a <see cref="SurfaceFormat"/> to an OpenTK.Graphics.ColorFormat.
+        /// Convert a <see cref="SurfaceFormat"/> to an Reactor.Graphics.ColorFormat.
         /// This is used for setting up the backbuffer format of the OpenGL context.
         /// </summary>
-        /// <returns>An OpenTK.Graphics.ColorFormat instance.</returns>
+        /// <returns>An Reactor.Graphics.ColorFormat instance.</returns>
         /// <param name="format">The <see cref="SurfaceFormat"/> to convert.</param>
         internal static ColorFormat GetColorFormat(this RSurfaceFormat format)
         {

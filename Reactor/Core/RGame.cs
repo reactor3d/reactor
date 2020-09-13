@@ -20,8 +20,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK;
 using Reactor.Types;
+using Reactor.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,7 +152,7 @@ namespace Reactor
             var now = DateTime.UtcNow;
             gameTime.TotalGameTime += (now - startTime);
             gameTime.ElapsedGameTime = (now - lastTime);
-
+            
             Update();
             lastTime = now;
         }

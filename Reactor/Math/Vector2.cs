@@ -535,16 +535,14 @@ namespace Reactor.Math
             value.Y *= scaleFactor;
             return value;
         }
-
-
+        
         public static Vector2 operator /(Vector2 value1, Vector2 value2)
         {
             value1.X /= value2.X;
             value1.Y /= value2.Y;
             return value1;
         }
-
-
+        
         public static Vector2 operator /(Vector2 value1, float divider)
         {
             float factor = 1 / divider;
@@ -552,16 +550,7 @@ namespace Reactor.Math
             value1.Y *= factor;
             return value1;
         }
-
-        public static implicit operator OpenTK.Vector2(Vector2 value)
-        {
-            return new OpenTK.Vector2(value.X, value.Y);
-        }
-
-        public static implicit operator Vector2(OpenTK.Vector2 value)
-        {
-            return new Vector2(value.X, value.Y);
-        }
+        
         #endregion Operators
     }
 }

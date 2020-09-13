@@ -21,19 +21,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using NVorbis;
-using OpenTK.Audio.OpenAL;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reactor.Audio.OpenAL;
 
 namespace Reactor.Audio
 {
     public class RAudioStream
     {
-const int DefaultBufferCount = 3;
+        const int DefaultBufferCount = 3;
 
         internal readonly object stopMutex = new object();
         internal readonly object prepareMutex = new object();

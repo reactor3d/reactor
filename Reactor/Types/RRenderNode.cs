@@ -25,7 +25,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Reactor.Geometry;
 using Reactor.Types.States;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics.OpenGL;
 
 namespace Reactor.Types
 {

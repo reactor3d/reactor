@@ -26,80 +26,86 @@ using System.IO.Compression;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Ionic.Zip;
-using Ionic.Crc;
 using System.Threading.Tasks;
 namespace Reactor.Core
 {
     public class RPackage
     {
-        ZipFile file;
+        ZipArchive file;
         public RPackage()
         {
-            file = new ZipFile();
-            file.Password = null;
+            file = new ZipArchive(Stream.Null);
         }
 
-        public RPackage(string filename, string password = null)
+        public RPackage(string filename)
         {
-            file = ZipFile.Read(filename);
-            file.Password = password;
+            file = ZipFile.Open(filename, ZipArchiveMode.Update);
         }
 
         public async Task<MemoryStream> GetEntry(string name)
         {
-            if(file.ContainsEntry(name))
+            if(ContainsEntry(name))
             {
-                ZipEntry entry = file[name];
-
-                CrcCalculatorStream s = entry.OpenReader();
-                byte[] bytes = new byte[s.Length];
-                int i = await s.ReadAsync(bytes, 0, bytes.Length);
-                MemoryStream  m = new MemoryStream(bytes);
-                return m;
+                ZipArchiveEntry entry = file.GetEntry(name);
+                MemoryStream m = new MemoryStream();
+                using (var s = entry.Open())
+                {
+                    await s.CopyToAsync(m);
+                    return m;
+                }
             }
             return null;
         }
 
         public async void AddEntry(string name, Stream data)
         {
-            file.AddEntry(name, data);
+            var entry = file.CreateEntry(name);
+            using (var s = entry.Open())
+            {
+                await data.CopyToAsync(s);
+            }
         }
 
-        public async void AddDirectory(string directory)
+        public async Task<bool> AddDirectory(string directory)
         {
-            file.AddDirectory(directory);
+            return false;
         }
 
         public async Task<bool> RemoveEntry(string name)
         {
-            return await Task<bool>.Run(() => {
-                if (file.EntryFileNames.Contains(name))
-                {
-                    file.RemoveEntry(name);
-                    return true;
-                }
-                else { return false; }
-            });
-        }
-
-        public void Save(string filename)
-        {
-            file.ParallelDeflateThreshold = -1; 
-            file.Save(filename);
+            var entry =  GetEntry(name);
+            if (entry != null)
+            {
+                entry.Dispose();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool ContainsEntry(string name)
         {
-            if (file[name] != null)
-                return true;
-            else
-                return false;
+            foreach(var entry in file.Entries)
+            {
+                if (entry.FullName == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public List<string> GetEntries()
         {
-            return new List<string>(file.EntryFileNames);
+            var names = new List<string>();
+            foreach (var entry in file.Entries)
+            {
+                names.Add(entry.FullName);
+            }
+            return names;
         }
 
     }

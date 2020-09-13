@@ -290,7 +290,14 @@ namespace Reactor.Math
 
         public override int GetHashCode()
         {
-            return (int)(this.W + this.X + this.Y + this.Y);
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+                hashCode = (hashCode * 397) ^ W.GetHashCode();
+                return hashCode;
+            }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 Hermite(Vector4 value1, Vector4 tangent1, Vector4 value2, Vector4 tangent2, float amount)
@@ -634,16 +641,7 @@ namespace Reactor.Math
             value1.Z *= factor;
             return value1;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator OpenTK.Vector4(Vector4 value)
-        {
-            return new OpenTK.Vector4(value.X, value.Y, value.Z, value.W);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector4(OpenTK.Vector4 value)
-        {
-            return new Vector4(value.X, value.Y, value.Z, value.W);
-        }
+        
         #endregion Operators
     }
 }

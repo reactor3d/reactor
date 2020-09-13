@@ -29,19 +29,46 @@ using System.Runtime.CompilerServices;
 
 namespace Reactor.Math
 {
+    public struct Vector3i : IEquatable<Vector3i>
+    {
+        public int X;
+        public int Y;
+        public int Z;
+        
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Vector3i))
+                return false;
 
+            var other = (Vector3i)obj;
+            return  X == other.X &&
+                    Y == other.Y &&
+                    Z == other.Z;
+        }
+        public bool Equals(Vector3i other)
+        {
+            return  X == other.X && 
+                    Y == other.Y &&
+                    Z == other.Z;
+        }
+
+        public override int GetHashCode()
+        {
+            return (X ^ Y ^ Z);
+        }
+    }
     public struct Vector3 : IEquatable<Vector3>
     {
         #region Private Fields
 
-        private static  Vector3 zero = new Vector3(0f, 0f, 0f);
-        private static  Vector3 one = new Vector3(1f, 1f, 1f);
-        private static  Vector3 unitX = new Vector3(1f, 0f, 0f);
-        private static  Vector3 unitY = new Vector3(0f, 1f, 0f);
-        private static  Vector3 unitZ = new Vector3(0f, 0f, 1f);
-        private static  Vector3 up = new Vector3(0f, 1f, 0f);
-        private static  Vector3 down = new Vector3(0f, -1f, 0f);
-        private static  Vector3 right = new Vector3(1f, 0f, 0f);
+        private static Vector3 zero = new Vector3(0f, 0f, 0f);
+        private static Vector3 one = new Vector3(1f, 1f, 1f);
+        private static Vector3 unitX = new Vector3(1f, 0f, 0f);
+        private static Vector3 unitY = new Vector3(0f, 1f, 0f);
+        private static Vector3 unitZ = new Vector3(0f, 0f, 1f);
+        private static Vector3 up = new Vector3(0f, 1f, 0f);
+        private static Vector3 down = new Vector3(0f, -1f, 0f);
+        private static Vector3 right = new Vector3(1f, 0f, 0f);
         private static Vector3 left = new Vector3(-1f, 0f, 0f);
         private static Vector3 forward = new Vector3(0f, 0f, -1f);
         private static Vector3 backward = new Vector3(0f, 0f, 1f);
@@ -321,7 +348,13 @@ namespace Reactor.Math
 
         public override int GetHashCode()
         {
-            return (int)(this.X + this.Y + this.Z);
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+                return hashCode;
+            }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Hermite(Vector3 value1, Vector3 tangent1, Vector3 value2, Vector3 tangent2, float amount)
@@ -460,6 +493,9 @@ namespace Reactor.Math
             result.X = value.X * factor;
             result.Y = value.Y * factor;
             result.Z = value.Z * factor;
+            if (float.IsNaN(result.X)) { result.X = 0; }
+            if (float.IsNaN(result.Y)) { result.Y = 0; }
+            if (float.IsNaN(result.Z)) { result.Z = 0; }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Reflect(Vector3 vector, Vector3 normal)
@@ -806,16 +842,6 @@ namespace Reactor.Math
             value.Y *= factor;
             value.Z *= factor;
             return value;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator OpenTK.Vector3(Vector3 value)
-        {
-            return new OpenTK.Vector3(value.X, value.Y, value.Z);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector3(OpenTK.Vector3 value)
-        {
-            return new Vector3(value.X, value.Y, value.Z);
         }
 
         #endregion

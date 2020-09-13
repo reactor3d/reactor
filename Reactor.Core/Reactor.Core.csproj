@@ -1,0 +1,224 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>Reactor</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>0.1.0</PackageVersion>
+        <Title>Reactor.Core</Title>
+        <Description>The official Reactor 3D .Net Core runtime. </Description>
+        <Copyright>2007-2020</Copyright>
+        <PackageProjectUrl>https://www.reactor3d.com</PackageProjectUrl>
+        <PackageLicenseUrl>https://www.reactor3d.com/license</PackageLicenseUrl>
+        <RepositoryUrl>https://www.github.com/reactor3d/reactor</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <Company>Red Engine Games, LLC</Company>
+        <Product>Reactor 3D</Product>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>reactor.key.snk</AssemblyOriginatorKeyFile>
+        <AssemblyName>Reactor</AssemblyName>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <PlatformTarget>x64</PlatformTarget>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <DocumentationFile>bin\Debug\Reactor.xml</DocumentationFile>
+        <DefineConstants>OPENGL;SDL2;SDL</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PlatformTarget>x64</PlatformTarget>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+      <DocumentationFile>bin\Release\Reactor.xml</DocumentationFile>
+      <WarningLevel>3</WarningLevel>
+        <DefineConstants>OPENGL;SDL2;SDL</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="..\Reactor\Audio\*.cs">
+          <Link>Audio\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Audio\NVorbis\*.cs">
+            <Link>Audio\NVorbis\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Audio\NVorbis\Ogg\*.cs">
+            <Link>Audio\NVorbis\Ogg\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Audio\OpenAL\*.cs">
+            <Link>Audio\OpenAL\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Audio\OpenAL\AL\*.cs">
+            <Link>Audio\OpenAL\AL\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Audio\OpenAL\ALC\*.cs">
+            <Link>Audio\OpenAL\ALC\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Core\*.cs">
+            <Link>Core\*.cs</Link>
+        </Compile>
+        <EmbeddedResource Include="..\Reactor\Fonts\coders_crux.ttf">
+            <Link>coders_crux.ttf</Link>
+        </EmbeddedResource>
+        <Compile Include="..\Reactor\Fonts\*.cs">
+            <Link>Fonts\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\BDF\*.cs">
+            <Link>Fonts\BDF\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\BDF\Internal\*.cs">
+            <Link>Fonts\BDF\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\Cache\*.cs">
+            <Link>Fonts\Cache\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\Cache\Internal\*.cs">
+            <Link>Fonts\Cache\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\Cff\*.cs">
+            <Link>Fonts\Cff\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\Fnt\*.cs">
+            <Link>Fonts\Fnt\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\Fnt\Internal\*.cs">
+            <Link>Fonts\Fnt\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\Internal\*.cs">
+            <Link>Fonts\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\MultipleMasters\*.cs">
+            <Link>Fonts\MultipleMasters\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\MultipleMasters\Internal\*.cs">
+            <Link>Fonts\MultipleMasters\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\PostScript\*.cs">
+            <Link>Fonts\PostScript\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\PostScript\Internal\*.cs">
+            <Link>Fonts\PostScript\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\TrueType\*.cs">
+            <Link>Fonts\TrueType\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Fonts\TrueType\Internal\*.cs">
+            <Link>Fonts\TrueType\Internal\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Geometry\*.cs">
+            <Link>Geometry\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Graphics\*.cs">
+            <Link>Graphics\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Graphics\ES30\*.cs">
+            <Link>Graphics\ES30\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Graphics\OpenGL\*.cs">
+            <Link>Graphics\OpenGL\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Graphics\OpenGL4\*.cs">
+            <Link>Graphics\OpenGL4\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Input\*.cs">
+            <Link>Input\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\*.cs">
+            <Link>Json\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Bson\*.cs">
+            <Link>Json\Bson\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Converters\*.cs">
+            <Link>Json\Converters\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Linq\*.cs">
+            <Link>Json\Linq\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Linq\JsonPath\*.cs">
+            <Link>Json\Linq\JsonPath\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Schema\*.cs">
+            <Link>Json\Schema\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Serialization\*.cs">
+            <Link>Json\Serialization\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Json\Utilities\*.cs">
+            <Link>Json\Utilities\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Loaders\*.cs">
+            <Link>Loaders\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Math\*.cs">
+            <Link>Math\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\*.cs">
+            <Link>Platform\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Common\*.cs">
+            <Link>Platform\Common\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Dummy\*.cs">
+            <Link>Platform\Dummy\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Egl\*.cs">
+            <Link>Platform\Egl\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Linux\*.cs">
+            <Link>Platform\Linux\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Linux\Bindings\*.cs">
+            <Link>Platform\Linux\Bindings\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\MacOS\*.cs">
+            <Link>Platform\MacOS\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\MacOS\Cocoa\*.cs">
+            <Link>Platform\MacOS\Cocoa\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\MacOS\Carbon\*.cs">
+            <Link>Platform\MacOS\Carbon\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\MacOS\Quartz\*.cs">
+            <Link>Platform\MacOS\Quartz\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\SDL2\*.cs">
+            <Link>Platform\SDL2\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Windows\*.cs">
+            <Link>Platform\Windows\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\Windows\Bindings\*.cs">
+            <Link>Platform\Windows\Bindings\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\X11\*.cs">
+            <Link>Platform\X11\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Platform\X11\Bindings\*.cs">
+            <Link>Platform\X11\Bindings\*.cs</Link>
+        </Compile>
+        <Content Include="..\Reactor\Shaders\*.*" CopyToOutputDirectory="PreserveNewest">
+            <Link>Shaders\*.*</Link>
+        </Content>
+        <Compile Include="..\Reactor\Types\*.cs">
+            <Link>Types\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Types\States\*.cs">
+            <Link>Types\States\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\UI\*.cs">
+            <Link>UI\*.cs</Link>
+        </Compile>
+        <Compile Include="..\Reactor\Utilities\*.cs">
+            <Link>Utilities\*.cs</Link>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    </ItemGroup>
+
+</Project>

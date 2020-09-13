@@ -23,11 +23,11 @@
 
 using System;
 using Reactor.Geometry;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Graphics.OpenGL;
 using System.Collections.Generic;
 using Reactor.Math;
 using Reactor.Platform;
-using OpenTK;
+
 
 namespace Reactor.Types
 {

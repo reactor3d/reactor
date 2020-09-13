@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK;
 
 namespace Reactor.Math
 {

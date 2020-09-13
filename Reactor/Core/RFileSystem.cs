@@ -74,12 +74,12 @@ namespace Reactor
             }
         }
 
-        public bool LoadPackage(string relativeFilename, string password = null)
+        public bool LoadPackage(string relativeFilename)
         {
             string fullFilename = GetFilePath(relativeFilename);
             if(File.Exists(fullFilename))
             {
-                RPackage package = new RPackage(fullFilename, password);
+                RPackage package = new RPackage(fullFilename);
                 packages.Add(package);
                 return true;
             }

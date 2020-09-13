@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using OpenTK;
 
 namespace Reactor.Math
 {
@@ -232,6 +231,27 @@ namespace Reactor.Math
         public Vector2 ToVector2()
         {
             return new Vector2(X, Y);
+        }
+        /// <summary>
+        /// Converts from a Reactor.Math.Point to a System.Drawing.Point
+        /// </summary>
+        /// <param name="value"><see cref="Reactor.Math.Point">Point</see> to convert</param>
+        /// <returns><see cref="System.Drawing.Point">System.Drawing.Point</see></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Drawing.Point(Point value)
+        {
+            return new System.Drawing.Point(value.X, value.Y);
+        }
+        
+        /// <summary>
+        /// Converts from a System.Drawing.Point to a Reactor.Math.Point
+        /// </summary>
+        /// <param name="value"><see cref="System.Drawing.Point">System.Drawing.Point</see> to convert</param>
+        /// <returns><see cref="Reactor.Math.Point">Point</see></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Point(System.Drawing.Point value)
+        {
+            return new Point(value.X, value.Y);
         }
 
         #endregion
