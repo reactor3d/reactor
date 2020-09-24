@@ -550,7 +550,15 @@ namespace Reactor.Math
             value1.Y *= factor;
             return value1;
         }
-        
+        public static implicit operator OpenTK.Vector2(Vector2 value)
+        {
+            return new OpenTK.Vector2(value.X, value.Y);
+        }
+
+        public static implicit operator Vector2(OpenTK.Vector2 value)
+        {
+            return new Vector2(value.X, value.Y);
+        }
         #endregion Operators
     }
 }

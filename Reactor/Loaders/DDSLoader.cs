@@ -40,8 +40,8 @@ using System;
 using System.IO;
 using System.Diagnostics;
 
-using Reactor.Graphics;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace Reactor
 {

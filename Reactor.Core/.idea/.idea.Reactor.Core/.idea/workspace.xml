@@ -23,49 +23,473 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65f53694-be0b-4d1e-9647-78d2c77bb4b9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Reactor.Core/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Reactor.Core/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Reactor.Core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Reactor.Core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Reactor.Core/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Reactor.Core/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reactor.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Reactor.Core.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.config" beforeDir="false" afterPath="$PROJECT_DIR$/app.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Audio/ALHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Audio/ALHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioCapture.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioContextException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioDeviceEnumerator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioDeviceErrorChecker.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioDeviceException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/AudioValueException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/AL.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/ALEnums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/EffectsExtension.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/EffectsExtensionEnums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/EffectsExtensionPresets.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/XRamExtension.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/Alc/Alc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/OpenAL/Alc/AlcEnums.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Audio/RAudioStream.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Audio/RAudioStream.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Audio/RAudioStreamer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Audio/RAudioStreamer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Audio/RMusic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Audio/RMusic.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/RAtmosphere.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RAtmosphere.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/RCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RCamera.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/REngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/REngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Core/RFileSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RFileSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/RGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RGame.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/RGameWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RGameWindow.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/RInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Core/RPackage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RPackage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Core/RScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Core/RScreen.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/AutoHinterScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/AutoHinterScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/BBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/BBox.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Bdf/Internal/PropertyRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Bdf/Internal/PropertyRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Bdf/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Bdf/Property.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Bdf/PropertyType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Bdf/PropertyType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/BitmapGlyph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/BitmapGlyph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/BitmapSize.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/BitmapSize.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/CMapCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/CMapCache.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/FaceRequester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/FaceRequester.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/ImageCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/ImageCache.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/ImageType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/ImageType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/CMapCacheRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/CMapCacheRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ImageCacheRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ImageCacheRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ImageTypeRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ImageTypeRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ManagerRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ManagerRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/NodeRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/NodeRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/SBitCacheRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/SBitCacheRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/SBitRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/SBitRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ScalerRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Internal/ScalerRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Manager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Node.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Node.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/SBit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/SBit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/SBitCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/SBitCache.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Scaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cache/Scaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Cff/HintingEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Cff/HintingEngine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/CharMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/CharMap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/ClassicKernValidationFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/ClassicKernValidationFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Data.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/EmbeddingTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/EmbeddingTypes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Encoding.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Encoding.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Error.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Error.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FT.Internal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FT.Internal.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FT.Public.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FT.Public.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTBitmap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTBitmap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTMatrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTMatrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTSize.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTSize.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTStream.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTStream.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTUnitVector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTUnitVector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTVector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTVector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FTVector26Dot6.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FTVector26Dot6.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Face.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Face.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FaceFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FaceFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Fixed16Dot16.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Fixed16Dot16.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Fixed26Dot6.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Fixed26Dot6.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Fixed2Dot14.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Fixed2Dot14.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Fnt/Header.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Fnt/Header.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Fnt/Internal/HeaderRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Fnt/Internal/HeaderRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Fnt/WinFntID.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Fnt/WinFntID.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/FreeTypeException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/FreeTypeException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Gasp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Gasp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Generic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Generic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Glyph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Glyph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/GlyphBBoxMode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/GlyphBBoxMode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/GlyphFormat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/GlyphFormat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/GlyphMetrics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/GlyphMetrics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/GlyphSlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/GlyphSlot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/GlyphToScriptMapProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/GlyphToScriptMapProperty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/IncreaseXHeightProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/IncreaseXHeightProperty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/BitmapGlyphRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/BitmapGlyphRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/BitmapRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/BitmapRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/BitmapSizeRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/BitmapSizeRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/CharMapRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/CharMapRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/FaceMarshsaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/FaceMarshsaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/FaceRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/FaceRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GenericRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GenericRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphMetricsRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphMetricsRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphSlotRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphSlotRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphToScriptMapPropertyRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/GlyphToScriptMapPropertyRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/IncreaseXHeightPropertyRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/IncreaseXHeightPropertyRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ListNodeMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ListNodeMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ListNodeRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ListNodeRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ListRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ListRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/MemoryMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/MemoryMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/MemoryRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/MemoryRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ModuleClassRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ModuleClassRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ModuleMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ModuleMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OpenArgsRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OpenArgsRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OutlineFuncsRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OutlineFuncsRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OutlineGlyphRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OutlineGlyphRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OutlineRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/OutlineRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ParameterRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/ParameterRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterFuncsRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterFuncsRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterParamsMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterParamsMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterParamsRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RasterParamsRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RendererClassRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/RendererClassRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SizeMetricsRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SizeMetricsRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SizeRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SizeRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SizeRequestRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SizeRequestRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SpanMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SpanMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SpanRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/SpanRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/StreamDescRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/StreamDescRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/StreamMarshaler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/StreamMarshaler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Internal/StreamRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Internal/StreamRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/KerningMode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/KerningMode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/LcdFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/LcdFilter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Library.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Library.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/ListNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/ListNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/LoadFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/LoadFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/LoadTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/LoadTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Memory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Memory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Module.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Module.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/ModuleClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/ModuleClass.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/MMAxisRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/MMAxisRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/MMVarRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/MMVarRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/MultiMasterRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/MultiMasterRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/VarAxisRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/VarAxisRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/VarNamedStyleRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/Internal/VarNamedStyleRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/MMAxis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/MMAxis.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/MMVar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/MMVar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/MultiMaster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/MultiMaster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/VarAxis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/VarAxis.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/VarNamedStyle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/MultipleMasters/VarNamedStyle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/OpenArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/OpenArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/OpenFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/OpenFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/OpenTypeValidationFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/OpenTypeValidationFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Orientation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Orientation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Outline.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Outline.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/OutlineFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/OutlineFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/OutlineFuncs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/OutlineFuncs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/OutlineGlyph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/OutlineGlyph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PInvokeHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PInvokeHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/ParamTag.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/ParamTag.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Parameter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Parameter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PixelMode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PixelMode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/BlendFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/BlendFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/DictionaryKeys.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/DictionaryKeys.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/EncodingType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/EncodingType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/FaceDict.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/FaceDict.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/FaceInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/FaceInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/FontInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/FontInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/FaceDictRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/FaceDictRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/FaceInfoRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/FaceInfoRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/FontInfoRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/FontInfoRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/PrivateRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Internal/PrivateRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Private.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/PostScript/Private.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Raster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Raster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/RasterFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/RasterFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/RasterFuncs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/RasterFuncs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/RasterParams.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/RasterParams.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/RenderMode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/RenderMode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Renderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Renderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/RendererClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/RendererClass.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/SizeMetrics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/SizeMetrics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/SizeRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/SizeRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/SizeRequestType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/SizeRequestType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Span.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Span.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/StreamDesc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/StreamDesc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/Stroker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/Stroker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/StrokerBorder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/StrokerBorder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/StrokerLineCap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/StrokerLineCap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/StrokerLineJoin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/StrokerLineJoin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/StyleFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/StyleFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/SubGlyph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/SubGlyph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/SubGlyphFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/SubGlyphFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/EncodingId.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/EncodingId.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/EngineType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/EngineType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Header.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Header.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/HoriHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/HoriHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/HeaderRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/HeaderRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/HoriHeaderRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/HoriHeaderRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/MaxProfileRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/MaxProfileRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/OS2Rec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/OS2Rec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/PCLTRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/PCLTRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/PostscriptRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/PostscriptRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/SfntNameRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/SfntNameRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/VertHeaderRec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Internal/VertHeaderRec.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/MaxProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/MaxProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/OS2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/OS2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Pclt.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Pclt.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/PlatformId.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/PlatformId.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Postscript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/Postscript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/SfntName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/SfntName.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/SfntTag.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/SfntTag.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/VertHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueType/VertHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Fonts/TrueTypeValidationFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Fonts/TrueTypeValidationFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/IVertexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/IVertexType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RBufferUsage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RBufferUsage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RIndexBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RIndexBuffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RIndexElementSize.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RIndexElementSize.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RPrimitiveType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RPrimitiveType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexBuffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexDataOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexDataOptions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexDeclaration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexDeclaration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexDeclarationCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexDeclarationCache.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexElementFormat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexElementFormat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Geometry/RVertexElementUsage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Geometry/RVertexElementUsage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/Color4.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ColorFormat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ES30/ES30.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ES30/ES30Enums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ES30/ErrorHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ES30/Helper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ES31/ES31.Enums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/ES31/ES31.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsBindingsBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContextBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContextException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContextFlags.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContextMissingException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContextVersion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsErrorException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsExceptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsMode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsModeComparer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/GraphicsModeException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/IGraphicsContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/IGraphicsMode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL/ErrorHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GL.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GLEnums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GLHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GLObsolete.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/ErrorHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/GL4.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/GL4Enums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/Helper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/ButtonState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/Buttons.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/ConfigurationType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/FileDropEventArgs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePad.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadAxes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadButtons.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadCapabilities.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadConfigurationDatabase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadConfigurationItem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadConfigurationSource.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadConfigurationTarget.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadDPad.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadThumbSticks.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadTriggers.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/GamePadType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/HatPosition.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/IGamePadDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/IInputDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/IInputDriver2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/IJoystickDriver2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/IKeyboardDriver2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/IMouseDriver2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/Joystick.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/JoystickCapabilities.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/JoystickDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/JoystickHat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/JoystickHatState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/JoystickState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/Key.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/KeyModifiers.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/Keyboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/KeyboardDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/KeyboardKeyEventArgs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/KeyboardState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/Mouse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/MouseButton.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/MouseDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/MouseEventArgs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/MouseScroll.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Input/MouseState.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Loaders/DDSLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Loaders/DDSLoader.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Loaders/GDILoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Loaders/GDILoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Loaders/MeshLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Loaders/MeshLoader.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Loaders/TextureLoaderParameters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Loaders/TextureLoaderParameters.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/BoundingBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/BoundingBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/BoundingFrustum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/BoundingFrustum.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/BoundingSphere.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/BoundingSphere.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/MathHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/MathHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Math/Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Matrix.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/Plane.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Plane.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/Point.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Point.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/Ray.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Ray.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Math/Rectangle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Rectangle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Math/Vector2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Vector2.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Math/Vector3.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Vector3.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Math/Vector4.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Math/Vector4.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/OpenTK.dll.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/AutoGeneratedAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/BindingsBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/BlittableValueType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Common/Hid.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Configuration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/ContextHandle.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/CountAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DesktopGraphicsContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DeviceCollection.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DisplayDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DisplayDeviceBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DisplayIndex.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DisplayResolution.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Dummy/DummyGLContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Dummy/DummyWindowInfo.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Platform/DummyRenderControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Platform/DummyRenderControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/AngleWindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/Egl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglAnglePlatformFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglGraphicsMode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglMacPlatformFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglSdl2PlatformFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglUnixContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglWinContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglWinPlatformFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglWindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Egl/EglX11PlatformFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/EmbeddedGraphicsContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Exceptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Factory.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Platform/FormRenderControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Platform/FormRenderControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/FrameEventArgs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/GameWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/GameWindowFlags.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Platform/GameWindowRenderControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Platform/GameWindowRenderControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/PictureBoxRenderControl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/IDisplayDeviceDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/IGameWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/INativeWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/IPlatformFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/IWindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/IntPtrEqualityComparer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/InteropHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/KeyPressEventArgs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Drm.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Evdev.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Gbm.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Kms.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/LibInput.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Libc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Poll.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Terminal.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/Bindings/Udev.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/DefaultCursor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxDisplayDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxGraphicsContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxInput.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxJoystick.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxKeyboardTTY.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxNativeWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Linux/LinuxWindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Carbon/Cgl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Carbon/MacOSKeys.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/Class.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/Cocoa.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSApplication.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSApplicationActivationPolicy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSApplicationPresentationOptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSAutoreleasePool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSBackingStore.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSBitmapFormat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSDragOperation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSEventModifierMask.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSEventType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSFloat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSOpenGLContextParameter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSOpenGLPixelFormatAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSOpenGLProfile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSTrackingAreaOptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/NSWindowStyle.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Cocoa/Selector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/CocoaContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/CocoaNativeWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/CocoaWindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/CoreVideo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/HIDInput.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/MacOSException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/MacOSFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/MacOSKeyMap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/NS.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Quartz/CoreFoundation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Quartz/DisplayServices.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/Quartz/EventServices.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MacOS/QuartzDisplayDeviceDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MappedGamePadDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/MouseCursor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/NativeWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/NativeWindowBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/PlatformException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/PlatformFactoryBase.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Platform/RenderControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Platform/RenderControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/RewrittenAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2DisplayDeviceDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2Factory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2GraphicsContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2GraphicsMode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2InputDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2JoystickDriver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2KeyMap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2Keyboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2Mouse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2NativeWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2WindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/SlotAttribute.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Threading.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Platform/Threading.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Properties/AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Reactor.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Reactor.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Types/RCameraNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RCameraNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Toolkit.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/ToolkitOptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Utilities.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/WindowBorder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/WindowIcon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/WindowState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/API.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/Bindings/HidProtocol.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/Bindings/Wgl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/Bindings/WglEnums.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WglHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinDisplayDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinFactory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinGLContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinGLNative.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinGraphicsMode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinInputBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinKeyMap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinRawInput.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinRawJoystick.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinRawKeyboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinRawMouse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/WinWindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/Windows/XInputJoystick.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/API.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Bindings/DL.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Bindings/Glx.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Bindings/INotify.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Bindings/XI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Bindings/Xkb.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Functions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/Structs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11DisplayDevice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11Factory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11GLContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11GLNative.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11GraphicsMode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11Input.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11KeyMap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11Keyboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11Mouse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/X11WindowInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/XI2Input.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Platform/X11/XI2MouseKeyboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reactor/Shaders/hdr.frag.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Shaders/hdr.frag.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RFont.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RFont.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RFontGlyph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RFontGlyph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RFrameBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RFrameBuffer.cs" afterDir="false" />
@@ -81,74 +505,11 @@
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RTexture3D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RTexture3D.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RTextureAtlas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RTextureAtlas.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RTextureLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RTextureLayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/Types/RUpdateNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RUpdateNode.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/RViewport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/RViewport.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Reactor/Types/States/RBlendState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Reactor/Types/States/RBlendState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/freetype.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/libassimp.dylib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reactor/packages.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/1 - InitGame/1 - Init Game/1 - Init Game.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/1 - InitGame/1 - Init Game/Game.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/1 - InitGame/1 - Init Game/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/1 - InitGame/1 - Init Game/app.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/2 - Init Form.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Form1.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Form1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Form1.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Form1.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/OpenTK.dll.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Properties/AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Properties/Resources.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Properties/Resources.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Properties/Resources.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Properties/Settings.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/Properties/Settings.settings" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/app.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Samples/2 - Init Form/2 - Init Form/packages.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestBed/TestBed/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TestBed/TestBed/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestBed/TestBed/OpenTK.dll.config" beforeDir="false" afterPath="$PROJECT_DIR$/../TestBed/TestBed/OpenTK.dll.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestBed/TestBed/TestBed.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../TestBed/TestBed/TestBed.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestBed/TestBed/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/../TestBed/TestBed/packages.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Form1.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Form1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Model Viewer.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Properties/AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Properties/Resources.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Properties/Resources.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Properties/Settings.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/Properties/Settings.settings" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/Model Viewer/app.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Atlas.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/AtlasNode.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Font.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/FontGenerator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/FontGlyph.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/RFont Generator.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Viewer.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Viewer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Viewer.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/Viewer.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RFont Generator/app.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/FileDragDrop.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/FileDragDrop.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/FileDragDrop.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/FileDragDrop.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/MainForm.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/MainForm.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/MainForm.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/MainForm.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/Properties/Resources.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/Properties/Resources.resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/Properties/Resources.resx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/Properties/app.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/RPKEditor.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/app.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/RPKEditor/images/dragdrop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jenkins.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Red/Red.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Red/Red.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Red/RedApp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Red/RedApp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ThirdParty/sdl" beforeDir="false" afterPath="$PROJECT_DIR$/../ThirdParty/sdl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,101 +520,98 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../Reactor/Shaders/basic2dEffect.frag.glsl" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Input/IGamePadDriver.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Input/GamePadState.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/Windows/XInputJoystick.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Input/GamePad.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6936A521-FED8-4DEB-8B14-A7F0DF001041/9E/Nullable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Vector4.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Core/RFileSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Core/RGameWindow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Matrix.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Core/RPackage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Types/RMaterial.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Core/RScreen.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Core/RGame.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Matrix.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Vector3.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/BoundingFrustum.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Matrix.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/BoundingSphere.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Vector4.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Ray.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Graphics/ES30/ES30.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Fonts/Bdf/Property.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Graphics/ES30/ES30Enums.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Input/Buttons.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Reactor/Fonts/Bdf/Property.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Vector2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/BoundingBox.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Graphics/GraphicsContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Rectangle.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/GameWindowRenderControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Point.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Math/Plane.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Types/RFont.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/X11/X11GLNative.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Graphics/GraphicsContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GLEnums.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GL.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/GL4.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/Windows/WinRawKeyboard.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/GL4Enums.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Quaternion.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Reactor/Loaders/MeshLoader.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/Configuration.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/Utilities.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/X11/XI2MouseKeyboard.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Reactor/Shaders/basic2dEffect.frag.glsl" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6936A521-FED8-4DEB-8B14-A7F0DF001041/35/String.Manipulation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Platform/Utilities.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Reactor/Platform/GameWindowRenderControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Matrix.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Matrix.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Quaternion.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/greiser/Projects/reisergames/reactor/Reactor/Math/Vector4.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Windows/XInputJoystick.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/X11/X11GLNative.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/X11/XI2MouseKeyboard.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Core/RFileSystem.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Types/RMaterial.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/PictureBoxRenderControl.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Windows/API.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Converters/KeyValuePairConverter.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/ThreadSafeStore.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/StringUtils.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/ReflectionObject.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/ReflectionDelegateFactory.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/LateBoundReflectionDelegateFactory.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/ExpressionReflectionDelegateFactory.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/CollectionUtils.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/ConvertUtils.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/ReflectionUtils.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Serialization/CachedAttributeGetter.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/LinqBridge.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Utilities/DynamicReflectionDelegateFactory.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Serialization/JsonTypeReflector.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Serialization/DefaultContractResolver.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Json/Linq/JToken.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Types/RShader.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Loaders/MeshLoader.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Types/RFont.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Graphics/ES30/ES30.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Math/Half.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Graphics/OpenGL/GL.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Graphics/OpenGL4/GL4.cs" />
-        <option value="$PROJECT_DIR$/../Red/RedApp.cs" />
-        <option value="$PROJECT_DIR$/../Red/Program.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/MacOS/CocoaNativeWindow.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/X11/X11DisplayDevice.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Factory.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Geometry/RVertexBuffer.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Geometry/RVertexDeclaration.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Geometry/RVertexElement.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Loaders/DDSLoader.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Platform/FormRenderControl.cs" />
         <option value="$PROJECT_DIR$/../Reactor/Platform/GameWindow.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/MacOS/HIDInput.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/MacOS/NS.cs" />
         <option value="$PROJECT_DIR$/../Reactor/Platform/NativeWindow.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Windows/WinFactory.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/PlatformFactoryBase.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Windows/WinDisplayDevice.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Windows/WinGLContext.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Windows/WinRawJoystick.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/X11/API.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Configuration.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Graphics/GraphicsContext.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/Toolkit.cs" />
-        <option value="$PROJECT_DIR$/../Reactor/Platform/DummyRenderControl.cs" />
         <option value="$PROJECT_DIR$/../Reactor/Platform/Utilities.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Platform/DummyRenderControl.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Platform/RenderControl.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Platform/GameWindowRenderControl.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Loaders/GDILoader.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Loaders/TextureLoaderParameters.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/States/RBlendState.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/RGameWindow.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/RCamera.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/RAtmosphere.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Platform/Threading.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RFontGlyph.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RFrameBuffer.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RMaterial.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RMesh.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RMeshBuilder.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RMeshPart.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RRenderNode.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RShaderEffect.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RTexture.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RTexture2D.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RTextureAtlas.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RTextureLayer.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RViewport.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RTexture3D.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Math/Vector2.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Math/Vector3.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Math/Vector4.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Math/Matrix.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Geometry/RIndexBuffer.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/RGame.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/RInput.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Audio/OpenAL/AL/AL.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Audio/ALHelper.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Audio/RAudioStream.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Audio/RAudioStreamer.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RShader.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Fonts/FT.Internal.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Types/RFont.cs" />
         <option value="$PROJECT_DIR$/Reactor.Core.csproj" />
+        <option value="$PROJECT_DIR$/../Reactor/Shaders/hdr.frag.glsl" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/RScreen.cs" />
+        <option value="$PROJECT_DIR$/../Red/RedApp.cs" />
+        <option value="$PROJECT_DIR$/../Reactor/Core/REngine.cs" />
       </list>
     </option>
   </component>
@@ -268,17 +626,20 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35040236" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.29919532" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Reactor/Fonts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
     <configuration name="Red" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../Red/bin/Debug/netcoreapp3.0/Red.dll" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Red/bin/Debug/netcoreapp3.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
@@ -288,7 +649,7 @@
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
       <option name="PROJECT_KIND" value="DotNetCore" />
-      <option name="PROJECT_TFM" value="" />
+      <option name="PROJECT_TFM" value=".NETCoreApp,Version=v3.0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -307,7 +668,9 @@
       <workItem from="1599790097191" duration="310000" />
       <workItem from="1599790437247" duration="553000" />
       <workItem from="1599791097924" duration="3994000" />
-      <workItem from="1599972468893" duration="2558000" />
+      <workItem from="1599972468893" duration="6110000" />
+      <workItem from="1600744741353" duration="4263000" />
+      <workItem from="1600832329487" duration="7494000" />
     </task>
     <servers />
   </component>
@@ -331,7 +694,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -346,10 +715,106 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="304" y="113" key="#Inspection_severity/0.23.1440.877@0.23.1440.877" timestamp="1599803085979" />
-    <state x="100" y="123" width="1240" height="677" key="DiffContextDialog" timestamp="1599696257530">
+    <state x="184" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600829282841">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="100" y="123" width="1240" height="677" key="DiffContextDialog/0.23.1440.877@0.23.1440.877" timestamp="1599696257530" />
+    <state x="184" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1600829282841" />
+    <state x="408" y="204" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1600832243996">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="408" y="204" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1440.877@0.23.1440.877" timestamp="1600832243996" />
+    <state width="567" height="618" key="DebuggerActiveHint" timestamp="1600873742399">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="567" height="618" key="DebuggerActiveHint/0.23.1440.877@0.23.1440.877" timestamp="1600873742399" />
+    <state x="100" y="123" width="1240" height="677" key="DiffContextDialog" timestamp="1600835372567">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="100" y="123" width="1240" height="677" key="DiffContextDialog/0.23.1440.877@0.23.1440.877" timestamp="1600835372567" />
+    <state x="0" y="424" key="FileChooserDialogImpl" timestamp="1600059363567">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="0" y="424" key="FileChooserDialogImpl/0.23.1440.877@0.23.1440.877" timestamp="1600059363567" />
+    <state width="1398" height="307" key="GridCell.Tab.0.bottom" timestamp="1600917341174">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600917341174" />
+    <state width="1398" height="307" key="GridCell.Tab.0.center" timestamp="1600917341174">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600917341174" />
+    <state width="1398" height="307" key="GridCell.Tab.0.left" timestamp="1600917341173">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600917341173" />
+    <state width="1398" height="307" key="GridCell.Tab.0.right" timestamp="1600917341174">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600917341174" />
+    <state width="1398" height="307" key="GridCell.Tab.1.bottom" timestamp="1600917341045">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600917341045" />
+    <state width="1398" height="307" key="GridCell.Tab.1.center" timestamp="1600917341045">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1600917341045" />
+    <state width="1398" height="307" key="GridCell.Tab.1.left" timestamp="1600917341044">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1600917341044" />
+    <state width="1398" height="307" key="GridCell.Tab.1.right" timestamp="1600917341045">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1600917341045" />
+    <state width="1398" height="307" key="GridCell.Tab.2.bottom" timestamp="1600917341046">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.2.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600917341046" />
+    <state width="1398" height="307" key="GridCell.Tab.2.center" timestamp="1600917341046">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.2.center/0.23.1440.877@0.23.1440.877" timestamp="1600917341046" />
+    <state width="1398" height="307" key="GridCell.Tab.2.left" timestamp="1600917341045">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.2.left/0.23.1440.877@0.23.1440.877" timestamp="1600917341045" />
+    <state width="1398" height="307" key="GridCell.Tab.2.right" timestamp="1600917341046">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.2.right/0.23.1440.877@0.23.1440.877" timestamp="1600917341046" />
+    <state width="1398" height="307" key="GridCell.Tab.3.bottom" timestamp="1600917341047">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.3.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600917341047" />
+    <state width="1398" height="307" key="GridCell.Tab.3.center" timestamp="1600917341047">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.3.center/0.23.1440.877@0.23.1440.877" timestamp="1600917341047" />
+    <state width="1398" height="307" key="GridCell.Tab.3.left" timestamp="1600917341047">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.3.left/0.23.1440.877@0.23.1440.877" timestamp="1600917341047" />
+    <state width="1398" height="307" key="GridCell.Tab.3.right" timestamp="1600917341047">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.3.right/0.23.1440.877@0.23.1440.877" timestamp="1600917341047" />
+    <state width="1398" height="307" key="GridCell.Tab.4.bottom" timestamp="1600917341048">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.4.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600917341048" />
+    <state width="1398" height="307" key="GridCell.Tab.4.center" timestamp="1600917341048">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.4.center/0.23.1440.877@0.23.1440.877" timestamp="1600917341048" />
+    <state width="1398" height="307" key="GridCell.Tab.4.left" timestamp="1600917341048">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.4.left/0.23.1440.877@0.23.1440.877" timestamp="1600917341048" />
+    <state width="1398" height="307" key="GridCell.Tab.4.right" timestamp="1600917341048">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="307" key="GridCell.Tab.4.right/0.23.1440.877@0.23.1440.877" timestamp="1600917341048" />
     <state x="308" y="203" key="IDE.errors.dialog" timestamp="1599709024827">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -358,29 +823,78 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="320" y="200" key="Rider.ProjectTemplateDialog.Size/0.23.1440.877@0.23.1440.877" timestamp="1599972562344" />
-    <state x="532" y="102" key="RiderGenerateDialog" timestamp="1599972641844">
+    <state x="532" y="102" key="RiderGenerateDialog" timestamp="1600835464661">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="532" y="102" key="RiderGenerateDialog/0.23.1440.877@0.23.1440.877" timestamp="1599972641844" />
+    <state x="532" y="102" key="RiderGenerateDialog/0.23.1440.877@0.23.1440.877" timestamp="1600835464661" />
     <state x="221" y="100" key="SettingsEditor" timestamp="1599787407237">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="221" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1599787407237" />
-    <state x="100" y="123" width="1240" height="677" key="VCS.FileHistoryDialog" timestamp="1599724079370">
+    <state x="100" y="123" width="1240" height="677" key="VCS.FileHistoryDialog" timestamp="1600835372567">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="100" y="123" width="1240" height="677" key="VCS.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1599724079370" />
+    <state x="100" y="123" width="1240" height="677" key="VCS.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1600835372567" />
+    <state width="720" height="438" key="XDebugger.FullValuePopup" timestamp="1600827741531">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="720" height="438" key="XDebugger.FullValuePopup/0.23.1440.877@0.23.1440.877" timestamp="1600827741531" />
     <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1599975029467">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="100" y="123" width="1240" height="677" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.877@0.23.1440.877" timestamp="1599975029467" />
-    <state x="390" y="26" width="748" height="870" key="find.popup" timestamp="1599973668899">
+    <state x="780" y="30" width="660" height="870" key="find.popup" timestamp="1600060093675">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="390" y="26" width="748" height="870" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1599973668899" />
+    <state x="780" y="30" width="660" height="870" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1600060093675" />
     <state x="385" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1599786765651">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="385" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1599786765651" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs</url>
+          <line>59</line>
+          <properties documentPath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs" initialLine="57">
+            <startOffsets>
+              <option value="2050" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2073" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs</url>
+          <line>61</line>
+          <properties documentPath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs" initialLine="59">
+            <startOffsets>
+              <option value="2116" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2137" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs</url>
+          <line>265</line>
+          <properties documentPath="$PROJECT_DIR$/../Reactor/Platform/SDL2/Sdl2.cs" initialLine="264">
+            <startOffsets>
+              <option value="14010" />
+            </startOffsets>
+            <endOffsets>
+              <option value="14019" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

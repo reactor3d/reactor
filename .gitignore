@@ -25,6 +25,11 @@ build/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+*.dll
+*.dylib
+*.so
+*.a
+*.o
 *_i.c
 *_p.c
 *.ilk

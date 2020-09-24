@@ -25,7 +25,7 @@
       <PlatformTarget>x64</PlatformTarget>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <DocumentationFile>bin\Debug\Reactor.xml</DocumentationFile>
-        <DefineConstants>OPENGL;SDL2;SDL</DefineConstants>
+        <DefineConstants>OPENGL;SDL2;SDL;OSX</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -34,7 +34,7 @@
       <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
       <DocumentationFile>bin\Release\Reactor.xml</DocumentationFile>
       <WarningLevel>3</WarningLevel>
-        <DefineConstants>OPENGL;SDL2;SDL</DefineConstants>
+        <DefineConstants>OPENGL;SDL2;SDL;OSX</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -47,21 +47,9 @@
         <Compile Include="..\Reactor\Audio\NVorbis\Ogg\*.cs">
             <Link>Audio\NVorbis\Ogg\*.cs</Link>
         </Compile>
-        <Compile Include="..\Reactor\Audio\OpenAL\*.cs">
-            <Link>Audio\OpenAL\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Audio\OpenAL\AL\*.cs">
-            <Link>Audio\OpenAL\AL\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Audio\OpenAL\ALC\*.cs">
-            <Link>Audio\OpenAL\ALC\*.cs</Link>
-        </Compile>
         <Compile Include="..\Reactor\Core\*.cs">
             <Link>Core\*.cs</Link>
         </Compile>
-        <EmbeddedResource Include="..\Reactor\Fonts\coders_crux.ttf">
-            <Link>coders_crux.ttf</Link>
-        </EmbeddedResource>
         <Compile Include="..\Reactor\Fonts\*.cs">
             <Link>Fonts\*.cs</Link>
         </Compile>
@@ -110,21 +98,6 @@
         <Compile Include="..\Reactor\Geometry\*.cs">
             <Link>Geometry\*.cs</Link>
         </Compile>
-        <Compile Include="..\Reactor\Graphics\*.cs">
-            <Link>Graphics\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Graphics\ES30\*.cs">
-            <Link>Graphics\ES30\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Graphics\OpenGL\*.cs">
-            <Link>Graphics\OpenGL\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Graphics\OpenGL4\*.cs">
-            <Link>Graphics\OpenGL4\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Input\*.cs">
-            <Link>Input\*.cs</Link>
-        </Compile>
         <Compile Include="..\Reactor\Json\*.cs">
             <Link>Json\*.cs</Link>
         </Compile>
@@ -158,51 +131,42 @@
         <Compile Include="..\Reactor\Platform\*.cs">
             <Link>Platform\*.cs</Link>
         </Compile>
-        <Compile Include="..\Reactor\Platform\Common\*.cs">
-            <Link>Platform\Common\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\Dummy\*.cs">
-            <Link>Platform\Dummy\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\Egl\*.cs">
-            <Link>Platform\Egl\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\Linux\*.cs">
-            <Link>Platform\Linux\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\Linux\Bindings\*.cs">
-            <Link>Platform\Linux\Bindings\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\MacOS\*.cs">
-            <Link>Platform\MacOS\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\MacOS\Cocoa\*.cs">
-            <Link>Platform\MacOS\Cocoa\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\MacOS\Carbon\*.cs">
-            <Link>Platform\MacOS\Carbon\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\MacOS\Quartz\*.cs">
-            <Link>Platform\MacOS\Quartz\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\SDL2\*.cs">
-            <Link>Platform\SDL2\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\Windows\*.cs">
-            <Link>Platform\Windows\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\Windows\Bindings\*.cs">
-            <Link>Platform\Windows\Bindings\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\X11\*.cs">
-            <Link>Platform\X11\*.cs</Link>
-        </Compile>
-        <Compile Include="..\Reactor\Platform\X11\Bindings\*.cs">
-            <Link>Platform\X11\Bindings\*.cs</Link>
-        </Compile>
-        <Content Include="..\Reactor\Shaders\*.*" CopyToOutputDirectory="PreserveNewest">
-            <Link>Shaders\*.*</Link>
-        </Content>
+        <EmbeddedResource Include="..\Reactor\Shaders\basic2dEffect.frag.glsl">
+            <Link>Shaders\basic2dEffect.frag.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\basic2dEffect.vert.glsl">
+                <Link>Shaders\basic2dEffect.vert.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\basicEffect.frag.glsl">
+                <Link>Shaders\basicEffect.frag.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\basicEffect.vert.glsl">
+                <Link>Shaders\basicEffect.vert.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\hdr.frag.glsl">
+                <Link>Shaders\hdr.frag.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\hdr.vert.glsl">
+                <Link>Shaders\hdr.vert.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\headers.glsl">
+                <Link>Shaders\headers.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\lighting.glsl">
+                <Link>Shaders\lighting.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\noise.glsl">
+                <Link>Shaders\noise.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\phong.frag.glsl">
+                <Link>Shaders\phong.frag.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\phong.vert.glsl">
+                <Link>Shaders\phong.vert.glsl</Link>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Reactor\Shaders\reactor.glsl">
+                <Link>Shaders\reactor.glsl</Link>
+        </EmbeddedResource>
         <Compile Include="..\Reactor\Types\*.cs">
             <Link>Types\*.cs</Link>
         </Compile>
@@ -215,9 +179,20 @@
         <Compile Include="..\Reactor\Utilities\*.cs">
             <Link>Utilities\*.cs</Link>
         </Compile>
+        <Compile Update="..\Reactor\Platform\Utilities.cs">
+          <Link>Platform\Utilities.cs</Link>
+        </Compile>
+        <Compile Update="..\Reactor\Platform\Threading.cs">
+          <Link>Platform\Threading.cs</Link>
+        </Compile>
+        <Compile Update="..\Reactor\Platform\Profiler.cs">
+          <Link>Platform\Profiler.cs</Link>
+        </Compile>
+        <EmbeddedResource Include="Resources\coders_crux.ttf" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="OpenTK" Version="3.2.0" />
       <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     </ItemGroup>
 

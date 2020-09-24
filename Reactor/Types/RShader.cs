@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System.Collections.Generic;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System.Reflection;
 using Reactor.Math;
 using System;
@@ -205,7 +205,8 @@ namespace Reactor.Types
         }
         public void SetUniformValue(string name, Matrix value)
         {
-            GL.UniformMatrix4(GetUniformLocation(name), false, ref value);
+            OpenTK.Matrix4 v = value;
+            GL.UniformMatrix4(GetUniformLocation(name), false, ref v);
             REngine.CheckGLError();
         }
 

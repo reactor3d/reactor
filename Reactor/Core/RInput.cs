@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 using System;
 using Reactor.Types;
-using Reactor.Input;
+using OpenTK.Input;
 using System.Collections.Generic;
 
 namespace Reactor

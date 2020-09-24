@@ -21,8 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Graphics;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using Reactor.Platform;
 using Reactor.Types;
 using System;
@@ -117,7 +117,7 @@ namespace Reactor
         }
         public float GetFPS()
         {
-            return _lastFps;
+            return (float)RGame.GameWindow.RenderFrequency;
         }
         public double GetRenderTime()
         {
@@ -154,9 +154,9 @@ namespace Reactor
         {
             get
             {
-                return new RDisplayMode(Reactor.Platform.DisplayDevice.Default.Width,
-                    Reactor.Platform.DisplayDevice.Default.Height,
-                    (int)Reactor.Platform.DisplayDevice.Default.RefreshRate);
+                return new RDisplayMode(OpenTK.DisplayDevice.Default.Width,
+                    OpenTK.DisplayDevice.Default.Height,
+                    (int)OpenTK.DisplayDevice.Default.RefreshRate);
             }
         }
         public RDisplayModes SupportedDisplayModes
@@ -170,29 +170,29 @@ namespace Reactor
 
 
                     //IList<OpenTK.DisplayDevice> displays = OpenTK.DisplayDevice.AvailableDisplays;
-                    var displays = new List<Reactor.Platform.DisplayDevice>();
+                    var displays = new List<OpenTK.DisplayDevice>();
 
-                    Reactor.Platform.DisplayIndex[] displayIndices = {
-                        Reactor.Platform.DisplayIndex.First,
-                        Reactor.Platform.DisplayIndex.Second,
-                        Reactor.Platform.DisplayIndex.Third,
-                        Reactor.Platform.DisplayIndex.Fourth,
-                        Reactor.Platform.DisplayIndex.Fifth,
-                        Reactor.Platform.DisplayIndex.Sixth,
+                    OpenTK.DisplayIndex[] displayIndices = {
+                        OpenTK.DisplayIndex.First,
+                        OpenTK.DisplayIndex.Second,
+                        OpenTK.DisplayIndex.Third,
+                        OpenTK.DisplayIndex.Fourth,
+                        OpenTK.DisplayIndex.Fifth,
+                        OpenTK.DisplayIndex.Sixth,
 					};
 
                     foreach (var displayIndex in displayIndices)
                     {
-                        var currentDisplay = Reactor.Platform.DisplayDevice.GetDisplay(displayIndex);
+                        var currentDisplay = OpenTK.DisplayDevice.GetDisplay(displayIndex);
                         if (currentDisplay != null) displays.Add(currentDisplay);
                     }
 
                     if (displays.Count > 0)
                     {
                         modes.Clear();
-                        foreach (Reactor.Platform.DisplayDevice display in displays)
+                        foreach (OpenTK.DisplayDevice display in displays)
                         {
-                            foreach (Reactor.Platform.DisplayResolution resolution in display.AvailableResolutions)
+                            foreach (OpenTK.DisplayResolution resolution in display.AvailableResolutions)
                             {
                                 RSurfaceFormat format = RSurfaceFormat.Color;
                                 switch (resolution.BitsPerPixel)
@@ -408,7 +408,7 @@ namespace Reactor
                 control.GameWindow = RGame.GameWindow;
                 control.GameWindow.ClientSize = new System.Drawing.Size(displayMode.Width, displayMode.Height);
                 if(windowStyle == RWindowStyle.Borderless)
-                    control.GameWindow.WindowBorder = WindowBorder.Hidden;
+                    control.GameWindow.WindowBorder = OpenTK.WindowBorder.Hidden;
                 control.GameWindow.X = 0;
                 control.GameWindow.Y = 0;
                 control.Context = (GraphicsContext)control.GameWindow.Context;
@@ -465,9 +465,9 @@ namespace Reactor
             {
                 if (_renderControl.IsFullscreen)
                 {
-                    DisplayDevice.Default.RestoreResolution();
+                    OpenTK.DisplayDevice.Default.RestoreResolution();
                     if (_renderControl.GetType() == typeof(GameWindowRenderControl))
-                        (_renderControl as GameWindowRenderControl).GameWindow.WindowState = WindowState.Normal;
+                        (_renderControl as GameWindowRenderControl).GameWindow.WindowState = OpenTK.WindowState.Normal;
 
                     _renderControl.IsFullscreen = false;
                     RLog.Info("No longer in fullscreen mode.");
@@ -476,9 +476,9 @@ namespace Reactor
                 {
                     if (_renderControl.GetType() == typeof(GameWindowRenderControl))
                     {
-                        DisplayDevice.Default.ChangeResolution(displayMode.Width, displayMode.Height, 32, -1);
+                        OpenTK.DisplayDevice.Default.ChangeResolution(displayMode.Width, displayMode.Height, 32, -1);
                         (_renderControl as GameWindowRenderControl).GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
-                        (_renderControl as GameWindowRenderControl).GameWindow.WindowState = WindowState.Fullscreen;
+                        (_renderControl as GameWindowRenderControl).GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
                         _renderControl.IsFullscreen = true;
                         RLog.Info(String.Format("Fullscreen mode activated : {0}", displayMode));
                     }

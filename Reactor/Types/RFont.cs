@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using Reactor.Math;
 using Reactor.Geometry;
-using Reactor.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL4;
 
 
 namespace Reactor.Types
@@ -283,7 +283,9 @@ namespace Reactor.Types
     {
         internal static Library FreetypeLibrary = new Library();
         internal static Assembly Assembly = Assembly.GetAssembly(typeof(RFontResources));
-        internal static Face GetResource(string resource){
+        internal static Face GetResource(string resource)
+        {
+            var names = Assembly.GetManifestResourceNames();
             Stream stream = Assembly.GetManifestResourceStream(resource);
             System.IO.BinaryReader reader = new System.IO.BinaryReader(stream);
             byte[] buffer = new byte[reader.BaseStream.Length];
@@ -295,7 +297,7 @@ namespace Reactor.Types
 
         }
 
-        internal static Face SystemFont = GetResource("Reactor.Fonts.coders_crux.ttf");
+        internal static Face SystemFont = GetResource("Reactor.Resources.coders_crux.ttf");
 
     }
 

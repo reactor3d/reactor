@@ -25,7 +25,7 @@ using System;
 using SD = System.Drawing;
 using Reactor.Math;
 using SharpFont;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System.IO;
 
 

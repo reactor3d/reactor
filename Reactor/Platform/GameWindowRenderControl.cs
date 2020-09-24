@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OpenTK;
 namespace Reactor.Platform
 {
     public class GameWindowRenderControl : RenderControl
@@ -33,7 +33,7 @@ namespace Reactor.Platform
         public GameWindow GameWindow { get; internal set; }
         public override void Init()
         {
-            Threading.WindowInfo = GameWindow.WindowInfo;
+            WindowInfo = GameWindow.WindowInfo;
         }
 
         public override void Destroy()

@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using Reactor.Geometry;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using Reactor.Loaders;

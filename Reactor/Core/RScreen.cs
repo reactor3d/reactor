@@ -26,7 +26,7 @@ using System.Drawing.Text;
 using Reactor.Types;
 using Reactor.Geometry;
 using Reactor.Math;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using Reactor.Types.States;
 using System.IO;
 using System.Drawing;

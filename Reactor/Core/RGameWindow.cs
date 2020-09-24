@@ -23,22 +23,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using Reactor.Graphics;
-using Reactor.Graphics.OpenGL4;
-using Reactor.Platform;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK;
 namespace Reactor
 {
     public sealed class RGameWindow : GameWindow
     {
 
 
-        public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 2, GraphicsContextFlags.ForwardCompatible){
+        public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 0, GraphicsContextFlags.ForwardCompatible){
             Width = 800;
             Height = 600;
         }
 
         public RGameWindow(int width, int height)
-            : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 2, GraphicsContextFlags.ForwardCompatible)
+            : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 0, GraphicsContextFlags.ForwardCompatible)
         {
             Width = width;
             Height = height;

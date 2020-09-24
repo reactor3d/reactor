@@ -843,7 +843,15 @@ namespace Reactor.Math
             value.Z *= factor;
             return value;
         }
+        public static implicit operator OpenTK.Vector3(Vector3 value)
+        {
+            return new OpenTK.Vector3(value.X, value.Y, value.Z);
+        }
 
+        public static implicit operator Vector3(OpenTK.Vector3 value)
+        {
+            return new Vector3(value.X, value.Y, value.Z);
+        }
         #endregion
     }
 }

@@ -4,14 +4,6 @@
     <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Reactor.Core.-1322691395.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$/../reactor/Audio/ALHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioCapture.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioContextException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioDeviceEnumerator.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioDeviceErrorChecker.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioDeviceException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/AudioValueException.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/NVorbis/BufferedReadStream.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/NVorbis/DataPacket.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/NVorbis/Huffman.cs" t="Include" />
@@ -37,14 +29,6 @@
     <e p="$PROJECT_DIR$/../reactor/Audio/NVorbis/VorbisResidue.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/NVorbis/VorbisStreamDecoder.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/NVorbis/VorbisTime.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/AL/AL.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/AL/ALEnums.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/AL/EffectsExtension.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/AL/EffectsExtensionEnums.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/AL/EffectsExtensionPresets.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/AL/XRamExtension.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/ALC/ALC.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Audio/OpenAL/ALC/ALCEnums.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/RAudioStream.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/RAudioStreamer.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Audio/RMusic.cs" t="Include" />
@@ -89,7 +73,6 @@
     <e p="$PROJECT_DIR$/../reactor/Fonts/Cff/HintingEngine.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Fonts/CharMap.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Fonts/ClassicKernValidationFlags.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Fonts/coders_crux.ttf" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Fonts/Data.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Fonts/EmbeddingTypes.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Fonts/Encoding.cs" t="Include" />
@@ -254,78 +237,6 @@
     <e p="$PROJECT_DIR$/../reactor/Geometry/RVertexElement.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Geometry/RVertexElementFormat.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Geometry/RVertexElementUsage.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/Color4.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/ColorFormat.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/ES30/ErrorHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/ES30/ES30.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/ES30/ES30Enums.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/ES30/Helper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsBindingsBase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsContextBase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsContextException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsContextFlags.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsContextMissingException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsContextVersion.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsErrorException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsExceptions.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsMode.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsModeComparer.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/GraphicsModeException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/IGraphicsContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/IGraphicsMode.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL/ErrorHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL/GL.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL/GLEnums.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL/GLHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL/GLObsolete.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL4/ErrorHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL4/GL4.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL4/GL4Enums.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Graphics/OpenGL4/Helper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/Buttons.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/ButtonState.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/ConfigurationType.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/FileDropEventArgs.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePad.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadAxes.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadButtons.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadCapabilities.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadConfiguration.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadConfigurationDatabase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadConfigurationItem.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadConfigurationSource.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadConfigurationTarget.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadDPad.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadState.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadThumbSticks.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadTriggers.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/GamePadType.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/HatPosition.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/IGamePadDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/IInputDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/IInputDriver2.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/IJoystickDriver2.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/IKeyboardDriver2.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/IMouseDriver2.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/Joystick.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/JoystickCapabilities.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/JoystickDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/JoystickHat.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/JoystickHatState.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/JoystickState.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/Key.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/Keyboard.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/KeyboardDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/KeyboardKeyEventArgs.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/KeyboardState.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/KeyModifiers.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/Mouse.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/MouseButton.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/MouseDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/MouseEventArgs.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/MouseScroll.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Input/MouseState.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Json/Bson/BsonBinaryType.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Json/Bson/BsonBinaryWriter.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Json/Bson/BsonObjectId.cs" t="Include" />
@@ -581,181 +492,26 @@
     <e p="$PROJECT_DIR$/../reactor/Math/Vector2.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Math/Vector3.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Math/Vector4.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/AutoGeneratedAttribute.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/BindingsBase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/BlittableValueType.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Common/Hid.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Configuration.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/ContextHandle.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/CountAttribute.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/DesktopGraphicsContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/DeviceCollection.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/DisplayDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/DisplayDeviceBase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/DisplayIndex.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/DisplayResolution.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Dummy/DummyGLContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Dummy/DummyWindowInfo.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Platform/DummyRenderControl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/AngleWindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/Egl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglAnglePlatformFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglGraphicsMode.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglMacPlatformFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglSdl2PlatformFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglUnixContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglWinContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglWindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglWinPlatformFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Egl/EglX11PlatformFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/EmbeddedGraphicsContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Exceptions.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Factory.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Platform/FormRenderControl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/FrameEventArgs.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/GameWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/GameWindowFlags.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Platform/GameWindowRenderControl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/IDisplayDeviceDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/IGameWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/INativeWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/InteropHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/IntPtrEqualityComparer.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/IPlatformFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/IWindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/KeyPressEventArgs.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Drm.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Evdev.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Gbm.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Kms.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Libc.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/LibInput.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Poll.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Terminal.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/Bindings/Udev.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/DefaultCursor.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxDisplayDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxGraphicsContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxInput.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxJoystick.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxKeyboardTTY.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxNativeWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Linux/LinuxWindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Carbon/Cgl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Carbon/MacOSKeys.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/Class.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/Cocoa.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSApplication.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSApplicationActivationPolicy.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSApplicationPresentationOptions.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSAutoreleasePool.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSBackingStore.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSBitmapFormat.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSDragOperation.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSEventModifierMask.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSEventType.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSFloat.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSOpenGLContextParameter.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSOpenGLPixelFormatAttribute.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSOpenGLProfile.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSTrackingAreaOptions.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/NSWindowStyle.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Cocoa/Selector.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/CocoaContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/CocoaNativeWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/CocoaWindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/CoreVideo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/HIDInput.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/MacOSException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/MacOSFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/MacOSKeyMap.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/NS.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Quartz/CoreFoundation.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Quartz/DisplayServices.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/Quartz/EventServices.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MacOS/QuartzDisplayDeviceDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MappedGamePadDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/MouseCursor.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/NativeWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/NativeWindowBase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/PlatformException.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/PlatformFactoryBase.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Platform/Profiler.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Platform/RenderControl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/RewrittenAttribute.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2DisplayDeviceDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2Factory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2GraphicsContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2GraphicsMode.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2InputDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2JoystickDriver.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2Keyboard.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2KeyMap.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2Mouse.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2NativeWindow.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SDL2/Sdl2WindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/SlotAttribute.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Platform/Threading.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Toolkit.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/ToolkitOptions.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Utilities.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/WindowBorder.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/WindowIcon.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/API.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/Bindings/HidProtocol.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/Bindings/Wgl.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/Bindings/WglEnums.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WglHelper.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinDisplayDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinFactory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinGLContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinGLNative.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinGraphicsMode.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinInputBase.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinKeyMap.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinRawInput.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinRawJoystick.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinRawKeyboard.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinRawMouse.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/WinWindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/Windows/XInputJoystick.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/WindowState.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/API.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Bindings/DL.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Bindings/Glx.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Bindings/INotify.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Bindings/XI.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Bindings/Xkb.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Functions.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/Structs.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11DisplayDevice.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11Factory.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11GLContext.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11GLNative.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11GraphicsMode.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11Input.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11Keyboard.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11KeyMap.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11Mouse.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/X11WindowInfo.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/XI2Input.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Platform/X11/XI2MouseKeyboard.cs" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/basic2dEffect.frag.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/basic2dEffect.vert.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/basicEffect.frag.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/basicEffect.vert.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/hdr.frag.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/hdr.vert.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/headers.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/lighting.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/noise.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/phong.frag.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/phong.vert.glsl" t="Include" />
-    <e p="$PROJECT_DIR$/../reactor/Shaders/reactor.glsl" t="Include" />
+    <e p="$PROJECT_DIR$/../reactor/Shaders" t="Include">
+      <e p="basic2dEffect.frag.glsl" t="Include" />
+      <e p="basic2dEffect.vert.glsl" t="Include" />
+      <e p="basicEffect.frag.glsl" t="Include" />
+      <e p="basicEffect.vert.glsl" t="Include" />
+      <e p="hdr.frag.glsl" t="Include" />
+      <e p="hdr.vert.glsl" t="Include" />
+      <e p="headers.glsl" t="Include" />
+      <e p="lighting.glsl" t="Include" />
+      <e p="noise.glsl" t="Include" />
+      <e p="phong.frag.glsl" t="Include" />
+      <e p="phong.vert.glsl" t="Include" />
+      <e p="reactor.glsl" t="Include" />
+    </e>
     <e p="$PROJECT_DIR$/../reactor/Types/RCameraNode.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Types/RColor.cs" t="Include" />
     <e p="$PROJECT_DIR$/../reactor/Types/RColorWriteChannels.cs" t="Include" />
@@ -808,10 +564,6 @@
         <e p="NVorbis" t="Include">
           <e p="Ogg" t="Include" />
         </e>
-        <e p="OpenAL" t="Include">
-          <e p="AL" t="Include" />
-          <e p="ALC" t="Include" />
-        </e>
       </e>
       <e p="bin" t="ExcludeRecursive" />
       <e p="Core" t="Include" />
@@ -839,12 +591,6 @@
       </e>
       <e p="Geometry" t="Include" />
       <e p="global.json" t="Include" />
-      <e p="Graphics" t="Include">
-        <e p="ES30" t="Include" />
-        <e p="OpenGL" t="Include" />
-        <e p="OpenGL4" t="Include" />
-      </e>
-      <e p="Input" t="Include" />
       <e p="Json" t="Include">
         <e p="Bson" t="Include" />
         <e p="Converters" t="Include" />
@@ -865,37 +611,30 @@
         </e>
       </e>
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Platform" t="Include">
-        <e p="Common" t="Include" />
-        <e p="Dummy" t="Include" />
-        <e p="Egl" t="Include" />
-        <e p="Linux" t="Include">
-          <e p="Bindings" t="Include" />
-        </e>
-        <e p="MacOS" t="Include">
-          <e p="Carbon" t="Include" />
-          <e p="Cocoa" t="Include" />
-          <e p="Quartz" t="Include" />
-        </e>
-        <e p="SDL2" t="Include" />
-        <e p="Windows" t="Include">
-          <e p="Bindings" t="Include" />
-        </e>
-        <e p="X11" t="Include">
-          <e p="Bindings" t="Include" />
-        </e>
-      </e>
+      <e p="Platform" t="Include" />
       <e p="Reactor.Core.csproj" t="IncludeRecursive" />
       <e p="Reactor.Core.sln" t="IncludeFlat" />
       <e p="reactor.key.snk" t="Include" />
-      <e p="Shaders" t="Include" />
+      <e p="Resources" t="Include">
+        <e p="coders_crux.ttf" t="Include" />
+      </e>
       <e p="Types" t="Include">
         <e p="States" t="Include" />
       </e>
       <e p="Utilities" t="Include" />
     </e>
     <e p="$PROJECT_DIR$/../Red" t="IncludeRecursive">
+      <e p="app.config" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
+      <e p="libassimp.5.0.0.dylib" t="Include" />
+      <e p="libassimp.5.dylib" t="Include" />
+      <e p="libassimp.dylib" t="Include" />
+      <e p="libfreetype.6.17.2.dylib" t="Include" />
+      <e p="libfreetype.6.dylib" t="Include" />
+      <e p="libfreetype.dylib" t="Include" />
+      <e p="libIrrXML.dylib" t="Include" />
+      <e p="libSDL2-2.0.dylib" t="Include" />
+      <e p="libSDL2.dylib" t="Include" />
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
           <e p="netcoreapp3.0" t="Include">

@@ -1,6 +1,5 @@
 using Reactor;
 using System;
-using Reactor.Input;
 using Reactor.Types;
 
 namespace Red
@@ -10,15 +9,19 @@ namespace Red
         private RViewport mainViewport;
         public override void Init()
         {
-            mainViewport = new RViewport(800, 600);
+            mainViewport = new RViewport(1920, 1080);
             // Initialization Code Here
             Engine.InitGameWindow((int)mainViewport.Width, (int)mainViewport.Height, RWindowStyle.Normal, "Red");
-            Engine.SetClearColor(RColor.Black);
+            Engine.SetClearColor(RColor.DarkGray);
+            Engine.SetShowFPS(true);
+            
         }
 
         public override void Render()
         {
+            Engine.Clear(RColor.DarkGray, true, true);
             // Rendering Code
+            Engine.Present();
         }
 
         public override void Update()
@@ -26,8 +29,9 @@ namespace Red
             // Update Code
             if (Engine.Input.IsKeyDown(RKey.Escape) == true)
             {
-                this.Dispose();
+                this.GameWindow.Exit();
             }
+            
         }
 
         public override void Dispose()
@@ -41,5 +45,6 @@ namespace Red
             mainViewport.Height = (float) Height;
             Engine.SetViewport(mainViewport);
         }
+        
     }
 }

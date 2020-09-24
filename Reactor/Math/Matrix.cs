@@ -1909,6 +1909,16 @@ namespace Reactor.Math
             minor11 = (float)det11;
             minor12 = (float)det12;
         }
+        public static implicit operator OpenTK.Matrix4(Matrix value)
+        {
+            return new OpenTK.Matrix4(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
+        }
+
+            
+        public static implicit operator Matrix(OpenTK.Matrix4 value)
+        {
+            return new Matrix(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
+        }
 
         #endregion Private Static Methods
     }

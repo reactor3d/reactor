@@ -23,7 +23,7 @@
 
 using System;
 using Reactor.Geometry;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using Reactor.Math;
 using Reactor.Platform;

@@ -1,0 +1,11 @@
+prefix=/Users/greiser/Projects/reisergames/reactor/ThirdParty/target/install
+exec_prefix=/Users/greiser/Projects/reisergames/reactor/ThirdParty/target/install/
+libdir=/Users/greiser/Projects/reisergames/reactor/ThirdParty/target/install/lib
+includedir=/Users/greiser/Projects/reisergames/reactor/ThirdParty/target/install/../include/include
+
+Name: Assimp
+Description: Import various well-known 3D model formats in an uniform manner.
+Version: 5.0.0
+Libs: -L${libdir} -lassimp
+Libs.private:  -lz
+Cflags: -I${includedir}

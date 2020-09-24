@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Reactor.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using Reactor;
 using System.IO;
 using System.Drawing;

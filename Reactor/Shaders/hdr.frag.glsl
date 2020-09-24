@@ -3,10 +3,10 @@ in vec2 TexCoords;
 
 uniform sampler2D diffuse;
 uniform float exposure = 1.1f;
+uniform float gamma = 2.2f;
 
 void main()
 {             
-    const float gamma = 2.2;
     vec3 hdrColor = texture(diffuse, TexCoords).rgb;
 
     // reinhard
