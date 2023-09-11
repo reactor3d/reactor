@@ -15,11 +15,11 @@ all: clean deps assets build
 
 .PHONY: clean
 clean:
-	@go clean && rm -rf build
+	@go clean && rm -rf build && rm -rf assets/shaders/*.spv
 
 .PHONY: assets
 assets:
-	@go generate ./..
+	@go generate -tags $(_BACKEND) -x ./assets
 
 .PHONY: deps
 deps:
