@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/reactor3d/reactor/platform/opengl"
 	"github.com/reactor3d/reactor/platform/vulkan"
 )
 
@@ -21,27 +22,49 @@ type RGameTime interface {
 	GetStartTime() *time.Time
 	GetNow() *time.Time
 }
+type rgametime struct {
+	start *time.Time
+	delta float64
+}
 
-type engine struct {
+func (g *rgametime) GetElapsed() int64 {
+	return time.Now().UnixNano() - g.start.UnixNano()
+}
+func (g *rgametime) GetDelta() float64 {
+	return float64(g.delta)
+}
+func (g *rgametime) GetStartTime() *time.Time {
+	return g.start
+}
+func (g *rgametime) GetNow() *time.Time {
+	now := time.Now()
+	return &now
+}
+
+type rengine struct {
 	REngine
-	window *glfw.Window
+	window   *glfw.Window
+	gameTime *rgametime
 }
 
 var (
-	_engine *engine
+	_engine *rengine
 )
 
-func Engine() REngine {
+//export Reactor_NewEngine
+func NewEngine() REngine {
 	// lock the thread so that GLFW/Vulkan/OpenGL execute on the main os thread.
 	runtime.LockOSThread()
 	if _engine == nil {
-		_engine = &engine{}
+		now := time.Now()
+		_engine = &rengine{gameTime: &rgametime{start: &now, delta: 0.0}}
 		runtime.SetFinalizer(_engine, func(o REngine) { o.Destroy() })
 	}
 	return _engine
 }
 
-func (e *engine) Configure(config RConfiguration) error {
+//export Reactor_Engine_Configure
+func (e *rengine) Configure(config RConfiguration) error {
 	err := glfw.Init()
 	if err != nil {
 		return err
@@ -70,6 +93,7 @@ func (e *engine) Configure(config RConfiguration) error {
 	}
 
 	glfw.WindowHint(glfw.Resizable, glfw.False)
+
 	switch mode {
 	case RWINDOWMODE_BORDERLESS:
 		glfw.WindowHint(glfw.Maximized, glfw.True)
@@ -77,23 +101,33 @@ func (e *engine) Configure(config RConfiguration) error {
 	case RWINDOWMODE_FULLSCREEN:
 		monitor = glfw.GetPrimaryMonitor()
 	}
+
 	_engine.window, err = glfw.CreateWindow(size.Width, size.Height, config.GetWindowTitle(), monitor, nil)
 	if err != nil {
 		panic(err)
 	}
-	vulkan.VkInit(config.GetServerMode())
+	if backend == RRENDERINGBACKEND_VULKAN {
+		vulkan.VkInit(config.GetServerMode())
+	}
+	if backend == RRENDERINGBACKEND_OPENGL {
+		opengl.Init(config.GetServerMode())
+	}
+	_engine.window.MakeContextCurrent()
 	return nil
 }
 
-func (e *engine) CreateScene() RScene {
+//export Reactor_Engine_CreateScene
+func (e *rengine) CreateScene() RScene {
 	return nil
 }
 
-func (e *engine) Run() error {
+//export Reactor_Engine_Run
+func (e *rengine) Run() error {
 	return nil
 }
 
-func (e *engine) Destroy() error {
+//export Reactor_Engine_Destroy
+func (e *rengine) Destroy() error {
 	e.window.Destroy()
 	glfw.Terminate()
 	runtime.UnlockOSThread()

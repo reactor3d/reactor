@@ -12,7 +12,8 @@
 *_p.c
 *.obj
 *.pch
-
+# precompiled shaders are not allowed
+*.spv
 # Windows image file caches
 **/Thumbs.db
 **/ehthumbs.db
