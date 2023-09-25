@@ -25,30 +25,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK;
+using Reactor.Types;
+
 namespace Reactor.Platform
 {
     public class GameWindowRenderControl : RenderControl
     {
-        public GameWindow GameWindow { get; internal set; }
+        public RGameWindow GameWindow { get; internal set; }
+
+        public GameWindowRenderControl() : base()
+        {
+            GameWindow = new RGameWindow(1280, 720);
+        }
+        public GameWindowRenderControl(RDisplayMode displayMode, RWindowStyle style, string title) : base()
+        {
+            GameWindow = new RGameWindow(displayMode.Width, displayMode.Height);
+            GameWindow.WindowStyle = style;
+            GameWindow.SetMode(displayMode);
+
+        }
         public override void Init()
         {
-            WindowInfo = GameWindow.WindowInfo;
+            Context = GameWindow;
         }
 
-        public override void Destroy()
+        public override void Dispose()
         {
-            GameWindow.Exit();
+            GameWindow.Close();
         }
 
         public override void MakeCurrent()
         {
-            GameWindow.MakeCurrent();
+            Context.MakeCurrent();
         }
 
         public override void SwapBuffers()
         {
-            GameWindow.SwapBuffers();
+            Context.SwapBuffers();
         }
     }
 }

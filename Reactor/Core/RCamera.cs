@@ -23,7 +23,7 @@
 using System;
 using Reactor.Types;
 using Reactor.Math;
-using OpenTK.Graphics.OpenGL4;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor
 {

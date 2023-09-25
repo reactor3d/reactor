@@ -2,10 +2,10 @@
 in vec4 out_color;
 
 uniform sampler2D diffuse;
-uniform vec4 diffuse_color;
-out vec4 color;
+uniform vec4 color;
+out vec4 out_color;
 
 void main(){
     vec4 t = texture(diffuse, out_texcoords.xy).rgba;
-    color = t * diffuse_color;
+    out_color = t * color;
 }

@@ -21,23 +21,22 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using Reactor.Platform;
-using Reactor.Types;
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Reflection;
+using System.Timers;
+using Reactor.Platform.OpenGL;
+using Reactor.Math;
+using Reactor.Platform;
+using Reactor.Types;
+using Reactor.Types.States;
 #if WINDOWS
 using System.Windows.Forms;
 #endif
-using System.IO;
-using System.Reflection;
-using Reactor.Math;
-using System.Diagnostics;
-using Reactor.Types.States;
-using System.Timers;
 
 namespace Reactor
 {
@@ -46,7 +45,7 @@ namespace Reactor
         private RDisplayModes _supportedDisplayModes;
         private RenderControl _renderControl;
         private Stopwatch _stopWatch;
-        private System.Timers.Timer _fpsTimer;
+        private Timer _fpsTimer;
         public RScene Scene { get { return RScene.Instance; } }
         public RTextures Textures { get { return RTextures.Instance; } }
         public RMaterials Materials { get { return RMaterials.Instance; } }
@@ -74,7 +73,7 @@ namespace Reactor
 
             
             _stopWatch = new Stopwatch();
-            _fpsTimer = new System.Timers.Timer();
+            _fpsTimer = new Timer();
 
             _fpsTimer.Interval = 1000;
             _fpsTimer.Elapsed += _fpsTimer_Tick;
@@ -117,7 +116,7 @@ namespace Reactor
         }
         public float GetFPS()
         {
-            return (float)RGame.GameWindow.RenderFrequency;
+            return _fps;
         }
         public double GetRenderTime()
         {
@@ -154,77 +153,21 @@ namespace Reactor
         {
             get
             {
-                return new RDisplayMode(OpenTK.DisplayDevice.Default.Width,
-                    OpenTK.DisplayDevice.Default.Height,
-                    (int)OpenTK.DisplayDevice.Default.RefreshRate);
+                return RGame.GameWindow.Mode;
             }
         }
         public RDisplayModes SupportedDisplayModes
         {
             get
             {
-
-                if (_supportedDisplayModes == null)
-                {
-                    var modes = new List<RDisplayMode>(new[] { CurrentDisplayMode, });
-
-
-                    //IList<OpenTK.DisplayDevice> displays = OpenTK.DisplayDevice.AvailableDisplays;
-                    var displays = new List<OpenTK.DisplayDevice>();
-
-                    OpenTK.DisplayIndex[] displayIndices = {
-                        OpenTK.DisplayIndex.First,
-                        OpenTK.DisplayIndex.Second,
-                        OpenTK.DisplayIndex.Third,
-                        OpenTK.DisplayIndex.Fourth,
-                        OpenTK.DisplayIndex.Fifth,
-                        OpenTK.DisplayIndex.Sixth,
-					};
-
-                    foreach (var displayIndex in displayIndices)
-                    {
-                        var currentDisplay = OpenTK.DisplayDevice.GetDisplay(displayIndex);
-                        if (currentDisplay != null) displays.Add(currentDisplay);
-                    }
-
-                    if (displays.Count > 0)
-                    {
-                        modes.Clear();
-                        foreach (OpenTK.DisplayDevice display in displays)
-                        {
-                            foreach (OpenTK.DisplayResolution resolution in display.AvailableResolutions)
-                            {
-                                RSurfaceFormat format = RSurfaceFormat.Color;
-                                switch (resolution.BitsPerPixel)
-                                {
-                                    case 32: format = RSurfaceFormat.Color; break;
-                                    case 16: format = RSurfaceFormat.Bgr565; break;
-                                    case 8: format = RSurfaceFormat.Bgr565; break;
-                                    default:
-                                        break;
-                                }
-                                // Just report the 32 bit surfaces for now
-                                // Need to decide what to do about other surface formats
-                                if (format == RSurfaceFormat.Color)
-                                {
-                                    modes.Add(new RDisplayMode(resolution.Width, resolution.Height, (int)resolution.RefreshRate));
-                                }
-                            }
-
-                        }
-                    }
-
-                    _supportedDisplayModes = new RDisplayModes(modes);
-                }
-
-                return _supportedDisplayModes;
+                return RGame.GameWindow.SupportedModes();
             }
         }
         public bool IsWideScreen
         {
             get
             {
-                const float limit = 4.0f / 3.0f;
+                const float limit = 800.0f / 600.0f; // the CRT square domes of old.
                 var aspect = CurrentDisplayMode.AspectRatio;
                 return aspect > limit;
             }
@@ -235,7 +178,7 @@ namespace Reactor
             get
             {
                 var aspect = CurrentDisplayMode.AspectRatio;
-                const float limit = 1.8f;
+                const float limit = 5.3333333f;
                 return (aspect > limit);
             }
         }
@@ -272,7 +215,7 @@ namespace Reactor
 
             hdrFrameBuffer.Unbind();
             hdrShader.Bind();
-            hdrShader.SetSamplerValue(RTextureLayer.DIFFUSE, hdrFrameBuffer);
+            hdrShader.SetSamplerValue(RTextureLayer.TEXTURE0, hdrFrameBuffer);
             hdrShader.Unbind();
 
         }
@@ -301,7 +244,7 @@ namespace Reactor
         public void Clear(RColor color, bool depth = false, bool stencil = false)
         {
             
-            Reactor.Math.Vector4 clearColor = color.ToVector4();
+            Vector4 clearColor = color.ToVector4();
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
             ClearBufferMask mask = ClearBufferMask.ColorBufferBit;
             if (depth)
@@ -312,7 +255,7 @@ namespace Reactor
 
             Atmosphere.Update();
 
-            REngine.CheckGLError();
+            CheckGLError();
         }
         internal void Reset()
         {
@@ -321,7 +264,7 @@ namespace Reactor
             GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.Enable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
             RBlendState.Opaque.PlatformApplyState();
             _viewport.Bind();
             
@@ -404,26 +347,23 @@ namespace Reactor
             {
                 RGame.GameWindow.Title = title;
 
-                GameWindowRenderControl control = new GameWindowRenderControl();
+                GameWindowRenderControl control = new GameWindowRenderControl(displayMode, windowStyle, title);
                 control.GameWindow = RGame.GameWindow;
-                control.GameWindow.ClientSize = new System.Drawing.Size(displayMode.Width, displayMode.Height);
-                if(windowStyle == RWindowStyle.Borderless)
-                    control.GameWindow.WindowBorder = OpenTK.WindowBorder.Hidden;
-                control.GameWindow.X = 0;
-                control.GameWindow.Y = 0;
-                control.Context = (GraphicsContext)control.GameWindow.Context;
+                control.GameWindow.ClientSize = new Size(displayMode.Width, displayMode.Height);
+                control.GameWindow.WindowStyle = windowStyle;
+                control.GameWindow.Position = new System.Drawing.Point(0, 0);
                 _renderControl = control;
 
                 RLog.Info(GetGLInfo());
-                REngine.CheckGLError ();
+                CheckGLError ();
                 RLog.Info("Game Window Renderer Initialized.");
                 //PrintExtensions();
-                REngine.CheckGLError();
+                CheckGLError();
 
                 RShader.InitShaders ();
-                REngine.CheckGLError();
+                CheckGLError();
                 Screen.Init();
-                REngine.CheckGLError();
+                CheckGLError();
                 return true;
             } catch(Exception e) {
                 RLog.Error(e);
@@ -447,11 +387,13 @@ namespace Reactor
             }
         }
 
-        public void SetGameWindowIcon(System.Drawing.Icon icon)
+        public void SetGameWindowIcon(Icon icon)
         {
             try
             {
-                RGame.GameWindow.Icon = icon;
+                var images = new Platform.GLFW.Image[] { new Platform.GLFW.Image(icon.Width, icon.Height, icon.Handle) };
+                
+                RGame.GameWindow.SetIcons(images);
             }
             catch(Exception e)
             {
@@ -465,10 +407,7 @@ namespace Reactor
             {
                 if (_renderControl.IsFullscreen)
                 {
-                    OpenTK.DisplayDevice.Default.RestoreResolution();
-                    if (_renderControl.GetType() == typeof(GameWindowRenderControl))
-                        (_renderControl as GameWindowRenderControl).GameWindow.WindowState = OpenTK.WindowState.Normal;
-
+                    RGame.GameWindow.SetMode(RGame.GameWindow.Mode, false);
                     _renderControl.IsFullscreen = false;
                     RLog.Info("No longer in fullscreen mode.");
                 }
@@ -476,9 +415,7 @@ namespace Reactor
                 {
                     if (_renderControl.GetType() == typeof(GameWindowRenderControl))
                     {
-                        OpenTK.DisplayDevice.Default.ChangeResolution(displayMode.Width, displayMode.Height, 32, -1);
-                        (_renderControl as GameWindowRenderControl).GameWindow.Size = new System.Drawing.Size(displayMode.Width, displayMode.Height);
-                        (_renderControl as GameWindowRenderControl).GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
+                        RGame.GameWindow.SetMode(displayMode, true);
                         _renderControl.IsFullscreen = true;
                         RLog.Info(String.Format("Fullscreen mode activated : {0}", displayMode));
                     }
@@ -510,7 +447,7 @@ namespace Reactor
 
         public RCamera GetCamera()
         {
-            return REngine.camera;
+            return camera;
         }
 
         public bool Dispose()
@@ -519,7 +456,7 @@ namespace Reactor
             {
                 RLog.Info("Shutting down the engine.");
                 hdrFrameBuffer.Dispose();
-                _renderControl.Destroy();
+                _renderControl.Dispose();
                 RLog.Info("Shutdown complete.\r\n\r\n\r\n\r\n");
                 return true;
             }
@@ -540,27 +477,6 @@ namespace Reactor
 
             return String.Format("Using OpenGL version {0} from {1}, renderer {2}, GLSL version {3}", version, vendor, renderer, glslVersion);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     }
 
     internal class EngineGLException : Exception
@@ -607,35 +523,6 @@ namespace Reactor
             }
         }
 
-        public static BlendingFactor GetBlendFactor(this RBlend blend)
-        {
-            switch (blend) {
-            case RBlend.DestinationAlpha:
-                return BlendingFactor.DstAlpha;
-            case RBlend.DestinationColor:
-                return BlendingFactor.DstColor;
-            case RBlend.InverseDestinationAlpha:
-                return BlendingFactor.OneMinusDstAlpha;
-            case RBlend.InverseDestinationColor:
-                return BlendingFactor.OneMinusDstColor;
-            case RBlend.InverseSourceAlpha:
-                return BlendingFactor.OneMinusSrcAlpha;
-            case RBlend.InverseSourceColor:
-                return (BlendingFactor)All.OneMinusSrcColor;
-            case RBlend.One:
-                return BlendingFactor.One;
-            case RBlend.SourceAlpha:
-                return BlendingFactor.SrcAlpha;
-            case RBlend.SourceAlphaSaturation:
-                return BlendingFactor.SrcAlphaSaturate;
-            case RBlend.SourceColor:
-                return (BlendingFactor)All.SrcColor;
-            case RBlend.Zero:
-                return BlendingFactor.Zero;
-            default:
-                return BlendingFactor.One;
-            }
-        }
         public static BlendingFactorSrc GetBlendFactorSrc(this RBlend blend)
         {
             switch (blend)
@@ -651,7 +538,7 @@ namespace Reactor
                 case RBlend.InverseSourceAlpha:
                     return BlendingFactorSrc.OneMinusSrcAlpha;
                 case RBlend.InverseSourceColor:
-                    return (BlendingFactorSrc)All.OneMinusSrcColor;
+                    return BlendingFactorSrc.OneMinusConstantColor;
                 case RBlend.One:
                     return BlendingFactorSrc.One;
                 case RBlend.SourceAlpha:
@@ -659,7 +546,7 @@ namespace Reactor
                 case RBlend.SourceAlphaSaturation:
                     return BlendingFactorSrc.SrcAlphaSaturate;
                 case RBlend.SourceColor:
-                    return (BlendingFactorSrc)All.SrcColor;
+                    return BlendingFactorSrc.ConstantColor;
                 case RBlend.Zero:
                     return BlendingFactorSrc.Zero;
                 default:
@@ -674,24 +561,18 @@ namespace Reactor
             {
                 case RBlend.DestinationAlpha:
                     return BlendingFactorDest.DstAlpha;
-                //			case Blend.DestinationColor:
-                //				return BlendingFactorDest.DstColor;
                 case RBlend.InverseDestinationAlpha:
                     return BlendingFactorDest.OneMinusDstAlpha;
-                //			case Blend.InverseDestinationColor:
-                //				return BlendingFactorDest.OneMinusDstColor;
                 case RBlend.InverseSourceAlpha:
                     return BlendingFactorDest.OneMinusSrcAlpha;
                 case RBlend.InverseSourceColor:
-                    return (BlendingFactorDest)All.OneMinusSrcColor;
+                    return BlendingFactorDest.OneMinusSrcColor;
                 case RBlend.One:
                     return BlendingFactorDest.One;
                 case RBlend.SourceAlpha:
                     return BlendingFactorDest.SrcAlpha;
-                //			case Blend.SourceAlphaSaturation:
-                //				return BlendingFactorDest.SrcAlphaSaturate;
                 case RBlend.SourceColor:
-                    return (BlendingFactorDest)All.SrcColor;
+                    return BlendingFactorDest.SrcColor;
 
                 case RBlend.Zero:
                     return BlendingFactorDest.Zero;
@@ -699,40 +580,6 @@ namespace Reactor
                     return BlendingFactorDest.One;
             }
 
-        }
-
-
-        /// <summary>
-        /// Convert a <see cref="SurfaceFormat"/> to an Reactor.Graphics.ColorFormat.
-        /// This is used for setting up the backbuffer format of the OpenGL context.
-        /// </summary>
-        /// <returns>An Reactor.Graphics.ColorFormat instance.</returns>
-        /// <param name="format">The <see cref="SurfaceFormat"/> to convert.</param>
-        internal static ColorFormat GetColorFormat(this RSurfaceFormat format)
-        {
-            switch (format)
-            {
-                case RSurfaceFormat.Alpha8:
-                    return new ColorFormat(0, 0, 0, 8);
-                case RSurfaceFormat.Bgr565:
-                    return new ColorFormat(5, 6, 5, 0);
-                case RSurfaceFormat.Bgra4444:
-                    return new ColorFormat(4, 4, 4, 4);
-                case RSurfaceFormat.Bgra5551:
-                    return new ColorFormat(5, 5, 5, 1);
-                case RSurfaceFormat.Bgr32:
-                    return new ColorFormat(8, 8, 8, 0);
-                case RSurfaceFormat.Bgra32:
-                case RSurfaceFormat.Color:
-                    return new ColorFormat(8, 8, 8, 8);
-                case RSurfaceFormat.Rgba1010102:
-                    return new ColorFormat(10, 10, 10, 2);
-                default:
-                    // Floating point backbuffers formats could be implemented
-                    // but they are not typically used on the backbuffer. In
-                    // those cases it is better to create a render target instead.
-                    throw new NotSupportedException();
-            }
         }
     }
 }

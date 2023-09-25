@@ -59,15 +59,15 @@ namespace Reactor.Math
     }
 	
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Explicit, Size = 16, Pack = 4)]
     public struct Plane : IEquatable<Plane>
     {
         #region Public Fields
 
-        
+        [FieldOffset(0)]
         public float D;
 
-        
+        [FieldOffset(4)]
         public Vector3 Normal;
 
         #endregion Public Fields
@@ -246,6 +246,16 @@ namespace Reactor.Math
             return "{{Normal:" + Normal + " D:" + D + "}}";
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Numerics.Plane(Plane plane)
+        {
+            return new System.Numerics.Plane(plane.Normal, plane.D);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Plane(System.Numerics.Plane plane)
+        {
+            return new Plane(plane.Normal, plane.D);
+        }
         #endregion
     }
 }

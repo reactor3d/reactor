@@ -19,11 +19,7 @@ uniform sampler2D glow;
 uniform sampler2D detail;
 uniform sampler2D height;
 
-uniform vec4 diffuse_color;
-uniform vec4 ambient_color;
-uniform vec4 specular_color;
-uniform vec4 glow_color;
-uniform vec4 alpha_color;
+uniform vec4 color;
 
 float blinnPhongSpecular(
   vec3 lightDirection,

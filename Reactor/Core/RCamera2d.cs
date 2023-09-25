@@ -38,7 +38,7 @@ namespace Reactor
             this.OnUpdate += RCamera2d_OnUpdate;
         }
 
-        void RCamera2d_OnUpdate(object sender, EventArgs e)
+        void RCamera2d_OnUpdate()
         {
             RViewport viewport = REngine.Instance._viewport;
             this.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height,0, Near, Far);

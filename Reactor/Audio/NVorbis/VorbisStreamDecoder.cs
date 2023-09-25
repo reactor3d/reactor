@@ -5,11 +5,13 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 
 namespace NVorbis
 {
@@ -57,7 +59,7 @@ namespace NVorbis
 
         internal int _packetCount;
 
-        internal System.Diagnostics.Stopwatch _sw = new System.Diagnostics.Stopwatch();
+        internal Stopwatch _sw = new Stopwatch();
 
         #endregion
 

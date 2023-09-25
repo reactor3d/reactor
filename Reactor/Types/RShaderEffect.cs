@@ -20,19 +20,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.IO;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {
     public class RShaderEffect : IDisposable
     {
-        public int Id { get; internal set; }
+        public uint Id { get; internal set; }
         public string EffectSource;
         public RShaderEffectType Type;
         internal RShaderSemantics Semantics;
@@ -99,23 +98,25 @@ namespace Reactor.Types
 
 
             }
-            GL.ShaderSource(Id, EffectSource);
+            GL.ShaderSource(Id, 1, new []{EffectSource}, new []{1});
             REngine.CheckGLError();
             GL.CompileShader(Id);
             REngine.CheckGLError();
-            int compile_status;
-            GL.GetShader(Id, ShaderParameter.CompileStatus, out compile_status);
-            if (compile_status == (int)All.False)
+            int[] pars = new[]{0};
+            GL.GetShaderiv(Id, ShaderParameter.CompileStatus, pars);
+            if (pars[0] == 0)
             {
-                var log = GL.GetShaderInfoLog(Id);
-                RLog.Error(log);
+                StringBuilder log = new StringBuilder();
+                var size = new[]{0};
+                GL.GetShaderInfoLog(Id, 4096, size, log);
+                RLog.Error(log.ToString());
                 REngine.CheckGLError();
                 if (GL.IsShader(Id))
                 {
                     GL.DeleteShader(Id);
                     REngine.CheckGLError();
                 }
-                Id = -1;
+                Id = 0;
 
                 throw new InvalidOperationException("Shader Compilation Failed");
             }

@@ -34,14 +34,14 @@ namespace Reactor.Types
     {
         public bool IsEnabled { get; set; }
 
-        public event EventHandler OnUpdate;
+        public event Action OnUpdate;
         public virtual void Update()
         {
             UpdateMatrix();
             if (IsEnabled)
             {
                 if (OnUpdate != null)
-                    OnUpdate(this, null);
+                    OnUpdate();
             }
         }
         internal Vector3 position = Vector3.Zero;
@@ -50,7 +50,7 @@ namespace Reactor.Types
         internal Vector3 scale = Vector3.One;
 
         public Vector3 Position { get { return position; } set { position = value; } }
-        public Matrix Matrix { get { return matrix; } set { matrix = value; } }
+        public Matrix Matrix { get { return matrix; } set { matrix = value; Matrix.Decompose(out scale, out rotation, out position); } }
         public Quaternion Rotation { get { return rotation; } set { rotation = value; } }
         public Vector3 Scale { get { return scale; } set { scale = value; } }
 
@@ -65,12 +65,6 @@ namespace Reactor.Types
             
             
 
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetMatrix(Matrix Matrix)
-        {
-            matrix = Matrix;
-            matrix.Decompose(out scale, out rotation, out position);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -122,7 +116,7 @@ namespace Reactor.Types
         }
         public void LookAt(Vector3 target)
         {
-            SetMatrix(Matrix.CreateScale (scale) * Matrix.CreateLookAt (position, target, Vector3.UnitY) * Matrix.CreateTranslation (position));
+            Matrix = Matrix.CreateScale (scale) * Matrix.CreateLookAt (position, target, Vector3.UnitY) * Matrix.CreateTranslation (position);
         }
         internal void BuildRotationMatrix(ref Matrix m)
         {

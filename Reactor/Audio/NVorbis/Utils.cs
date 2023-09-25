@@ -5,6 +5,11 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 namespace NVorbis
 {
     static class Utils
@@ -35,12 +40,12 @@ namespace NVorbis
         }
 
         // make it so we can twiddle bits in a float...
-        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+        [StructLayout(LayoutKind.Explicit)]
         struct FloatBits
         {
-            [System.Runtime.InteropServices.FieldOffset(0)]
+            [FieldOffset(0)]
             public float Float;
-            [System.Runtime.InteropServices.FieldOffset(0)]
+            [FieldOffset(0)]
             public uint Bits;
         }
 
@@ -80,11 +85,11 @@ namespace NVorbis
             //     Either way, we'll play it safe and let the BCL calculate it.
 
             // now switch to single-precision and calc the return value
-            return mantissa * (float)System.Math.Pow(2.0, exponent);
+            return mantissa * (float)Math.Pow(2.0, exponent);
         }
 
         // this is a no-allocation way to sum an int queue
-        static internal int Sum(System.Collections.Generic.Queue<int> queue)
+        static internal int Sum(Queue<int> queue)
         {
             var value = 0;
             for (int i = 0; i < queue.Count; i++)

@@ -26,13 +26,20 @@ using System.Diagnostics;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace Reactor.Math
 {
+    [Serializable]
+    [StructLayout(LayoutKind.Explicit, Size = 12, Pack = 4)]
     public struct Vector3i : IEquatable<Vector3i>
     {
+        [FieldOffset(0)]
         public int X;
+        [FieldOffset(4)]
         public int Y;
+        [FieldOffset(8)]
         public int Z;
         
         public override bool Equals(object obj)
@@ -57,6 +64,8 @@ namespace Reactor.Math
             return (X ^ Y ^ Z);
         }
     }
+    [Serializable]
+    [StructLayout(LayoutKind.Explicit, Size = 12, Pack = 4)]
     public struct Vector3 : IEquatable<Vector3>
     {
         #region Private Fields
@@ -77,14 +86,14 @@ namespace Reactor.Math
 
 
         #region Public Fields
-        
-        
+
+        [FieldOffset(0)]
         public float X;
-      
-        
+
+        [FieldOffset(4)]
         public float Y;
-      
-        
+
+        [FieldOffset(8)]
         public float Z;
 
         #endregion Public Fields
@@ -334,14 +343,14 @@ namespace Reactor.Math
                 return false;
 
             var other = (Vector3)obj;
-            return  X == other.X &&
+            return X == other.X &&
                     Y == other.Y &&
                     Z == other.Z;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Vector3 other)
         {
-            return  X == other.X && 
+            return X == other.X &&
                     Y == other.Y &&
                     Z == other.Z;
         }
@@ -499,33 +508,33 @@ namespace Reactor.Math
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Reflect(Vector3 vector, Vector3 normal)
-	    {
-		    // I is the original array
-		    // N is the normal of the incident plane
-		    // R = I - (2 * N * ( DotProduct[ I,N] ))
-		    Vector3 reflectedVector;
-		    // inline the dotProduct here instead of calling method
-		    float dotProduct = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
-		    reflectedVector.X = vector.X - (2.0f * normal.X) * dotProduct;
-		    reflectedVector.Y = vector.Y - (2.0f * normal.Y) * dotProduct;
-		    reflectedVector.Z = vector.Z - (2.0f * normal.Z) * dotProduct;
+        {
+            // I is the original array
+            // N is the normal of the incident plane
+            // R = I - (2 * N * ( DotProduct[ I,N] ))
+            Vector3 reflectedVector;
+            // inline the dotProduct here instead of calling method
+            float dotProduct = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
+            reflectedVector.X = vector.X - (2.0f * normal.X) * dotProduct;
+            reflectedVector.Y = vector.Y - (2.0f * normal.Y) * dotProduct;
+            reflectedVector.Z = vector.Z - (2.0f * normal.Z) * dotProduct;
 
-		    return reflectedVector;
-	    }
+            return reflectedVector;
+        }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Reflect(ref Vector3 vector, ref Vector3 normal, out Vector3 result)
-	    {
-		    // I is the original array
-		    // N is the normal of the incident plane
-		    // R = I - (2 * N * ( DotProduct[ I,N] ))
+        {
+            // I is the original array
+            // N is the normal of the incident plane
+            // R = I - (2 * N * ( DotProduct[ I,N] ))
 
-		    // inline the dotProduct here instead of calling method
-		    float dotProduct = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
-		    result.X = vector.X - (2.0f * normal.X) * dotProduct;
-		    result.Y = vector.Y - (2.0f * normal.Y) * dotProduct;
-		    result.Z = vector.Z - (2.0f * normal.Z) * dotProduct;
+            // inline the dotProduct here instead of calling method
+            float dotProduct = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
+            result.X = vector.X - (2.0f * normal.X) * dotProduct;
+            result.Y = vector.Y - (2.0f * normal.Y) * dotProduct;
+            result.Z = vector.Z - (2.0f * normal.Z) * dotProduct;
 
-	    }
+        }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 SmoothStep(Vector3 value1, Vector3 value2, float amount)
         {
@@ -592,18 +601,18 @@ namespace Reactor.Math
 
             for (var i = 0; i < sourceArray.Length; i++)
             {
-                var position = sourceArray[i];                
+                var position = sourceArray[i];
                 destinationArray[i] =
                     new Vector3(
-                        (position.X*matrix.M11) + (position.Y*matrix.M21) + (position.Z*matrix.M31) + matrix.M41,
-                        (position.X*matrix.M12) + (position.Y*matrix.M22) + (position.Z*matrix.M32) + matrix.M42,
-                        (position.X*matrix.M13) + (position.Y*matrix.M23) + (position.Z*matrix.M33) + matrix.M43);
+                        (position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41,
+                        (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42,
+                        (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43);
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Matrix matrix, Vector3[] destinationArray, int destinationIndex, int length)
         {
-            Debug.Assert(sourceArray.Length - sourceIndex >= length, 
+            Debug.Assert(sourceArray.Length - sourceIndex >= length,
                 "The source array is too small for the given sourceIndex and length.");
             Debug.Assert(destinationArray.Length - destinationIndex >= length,
                 "The destination array is too small for the given destinationIndex and length.");
@@ -701,7 +710,7 @@ namespace Reactor.Math
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
-            for (var i = 0; i < length; i++) 
+            for (var i = 0; i < length; i++)
             {
                 var position = sourceArray[sourceIndex + i];
 
@@ -785,8 +794,8 @@ namespace Reactor.Math
             value.Z *= scaleFactor;
             return value;
         }
-        [MethodImpl (MethodImplOptions.AggressiveInlining)]
-        public static Vector3 operator * (Vector3 value, double scaleFactor)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator *(Vector3 value, double scaleFactor)
         {
             value.X *= (float)scaleFactor;
             value.Y *= (float)scaleFactor;
@@ -801,8 +810,8 @@ namespace Reactor.Math
             value.Z *= scaleFactor;
             return value;
         }
-        [MethodImpl (MethodImplOptions.AggressiveInlining)]
-        public static Vector3 operator * (double scaleFactor, Vector3 value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator *(double scaleFactor, Vector3 value)
         {
             value.X *= (float)scaleFactor;
             value.Y *= (float)scaleFactor;
@@ -834,8 +843,8 @@ namespace Reactor.Math
             value.Z *= factor;
             return value;
         }
-        [MethodImpl (MethodImplOptions.AggressiveInlining)]
-        public static Vector3 operator / (Vector3 value, double divider)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator /(Vector3 value, double divider)
         {
             float factor = 1.0f / (float)divider;
             value.X *= factor;
@@ -843,12 +852,15 @@ namespace Reactor.Math
             value.Z *= factor;
             return value;
         }
-        public static implicit operator OpenTK.Vector3(Vector3 value)
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Numerics.Vector3(Vector3 value)
         {
-            return new OpenTK.Vector3(value.X, value.Y, value.Z);
+            return new System.Numerics.Vector3(value.X, value.Y, value.Z);
         }
 
-        public static implicit operator Vector3(OpenTK.Vector3 value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Vector3(System.Numerics.Vector3 value)
         {
             return new Vector3(value.X, value.Y, value.Z);
         }

@@ -20,19 +20,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using SharpFont;
+
 using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
 using System.IO;
-using Reactor.Math;
+using System.Reflection;
 using Reactor.Geometry;
-using OpenTK.Graphics.OpenGL4;
-
+using Reactor.Math;
+using Reactor.Platform.OpenGL;
+using SharpFont;
+using Matrix = Reactor.Math.Matrix;
+using Rectangle = Reactor.Math.Rectangle;
 
 namespace Reactor.Types
 {
@@ -129,7 +129,7 @@ namespace Reactor.Types
                 RFontGlyph glyph = new RFontGlyph();
                 
                 glyph.bitmap = face.Glyph.Bitmap.ToGdipBitmap(Color.White);
-                glyph.Bounds = new Reactor.Math.Rectangle(0, 0, glyph.bitmap.Width, glyph.bitmap.Height);
+                glyph.Bounds = new Rectangle(0, 0, glyph.bitmap.Width, glyph.bitmap.Height);
                 glyph.CharIndex = i;
                 glyph.Offset = new Vector2(face.Glyph.Metrics.HorizontalBearingX.ToInt32(), face.Glyph.Metrics.HorizontalBearingY.ToInt32());
                 glyph.Advance = face.Glyph.Advance.X.ToInt32();
@@ -144,12 +144,12 @@ namespace Reactor.Types
             {
                 missed = 0;
                 AtlasNode root = new AtlasNode();
-                root.bounds = new Reactor.Math.Rectangle(0, 0, width, width);
+                root.bounds = new Rectangle(0, 0, width, width);
                 b.Dispose ();
                 b = new Bitmap(width, width);
-                System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(b);
+                Graphics g = Graphics.FromImage(b);
                 g.Clear(Color.Transparent);
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 for (var i = 0; i < Glyphs.Count; i++)
                 {
                     RFontGlyph glyph = Glyphs[i];
@@ -157,7 +157,7 @@ namespace Reactor.Types
 
                     if (result != null)
                     {
-                        Reactor.Math.Rectangle bounds = result.bounds;
+                        Rectangle bounds = result.bounds;
                         //g.DrawImageUnscaledAndClipped(glyph.bitmap, bounds);
                         g.DrawImage(glyph.bitmap, bounds);
                         glyph.Bounds = bounds;
@@ -212,7 +212,7 @@ namespace Reactor.Types
                     continue;
                 }
                 RFontGlyph glyph = GetGlyphForChar(c);
-                var dest = new Reactor.Math.Rectangle();
+                var dest = new Rectangle();
                 dest.X = (int)(pen.X + glyph.Offset.X);
                 dest.Y = (int)pen.Y - ((int)glyph.Offset.Y);
                 dest.Width = glyph.Bounds.Width;
@@ -223,7 +223,7 @@ namespace Reactor.Types
                 vertexBuffer.BindVertexArray();
                 indexBuffer.Bind();
                 vertexBuffer.VertexDeclaration.Apply(shader, IntPtr.Zero);
-                GL.DrawElements(PrimitiveType.Triangles, indexBuffer.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
+                GL.DrawElements(BeginMode.Triangles, indexBuffer.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
                 REngine.CheckGLError();
                 indexBuffer.Unbind();
                 vertexBuffer.Unbind();
@@ -234,9 +234,9 @@ namespace Reactor.Types
 
         }
 
-        public Reactor.Math.Rectangle MeasureString(string text)
+        public Rectangle MeasureString(string text)
         {
-            Reactor.Math.Rectangle r = new Reactor.Math.Rectangle();
+            Rectangle r = new Rectangle();
             foreach (char c in text)
             {
                 if (c == ' ')
@@ -265,7 +265,7 @@ namespace Reactor.Types
             }
             throw new InvalidOperationException(String.Format("Character {0} not found in character map", ch));
         }
-        RVertexData2D[] AddQuads(Reactor.Math.Rectangle placement, Vector4 UVs)
+        RVertexData2D[] AddQuads(Rectangle placement, Vector4 UVs)
         {
             quadVerts[0].Position = new Vector2(placement.X, placement.Y);
             quadVerts[0].TexCoord = new Vector2(UVs.X, UVs.Y);
@@ -287,7 +287,7 @@ namespace Reactor.Types
         {
             var names = Assembly.GetManifestResourceNames();
             Stream stream = Assembly.GetManifestResourceStream(resource);
-            System.IO.BinaryReader reader = new System.IO.BinaryReader(stream);
+            BinaryReader reader = new BinaryReader(stream);
             byte[] buffer = new byte[reader.BaseStream.Length];
             reader.Read(buffer, 0, buffer.Length);
             reader.Close();

@@ -29,7 +29,7 @@ using System.Runtime.CompilerServices;
 
 namespace Reactor.Math
 {
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Explicit, Size = 8, Pack = 4)]
     public struct Vector2 : IEquatable<Vector2>
     {
         #region Private Fields
@@ -43,11 +43,11 @@ namespace Reactor.Math
 
 
         #region Public Fields
-      
-        
+
+        [FieldOffset(0)]
         public float X;
-        
-        
+
+        [FieldOffset(4)]
         public float Y;
 
         #endregion Public Fields
@@ -512,7 +512,7 @@ namespace Reactor.Math
             return value1;
         }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator *(Vector2 value1, Vector2 value2)
         {
             value1.X *= value2.X;
@@ -520,7 +520,7 @@ namespace Reactor.Math
             return value1;
         }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator *(Vector2 value, float scaleFactor)
         {
             value.X *= scaleFactor;
@@ -528,21 +528,21 @@ namespace Reactor.Math
             return value;
         }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator *(float scaleFactor, Vector2 value)
         {
             value.X *= scaleFactor;
             value.Y *= scaleFactor;
             return value;
         }
-        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator /(Vector2 value1, Vector2 value2)
         {
             value1.X /= value2.X;
             value1.Y /= value2.Y;
             return value1;
         }
-        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator /(Vector2 value1, float divider)
         {
             float factor = 1 / divider;
@@ -550,12 +550,25 @@ namespace Reactor.Math
             value1.Y *= factor;
             return value1;
         }
-        public static implicit operator OpenTK.Vector2(Vector2 value)
+
+        /// <summary>
+        /// Converts a Reactor Vector2 to a System Numerics Vector2 (supposedly they are fast.)
+        /// </summary>
+        /// <param name="value">a Reactor Vector2</param>
+        /// <returns>a System Numerics Vector2</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Numerics.Vector2(Vector2 value)
         {
-            return new OpenTK.Vector2(value.X, value.Y);
+            return new System.Numerics.Vector2(value.X, value.Y);
         }
 
-        public static implicit operator Vector2(OpenTK.Vector2 value)
+        /// <summary>
+        /// Converts a System Numerics Vector2 to a Reactor Vector2 (supposedly they are just as fast.)
+        /// </summary>
+        /// <param name="value">a System Numerics Vector2</param>
+        /// <returns>a Reactor Vector2</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Vector2(System.Numerics.Vector2 value)
         {
             return new Vector2(value.X, value.Y);
         }

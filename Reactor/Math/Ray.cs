@@ -29,22 +29,27 @@ using System.Runtime.Serialization;
 
 namespace Reactor.Math
 {
-
+    [Serializable]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Explicit, Size = 24, Pack = 4)]
     public struct Ray : IEquatable<Ray>
     {
         #region Public Fields
 
-        
+        [FieldOffset(0)]
         public Vector3 Direction;
-      
-        
+
+        [FieldOffset(12)]
         public Vector3 Position;
 
         #endregion
 
-
+        /// <summary>
+        /// Casts a ray from position in direction (normalized).
+        /// Checking if it hits boundings boxes, spheres, planes, etc.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="direction"></param>
         #region Public Constructors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Ray(Vector3 position, Vector3 direction)

@@ -35,7 +35,7 @@ namespace Reactor.Math
     /// <summary>
     /// Describes a 2D-rectangle. 
     /// </summary>
-
+    [Serializable]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
     [StructLayout(LayoutKind.Sequential)]
     public struct Rectangle : IEquatable<Rectangle>

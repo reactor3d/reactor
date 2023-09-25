@@ -46,7 +46,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using OpenTK.Audio.OpenAL;
+using Reactor.Audio.OpenAL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -164,7 +164,7 @@ namespace Reactor.Audio
                 CastBuffer(readSampleBuffer, castBuffer, readSamples);
             }
             AL.BufferData(bufferId, stream.Reader.Channels == 1 ? ALFormat.Mono16 : ALFormat.Stereo16, castBuffer,
-                          readSamples * sizeof (short), stream.Reader.SampleRate);
+                          stream.Reader.SampleRate);
             ALHelper.Check();
 
             
@@ -257,7 +257,7 @@ namespace Reactor.Audio
                             if (!streams.Contains(stream))
                                 continue;
 
-                        var state = AL.GetSourceState(stream.alSourceId);
+                        var state = ALHelper.GetSourceState(stream.alSourceId);
                         if (state == ALSourceState.Stopped)
                         {
                             

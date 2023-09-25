@@ -46,14 +46,10 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using NVorbis;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Audio.OpenAL;
+using NVorbis;
+using Reactor.Audio.OpenAL;
 
 namespace Reactor.Audio
 {
@@ -90,22 +86,13 @@ namespace Reactor.Audio
             alBufferIds = AL.GenBuffers(bufferCount);
             alSourceId = AL.GenSource();
 
-            if (ALHelper.XRam.IsInitialized)
-            {
-                ALHelper.XRam.SetBufferMode(BufferCount, ref alBufferIds[0], XRamExtension.XRamStorage.Hardware);
-                ALHelper.Check();
-            }
-
             Volume = 1;
-
-            if (ALHelper.Efx.IsInitialized)
-            {
-                alFilterId = ALHelper.Efx.GenFilter();
-                ALHelper.Efx.Filter(alFilterId, EfxFilteri.FilterType, (int)EfxFilterType.Lowpass);
-                ALHelper.Efx.Filter(alFilterId, EfxFilterf.LowpassGain, 1);
-                LowPassHFGain = 1;
-            }
-
+            
+            alFilterId = ALC.EFX.GenFilter();
+            ALC.EFX.Filter(alFilterId, FilterInteger.FilterType, (int)FilterType.Lowpass);
+            ALC.EFX.Filter(alFilterId, FilterFloat.LowpassGain, 1);
+            LowPassHFGain = 1;
+            
             underlyingStream = stream;
 
             
@@ -114,8 +101,7 @@ namespace Reactor.Audio
         public void Prepare()
         {
             if (Preparing) return;
-
-            var state = AL.GetSourceState(alSourceId);
+            var state = ALHelper.GetSourceState(alSourceId);
 
             lock (stopMutex)
             {
@@ -150,7 +136,7 @@ namespace Reactor.Audio
 
         public void Play()
         {
-            var state = AL.GetSourceState(alSourceId);
+            var state = ALHelper.GetSourceState(alSourceId);
 
             switch (state)
             {
@@ -173,7 +159,7 @@ namespace Reactor.Audio
 
         public void Pause()
         {
-            if (AL.GetSourceState(alSourceId) != ALSourceState.Playing)
+            if (ALHelper.GetSourceState(alSourceId) != ALSourceState.Playing)
                 return;
 
             RAudioStreamer.Instance.RemoveStream(this);
@@ -184,7 +170,7 @@ namespace Reactor.Audio
 
         public void Resume()
         {
-            if (AL.GetSourceState(alSourceId) != ALSourceState.Paused)
+            if (ALHelper.GetSourceState(alSourceId) != ALSourceState.Paused)
                 return;
 
             RAudioStreamer.Instance.AddStream(this);
@@ -195,7 +181,7 @@ namespace Reactor.Audio
 
         public void Stop()
         {
-            var state = AL.GetSourceState(alSourceId);
+            var state = ALHelper.GetSourceState(alSourceId);
             if (state == ALSourceState.Playing || state == ALSourceState.Paused)
             {
                 StopPlayback();
@@ -213,12 +199,9 @@ namespace Reactor.Audio
             get { return lowPassHfGain; }
             set
             {
-                if (ALHelper.Efx.IsInitialized)
-                {
-                    ALHelper.Efx.Filter(alFilterId, EfxFilterf.LowpassGainHF, lowPassHfGain = value);
-                    ALHelper.Efx.BindFilterToSource(alSourceId, alFilterId);
-                    ALHelper.Check();
-                }
+                ALC.EFX.Filter(alFilterId, FilterFloat.LowpassGainHF, lowPassHfGain = value);
+                ALC.EFX.Source(alSourceId, EFXSourceInteger.DirectFilter, alFilterId);
+                ALHelper.Check();
             }
         }
 
@@ -237,7 +220,7 @@ namespace Reactor.Audio
 
         public void Dispose()
         {
-            var state = AL.GetSourceState(alSourceId);
+            var state = ALHelper.GetSourceState(alSourceId);
             if (state == ALSourceState.Playing || state == ALSourceState.Paused)
                 StopPlayback();
 
@@ -255,10 +238,9 @@ namespace Reactor.Audio
 
             AL.DeleteSource(alSourceId);
             AL.DeleteBuffers(alBufferIds);
-
-            if (ALHelper.Efx.IsInitialized)
-                ALHelper.Efx.DeleteFilter(alFilterId);
-
+            
+            ALC.EFX.DeleteFilter(alFilterId);
+            
             ALHelper.Check();
 
             

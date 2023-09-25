@@ -5,11 +5,12 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
+using NVorbis.Ogg;
 
 namespace NVorbis
 {
@@ -42,7 +43,7 @@ namespace NVorbis
             bufferedStream.CloseBaseStream = closeStreamOnDispose;
 
             // try Ogg first
-            var oggContainer = new Ogg.ContainerReader(bufferedStream, closeStreamOnDispose);
+            var oggContainer = new ContainerReader(bufferedStream, closeStreamOnDispose);
             if (!LoadContainer(oggContainer))
             {
                 // oops, not Ogg!

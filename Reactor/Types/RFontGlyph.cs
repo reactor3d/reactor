@@ -21,12 +21,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using SD = System.Drawing;
-using Reactor.Math;
-using SharpFont;
-using OpenTK.Graphics.OpenGL;
 using System.IO;
+using Reactor.Math;
+using SD = System.Drawing;
 
 
 namespace Reactor.Types
@@ -38,7 +35,7 @@ namespace Reactor.Types
         public Vector4 UVBounds;
         public Vector2 Offset;
         public int Advance;
-        public System.Drawing.Bitmap bitmap;
+        public SD.Bitmap bitmap;
         internal void Save(ref BinaryWriter stream)
         {
             stream.Write(CharIndex);

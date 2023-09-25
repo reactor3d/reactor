@@ -20,10 +20,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using System.Text;
-using System.Runtime.Serialization;
 using System.Diagnostics;
+using System.Text;
 using Reactor.Math;
 
 namespace Reactor.Types
@@ -200,10 +200,10 @@ namespace Reactor.Types
         {
             _packedValue = 0;
 			
-			R = (byte)Reactor.Math.MathHelper.Clamp(RColor.X * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)Reactor.Math.MathHelper.Clamp(RColor.Y * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)Reactor.Math.MathHelper.Clamp(RColor.Z * 255, Byte.MinValue, Byte.MaxValue);
-            A = (byte)Reactor.Math.MathHelper.Clamp(RColor.W * 255, Byte.MinValue, Byte.MaxValue);
+			R = (byte)MathHelper.Clamp(RColor.X * 255, Byte.MinValue, Byte.MaxValue);
+            G = (byte)MathHelper.Clamp(RColor.Y * 255, Byte.MinValue, Byte.MaxValue);
+            B = (byte)MathHelper.Clamp(RColor.Z * 255, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(RColor.W * 255, Byte.MinValue, Byte.MaxValue);
         }
 
 	/// <summary>
@@ -214,9 +214,9 @@ namespace Reactor.Types
         {
             _packedValue = 0;
 
-            R = (byte)Reactor.Math.MathHelper.Clamp(RColor.X * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)Reactor.Math.MathHelper.Clamp(RColor.Y * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)Reactor.Math.MathHelper.Clamp(RColor.Z * 255, Byte.MinValue, Byte.MaxValue);
+            R = (byte)MathHelper.Clamp(RColor.X * 255, Byte.MinValue, Byte.MaxValue);
+            G = (byte)MathHelper.Clamp(RColor.Y * 255, Byte.MinValue, Byte.MaxValue);
+            B = (byte)MathHelper.Clamp(RColor.Z * 255, Byte.MinValue, Byte.MaxValue);
             A = 255;
         }
 	
@@ -232,7 +232,7 @@ namespace Reactor.Types
             R = RColor.R;
             G = RColor.G;
             B = RColor.B;
-            A = (byte)Reactor.Math.MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
         }
 	
 	/// <summary>
@@ -247,7 +247,7 @@ namespace Reactor.Types
             R = RColor.R;
             G = RColor.G;
             B = RColor.B;
-            A = (byte)Reactor.Math.MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
         }
 	
 	/// <summary>
@@ -260,9 +260,9 @@ namespace Reactor.Types
         {
             _packedValue = 0;
 			
-            R = (byte)Reactor.Math.MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)Reactor.Math.MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)Reactor.Math.MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
+            R = (byte)MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
             A = 255;
         }
 	
@@ -275,9 +275,9 @@ namespace Reactor.Types
         public RColor(int r, int g, int b)
         {
             _packedValue = 0;
-            R = (byte)Reactor.Math.MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-            G = (byte)Reactor.Math.MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-            B = (byte)Reactor.Math.MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
+            R = (byte)MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
             A = (byte)255;
         }
 
@@ -291,10 +291,10 @@ namespace Reactor.Types
         public RColor(int r, int g, int b, int alpha)
         {
             _packedValue = 0;
-            R = (byte)Reactor.Math.MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-            G = (byte)Reactor.Math.MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-            B = (byte)Reactor.Math.MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
-            A = (byte)Reactor.Math.MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+            R = (byte)MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
         }
 	
 	/// <summary>
@@ -308,10 +308,10 @@ namespace Reactor.Types
         {
             _packedValue = 0;
 			
-            R = (byte)Reactor.Math.MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)Reactor.Math.MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)Reactor.Math.MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
-            A = (byte)Reactor.Math.MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
+            R = (byte)MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
         }
 
         /// <summary>
@@ -1721,12 +1721,12 @@ namespace Reactor.Types
         /// <returns>Interpolated <see cref="RColor"/>.</returns>
         public static RColor Lerp(RColor value1, RColor value2, Single amount)
         {
-            amount = Reactor.Math.MathHelper.Clamp(amount, 0, 1);
+            amount = MathHelper.Clamp(amount, 0, 1);
             return new RColor(   
-                (int)Reactor.Math.MathHelper.Lerp(value1.R, value2.R, amount),
-                (int)Reactor.Math.MathHelper.Lerp(value1.G, value2.G, amount),
-                (int)Reactor.Math.MathHelper.Lerp(value1.B, value2.B, amount),
-                (int)Reactor.Math.MathHelper.Lerp(value1.A, value2.A, amount) );
+                (int)MathHelper.Lerp(value1.R, value2.R, amount),
+                (int)MathHelper.Lerp(value1.G, value2.G, amount),
+                (int)MathHelper.Lerp(value1.B, value2.B, amount),
+                (int)MathHelper.Lerp(value1.A, value2.A, amount) );
         }
 		
 	/// <summary>
@@ -1799,22 +1799,12 @@ namespace Reactor.Types
         /// {R:[red] G:[green] B:[blue] A:[alpha]}
         /// </summary>
         /// <returns><see cref="String"/> representation of this <see cref="RColor"/>.</returns>
-	public override string ToString ()
-	{
-        StringBuilder sb = new StringBuilder(25);
-        sb.Append("{R:");
-        sb.Append(R);
-        sb.Append(" G:");
-        sb.Append(G);
-        sb.Append(" B:");
-        sb.Append(B);
-        sb.Append(" A:");
-        sb.Append(A);
-        sb.Append("}");
-        return sb.ToString();
-	}
+	    public override string ToString ()
+	    {
+            return String.Format("RColor(R:{0} G:{1} B:{2} A:{3})", R, G, B, A);
+	    }
 	
-	/// <summary>
+	    /// <summary>
         /// Translate a non-premultipled alpha <see cref="RColor"/> to a <see cref="RColor"/> that contains premultiplied alpha.
         /// </summary>
         /// <param name="vector">A <see cref="Vector4"/> representing RColor.</param>
@@ -1823,8 +1813,17 @@ namespace Reactor.Types
         {
             return new RColor(vector.X * vector.W, vector.Y * vector.W, vector.Z * vector.W, vector.W);
         }
-	
-	/// <summary>
+        /// <summary>
+        /// Translate a non-premultipled alpha <see cref="RColor"/> to a <see cref="RColor"/> that contains premultiplied alpha.
+        /// </summary>
+        /// <param name="values">An array of <see cref="float"/> representing RColor NonPreMultiplied</param>
+        /// <returns>A <see cref="RColor"/> which contains premultiplied alpha data.</returns>
+        public static RColor FromArray(float[] values)
+        {
+            return FromNonPremultiplied(new Vector4(values[0], values[1], values[2], values[3]));
+        }
+
+        /// <summary>
         /// Translate a non-premultipled alpha <see cref="RColor"/> to a <see cref="RColor"/> that contains premultiplied alpha.
         /// </summary>
         /// <param name="r">Red component value.</param>

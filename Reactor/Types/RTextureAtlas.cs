@@ -22,9 +22,9 @@
 // THE SOFTWARE.
 
 using System;
-using Reactor.Math;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Math;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {

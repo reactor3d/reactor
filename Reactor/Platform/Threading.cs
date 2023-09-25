@@ -20,18 +20,78 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Platform;
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Reactor.Platform.GLFW;
+using Reactor.Platform.OpenGL;
+using Reactor.Types;
 
 namespace Reactor.Platform
 {
+    
+    public class RThreadPool : RSingleton<RThreadPool>
+    {
+        
+        public RThreadPool()
+        {
+        }
+        public int ThreadCount
+        {
+            get
+            {
+                int workers, p;
+                ThreadPool.GetAvailableThreads(out workers, out p);
+                return workers;
+            }
+        }
+
+        public async void Queue(Action action, object state)
+        {
+            if(state != null)
+            {
+                ThreadPool.QueueUserWorkItem((o) =>
+                {
+                    action.DynamicInvoke(o);
+                }, state);
+            }
+            else
+            {
+                ThreadPool.QueueUserWorkItem((_) =>
+                {
+                    action.Invoke();
+                });
+            }
+        }
+        public async void Queue(Action action, Action callback)
+        {
+            ThreadPool.QueueUserWorkItem((_) =>
+            {
+                action.BeginInvoke((r) =>
+                {
+                    action.EndInvoke(r);
+                    if (r.IsCompleted)
+                    {
+                        callback();
+                    }
+                }, null);
+                
+            });
+        }
+        public async void Queue(Task task)
+        {
+            ThreadPool.QueueUserWorkItem((_) => 
+            {
+                task.Start(TaskScheduler.Default);
+
+            });
+        }
+    }
     internal class Threading
     {
         public const int kMaxWaitForUIThread = 750; // In milliseconds
@@ -39,7 +99,6 @@ namespace Reactor.Platform
 
         static int mainThreadId;
         public static IGraphicsContext BackgroundContext;
-        public static IWindowInfo WindowInfo;
 
         static Threading()
         {
@@ -86,16 +145,27 @@ namespace Reactor.Platform
             lock (BackgroundContext)
             {
                 // Make the context current on this thread
-                BackgroundContext.MakeCurrent(WindowInfo);
+                BackgroundContext.MakeCurrent();
                 // Execute the action
                 action();
                 // Must flush the GL calls so the texture is ready for the main context to use
                 GL.Flush();
                 REngine.CheckGLError();
                 // Must make the context not current on this thread or the next thread will get error 170 from the MakeCurrent call
-                BackgroundContext.MakeCurrent(null);
+                BackgroundContext.MakeNoneCurrent();
             }
-            
+        }
+
+        public void RunOnThreadPool(Action action)
+        {
+            if(!IsOnUIThread())
+            {
+                action();
+            }
+            else
+            {
+                new Thread(() => { action(); }).Start();
+            }
         }
     }
 }

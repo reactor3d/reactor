@@ -21,25 +21,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace Reactor.Math
 {
+	[Serializable]
+	[StructLayout(LayoutKind.Explicit, Size = 16, Pack = 4)]
     public struct Quaternion : IEquatable<Quaternion>
     {
-        
+		#region Public Fields
+		[FieldOffset(0)]
         public float X;
 
-        
+		[FieldOffset(4)]
         public float Y;
-      
-        
-        public float Z;
-      
-        
-        public float W;
 
-        static Quaternion identity = new Quaternion(0, 0, 0, 1);
+		[FieldOffset(8)]      
+        public float Z;
+
+		[FieldOffset(12)]
+        public float W;
+		#endregion
+		static Quaternion identity = new Quaternion(0, 0, 0, 1);
 
         
         public Quaternion(float x, float y, float z, float w)
@@ -85,8 +90,7 @@ namespace Reactor.Math
 			result.Z = quaternion1.Z + quaternion2.Z;
 			result.W = quaternion1.W + quaternion2.W;
         }
-		
-		//Funcion añadida Syderis
+        
 		public static Quaternion Concatenate(Quaternion value1, Quaternion value2)
 		{
 			 Quaternion quaternion;
@@ -110,7 +114,6 @@ namespace Reactor.Math
 
 		}
 		
-		//Añadida por Syderis
 		public static void Concatenate(ref Quaternion value1, ref Quaternion value2, out Quaternion result)
 		{
 		    float x = value2.X;
@@ -131,7 +134,6 @@ namespace Reactor.Math
 		    result.W = (w * num) - num9;
 		}
 		
-		//Añadida por Syderis
 		public void Conjugate()
 		{
 			this.X = -this.X;
@@ -139,7 +141,6 @@ namespace Reactor.Math
 			this.Z = -this.Z;
 		}
 		
-		//Añadida por Syderis
 		public static Quaternion Conjugate(Quaternion value)
 		{
 			Quaternion quaternion;
@@ -150,7 +151,6 @@ namespace Reactor.Math
 			return quaternion;
 		}
 		
-		//Añadida por Syderis
 		public static void Conjugate(ref Quaternion value, out Quaternion result)
 		{
 			result.X = -value.X;
@@ -874,7 +874,7 @@ namespace Reactor.Math
 			//	}
 		}
 
-		internal Vector3 Xyz
+		public Vector3 Xyz
 		{
 			get {
 				return new Vector3(X, Y, Z);
@@ -886,7 +886,24 @@ namespace Reactor.Math
 				Z = value.Z;
 			}
 		}
-
+		/// <summary>Converts a Reactor Quaternion to a System Numerics Quaternion (supposedly they are fast).
+		/// This way you can use either Reactor or System.Numerics to do maths.</summary>
+		/// <param name="value">Reactor Quaternion value</param>
+		/// <returns>System Numerics Quaternion value</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Numerics.Quaternion(Quaternion value)
+        {
+            return new System.Numerics.Quaternion(value.X, value.Y, value.Z, value.W);
+        }
+        /// <summary>Converts a System Numerics Quaternion to a Reactor Quaternion (supposedly they are just as fast).
+        /// This way you can use either Reactor or System.Numerics to do maths.</summary>
+        /// <param name="value">Reactor Quaternion value</param>
+        /// <returns>System Numerics Quaternion value</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Quaternion(System.Numerics.Quaternion value)
+        {
+            return new Quaternion(value.X, value.Y, value.Z, value.W);
+        }
 
     }
 }

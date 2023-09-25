@@ -23,11 +23,9 @@
 
 using System;
 using Reactor.Geometry;
-using OpenTK.Graphics.OpenGL;
-using System.Collections.Generic;
 using Reactor.Math;
 using Reactor.Platform;
-
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {
@@ -39,12 +37,12 @@ namespace Reactor.Types
         public BoundingBox BoundingBox { get; set; }
 
         public RMaterial Material { get; set; }
-        RMeshPart()
+        internal RMeshPart()
         {
             Material = RMaterial.defaultMaterial;
         }
 
-        internal void Draw(PrimitiveType primitiveType, Matrix world)
+        internal void Draw(BeginMode primitiveType, Matrix world)
         {
             Threading.EnsureUIThread();
             GL.FrontFace(FrontFaceDirection.Ccw);

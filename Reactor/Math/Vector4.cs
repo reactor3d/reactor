@@ -25,9 +25,12 @@ using System;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Reactor.Math
 {
+    [Serializable]
+    [StructLayout(LayoutKind.Explicit, Size = 16, Pack = 4)]
     public struct Vector4 : IEquatable<Vector4>
     {
         #region Private Fields
@@ -43,17 +46,17 @@ namespace Reactor.Math
 
 
         #region Public Fields
-        
-        
+
+        [FieldOffset(0)]
         public float X;
 
-        
+        [FieldOffset(4)]
         public float Y;
-      
-        
+
+        [FieldOffset(8)]
         public float Z;
-      
-        
+
+        [FieldOffset(12)]
         public float W;
 
         #endregion Public Fields
@@ -641,13 +644,15 @@ namespace Reactor.Math
             value1.Z *= factor;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator OpenTK.Vector4(Vector4 value)
+        public static implicit operator System.Numerics.Vector4(Vector4 value)
         {
-            return new OpenTK.Vector4(value.X, value.Y, value.Z, value.W);
+            return new System.Numerics.Vector4(value.X, value.Y, value.Z, value.W);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector4(OpenTK.Vector4 value)
+        public static implicit operator Vector4(System.Numerics.Vector4 value)
         {
             return new Vector4(value.X, value.Y, value.Z, value.W);
         }

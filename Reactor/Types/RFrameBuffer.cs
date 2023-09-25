@@ -20,24 +20,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
-using Reactor.Platform;
-using Reactor.Types;
-using Reactor.Types.States;
+
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {
     public class RFrameBuffer : IDisposable
     {
-        public int Id { get; set; }
+        public uint Id { get; set; }
         public RDepthFormat DepthStencilFormat { get; private set; }
         public RSurfaceFormat SurfaceFormat { get; private set; }
         public int MultiSampleCount { get; private set; }
@@ -55,10 +46,10 @@ namespace Reactor.Types
             DepthStencilFormat = preferredDepthFormat;
             SurfaceFormat = preferredFormat;
             MultiSampleCount = preferredMultiSampleCount;
-            var id = 0;
-            GL.GenFramebuffers(1, out id);
+            uint[] id = {0};
+            GL.GenFramebuffers(1, id);
             REngine.CheckGLError();
-            Id = id;
+            Id = id[0];
             Bind();
             Build(width, height, mipMap, preferredFormat, preferredDepthFormat, preferredMultiSampleCount, shared);
             Unbind();
@@ -135,7 +126,8 @@ namespace Reactor.Types
 
         public void Dispose()
         {
-            GL.DeleteFramebuffer(Id);
+            uint[] v = { Id };
+            GL.DeleteFramebuffers(1, v);
             DepthBuffer.Dispose();
             BackBuffer.Dispose();
             REngine.CheckGLError();
@@ -145,7 +137,7 @@ namespace Reactor.Types
             switch(surfaceFormat)
             {
                 case RSurfaceFormat.Alpha8:
-                    return RenderbufferStorage.Alpha8;
+                    return RenderbufferStorage.R8;
                 case RSurfaceFormat.Color:
                     return RenderbufferStorage.Rgba8;
                 case RSurfaceFormat.HalfVector4:

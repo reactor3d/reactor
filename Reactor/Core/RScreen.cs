@@ -26,7 +26,7 @@ using System.Drawing.Text;
 using Reactor.Types;
 using Reactor.Geometry;
 using Reactor.Math;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Platform.OpenGL;
 using Reactor.Types.States;
 using System.IO;
 using System.Drawing;
@@ -102,7 +102,7 @@ namespace Reactor
             //blendState.ColorWriteChannels = RColorWriteChannels.All;
             GL.Enable(EnableCap.Blend);
             blendState.PlatformApplyState();
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
             REngine.CheckGLError ();
             GL.CullFace(CullFaceMode.Back);
             REngine.CheckGLError ();
@@ -125,7 +125,7 @@ namespace Reactor
             GL.CullFace(CullFaceMode.Back);
             GL.DepthFunc(DepthFunction.Less);
             GL.Disable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.Zero);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
             REngine.CheckGLError();
             GL.DepthMask(true);
             REngine.CheckGLError();
@@ -174,10 +174,10 @@ namespace Reactor
             vertexQuad2D.VertexDeclaration.Apply(shader, IntPtr.Zero);
 
 
-            GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
+            GL.DrawElements(BeginMode.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
             
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
@@ -202,10 +202,10 @@ namespace Reactor
             blendState.PlatformApplyState();
 
                 GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             defaultShader.Bind();
-            defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, texture);
+            defaultShader.SetSamplerValue(RTextureLayer.TEXTURE0, texture);
             vertexQuad2D.Bind();
             vertexQuad2D.BindVertexArray();
             indexQuad2D.Bind();
@@ -213,16 +213,16 @@ namespace Reactor
 
             defaultShader.SetUniformValue("projection", camera2d.Projection);
             defaultShader.SetUniformValue("view", camera2d.View);
-            defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
+            defaultShader.SetUniformValue("color", color.ToVector4());
             defaultShader.SetUniformValue("model", matrix);
             defaultShader.SetUniformValue("font", font);
             vertexQuad2D.VertexDeclaration.Apply(defaultShader, IntPtr.Zero);
 
 
-            GL.DrawElements(PrimitiveType.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
+            GL.DrawElements(BeginMode.Triangles, indexQuad2D.IndexCount, DrawElementsType.UnsignedShort, IntPtr.Zero);
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
             GL.Disable(EnableCap.Blend);
             indexQuad2D.Unbind();
             vertexQuad2D.UnbindVertexArray();
@@ -241,22 +241,22 @@ namespace Reactor
 
             blendState.PlatformApplyState();
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.One);
             GL.Disable(EnableCap.CullFace);
             defaultShader.Bind();
-            defaultShader.SetSamplerValue(RTextureLayer.DIFFUSE, font.Texture);
+            defaultShader.SetSamplerValue(RTextureLayer.TEXTURE0, font.Texture);
             
 
             defaultShader.SetUniformValue("projection", camera2d.Projection);
             defaultShader.SetUniformValue("view", camera2d.View);
-            defaultShader.SetUniformValue("diffuse_color", color.ToVector4());
+            defaultShader.SetUniformValue("color", color.ToVector4());
             defaultShader.SetUniformValue("model", Matrix.Identity);
             font.Render(ref defaultShader, ref vertexQuad2D, ref indexQuad2D, text, penPoint, color, Matrix.Identity);
 
             
             REngine.CheckGLError();
 
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.DstAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
             GL.Disable(EnableCap.Blend);
             
             defaultShader.Unbind();

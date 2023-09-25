@@ -5,9 +5,11 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NVorbis.Ogg
 {
@@ -32,7 +34,7 @@ namespace NVorbis.Ogg
         /// </summary>
         public int[] StreamSerials
         {
-            get { return System.Linq.Enumerable.ToArray<int>(_packetReaders.Keys); }
+            get { return Enumerable.ToArray<int>(_packetReaders.Keys); }
         }
 
         /// <summary>

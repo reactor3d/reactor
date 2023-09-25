@@ -21,11 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using Reactor.Types;
-using OpenTK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace Reactor
 {
@@ -62,16 +59,10 @@ namespace Reactor
             REngine.RGame = this;
             gameWindow = new RGameWindow(800, 600);
             REngine.Instance.SetViewport(new RViewport(0, 0, 800, 600));
-            gameWindow.RenderFrame += GameWindow_RenderFrame;
-            gameWindow.UpdateFrame += GameWindow_UpdateFrame;
+            gameWindow.Render += GameWindow_RenderFrame;
+            gameWindow.Update += GameWindow_UpdateFrame;
             gameWindow.Resize += GameWindow_Resize;
-            gameWindow.Closed += gameWindow_Closed;
-            gameWindow.VSync = VSyncMode.On;
-        }
-
-        void gameWindow_Closed(object sender, EventArgs e)
-        {
-            gameWindow.Exit();
+            gameWindow.VSync = true;
         }
 
         /// <summary>
@@ -142,30 +133,25 @@ namespace Reactor
             gameWindow.Run();
         }
 
-        void GameWindow_Resize(object sender, EventArgs e)
+        void GameWindow_Resize()
         {
-            Resized(GameWindow.Width, GameWindow.Height);
+            Resized(GameWindow.ClientBounds.Width, GameWindow.ClientBounds.Height);
         }
 
-        void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
+        void GameWindow_UpdateFrame()
         {
             var now = DateTime.UtcNow;
             gameTime.TotalGameTime += (now - startTime);
             gameTime.ElapsedGameTime = (now - lastTime);
-            
+
             Update();
             lastTime = now;
         }
 
-        void GameWindow_RenderFrame(object sender, FrameEventArgs e)
+        void GameWindow_RenderFrame()
         {
             Engine.Reset();
             Render();
-        }
-
-        void IDisposable.Dispose()
-        {
-            this.Dispose();
         }
     }
 }

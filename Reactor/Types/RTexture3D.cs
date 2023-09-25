@@ -20,16 +20,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {
     public class RTexture3D : RTexture
     {
+        private static uint[] uint1 = new uint[] { 0 };
         public void Create(RPixelFormat format, ref RTexture2D posX, ref RTexture2D posY, ref RTexture2D posZ, ref RTexture2D negX, ref RTexture2D negY, ref RTexture2D negZ)
         {
             PixelInternalFormat inf = PixelInternalFormat.Rgba;
@@ -63,18 +62,46 @@ namespace Reactor.Types
             var negZcolors = negZ.GetData<RColor>();
 
             Bounds = posX.Bounds;
-            GL.GenTextures(1, out Id);
-            textureTarget = OpenTK.Graphics.OpenGL.TextureTarget.TextureCubeMap;
+            GL.GenTextures(1, uint1);
+            Id = uint1[0];
+            textureTarget = TextureTarget.TextureCubeMap;
             GL.BindTexture(textureTarget, Id);
             SetTextureMagFilter(RTextureMagFilter.Nearest);
             SetTextureMinFilter(RTextureMinFilter.Nearest);
             SetTextureWrapMode(RTextureWrapMode.ClampToBorder, RTextureWrapMode.ClampToBorder);
-            GL.TexImage2D<RColor>(TextureTarget.TextureCubeMapPositiveX, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, posXcolors);
-            GL.TexImage2D<RColor>(TextureTarget.TextureCubeMapPositiveY, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, posYcolors);
-            GL.TexImage2D<RColor>(TextureTarget.TextureCubeMapPositiveZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, posZcolors);
-            GL.TexImage2D<RColor>(TextureTarget.TextureCubeMapNegativeX, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, negXcolors);
-            GL.TexImage2D<RColor>(TextureTarget.TextureCubeMapNegativeY, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, negYcolors);
-            GL.TexImage2D<RColor>(TextureTarget.TextureCubeMapNegativeZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, negZcolors);
+            unsafe
+            {
+                fixed (RColor* ptr = &posXcolors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                }
+                fixed (RColor* ptr = &posYcolors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveY, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                }
+                fixed (RColor* ptr = &posZcolors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                }
+                fixed (RColor* ptr = &negXcolors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeX, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                }
+                fixed (RColor* ptr = &negYcolors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeY, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                }
+                fixed (RColor* ptr = &negZcolors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                }
+            }
         }
     }
 }

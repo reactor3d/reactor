@@ -20,21 +20,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Math;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenTK.Graphics.OpenGL;
-using Reactor;
 using System.IO;
 using System.Drawing;
+
+using Reactor.Platform.OpenGL;
 using Newtonsoft.Json;
 
 namespace Reactor.Types
 {
     public class RTexture : IDisposable
     {
+        private static int[] int1 = new[] { 0 };
+        private static uint[] uint1 = new uint[] { 0 };
+        private static float[] float1 = new float[] { 0 };
         [JsonIgnore]
         public uint Id;
         [JsonProperty("name")]
@@ -81,16 +80,18 @@ namespace Reactor.Types
 
             // load succeeded, Texture can be used.
             Bind();
-            GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
-            int MipMapCount;
-            GL.GetTexParameter( textureTarget, GetTextureParameter.TextureMaxLevel, out MipMapCount );
-            if ( MipMapCount == 0 ) // if no MipMaps are present, use linear Filter
-                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
+            GL.TexParameteri( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
+            GL.GetTexParameteriv( textureTarget, GetTextureParameter.TextureMaxLevel, int1 );
+            if ( int1[0] == 0 ) // if no MipMaps are present, use linear Filter
+                GL.TexParameteri( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
             else // MipMaps are present, use trilinear Filter
-                GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
-            int height, width;
-            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureHeight, out height);
-            GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWidth, out width);
+                GL.TexParameteri( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
+
+
+            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureHeight, int1);
+            var height = int1[0];
+            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWidth, int1);
+            var width = int1[0];
 
             Bounds = new Reactor.Math.Rectangle(0, 0, width, height);
             RLog.Info("Texture loaded for: "+name);
@@ -159,23 +160,22 @@ namespace Reactor.Types
                 int min_level = 0;
                 
                 REngine.CheckGLError();
-                GL.TexParameterI(textureTarget, TextureParameterName.TextureBaseLevel,ref min_level);
+                GL.TexParameteri(textureTarget, TextureParameterName.TextureBaseLevel,min_level);
                 REngine.CheckGLError();
-                GL.TexParameterI(textureTarget, TextureParameterName.TextureMaxLevel,ref max_level);
+                GL.TexParameteri(textureTarget, TextureParameterName.TextureMaxLevel,max_level);
                 REngine.CheckGLError();
-            GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
+            GL.TexParameteri( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
             REngine.CheckGLError();
-            GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
+            GL.TexParameteri( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
             REngine.CheckGLError();
-            GL.TexParameter(textureTarget, TextureParameterName.TextureMaxLod, 0);
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureMaxLod, 0);
             REngine.CheckGLError();
-            GL.TexParameter(textureTarget, TextureParameterName.TextureMinLod, 0);
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureMinLod, 0);
             REngine.CheckGLError();
-            int height, width;
-            GL.GetTexLevelParameter(textureTarget, 0, GetTextureParameter.TextureHeight, out height);
-            REngine.CheckGLError();
-            GL.GetTexLevelParameter(textureTarget, 0, GetTextureParameter.TextureWidth, out width);
-            REngine.CheckGLError();
+            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureHeight, int1);
+            var height = int1[0];
+            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWidth, int1);
+            var width = int1[0];
             Bounds = new Reactor.Math.Rectangle(0, 0, width, height);
             RLog.Info("Texture loaded from: "+filename);
         }
@@ -202,7 +202,7 @@ namespace Reactor.Types
         {
             if(Id != 0)
             {
-                GL.TexParameter(textureTarget, TextureParameterName.TextureMagFilter, (int)value);
+                GL.TexParameteri(textureTarget, TextureParameterName.TextureMagFilter, (int)value);
                 REngine.CheckGLError();
             }
         }
@@ -211,7 +211,7 @@ namespace Reactor.Types
         {
             if(Id != 0)
             {
-                GL.TexParameter(textureTarget, TextureParameterName.TextureMinFilter, (int)value);
+                GL.TexParameteri(textureTarget, TextureParameterName.TextureMinFilter, (int)value);
                 REngine.CheckGLError();
             }
         }
@@ -223,9 +223,9 @@ namespace Reactor.Types
                 Bind();
                 try
                 {
-                GL.TexParameter(textureTarget, TextureParameterName.TextureWrapS, (int) modeS);
+                GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapS, (int) modeS);
                 REngine.CheckGLError();
-                GL.TexParameter(textureTarget, TextureParameterName.TextureWrapT, (int) modeT);
+                GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapT, (int) modeT);
                 REngine.CheckGLError();
                 }catch(EngineGLException ex)
                 {
@@ -238,9 +238,8 @@ namespace Reactor.Types
         {
             if(Id != 0)
             {
-                int magFilter;
-                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureMagFilter, out magFilter);
-                return (RTextureMagFilter)magFilter;
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureMagFilter, int1);
+                return (RTextureMagFilter)int1[0];
             }
             return 0;
         }
@@ -248,9 +247,8 @@ namespace Reactor.Types
         {
             if(Id != 0)
             {
-                int minFilter;
-                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureMinFilter, out minFilter);
-                return (RTextureMinFilter)minFilter;
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureMinFilter, int1);
+                return (RTextureMinFilter)int1[0];
             }
             return 0;
         }
@@ -259,9 +257,8 @@ namespace Reactor.Types
         {
             if(Id!=0)
             {
-                int modeS;
-                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWrapS, out modeS);
-                return (RTextureWrapMode)modeS;
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWrapS, int1);
+                return (RTextureWrapMode)int1[0];
             }
             return 0;
         }
@@ -270,9 +267,8 @@ namespace Reactor.Types
         {
             if(Id!=0)
             {
-                int modeT;
-                GL.GetTexParameter(textureTarget, GetTextureParameter.TextureWrapT, out modeT);
-                return (RTextureWrapMode)modeT;
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWrapT, int1);
+                return (RTextureWrapMode)int1[0];
             }
             return 0;
         }
@@ -306,7 +302,15 @@ namespace Reactor.Types
             Bind();
             REngine.CheckGLError();
             T[] pixels = new T[Bounds.Width * Bounds.Height];
-            GL.GetTexImage<T>(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, pixels);
+            unsafe
+            {
+                fixed (T* ptr = &pixels[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.GetTexImage(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, p);
+                }
+            }
+            
             REngine.CheckGLError();
             Unbind();
             REngine.CheckGLError();
@@ -316,18 +320,34 @@ namespace Reactor.Types
         public void SetData<T>(T[] data, RPixelFormat format, int x, int y, int width, int height, bool packAlignment=true) where T : struct
         {
             if(!packAlignment)
-                GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+                GL.PixelStorei(PixelStoreParameter.UnpackAlignment, 1);
             Bind();
-            GL.TexSubImage2D<T>(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, data);
+            unsafe
+            {
+                fixed (T* ptr = &data[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexSubImage2D(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, p);
+                }
+            }
+            
             REngine.CheckGLError();
             Unbind();
             if(!packAlignment)
-                GL.PixelStore(PixelStoreParameter.PackAlignment, 1);
+                GL.PixelStorei(PixelStoreParameter.PackAlignment, 1);
         }
         public void SetData(RColor[] colors, RPixelFormat format, int x, int y, int width, int height)
         {
             Bind();
-            GL.TexSubImage2D<RColor>(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, colors);
+            unsafe
+            {
+                fixed (RColor* ptr = &colors[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexSubImage2D(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, p);
+                }
+            }
+            
             REngine.CheckGLError();
             Unbind();
             REngine.CheckGLError();
@@ -345,8 +365,12 @@ namespace Reactor.Types
             if(bound){
                 Unbind();
             }
-            if(Id != 0)
-                GL.DeleteTexture(Id);
+
+            if (Id != 0)
+            {
+                uint1[0] = Id;
+                GL.DeleteTextures(1, uint1);
+            }
         }
 
         #endregion
@@ -365,44 +389,26 @@ namespace Reactor.Types
 
     public enum RTextureMagFilter
     {
-        Nearest = TextureMagFilter.Nearest,
-        Linear = TextureMagFilter.Linear,
-        LinearDetailSgis = TextureMagFilter.LinearDetailSgis,
-        LinearDetailAlphaSgis = TextureMagFilter.LinearDetailAlphaSgis,
-        LinearDetailColorSgis = TextureMagFilter.LinearDetailColorSgis,
-        LinearSharpenSgis = TextureMagFilter.LinearSharpenSgis,
-        LinearSharpenAlphaSgis = TextureMagFilter.LinearSharpenAlphaSgis,
-        LinearSharpenColorSgis = TextureMagFilter.LinearSharpenColorSgis,
-        Filter4Sgis = TextureMagFilter.Filter4Sgis,
-        PixelTexGenQCeilingSgix = TextureMagFilter.PixelTexGenQCeilingSgix,
-        PixelTexGenQRoundSgix = TextureMagFilter.PixelTexGenQRoundSgix,
-        PixelTexGenQFloorSgix = TextureMagFilter.PixelTexGenQFloorSgix
+        Nearest = TextureParameter.Nearest,
+        Linear = TextureParameter.Linear,
+
     }
     public enum RTextureMinFilter
     {
-        Nearest = TextureMinFilter.Nearest,
-        Linear = TextureMinFilter.Linear,
-        NearestMipmapNearest = TextureMinFilter.NearestMipmapNearest,
-        LinearMipmapNearest = TextureMinFilter.LinearMipmapNearest,
-        NearestMipmapLinear = TextureMinFilter.NearestMipmapLinear,
-        LinearMipmapLinear = TextureMinFilter.LinearMipmapLinear,
-        Filter4Sgis = TextureMinFilter.Filter4Sgis,
-        LinearClipmapLinearSgix = TextureMinFilter.LinearClipmapLinearSgix,
-        PixelTexGenQCeilingSgix = TextureMinFilter.PixelTexGenQCeilingSgix,
-        PixelTexGenQRoundSgix = TextureMinFilter.PixelTexGenQRoundSgix,
-        PixelTexGenQFloorSgix = TextureMinFilter.PixelTexGenQFloorSgix,
-        NearestClipmapNearestSgix = TextureMinFilter.NearestClipmapNearestSgix,
-        NearestClipmapLinearSgix = TextureMinFilter.NearestClipmapLinearSgix,
-        LinearClipmapNearestSgix = TextureMinFilter.LinearClipmapNearestSgix
+        Nearest = TextureParameter.Nearest,
+        Linear = TextureParameter.Linear,
+        NearestMipmapNearest = TextureParameter.NearestMipMapNearest,
+        LinearMipmapNearest = TextureParameter.LinearMipMapNearest,
+        NearestMipmapLinear = TextureParameter.NearestMipMapLinear,
+        LinearMipmapLinear = TextureParameter.LinearMipMapLinear,
+
     }
 
     public enum RTextureWrapMode
     {
-        Clamp = TextureWrapMode.Clamp,
-        ClampToBorder = TextureWrapMode.ClampToBorder,
-        ClampToBorderARB = TextureWrapMode.ClampToBorderArb,
-        ClampToBorderNV = TextureWrapMode.ClampToBorderNv,
-        Repeat = TextureWrapMode.Repeat,
-        Mirrior = TextureWrapMode.MirroredRepeat
+        Clamp = TextureParameter.ClampToEdge,
+        ClampToBorder = TextureParameter.ClampToBorder,
+        Repeat = TextureParameter.Repeat,
+        Mirrior = TextureParameter.MirroredRepeat
     }
 }

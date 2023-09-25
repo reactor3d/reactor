@@ -5,9 +5,11 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NVorbis
 {
@@ -260,7 +262,7 @@ namespace NVorbis
         internal int MapType;
 
         HuffmanListNode PrefixOverflowTree;
-        System.Collections.Generic.List<HuffmanListNode> PrefixList;
+        List<HuffmanListNode> PrefixList;
         int PrefixBitLength;
         int MaxBits;
 

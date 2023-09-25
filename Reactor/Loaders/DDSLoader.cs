@@ -40,8 +40,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor
 {
@@ -67,7 +66,9 @@ namespace Reactor
         private static int _Width, _Height, _Depth, _MipMapCount;
         private static int _BytesForMainSurface; // must be handled with care when implementing uncompressed formats!
         private static byte _BytesPerBlock;
-        private static InternalFormat _PixelInternalFormat;
+        private static PixelInternalFormat _PixelInternalFormat;
+        static int[] b = new int[1] { 0 };
+        static uint[] t = new uint[1] { 0 };
         #endregion Simplified In-Memory representation of the Image
 
         #region Flag Enums
@@ -209,6 +210,7 @@ namespace Reactor
             data = File.ReadAllBytes( @filename );
             LoadFromData(data, filename, out texturehandle, out dimension, out format, out type);
         }
+
         /// <summary>
         /// This function will generate, bind and fill a Texture Object with a DXT1/3/5 compressed Texture in .dds Format.
         /// MipMaps below 4x4 Pixel Size are discarded, because DXTn's smallest unit is a 4x4 block of Pixel data.
@@ -234,8 +236,8 @@ namespace Reactor
             _MipMapCount = 0;
             _BytesForMainSurface = 0;
             _BytesPerBlock = 0;
-            _PixelInternalFormat = InternalFormat.Rgba8;
-
+            _PixelInternalFormat = PixelInternalFormat.Rgba8;
+            
             #endregion
 
             #region Try
@@ -316,19 +318,19 @@ namespace Reactor
                     switch ( (eFOURCC) pfFourCC )
                 {
                     case eFOURCC.DXT1:
-                        _PixelInternalFormat = (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext;
+                        _PixelInternalFormat =PixelInternalFormat.CompressedRgbS3tcDxt1Ext;
                         _BytesPerBlock = 8;
                         _IsCompressed = true;
                         break;
                         //case eFOURCC.DXT2:
                     case eFOURCC.DXT3:
-                        _PixelInternalFormat = (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext;
+                        _PixelInternalFormat = PixelInternalFormat.CompressedRgbaS3tcDxt3Ext;
                         _BytesPerBlock = 16;
                         _IsCompressed = true;
                         break;
                         //case eFOURCC.DXT4:
                     case eFOURCC.DXT5:
-                        _PixelInternalFormat = (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext;
+                        _PixelInternalFormat = PixelInternalFormat.CompressedRgbaS3tcDxt5Ext;
                         _BytesPerBlock = 16;
                         _IsCompressed = true;
                         break;
@@ -354,7 +356,8 @@ namespace Reactor
 
                 #region send the Texture to GL
                 #region Generate and Bind Handle
-                GL.GenTextures( 1, out texturehandle );
+                GL.GenTextures( 1, t );
+                texturehandle = t[ 0 ];
                 GL.BindTexture( dimension, texturehandle );
                 #endregion Generate and Bind Handle
 
@@ -398,7 +401,7 @@ namespace Reactor
                                         #region Swap Bytes
                                         switch ( _PixelInternalFormat )
                                         {
-                                            case (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbS3tcDxt1Ext:
+                                            case PixelInternalFormat.CompressedRgbS3tcDxt1Ext:
                                                 // Color only
                                                 RawDataOfSurface[target + 0] = data[source + 0];
                                                 RawDataOfSurface[target + 1] = data[source + 1];
@@ -409,7 +412,7 @@ namespace Reactor
                                                 RawDataOfSurface[target + 6] = data[source + 5];
                                                 RawDataOfSurface[target + 7] = data[source + 4];
                                                 break;
-                                            case (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt3Ext:
+                                            case PixelInternalFormat.CompressedRgbaS3tcDxt3Ext:
                                                 // Alpha
                                                 RawDataOfSurface[target + 0] = data[source + 6];
                                                 RawDataOfSurface[target + 1] = data[source + 7];
@@ -430,7 +433,7 @@ namespace Reactor
                                                 RawDataOfSurface[target + 14] = data[source + 13];
                                                 RawDataOfSurface[target + 15] = data[source + 12];
                                                 break;
-                                            case (InternalFormat) ExtTextureCompressionS3tc.CompressedRgbaS3tcDxt5Ext:
+                                            case PixelInternalFormat.CompressedRgbaS3tcDxt5Ext:
                                                 // Alpha, the first 2 bytes remain 
                                                 RawDataOfSurface[target + 0] = data[source + 0];
                                                 RawDataOfSurface[target + 1] = data[source + 1];
@@ -459,33 +462,41 @@ namespace Reactor
                             #endregion Prepare Array for TexImage
 
                             #region Create TexImage
-                            switch ( dimension )
+                            unsafe
                             {
-                                case TextureTarget.Texture2D:
-                                    GL.CompressedTexImage2D( TextureTarget.Texture2D,
-                                        Level,
-                                        _PixelInternalFormat,
-                                        Width,
-                                        Height,
-                                        TextureLoaderParameters.Border,
-                                        SurfaceSizeInBytes,
-                                        RawDataOfSurface );
-                                    break;
-                                case TextureTarget.TextureCubeMap:
-                                    GL.CompressedTexImage2D( TextureTarget.TextureCubeMapPositiveX + Slices,
-                                        Level,
-                                        _PixelInternalFormat,
-                                        Width,
-                                        Height,
-                                        TextureLoaderParameters.Border,
-                                        SurfaceSizeInBytes,
-                                        RawDataOfSurface );
-                                    break;
-                                case TextureTarget.Texture1D: // Untested
-                                case TextureTarget.Texture3D: // Untested
-                                default:
-                                    throw new ArgumentException( "ERROR: Use DXT for 2D Images only. Cannot evaluate " + dimension );
+                                fixed(byte* ptr = &RawDataOfSurface[0])
+                                {
+                                    switch (dimension)
+                                    {
+                                        case TextureTarget.Texture2D:
+                                            GL.CompressedTexImage2D(TextureTarget.Texture2D,
+                                                Level,
+                                                _PixelInternalFormat,
+                                                Width,
+                                                Height,
+                                                TextureLoaderParameters.Border,
+                                                SurfaceSizeInBytes,
+                                                (IntPtr)ptr);
+                                            break;
+                                        case TextureTarget.TextureCubeMap:
+                                            GL.CompressedTexImage2D(TextureTarget.TextureCubeMapPositiveX + Slices,
+                                                Level,
+                                                _PixelInternalFormat,
+                                                Width,
+                                                Height,
+                                                TextureLoaderParameters.Border,
+                                                SurfaceSizeInBytes,
+                                                (IntPtr)ptr);
+                                            break;
+                                        case TextureTarget.Texture1D: // Untested
+                                        case TextureTarget.Texture3D: // Untested
+                                        default:
+                                            throw new ArgumentException("ERROR: Use DXT for 2D Images only. Cannot evaluate " + dimension);
+                                    }
+                                }
+                                
                             }
+                            
                             GL.Finish( );
                             #endregion Create TexImage
 
@@ -496,26 +507,35 @@ namespace Reactor
                                 case TextureTarget.Texture1D:
                                 case TextureTarget.Texture2D:
                                 case TextureTarget.Texture3D:
-                                    GL.GetTexLevelParameter( dimension, Level, GetTextureParameter.TextureWidth, out width );
-                                    GL.GetTexLevelParameter( dimension, Level, GetTextureParameter.TextureHeight, out height );
-                                    GL.GetTexLevelParameter( dimension, Level, GetTextureParameter.TextureInternalFormat, out internalformat );
-                                    GL.GetTexLevelParameter( dimension, Level, GetTextureParameter.TextureCompressed, out compressed );
+                                    GL.GetTexLevelParameteriv( dimension, Level, GetTextureLevelParameter.TextureWidth, b );
+                                    width = b[0];
+                                    GL.GetTexLevelParameteriv( dimension, Level, GetTextureLevelParameter.TextureHeight, b );
+                                    height = b[0];
+                                    GL.GetTexLevelParameteriv( dimension, Level, GetTextureLevelParameter.TextureInternalFormat, b );
+                                    internalformat = b[0];
+                                    GL.GetTexLevelParameteriv( dimension, Level, GetTextureLevelParameter.TextureCompressed, b );
+                                    compressed = b[0];
                                     break;
                                 case TextureTarget.TextureCubeMap:
-                                    GL.GetTexLevelParameter( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureParameter.TextureWidth, out width );
-                                    GL.GetTexLevelParameter( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureParameter.TextureHeight, out height );
-                                    GL.GetTexLevelParameter( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureParameter.TextureInternalFormat, out internalformat );
-                                    GL.GetTexLevelParameter( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureParameter.TextureCompressed, out compressed );
+                                    GL.GetTexLevelParameteriv( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureLevelParameter.TextureWidth, b );
+                                    width = b[0];
+                                    GL.GetTexLevelParameteriv( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureLevelParameter.TextureHeight, b );
+                                    height = b[0];
+                                    GL.GetTexLevelParameteriv( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureLevelParameter.TextureInternalFormat, b );
+                                    internalformat = b[0];
+                                    GL.GetTexLevelParameteriv( TextureTarget.TextureCubeMapPositiveX + Slices, Level, GetTextureLevelParameter.TextureCompressed, b );
+                                    compressed = b[0];
                                     break;
                                 default:
                                     throw Unfinished;
                             }
                             GLError = GL.GetError( );
                             if ( TextureLoaderParameters.Verbose )
-                                Trace.WriteLine( "GL: " + GLError.ToString( ) + " Level: " + Level + " DXTn: " + ( ( compressed == 1 ) ? "Yes" : "No" ) + " Frmt:" + (ExtTextureCompressionS3tc) internalformat + " " + width + "*" + height );
+                                Trace.WriteLine( "GL: " + GLError.ToString( ) + " Level: " + Level + " DXTn: " + ( ( compressed == 1 ) ? "Yes" : "No" ) + " Frmt:" + internalformat + " " + width + "*" + height );
                             if ( GLError != ErrorCode.NoError || compressed == 0 || width == 0 || height == 0 || internalformat == 0 )
                             {
-                                GL.DeleteTextures( 1, ref texturehandle );
+                                t[0] = texturehandle;
+                                GL.DeleteTextures( 1, t );
                                 throw new ArgumentException( "ERROR: Something went wrong after GL.CompressedTexImage(); Last GL Error: " + GLError.ToString( ) );
                             }
                             #endregion Query Success
@@ -537,12 +557,13 @@ namespace Reactor
                     }
 
                     #region Set States properly
-                    GL.TexParameter( dimension, (TextureParameterName) All.TextureBaseLevel, 0 );
-                    GL.TexParameter( dimension, (TextureParameterName) All.TextureMaxLevel, trueMipMapCount );
+                    GL.TexParameteri( dimension, TextureParameterName.TextureBaseLevel, 0 );
+                    GL.TexParameteri( dimension, TextureParameterName.TextureMaxLevel, trueMipMapCount );
                     REngine.CheckGLError();
 
                     int TexMaxLevel;
-                    GL.GetTexParameter( dimension, GetTextureParameter.TextureMaxLevel, out TexMaxLevel );
+                    GL.GetTexParameteriv( dimension, GetTextureParameter.TextureMaxLevel, b );
+                    TexMaxLevel = b[0];
                     REngine.CheckGLError();
                     if ( TextureLoaderParameters.Verbose )
                         Trace.WriteLine( "Verification: GL: " + GL.GetError( ).ToString( ) + " TextureMaxLevel: " + TexMaxLevel + ( ( TexMaxLevel == trueMipMapCount ) ? " (Correct.)" : " (Wrong!)" ) );
@@ -550,15 +571,14 @@ namespace Reactor
                 }
 
                 #region Set Texture Parameters
-                GL.TexParameter( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
-                GL.TexParameter( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
+                GL.TexParameteri( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
+                GL.TexParameteri( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
 
-                GL.TexParameter( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
-                GL.TexParameter( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
+                GL.TexParameteri( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
+                GL.TexParameteri( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
 
-                float maxAniso;
-                GL.GetFloat((GetPName)ExtTextureFilterAnisotropic.MaxTextureMaxAnisotropyExt, out maxAniso);
-                GL.TexParameter(TextureTarget.Texture2D, (TextureParameterName)ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, maxAniso);
+                float maxAniso = GL.GetFloat(GetPName.MaxTextureMaxAnisotropyExt);
+                GL.TexParameterf(TextureTarget.Texture2D, TextureParameterName.MaxAnisotropyExt, maxAniso);
 
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )

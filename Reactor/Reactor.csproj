@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\coders_crux.ttf" />
+    <None Remove="Shaders\basic2dEffect.frag.glsl" />
+    <None Remove="Shaders\basic2dEffect.vert.glsl" />
+    <None Remove="Shaders\basicEffect.frag.glsl" />
+    <None Remove="Shaders\basicEffect.vert.glsl" />
+    <None Remove="Shaders\hdr.frag.glsl" />
+    <None Remove="Shaders\hdr.vert.glsl" />
+    <None Remove="Shaders\headers.glsl" />
+    <None Remove="Shaders\lighting.glsl" />
+    <None Remove="Shaders\noise.glsl" />
+    <None Remove="Shaders\phong.frag.glsl" />
+    <None Remove="Shaders\phong.vert.glsl" />
+    <None Remove="Shaders\reactor.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\coders_crux.ttf" />
+    <EmbeddedResource Include="Shaders\basic2dEffect.frag.glsl" />
+    <EmbeddedResource Include="Shaders\basic2dEffect.vert.glsl" />
+    <EmbeddedResource Include="Shaders\basicEffect.frag.glsl" />
+    <EmbeddedResource Include="Shaders\basicEffect.vert.glsl" />
+    <EmbeddedResource Include="Shaders\hdr.frag.glsl" />
+    <EmbeddedResource Include="Shaders\hdr.vert.glsl" />
+    <EmbeddedResource Include="Shaders\headers.glsl" />
+    <EmbeddedResource Include="Shaders\lighting.glsl" />
+    <EmbeddedResource Include="Shaders\noise.glsl" />
+    <EmbeddedResource Include="Shaders\phong.frag.glsl" />
+    <EmbeddedResource Include="Shaders\phong.vert.glsl" />
+    <EmbeddedResource Include="Shaders\reactor.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>

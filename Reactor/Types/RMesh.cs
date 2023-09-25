@@ -20,13 +20,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Geometry;
-using OpenTK.Graphics.OpenGL;
+
 using System;
 using System.Collections.Generic;
 using Reactor.Loaders;
 using Reactor.Math;
-
+using Reactor.Platform.OpenGL;
+using Reactor.Types.States;
 
 namespace Reactor.Types
 {
@@ -42,7 +42,7 @@ namespace Reactor.Types
             this.Rotation = Quaternion.Identity;
             Parts = new List<RMeshPart>();
             this.CullEnable = true;
-            this.CullMode = Reactor.Types.States.RCullMode.CullClockwiseFace;
+            this.CullMode = RCullMode.CullClockwiseFace;
             this.BlendEnable = true;
             this.DepthWrite= true;
             this.IsDrawable = true;
@@ -71,7 +71,7 @@ namespace Reactor.Types
                 base.Render();
                 foreach (RMeshPart part in Parts)
                 {
-                    part.Draw(PrimitiveType.Triangles, this.Matrix);
+                    part.Draw(BeginMode.Triangles, this.Matrix);
                 }
             }
         }

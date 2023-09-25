@@ -5,9 +5,10 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace NVorbis
 {
@@ -23,7 +24,7 @@ namespace NVorbis
         StreamReadBuffer _buffer;
         long _readPosition;
         object _localLock = new object();
-        System.Threading.Thread _owningThread;
+        Thread _owningThread;
         int _lockCount;
 
         public BufferedReadStream(Stream baseStream)
@@ -77,18 +78,18 @@ namespace NVorbis
         // route all the container locking through here so we can track whether the caller actually took the lock...
         public void TakeLock()
         {
-            System.Threading.Monitor.Enter(_localLock);
+            Monitor.Enter(_localLock);
             if (++_lockCount == 1)
             {
-                _owningThread = System.Threading.Thread.CurrentThread;
+                _owningThread = Thread.CurrentThread;
             }
         }
 
         void CheckLock()
         {
-            if (_owningThread != System.Threading.Thread.CurrentThread)
+            if (_owningThread != Thread.CurrentThread)
             {
-                throw new System.Threading.SynchronizationLockException();
+                throw new SynchronizationLockException();
             }
         }
 
@@ -99,7 +100,7 @@ namespace NVorbis
             {
                 _owningThread = null;
             }
-            System.Threading.Monitor.Exit(_localLock);
+            Monitor.Exit(_localLock);
         }
 
         public bool CloseBaseStream

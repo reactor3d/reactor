@@ -28,175 +28,376 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
+using Reactor.Platform.glTF.Schema;
+using Reactor.Platform.glTF;
+using SharpFont;
 
 namespace Reactor.Loaders
 {
+    static class Assert
+    {
+        public static void NotNull(Object o)
+        {
+            if (o == null) throw new ArgumentNullException("o");
+        }
+        public static void Fail(string msg)
+        {
+            throw new Exception(msg);
+        }
+    }
     static class MeshLoader
     {
-        public static void LoadSource (this RMesh rmesh, string filename)
+        static Vector4[] ReadVec4s(ref Gltf gltf, ref MeshPrimitive primitive, string attr, string filename)
         {
-/*
-            AssimpContext context = new AssimpContext ();
-            context.SetConfig (new Assimp.Configs.FBXImportAllMaterialsConfig (true));
-            context.SetConfig (new Assimp.Configs.FBXImportAllGeometryLayersConfig (true));
-            context.SetConfig (new Assimp.Configs.MultithreadingConfig (2));
-            context.SetConfig (new Assimp.Configs.FBXStrictModeConfig (false));
-            if (!context.IsImportFormatSupported (Path.GetExtension (filename)))
-                throw new ReactorException ("Attempted to load a model that Assimp doesn't know how to load");
-            LogStream log = new LogStream ((msg, user) => {
-                RLog.Info (msg.Remove (msg.Length - 2));
-            });
-            log.Attach ();
-            int platform = (int)Environment.OSVersion.Platform;
-            Scene scene = context.ImportFile (filename,
-                PostProcessSteps.FindInvalidData |
-                PostProcessSteps.GenerateSmoothNormals |
-                PostProcessSteps.Triangulate |
-                PostProcessSteps.GenerateUVCoords |
-                PostProcessSteps.CalculateTangentSpace |
-                PostProcessSteps.PreTransformVertices);
-
-            if (scene.HasMeshes) {
-                foreach (Mesh mesh in scene.Meshes) {
-                    if (!mesh.HasVertices) {
-                        continue;
-                    }
-                    RMeshPart rmeshpart = RMeshPart.Create<RMeshPart> ();
-
-
-                    RVertexData [] data = new RVertexData [mesh.VertexCount];
-
-                    List<int> indicesList = new List<int> ();
-
-                    if (mesh.HasFaces) {
-                        foreach (Face face in mesh.Faces) {
-                            indicesList.AddRange (face.Indices.ToArray ());
-                            foreach (int index in face.Indices) {
-                                Vector3D p = mesh.Vertices [index];
-                                data [index].Position = new Vector3 (p.X, p.Y, p.Z);
-                                if (mesh.HasTextureCoords (0)) {
-                                    Vector3D t = mesh.TextureCoordinateChannels [0] [index];
-                                    data [index].TexCoord = new Vector2 (t.X, -t.Y);
-                                }
-
-                                if (mesh.HasNormals) {
-                                    Vector3D n = mesh.Normals [index];
-                                    data [index].Normal = new Vector3 (n.X, n.Y, n.Z);
-                                }
-
-                                if (mesh.HasTangentBasis) {
-                                    Vector3D b = mesh.BiTangents [index];
-                                    Vector3D t = mesh.Tangents [index];
-                                    data [index].Bitangent = new Vector3 (b.X, b.Y, b.Z);
-                                    data [index].Tangent = new Vector3 (t.X, t.Y, t.Z);
-                                }
-
-
-
-                            }
-                        }
-                    }
-
-
-
-
-                    RVertexBuffer vbuffer = new RVertexBuffer (typeof (RVertexData), mesh.VertexCount, RBufferUsage.WriteOnly, true);
-
-
-                    RIndexBuffer ibuffer = new RIndexBuffer (typeof (int), indicesList.Count, RBufferUsage.WriteOnly);
-                    ibuffer.SetData (indicesList.ToArray ());
-
-                    vbuffer.SetData<RVertexData> (data);
-
-#if WINDOWS
-                    var separator = "\\";
-#else
-                    var separator = "/";
-#endif
-
-                    rmeshpart.VertexBuffer = vbuffer;
-                    rmeshpart.IndexBuffer = ibuffer;
-
-                    RMaterial material = new RMaterial(rmesh.Name + ":Material");
-
-                    if (scene.HasMaterials)
+            var positionAttr = gltf.Accessors[primitive.Attributes[attr]];
+            if (positionAttr.Type != Accessor.TypeEnum.VEC4)
+            {
+                throw new Exception("Error! " + attr + " is not of type VEC4 in " + filename);
+            }
+            var positionAttrBuf = gltf.BufferViews[positionAttr.BufferView.Value];
+            var buff = gltf.LoadBinaryBuffer(positionAttrBuf.Buffer, filename).AsMemory();
+            var data = buff.Slice(positionAttrBuf.ByteOffset + positionAttr.ByteOffset, positionAttrBuf.ByteLength);
+            var ret = new Vector4[positionAttr.Count];
+            var stride = positionAttrBuf.ByteStride.HasValue ? positionAttrBuf.ByteStride.Value : 0;
+            using (var reader = new BinaryReader(new MemoryStream(data.ToArray())))
+            {
+                for (int p = 0; p < positionAttr.Count; ++p)
+                {
+                    ret[p].X = reader.ReadSingle();
+                    ret[p].Y = reader.ReadSingle();
+                    ret[p].Z = reader.ReadSingle();
+                    ret[p].W = reader.ReadSingle();
+                }
+            }
+            return ret;
+        }
+        static Vector3[] ReadVec3s(ref Gltf gltf, ref MeshPrimitive primitive, string attr, string filename)
+        {
+            var positionAttr = gltf.Accessors[primitive.Attributes[attr]];
+            if (positionAttr.Type != Accessor.TypeEnum.VEC3)
+            {
+                throw new Exception("Error! " + attr + " is not of type VEC3 in " + filename);
+            }
+            var positionAttrBuf = gltf.BufferViews[positionAttr.BufferView.Value];
+            var buff = gltf.LoadBinaryBuffer(positionAttrBuf.Buffer, filename).AsMemory();
+            var data = buff.Slice(positionAttrBuf.ByteOffset + positionAttr.ByteOffset, positionAttrBuf.ByteLength);
+            var ret = new Vector3[positionAttr.Count];
+            var stride = positionAttrBuf.ByteStride.HasValue ? positionAttrBuf.ByteStride.Value : 0;
+            using (var reader = new BinaryReader(new MemoryStream(data.ToArray())))
+            {
+                for (int p = 0; p < positionAttr.Count; ++p)
+                {
+                    ret[p].X = reader.ReadSingle();
+                    ret[p].Y = reader.ReadSingle();
+                    ret[p].Z = reader.ReadSingle();
+                }
+            }
+            return ret;
+        }
+        static Vector2[] ReadVec2s(ref Gltf gltf, ref MeshPrimitive primitive, string attr, string filename)
+        {
+            var positionAttr = gltf.Accessors[primitive.Attributes[attr]];
+            if (positionAttr.Type != Accessor.TypeEnum.VEC2)
+            {
+                throw new Exception("Error! " + attr + " is not of type VEC2 in " + filename);
+            }
+            var positionAttrBuf = gltf.BufferViews[positionAttr.BufferView.Value];
+            var buff = gltf.LoadBinaryBuffer(positionAttrBuf.Buffer, filename).AsMemory();
+            var data = buff.Slice(positionAttrBuf.ByteOffset + positionAttr.ByteOffset, positionAttrBuf.ByteLength);
+            var ret = new Vector2[positionAttr.Count];
+            var stride = positionAttrBuf.ByteStride.HasValue ? positionAttrBuf.ByteStride.Value : 0;
+            using (var reader = new BinaryReader(new MemoryStream(data.ToArray())))
+            {
+                for(int p = 0; p < positionAttr.Count; ++p)
+                {
+                    ret[p].X = reader.ReadSingle();
+                    ret[p].Y = reader.ReadSingle();
+                    p += stride;
+                }
+            }
+            return ret;
+        }
+        static int[] ReadIndices(ref Gltf gltf, ref MeshPrimitive primitive, string filename)
+        {
+            var attr = gltf.Accessors[primitive.Indices.Value];
+            var attrBuf = gltf.BufferViews[attr.BufferView.Value];
+            var buff = gltf.LoadBinaryBuffer(attrBuf.Buffer, filename).AsMemory();
+            var data = buff.Slice(attrBuf.ByteOffset + attr.ByteOffset, attrBuf.ByteLength);
+            var ret = new int[attr.Count];
+            using (var reader = new BinaryReader(new MemoryStream(data.ToArray())))
+            {
+                for (int p = 0; p < attr.Count; ++p)
+                {
+                    switch(attr.ComponentType)
                     {
-                        Material mat = scene.Materials[mesh.MaterialIndex];
-                        material.Shininess = mat.Shininess;
-                        material.SetColor(RMaterialColor.DIFFUSE, new RColor(mat.ColorDiffuse.R, mat.ColorDiffuse.G, mat.ColorDiffuse.B, mat.ColorDiffuse.A));
-                        if (mat.HasTextureDiffuse)
-                        {
-                            var texFileName = Path.GetFileName(mat.TextureDiffuse.FilePath.Replace("\\", separator).Replace("/", separator));
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
-                            tex.Bind();
-                            tex.GenerateMipmaps();
-                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
-                            tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            tex.Unbind();
-                            material.SetTexture(RTextureLayer.DIFFUSE, tex);
-                        }
-                        if (mat.HasTextureNormal)
-                        {
-                            var texFileName = Path.GetFileName(mat.TextureNormal.FilePath.Replace("\\", separator).Replace("/", separator));
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
-                            tex.Bind();
-                            tex.GenerateMipmaps();
-                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
-                            tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            tex.Unbind();
-                            material.SetTexture(RTextureLayer.NORMAL, tex);
-                        }
-                        if (mat.HasTextureAmbient)
-                        {
-                            var texFileName = Path.GetFileName(mat.TextureAmbient.FilePath.Replace("\\", separator).Replace("/", separator));
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
-                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
-                            tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            material.SetTexture(RTextureLayer.AMBIENT, tex);
-                        }
-                        if (mat.HasTextureHeight)
-                        {
-                            var texFileName = Path.GetFileName(mat.TextureHeight.FilePath.Replace("\\", separator).Replace("/", separator));
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
-                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
-                            tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            material.SetTexture(RTextureLayer.HEIGHT, tex);
-                        }
-                        if (mat.HasTextureEmissive)
-                        {
-                            var texFileName = Path.GetFileName(mat.TextureEmissive.FilePath.Replace("\\", separator).Replace("/", separator));
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
-                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
-                            tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            material.SetTexture(RTextureLayer.GLOW, tex);
-                        }
-                        if (mat.HasTextureSpecular)
-                        {
-                            var texFileName = Path.GetFileName(mat.TextureSpecular.FilePath.Replace("\\", separator).Replace("/", separator));
-                            RTexture2D tex = (RTexture2D)RTextures.Instance.CreateTexture<RTexture2D>(texFileName, "/textures/" + texFileName.ToLower());
-                            tex.SetTextureMagFilter(RTextureMagFilter.Linear);
-                            tex.SetTextureMinFilter(RTextureMinFilter.LinearMipmapLinear);
-                            tex.SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
-                            material.SetTexture(RTextureLayer.SPECULAR, tex);
-                        }
+                        case Accessor.ComponentTypeEnum.BYTE:
+                            ret[p] = reader.ReadByte();
+                            break;
+                        case Accessor.ComponentTypeEnum.SHORT:
+                            ret[p] = reader.ReadInt16();
+                            break;
+                        case Accessor.ComponentTypeEnum.UNSIGNED_BYTE:
+                            ret[p] = reader.ReadByte();
+                            break;
+                        case Accessor.ComponentTypeEnum.UNSIGNED_SHORT:
+                            ret[p] = reader.ReadUInt16();
+                            break;
+                        case Accessor.ComponentTypeEnum.UNSIGNED_INT:
+                            ret[p] = (int)reader.ReadUInt32();
+                            break;
+                        default:
+                            ret[p] = reader.ReadInt32();
+                            break;
                     }
-                    rmeshpart.Material = material;
-                    rmesh.Parts.Add(rmeshpart);
                     
                 }
-                //return rmesh;
             }
-            //return null;
-            if (rmesh.Parts.Count == 0)
-                throw new ReactorException("Attempted to load a model when Assimp couldn't find any verticies!");
+            return ret;
+        }
 
-            context.Dispose();
-            */
+        static RTexture ReadTexture(ref Gltf gltf, int index, string filename)
+        {
+            using (var s = gltf.OpenImageFile(index, filename))
+            {
+                var tex = gltf.Textures[index];
+                var reader = new BinaryReader(s);
+                var data = new List<byte>();
+                var buf = new byte[1];
+                while (reader.Read(buf, 0, buf.Length) != 0)
+                {
+                    data.Add(buf[0]);
+                }
+                return RTextures.Instance.CreateTexture<RTexture2D>(data.ToArray(), tex.Name, false);
+            }
+        }
+        static RMaterial ReadMaterial(ref Gltf gltf, ref Material mat, string filename)
+        {
+            var material = RMaterials.Instance.CreateMaterial(mat.Name);
+            var pbr = mat.PbrMetallicRoughness;
+            material.Color = RColor.FromArray(pbr.BaseColorFactor);
+            var basetexture = ReadTexture(ref gltf, pbr.BaseColorTexture.Index, filename);
+            material.SetTexture(RTextureLayer.TEXTURE0, basetexture);
+            var normaltexture = ReadTexture(ref gltf, mat.NormalTexture.Index, filename);
+            material.SetTexture(RTextureLayer.TEXTURE1, normaltexture);
+            var metallictexture = ReadTexture(ref gltf, pbr.MetallicRoughnessTexture.Index, filename);
+            material.SetTexture(RTextureLayer.TEXTURE2, metallictexture);
+            var aotexture = ReadTexture(ref gltf, mat.OcclusionTexture.Index, filename);
+            material.SetTexture(RTextureLayer.TEXTURE3, aotexture);
+            material.EmissiveColor = RColor.FromArray(mat.EmissiveFactor);
+            var emissivetexture = ReadTexture(ref gltf, mat.EmissiveTexture.Index, filename);
+            material.SetTexture(RTextureLayer.TEXTURE4, emissivetexture);
+            material.Roughness = pbr.RoughnessFactor;
+            material.Metallic = pbr.MetallicFactor;
+            return material;
+
+        }
+        static RMeshPart LoadMeshPart(ref Gltf gltf, ref MeshPrimitive primitive, string filename)
+        {
+            var attributes = primitive.Attributes;
+            var positions = new List<Vector3>();
+            var normals = new List<Vector3>();
+            var tangents = new List<Vector4>();
+            var uvs = new List<Vector2>();
+            var indices = new List<int>();
+
+            if (attributes.ContainsKey("POSITION"))
+            {
+                positions.AddRange(ReadVec3s(ref gltf, ref primitive, "POSITION", filename));
+            }
+            if (attributes.ContainsKey("NORMAL"))
+            {
+                normals.AddRange(ReadVec3s(ref gltf, ref primitive, "NORMAL", filename));
+            }
+            if (attributes.ContainsKey("TANGENT"))
+            {
+                tangents.AddRange(ReadVec4s(ref gltf, ref primitive, "TANGENT", filename));
+            }
+            if (attributes.ContainsKey("TEXCOORD"))
+            {
+                uvs.AddRange(ReadVec2s(ref gltf, ref primitive, "TEXCOORD", filename));
+            }
+            if (attributes.ContainsKey("TEXCOORD_0"))
+            {
+                uvs.AddRange(ReadVec2s(ref gltf, ref primitive, "TEXCOORD_0", filename));
+            }
+            indices.AddRange(ReadIndices(ref gltf, ref primitive, filename));
+
+            bool hasNormals = false;
+            bool hasTangents = false;
+            bool hasUvs = false;
+            if (normals.Count == positions.Count)
+                hasNormals = true;
+            if (tangents.Count == positions.Count)
+                hasTangents = true;
+            if (uvs.Count == positions.Count)
+                hasUvs = true;
+            
+            var vertexData = new RVertexData[positions.Count];
+            for(var i=0; i<positions.Count; ++i)
+            {
+                vertexData[i].Position = positions[i];
+                if(hasNormals)
+                    vertexData[i].Normal = normals[i];
+                if (hasTangents)
+                {
+                    // generate physically accurate tangent and bitangent factors for TBN matrix.
+                    var t = new Vector3(tangents[i].X, tangents[i].Y, tangents[i].Z);
+                    var n = vertexData[i].Normal;
+                    var b = Vector3.Cross(n, t) * tangents[i].W;
+
+                    vertexData[i].Tangent = t;
+                    vertexData[i].Bitangent = b;
+
+                }
+            }
+            if (!hasTangents)
+            {
+                // model didn't include tangent space data. Let's pre-compute this data to satisfy our RVertexData declarations.
+                var t = new Vector3[positions.Count];
+                var b = new Vector3[positions.Count];
+                CalculateTangents(positions, indices, normals, uvs, out t, out b);
+                for(var i=0; i<positions.Count; ++i)
+                {
+                    vertexData[i].Tangent = t[i];
+                    vertexData[i].Bitangent = b[i];
+                }
+            }
+            var vertexBuffer = new RVertexBuffer(typeof(RVertexData), vertexData.Length, RBufferUsage.None);
+            vertexBuffer.SetData(vertexData);
+            var indexBuffer = new RIndexBuffer(typeof(int), indices.Count, RBufferUsage.None);
+            indexBuffer.SetData(indices.ToArray());
+            var part = new RMeshPart();
+            part.VertexBuffer = vertexBuffer;
+            part.IndexBuffer = indexBuffer;
+            part.BoundingBox = BoundingBox.CreateFromPoints(positions);
+
+            return part;
+
+        }
+        public static RMaterial[] ReadMaterials(ref Gltf gltf, string filename)
+        {
+            var materials = new List<RMaterial>();
+            for (int i = 0; i < gltf.Materials.Length; ++i)
+            {
+                var mat = gltf.Materials[i];
+                var m = ReadMaterial(ref gltf, ref mat, filename);
+                materials.Add(m);
+            }
+            return materials.ToArray();
+        }
+        public static void LoadSource (this RMesh rmesh, string filename)
+        {
+
+            var gltf = Interface.LoadModel(filename);
+            if(gltf.Materials.Length == 0)
+            {
+                RLog.Info("WARNING!! " + filename + " has no materials defined.");
+            }
+            var materials = ReadMaterials(ref gltf, filename);
+            if (gltf.Nodes.Length > 1)
+            {
+                RLog.Info("WARNING!! " + filename + " has more than 1 root node.");
+                var node = gltf.Nodes[0];
+                if (!node.Mesh.HasValue){
+                    RLog.Info("WARNING!! " + filename + " root node doesn't have mesh data.");
+                    return;
+                }
+                var meshId = node.Mesh.Value;
+                var mesh = gltf.Meshes[meshId];
+                rmesh.Name = mesh.Name;
+                var meshPartsLength = mesh.Primitives.Length;
+                rmesh.Parts = new List<RMeshPart>(meshPartsLength);
+                for ( var i = 0; i < meshPartsLength; i++)
+                {
+                    var primitive = mesh.Primitives[i];
+                    var part = LoadMeshPart(ref gltf, ref primitive, filename);
+                    if (primitive.Material.HasValue)
+                    {
+                        part.Material = materials[primitive.Material.Value];
+                    }
+                    rmesh.Parts.Add(part);
+                }
+                var matrixf = node.Matrix;
+                rmesh.Matrix = Matrix.FromColumnMajor(matrixf);
+
+                
+            }
+            for (int i = 0; i < gltf.Meshes.Length; ++i)
+            {
+                var mesh = gltf.Meshes[i];
+                var name = mesh.Name;
+                for (int si = 0; si < mesh.Primitives.Length; ++si)
+                {
+                    var primitive = mesh.Primitives[si];
+                    var positions = ReadVec3s(ref gltf, ref primitive, "POSITION", filename);
+                    var normals = ReadVec3s(ref gltf, ref primitive, "NORMAL", filename);
+                    var positionAttr = gltf.Accessors[primitive.Attributes["POSITION"]];
+                    var positionAttrBuf = gltf.BufferViews[positionAttr.BufferView.Value];
+                    var buffer = gltf.LoadBinaryBuffer(positionAttrBuf.Buffer, filename);
+                    var reader = new BinaryReader(new MemoryStream(buffer));
+                    for (int p =0; p < positionAttr.Count; p++)
+                    {
+
+                    }
+                }
+            }
+            var buffers = new byte[gltf.Buffers.Length][];
+            for (int i = 0; i < gltf.Buffers.Length; ++i)
+            {
+                
+                buffers[i] = gltf.LoadBinaryBuffer(i, filename);
+            }
+            for (int i = 0; i < gltf.Meshes.Length; ++i)
+            {
+                var mesh = gltf.Meshes[i];
+                var name = mesh.Name;
+                
+            }
+            
+        }
+        static Gltf LoadSchema(string filename)
+        {
+            if (!filename.EndsWith("gltf") && !filename.EndsWith("glb")) return null;
+
+            try
+            {
+                var deserializedFile = Interface.LoadModel(filename);
+                Assert.NotNull(deserializedFile);
+
+                // read all buffers
+                for (int i = 0; i < deserializedFile.Buffers?.Length; ++i)
+                {
+                    var expectedLength = deserializedFile.Buffers[i].ByteLength;
+
+                    var bufferBytes = deserializedFile.LoadBinaryBuffer(i, filename);
+                    Assert.NotNull(bufferBytes);
+                }
+
+                // open all images
+                for (int i = 0; i < deserializedFile.Images?.Length; ++i)
+                {
+                    using (var s = deserializedFile.OpenImageFile(i, filename))
+                    {
+                        Assert.NotNull(s);
+
+                        using (var rb = new BinaryReader(s))
+                        {
+                            uint header = rb.ReadUInt32();
+
+                            if (header == 0x474e5089) continue; // PNG
+                            if ((header & 0xffff) == 0xd8ff) continue; // JPEG
+
+                            Assert.Fail($"Invalid image in Image index {i}");
+                        }
+                    }
+                }
+
+                return deserializedFile;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(filename, e);
+            }
         }
         internal static void CalculateTangents(IList<Vector3> positions,
             IList<int> indices,
@@ -205,12 +406,14 @@ namespace Reactor.Loaders
             out Vector3[] tangents,
             out Vector3[] bitangents)
         {
-            // Lengyel, Eric. “Computing Tangent Space Basis Vectors for an Arbitrary Mesh”. 
+            // Lengyel, Eric. "Computing Tangent Space Basis Vectors for an Arbitrary Mesh".
+            // "Foundations of Game Engine Development, Vol 2. - 7.5 Tangent Space"
             // Terathon Software 3D Graphics Library, 2001.
             // http://www.terathon.com/code/tangent.html
 
             // Hegde, Siddharth. "Messing with Tangent Space". Gamasutra, 2007. 
             // http://www.gamasutra.com/view/feature/129939/messing_with_tangent_space.php
+
 
             var numVerts = positions.Count;
             var numIndices = indices.Count;

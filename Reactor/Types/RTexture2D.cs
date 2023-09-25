@@ -20,17 +20,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
-using Reactor.Types.States;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {
     public class RTexture2D : RTexture
     {
+        private static uint[] uint1 = new uint[] { 0 };
         public RTexture2D():base()
         {
 
@@ -46,7 +44,8 @@ namespace Reactor.Types
         public void Create(int width, int height, RPixelFormat format, RSurfaceFormat surfaceFormat, bool multisample = false)
         {
 
-            GL.GenTextures(1, out Id);
+            GL.GenTextures(1, uint1);
+            Id = uint1[0];
             if (multisample){
                 textureTarget = TextureTarget.Texture2DMultisample;
                 GL.BindTexture(TextureTarget.Texture2DMultisample, Id);
@@ -68,7 +67,8 @@ namespace Reactor.Types
         }
         public void CreateDepth(int width, int height, RPixelFormat format, RDepthFormat depthFormat)
         {
-            GL.GenTextures(1, out Id);
+            GL.GenTextures(1, uint1);
+            Id = uint1[0];
             textureTarget = TextureTarget.Texture2D;
             GL.BindTexture(textureTarget, Id);
             REngine.CheckGLError();

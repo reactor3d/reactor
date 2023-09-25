@@ -20,26 +20,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics;
-using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reactor.Math;
 
 namespace Reactor.Platform
 {
-    public abstract class RenderControl
-    {
-        public GraphicsContext Context { get; internal set; }
 
-        public IWindowInfo WindowInfo { get; internal set; }
+    public abstract class RenderControl : IDisposable
+    {
+        public IGraphicsContext Context { get; internal set; }
+
         public abstract void Init();
 
-        public abstract void Destroy();
+        public abstract void Dispose();
 
-        public event EventHandler OnRender;
+        public event Action OnRender;
 
         public abstract void SwapBuffers();
 

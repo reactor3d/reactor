@@ -21,13 +21,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using Reactor.Platform;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Geometry
 {
@@ -227,9 +223,9 @@ namespace Reactor.Geometry
             if (ibo == 0)
             {
                 var sizeInBytes = IndexCount * (this.IndexElementSize == RIndexElementSize.SixteenBits ? 2 : 4);
-
-                GL.GenBuffers(1, out ibo);
-
+                uint[] p = new uint[]{0};
+                GL.GenBuffers(1, p);
+                ibo = p[0];
                 REngine.CheckGLError();
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
                 REngine.CheckGLError();
@@ -238,22 +234,22 @@ namespace Reactor.Geometry
                 REngine.CheckGLError();
             }
         }
-        internal int GetElementCountArray(PrimitiveType primitiveType, int primitiveCount)
+        internal int GetElementCountArray(RPrimitiveType primitiveType, int primitiveCount)
         {
             //TODO: Overview the calculation
             switch (primitiveType)
             {
-                case PrimitiveType.Points:
+                case RPrimitiveType.Points:
                     return primitiveCount;
-                case PrimitiveType.Lines:
+                case RPrimitiveType.Lines:
                     return primitiveCount * 2;
-                case PrimitiveType.LineStrip:
+                case RPrimitiveType.LineStrip:
                     return primitiveCount + 1;
-                case PrimitiveType.Triangles:
+                case RPrimitiveType.Triangles:
                     return primitiveCount * 3;
-                case PrimitiveType.TriangleStrip:
+                case RPrimitiveType.TriangleStrip:
                     return 3 + (primitiveCount - 1); // ???
-                case PrimitiveType.Polygon:
+                case RPrimitiveType.Polygon:
                     return primitiveCount * 4;
             }
 
@@ -274,7 +270,7 @@ namespace Reactor.Geometry
         {
             Threading.BlockOnUIThread(() =>
                 {
-                    GL.DeleteBuffers(1, ref ibo);
+                    GL.DeleteBuffers(1, new[]{ibo});
                     REngine.CheckGLError();
                 });
         }

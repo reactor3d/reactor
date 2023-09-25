@@ -39,12 +39,12 @@ cd $BUILD_SRC/target/install/lib
 
 
 echo "Libraries built..."
-ls *.dylib
+ls *
 
 echo "Press Enter to continue"
 read line
-echo "Copying libraries to Red src tree..."
-cp *.dylib ../../../../Red
+echo "Copying libraries to src tree..."
+cp * $BUILD_SRC/libs
 
 echo -e "\x1b[32;5mDependency compilation complete!\n\x1b[0m"
 

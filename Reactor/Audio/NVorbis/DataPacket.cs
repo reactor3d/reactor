@@ -5,11 +5,11 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.IO;
 
-namespace NVorbis
+ using System;
+ using System.Collections.Generic;
+
+ namespace NVorbis
 {
     /// <summary>
     /// A single data packet from a logical Vorbis stream.

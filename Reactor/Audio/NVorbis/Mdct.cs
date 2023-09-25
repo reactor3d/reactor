@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace NVorbis
 {
@@ -88,9 +89,9 @@ namespace NVorbis
             lock (_threadLocalBuffers)
             {
                 float[] buf;
-                if (!_threadLocalBuffers.TryGetValue(System.Threading.Thread.CurrentThread.ManagedThreadId, out buf))
+                if (!_threadLocalBuffers.TryGetValue(Thread.CurrentThread.ManagedThreadId, out buf))
                 {
-                    _threadLocalBuffers[System.Threading.Thread.CurrentThread.ManagedThreadId] = (buf = new float[_n2]);
+                    _threadLocalBuffers[Thread.CurrentThread.ManagedThreadId] = (buf = new float[_n2]);
                 }
                 return buf;
             }

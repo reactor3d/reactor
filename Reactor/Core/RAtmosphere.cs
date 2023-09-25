@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL4;
+using Reactor.Platform.OpenGL;
 using Reactor.Math;
 using Reactor.Types;
 using System;
@@ -77,7 +77,7 @@ void main()
             sky.DepthWrite = false;
             RMaterial skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skybox;
-            skyBoxMaterial.SetTexture(RTextureLayer.DIFFUSE, skyBoxTexture);
+            skyBoxMaterial.SetTexture(RTextureLayer.TEXTURE0, skyBoxTexture);
             sky.Material = skyBoxMaterial;
         }
 
@@ -89,7 +89,7 @@ void main()
             sky.DepthWrite = false;
             RMaterial skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skyBoxShader;
-            skyBoxMaterial.SetTexture(RTextureLayer.DIFFUSE, skyBoxTexture);
+            skyBoxMaterial.SetTexture(RTextureLayer.TEXTURE0, skyBoxTexture);
             sky.Material = skyBoxMaterial;
         }
 

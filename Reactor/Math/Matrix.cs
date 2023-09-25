@@ -20,11 +20,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Reactor.Math
 {
+    [Serializable]
+    [StructLayout(LayoutKind.Explicit, Size = 64, Pack = 4)]
     public struct Matrix : IEquatable<Matrix>
     {
         #region Public Constructors
@@ -54,52 +58,52 @@ namespace Reactor.Math
 
         #region Public Fields
 
-        
+        [FieldOffset(0)]
         public float M11;
-      
-        
+
+        [FieldOffset(4)]
         public float M12;
-      
-        
+
+        [FieldOffset(8)]
         public float M13;
-      
-        
+
+        [FieldOffset(12)]
         public float M14;
-      
-        
+
+        [FieldOffset(16)]
         public float M21;
-      
-        
+
+        [FieldOffset(20)]
         public float M22;
-      
-        
+
+        [FieldOffset(24)]
         public float M23;
-      
-        
+
+        [FieldOffset(28)]
         public float M24;
-      
-        
+
+        [FieldOffset(32)]
         public float M31;
-      
-        
+
+        [FieldOffset(36)]
         public float M32;
-      
-        
+
+        [FieldOffset(40)]
         public float M33;
-      
-        
+
+        [FieldOffset(44)]
         public float M34;
-      
-        
+
+        [FieldOffset(48)]
         public float M41;
-      
-        
+
+        [FieldOffset(52)]
         public float M42;
-      
-        
+
+        [FieldOffset(56)]
         public float M43;
-      
-        
+
+        [FieldOffset(60)]
         public float M44;
 
         #endregion Public Fields
@@ -356,6 +360,62 @@ namespace Reactor.Math
                 mat.M41, mat.M42, mat.M43, mat.M44
             };
             return matarray;
+        }
+        public static Matrix FromColumnMajor(float[] v)
+        {
+            var mat = new Matrix();
+            float[] matarray =
+            {
+                v[0], v[4], v[8], v[12],
+                v[1], v[5], v[9], v[13],
+                v[2], v[6], v[10], v[14],
+                v[3], v[7], v[11], v[15]
+            };
+            mat.M11 = matarray[0];
+            mat.M12 = matarray[1];
+            mat.M13 = matarray[2];
+            mat.M14 = matarray[3];
+            mat.M21 = matarray[4];
+            mat.M22 = matarray[5];
+            mat.M23 = matarray[6];
+            mat.M24 = matarray[7];
+            mat.M31 = matarray[8];
+            mat.M32 = matarray[9];
+            mat.M33 = matarray[10];
+            mat.M34 = matarray[11];
+            mat.M41 = matarray[12];
+            mat.M42 = matarray[13];
+            mat.M43 = matarray[14];
+            mat.M44 = matarray[15];
+            return mat;
+        }
+        public static Matrix FromRowMajor(float[] v)
+        {
+            var mat = new Matrix();
+            float[] matarray =
+            {
+                v[0], v[1], v[2], v[3],
+                v[4], v[5], v[6], v[7],
+                v[8], v[9], v[10], v[11],
+                v[12], v[13], v[14], v[15]
+            };
+            mat.M11 = matarray[0];
+            mat.M12 = matarray[1];
+            mat.M13 = matarray[2];
+            mat.M14 = matarray[3];
+            mat.M21 = matarray[4];
+            mat.M22 = matarray[5];
+            mat.M23 = matarray[6];
+            mat.M24 = matarray[7];
+            mat.M31 = matarray[8];
+            mat.M32 = matarray[9];
+            mat.M33 = matarray[10];
+            mat.M34 = matarray[11];
+            mat.M41 = matarray[12];
+            mat.M42 = matarray[13];
+            mat.M43 = matarray[14];
+            mat.M44 = matarray[15];
+            return mat;
         }
 
         public static Matrix Add(Matrix matrix1, Matrix matrix2)
@@ -826,7 +886,7 @@ namespace Reactor.Math
 
         public static void CreateRotationX(float radians, out Matrix result)
         {
-            result = Matrix.Identity;
+            result = Identity;
 
             var val1 = (float)System.Math.Cos(radians);
             var val2 = (float)System.Math.Sin(radians);
@@ -847,7 +907,7 @@ namespace Reactor.Math
 
         public static void CreateRotationY(float radians, out Matrix result)
         {
-            result = Matrix.Identity;
+            result = Identity;
 
             var val1 = (float)System.Math.Cos(radians);
             var val2 = (float)System.Math.Sin(radians);
@@ -869,7 +929,7 @@ namespace Reactor.Math
 
         public static void CreateRotationZ(float radians, out Matrix result)
         {
-            result = Matrix.Identity;
+            result = Identity;
 
             var val1 = (float)System.Math.Cos(radians);
             var val2 = (float)System.Math.Sin(radians);
@@ -1583,7 +1643,7 @@ namespace Reactor.Math
 
         public static Matrix operator +(Matrix matrix1, Matrix matrix2)
         {
-            Matrix.Add(ref matrix1, ref matrix2, out matrix1);
+            Add(ref matrix1, ref matrix2, out matrix1);
             return matrix1;
         }
 
@@ -1876,9 +1936,9 @@ namespace Reactor.Math
 
         /// <summary>
         /// Helper method for using the Laplace expansion theorem using two rows expansions to calculate major and 
-        /// minor determinants of a 4x4 matrix. This method is used for inverting a matrix.
+        /// minor determinants of a 4x4 matrix. This method isn't used but it's useful none-the-less.
         /// </summary>
-        private static void FindDeterminants(ref Matrix matrix, out float major, 
+        public static void FindDeterminants(ref Matrix matrix, out float major, 
                                              out float minor1, out float minor2, out float minor3, out float minor4, out float minor5, out float minor6,
                                              out float minor7, out float minor8, out float minor9, out float minor10, out float minor11, out float minor12)
         {
@@ -1909,17 +1969,20 @@ namespace Reactor.Math
             minor11 = (float)det11;
             minor12 = (float)det12;
         }
-        public static implicit operator OpenTK.Matrix4(Matrix value)
-        {
-            return new OpenTK.Matrix4(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
-        }
 
-            
-        public static implicit operator Matrix(OpenTK.Matrix4 value)
+        #endregion Private Static Methods
+
+        #region Public Static Methods
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Numerics.Matrix4x4(Matrix value)
+        {
+            return new System.Numerics.Matrix4x4(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Matrix(System.Numerics.Matrix4x4 value)
         {
             return new Matrix(value.M11, value.M12, value.M13, value.M14, value.M21, value.M22, value.M23, value.M24, value.M31, value.M32, value.M33, value.M34, value.M41, value.M42, value.M43, value.M44);
         }
-
-        #endregion Private Static Methods
+        #endregion Public Static Methods
     }
 }

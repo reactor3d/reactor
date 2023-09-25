@@ -20,11 +20,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Geometry;
-using Reactor.Math;
+
 using System;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using Reactor.Geometry;
+using Reactor.Math;
+using Reactor.Platform.OpenGL;
+using Reactor.Types.States;
 
 namespace Reactor.Types
 {
@@ -55,7 +57,7 @@ namespace Reactor.Types
             this._material = RMaterial.defaultMaterial;
             this.IsDrawable = true;
             this.CullEnable = true;
-            this.CullMode = States.RCullMode.CullClockwiseFace;
+            this.CullMode = RCullMode.CullClockwiseFace;
             this.DepthWrite = true;
             this.BlendEnable = true;
             this.PrimitiveType = RPrimitiveType.Triangles;
@@ -214,14 +216,14 @@ namespace Reactor.Types
 
 
 
-            float dphi = Reactor.Math.MathHelper.Pi / Stacks;
-            float dtheta = Reactor.Math.MathHelper.TwoPi / Slices;
+            float dphi = MathHelper.Pi / Stacks;
+            float dtheta = MathHelper.TwoPi / Slices;
 
             int index = 0;
             vertices.Add(new RVertexData(new Vector3(0, -1f, 0) * Radius, new Vector3(0, -1f, 0),Vector3.Zero, Vector3.Zero, Vector2.Zero));
             for (int i = 0; i < Stacks - 1; i++)
             {
-                float latitude = ((i + 1) * Reactor.Math.MathHelper.Pi / Stacks) - Reactor.Math.MathHelper.PiOver2;
+                float latitude = ((i + 1) * MathHelper.Pi / Stacks) - MathHelper.PiOver2;
 
                 float dy = (float)System.Math.Sin(latitude);
                 float dxz = (float)System.Math.Cos(latitude);
@@ -229,7 +231,7 @@ namespace Reactor.Types
                 // Create a single ring of vertices at this latitude.
                 for (int j = 0; j < Slices; j++)
                 {
-                    float longitude = j * Reactor.Math.MathHelper.TwoPi / Slices;
+                    float longitude = j * MathHelper.TwoPi / Slices;
 
                     float dx = (float)System.Math.Cos(longitude) * dxz;
                     float dz = (float)System.Math.Sin(longitude) * dxz;
@@ -353,10 +355,7 @@ namespace Reactor.Types
 
                 _material.Shader.BindSemantics(matrix, REngine.camera.View, REngine.camera.Projection);
                 if (PrimitiveType == RPrimitiveType.Points) {
-                    GL.PointParameter(PointParameterName.PointSizeMin, 0.0f);
-                    GL.PointParameter(PointParameterName.PointSizeMax, 1024.0f);
                     GL.Enable(EnableCap.PointSprite);
-                    GL.Enable(EnableCap.PointSmooth);
                     GL.Enable(EnableCap.ProgramPointSize);
                 }
                 if (_index != null)
@@ -366,23 +365,22 @@ namespace Reactor.Types
                     var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
                     var indexElementSize = shortIndices ? 2 : 4;
                     var indexOffsetInBytes = (IntPtr)(indexElementSize);
-                    var indexElementCount = _index.GetElementCountArray((PrimitiveType)PrimitiveType, vertCount);
+                    var indexElementCount = _index.GetElementCountArray(PrimitiveType, vertCount);
                     _index.Bind();
                     REngine.CheckGLError();
-                    GL.DrawRangeElements((PrimitiveType)PrimitiveType,0,1, _index.IndexCount, indexElementType, indexOffsetInBytes);
+                    GL.DrawRangeElements((BeginMode)PrimitiveType,0,1, _index.IndexCount, indexElementType, indexOffsetInBytes);
                     REngine.CheckGLError();
                     _index.Unbind();
                     REngine.CheckGLError();
                 }
                 else
                 {
-                    GL.DrawArrays((PrimitiveType)PrimitiveType, 0, VertexBuffer.VertexCount);
+                    GL.DrawArrays((BeginMode)PrimitiveType, 0, VertexBuffer.VertexCount);
                     REngine.CheckGLError();
                 }
                 if (PrimitiveType == RPrimitiveType.Points)
                 {
                     GL.Disable(EnableCap.PointSprite);
-                    GL.Disable(EnableCap.PointSmooth);
                     GL.Disable(EnableCap.ProgramPointSize);
                 }
                 _material.Shader.Unbind();

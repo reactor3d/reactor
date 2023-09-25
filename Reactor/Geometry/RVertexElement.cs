@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
+using Reactor.Platform.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,49 +157,7 @@ namespace Reactor.Geometry
 
             throw new ArgumentException();
         }
-        internal static VertexPointerType OpenGLVertexPointerType(RVertexElementFormat elementFormat)
-        {
-            switch (elementFormat)
-            {
-                case RVertexElementFormat.Single:
-                    return VertexPointerType.Float;
-
-                case RVertexElementFormat.Vector2:
-                    return VertexPointerType.Float;
-
-                case RVertexElementFormat.Vector3:
-                    return VertexPointerType.Float;
-
-                case RVertexElementFormat.Vector4:
-                    return VertexPointerType.Float;
-
-                case RVertexElementFormat.Color:
-                    return VertexPointerType.Short;
-
-                case RVertexElementFormat.Byte4:
-                    return VertexPointerType.Short;
-
-                case RVertexElementFormat.Short2:
-                    return VertexPointerType.Short;
-
-                case RVertexElementFormat.Short4:
-                    return VertexPointerType.Short;
-
-                case RVertexElementFormat.NormalizedShort2:
-                    return VertexPointerType.Short;
-
-                case RVertexElementFormat.NormalizedShort4:
-                    return VertexPointerType.Short;
-
-                case RVertexElementFormat.HalfVector2:
-                    return VertexPointerType.Float;
-
-                case RVertexElementFormat.HalfVector4:
-                    return VertexPointerType.Float;
-            }
-
-            throw new ArgumentException();
-        }
+        
 
         internal static VertexAttribPointerType OpenGLVertexAttribPointerType(RVertexElementFormat elementFormat)
         {
@@ -270,94 +228,6 @@ namespace Reactor.Geometry
             }
         }
 
-        internal static ColorPointerType OpenGLColorPointerType(RVertexElementFormat elementFormat)
-        {
-            switch (elementFormat)
-            {
-                case RVertexElementFormat.Single:
-                    return ColorPointerType.Float;
-
-                case RVertexElementFormat.Vector2:
-                    return ColorPointerType.Float;
-
-                case RVertexElementFormat.Vector3:
-                    return ColorPointerType.Float;
-
-                case RVertexElementFormat.Vector4:
-                    return ColorPointerType.Float;
-
-                case RVertexElementFormat.Color:
-                    return ColorPointerType.UnsignedByte;
-
-                case RVertexElementFormat.Byte4:
-                    return ColorPointerType.UnsignedByte;
-
-                case RVertexElementFormat.Short2:
-                    return ColorPointerType.Short;
-
-                case RVertexElementFormat.Short4:
-                    return ColorPointerType.Short;
-
-                case RVertexElementFormat.NormalizedShort2:
-                    return ColorPointerType.UnsignedShort;
-
-                case RVertexElementFormat.NormalizedShort4:
-                    return ColorPointerType.UnsignedShort;
-
-                case RVertexElementFormat.HalfVector2:
-                    return ColorPointerType.HalfFloat;
-
-                case RVertexElementFormat.HalfVector4:
-                    return ColorPointerType.HalfFloat;
-
-            }
-
-            throw new ArgumentException();
-        }
-
-        internal static NormalPointerType OpenGLNormalPointerType(RVertexElementFormat elementFormat)
-        {
-            switch (elementFormat)
-            {
-                case RVertexElementFormat.Single:
-                    return NormalPointerType.Float;
-
-                case RVertexElementFormat.Vector2:
-                    return NormalPointerType.Float;
-
-                case RVertexElementFormat.Vector3:
-                    return NormalPointerType.Float;
-
-                case RVertexElementFormat.Vector4:
-                    return NormalPointerType.Float;
-
-                case RVertexElementFormat.Color:
-                    return NormalPointerType.Byte;
-
-                case RVertexElementFormat.Byte4:
-                    return NormalPointerType.Byte;
-
-                case RVertexElementFormat.Short2:
-                    return NormalPointerType.Short;
-
-                case RVertexElementFormat.Short4:
-                    return NormalPointerType.Short;
-
-                case RVertexElementFormat.NormalizedShort2:
-                    return NormalPointerType.Short;
-
-                case RVertexElementFormat.NormalizedShort4:
-                    return NormalPointerType.Short;
-
-                case RVertexElementFormat.HalfVector2:
-                    return NormalPointerType.HalfFloat;
-
-                case RVertexElementFormat.HalfVector4:
-                    return NormalPointerType.HalfFloat;
-            }
-
-            throw new ArgumentException();
-        }
         internal static int GetSize(RVertexElementFormat elementFormat)
         {
             switch (elementFormat)

@@ -5,11 +5,8 @@
  * See COPYING for license terms (Ms-PL).                                   *
  *                                                                          *
  ***************************************************************************/
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 
 namespace NVorbis.Ogg
 {
@@ -54,7 +51,7 @@ namespace NVorbis.Ogg
             _curOfs = 0;
         }
 
-        internal void MergeWith(NVorbis.DataPacket continuation)
+        internal void MergeWith(DataPacket continuation)
         {
             var op = continuation as Packet;
 

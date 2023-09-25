@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
+using Reactor.Platform.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -256,7 +256,7 @@ namespace Reactor.Types.States
         {
 
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(this.ColorSourceBlend.GetBlendFactor(), this.ColorDestinationBlend.GetBlendFactor());
+            GL.BlendFunc(this.ColorSourceBlend.GetBlendFactorSrc(), this.ColorDestinationBlend.GetBlendFactorDest());
 
             GL.BlendColor(
                 this.BlendFactor.R / 255.0f,      

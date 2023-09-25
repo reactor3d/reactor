@@ -47,20 +47,27 @@
 //
 
 using System;
-using OpenTK.Audio.OpenAL;
+using Reactor.Audio.OpenAL;
 
 namespace Reactor.Audio
 {
     internal static class ALHelper
     {
-        internal static readonly XRamExtension XRam = new XRamExtension();
-        internal static readonly EffectsExtension Efx = new EffectsExtension();
-        
+        //internal static readonly XRamExtension XRam = new XRamExtension();
+        //internal static readonly EffectsExtension Efx = new EffectsExtension();
+        internal static ALContext Context = ALC.GetCurrentContext();
         internal static void Check()
         {
             ALError error;
             if ((error = AL.GetError()) != ALError.NoError)
                 throw new InvalidOperationException(AL.GetErrorString(error));
+        }
+
+        internal static ALSourceState GetSourceState(int sourceId)
+        {
+            int state;
+            AL.GetSource(sourceId, ALGetSourcei.SourceState, out state);
+            return (ALSourceState)state;
         }
     }
 }

@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics.OpenGL;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor
 {
@@ -38,25 +38,23 @@ namespace Reactor
         public const int Border = 0;
 
         /// <summary>false==DirectX TexCoords, true==OpenGL TexCoords (Default: true)</summary>
-        public static bool FlipImages = false;
+        public static bool FlipImages = true;
 
         /// <summary>When enabled, will use Glu to create MipMaps for images loaded with GDI+ (Default: false)</summary>
         public static bool BuildMipmapsForUncompressed = false;
 
         /// <summary>Selects the Magnification filter for following Textures to be loaded. (Default: Nearest)</summary>
-        public static TextureMagFilter MagnificationFilter = TextureMagFilter.Linear;
+        public static TextureParameter MagnificationFilter = TextureParameter.Nearest;
 
         /// <summary>Selects the Minification filter for following Textures to be loaded. (Default: Nearest)</summary>
-        public static TextureMinFilter MinificationFilter = TextureMinFilter.LinearMipmapLinear;
+        public static TextureParameter MinificationFilter = TextureParameter.Nearest;
 
         /// <summary>Selects the S Wrapping for following Textures to be loaded. (Default: Repeat)</summary>
-        public static TextureWrapMode WrapModeS = TextureWrapMode.ClampToEdge;
+        public static TextureParameter WrapModeS = TextureParameter.Repeat;
 
         /// <summary>Selects the T Wrapping for following Textures to be loaded. (Default: Repeat)</summary>
-        public static TextureWrapMode WrapModeT = TextureWrapMode.ClampToEdge;
+        public static TextureParameter WrapModeT = TextureParameter.Repeat;
 
-        /// <summary>Selects the Texture Environment Mode for the following Textures to be loaded. Default: Modulate)</summary>
-        public static TextureEnvMode EnvMode = TextureEnvMode.Modulate;
     }
 
 }

@@ -23,51 +23,61 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK;
+using Reactor.Platform;
+using Reactor.Math;
+
 namespace Reactor
 {
-    public sealed class RGameWindow : GameWindow
+    public sealed class RGameWindow : RNativeWindow, IEquatable<RGameWindow>
     {
+        private double r = 1.0f / 60.0f;
+        private double u = 1.0f / 60.0f;
+        public double RenderFrequency { get => r; set { r = value; } }
+        public double UpdateFrequency { get => u; set { u = value; } }
 
 
-        public RGameWindow():base(800,600, new GraphicsMode(32,24,8,8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary), 4, 0, GraphicsContextFlags.ForwardCompatible){
-            Width = 800;
-            Height = 600;
+        public Action Render;
+        public Action Update;
+        public Action Resize;
+        public Action Closed;
+
+        public RGameWindow():base()
+        {
+            init();
         }
 
-        public RGameWindow(int width, int height)
-            : base(width, height, new GraphicsMode(32, 24, 8, 8), "Reactor", GameWindowFlags.Default, DisplayDevice.GetDisplay(DisplayIndex.Primary),4, 0, GraphicsContextFlags.ForwardCompatible)
+        public RGameWindow(int width, int height) : base(width, height, null)
         {
-            Width = width;
-            Height = height;
+            init();
+        }
+        void init()
+        {
+            base.Closing += OnClosing;
+            base.SizeChanged += OnSizeChanged;
+        }
+        void OnClosing(object sender, EventArgs e)
+        {
+            if (Closed != null) Closed();
         }
 
-        public void DoExit()
+        void OnSizeChanged(object sender, EventArgs e)
         {
-            base.Exit();
+            if (Resize != null) Resize();
         }
 
-        public bool Focused
+        public void Run()
         {
-            get
+            while(true)
             {
-                return base.Focused;
+                Threading.BlockOnUIThread(Update);
+                Threading.BlockOnUIThread(Render);
             }
         }
 
-        public int Width
+        public bool Equals(RGameWindow other)
         {
-            get { return base.Width; }
-            set { base.Width = value; }
+            return Handle == other.Handle;
         }
-        public int Height
-        {
-            get { return base.Height; }
-            set { base.Width = value; }
-        }
-
     }
 }
 

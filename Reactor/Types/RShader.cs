@@ -20,20 +20,31 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
-using System.Reflection;
-using Reactor.Math;
-using System;
-using System.Text;
-using System.Runtime.InteropServices;
-using Reactor.Geometry;
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using Reactor.Geometry;
+using Reactor.Math;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Types
 {
     public class RShader : IDisposable
     {
+        const string r_position = "r_Position";
+        const string r_color = "r_Color";
+        const string r_normal = "r_Normal";
+        const string r_bitangent = "r_Bitangent";
+        const string r_tangent = "r_Tangent";
+        const string r_texcoord = "r_TexCoord";
+        const string r_blendindices = "r_BlendIndices";
+        const string r_blendweight = "r_BlendWeight";
+        const string r_tessellatefactor = "r_TessellateFactor";
+
         [StructLayout(LayoutKind.Sequential)]
         private struct Attribute
         {
@@ -57,7 +68,7 @@ namespace Reactor.Types
 
         private readonly Dictionary<string, int> _uniformLocations = new Dictionary<string, int>();
         private readonly Dictionary<string, int> _attributeLocations = new Dictionary<string, int>();
-        public int Id { get; internal set; }
+        public uint Id { get; internal set; }
         RShaderEffect[] effects = new RShaderEffect[6];
 
         public void Load(string vertSource, string fragSource) {
@@ -81,11 +92,13 @@ namespace Reactor.Types
             }
 
             GL.LinkProgram(Id);
-            int linkStatus;
-            GL.GetProgram(Id, GetProgramParameterName.LinkStatus, out linkStatus);
-            if(linkStatus == (int)All.False){
-                var log = GL.GetProgramInfoLog(Id);
-                RLog.Error(log);
+            int linkStatus = 0;
+            GL.GetProgramv(Id, ProgramParameter.LinkStatus, linkStatus);
+            if(linkStatus == 0){
+                int[] lengths = new []{0};
+                StringBuilder log = new StringBuilder();
+                GL.GetProgramInfoLog(Id, 4096, lengths, log);
+                RLog.Error(log.ToString());
                 REngine.CheckGLError();
                 if (GL.IsProgram(Id))
                 {
@@ -104,19 +117,19 @@ namespace Reactor.Types
             //if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
 
             REngine.CheckGLError();
-            int numAttributes;
-            GL.GetProgram(Id, GetProgramParameterName.ActiveAttributes, out numAttributes);
+            int numAttributes=0;
+            GL.GetProgramv(Id, ProgramParameter.ActiveAttributes, numAttributes);
             REngine.CheckGLError();
             _attributes = new Attribute[numAttributes];
             for (int i = 0; i < numAttributes; i++)
             {
-                int size;
-                ActiveAttribType type;
-                int length;
-                string name;
-                GL.GetActiveAttrib(Id, i, 4096, out length, out size, out type, out name);
+                int size=0;
+                ActiveAttribType type = ActiveAttribType.Float;
+                int length=0;
+                StringBuilder name = new StringBuilder();
+                GL.GetActiveAttrib(Id, i, 4096, new []{length}, new[]{size}, new[]{type}, name);
                 Attribute attrib = new Attribute();
-                attrib.name = name;
+                attrib.name = name.ToString();
                 attrib.index = i;
                 attrib.location = GL.GetAttribLocation(Id, attrib.name);
                 attrib.type = type;
@@ -124,16 +137,16 @@ namespace Reactor.Types
                 _attributeLocations.Add(attrib.name, attrib.location);
             }
 
-            int numUniforms;
-            GL.GetProgram(Id, GetProgramParameterName.ActiveUniforms, out numUniforms);
+            int numUniforms=0;
+            GL.GetProgramv(Id, ProgramParameter.ActiveUniforms, numUniforms);
             _uniforms = new Uniform[numUniforms];
             for (int i = 0; i < numUniforms; i++)
             {
-                int size;
-                ActiveUniformType type;
-                int length;
-                string name;
-                GL.GetActiveUniform(Id, i, 4096, out length, out size, out type, out name);
+                int size=0;
+                ActiveUniformType type = ActiveUniformType.Float;
+                int length=0;
+                StringBuilder name = new StringBuilder();
+                GL.GetActiveUniform(Id, i, 4096, new []{length}, new[]{size}, new[]{type}, name);
                 Uniform uni = new Uniform();
                 uni.index = i;
                 uni.name = name.ToString();
@@ -164,39 +177,39 @@ namespace Reactor.Types
         public void SetUniformValue(string name, bool value)
         {
             if(value)
-                GL.Uniform1(GetUniformLocation(name), 1);
+                GL.ProgramUniform1i(Id, GetUniformLocation(name), 1);
             else
-                GL.Uniform1(GetUniformLocation(name), 0);
+                GL.ProgramUniform1i(Id, GetUniformLocation(name), 0);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, int value)
         {
-            GL.Uniform1(GetUniformLocation(name), value);
+            GL.ProgramUniform1i(Id, GetUniformLocation(name), value);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, double value)
         {
-            GL.Uniform1(GetUniformLocation(name), value);
+            GL.ProgramUniform1f(Id, GetUniformLocation(name), (float)value);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, float value)
         {
-            GL.Uniform1(GetUniformLocation(name), value);
+            GL.ProgramUniform1f(Id, GetUniformLocation(name), value);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, Vector2 value)
         {
-            GL.Uniform2(GetUniformLocation(name), value);
+            GL.ProgramUniform2f(Id, GetUniformLocation(name), value.X, value.Y);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, Vector3 value)
         {
-            GL.Uniform3(GetUniformLocation(name), value);
+            GL.ProgramUniform3f(Id, GetUniformLocation(name), value.X, value.Y, value.Z);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, Vector4 value)
         {
-            GL.Uniform4(GetUniformLocation(name), value);
+            GL.ProgramUniform4f(Id, GetUniformLocation(name), value.X, value.Y, value.Z, value.W);
             REngine.CheckGLError();
         }
         public void SetUniformValue(string name, RColor value)
@@ -205,8 +218,8 @@ namespace Reactor.Types
         }
         public void SetUniformValue(string name, Matrix value)
         {
-            OpenTK.Matrix4 v = value;
-            GL.UniformMatrix4(GetUniformLocation(name), false, ref v);
+            var v = Matrix.ToFloatArray(value);
+            GL.ProgramUniformMatrix4fv(Id, GetUniformLocation(name),1, false, v);
             REngine.CheckGLError();
         }
 
@@ -214,10 +227,9 @@ namespace Reactor.Types
         {
             int unival = GetTexUniformValue(layer);
             int loc = GetTexUniformLocation(layer);
-            GL.Uniform1(loc, unival);
+            GL.ProgramUniform1i(Id, loc, unival);
             REngine.CheckGLError();
-            TextureUnit unit = (TextureUnit)(int)layer;
-            GL.ActiveTexture(unit);
+            GL.ActiveTexture((int)layer);
             REngine.CheckGLError();
             texture.Bind();
             REngine.CheckGLError();
@@ -306,117 +318,12 @@ namespace Reactor.Types
         }
         internal int GetTexUniformLocation(RTextureLayer layer)
         {
-            string name = "";
-            switch(layer)
-            {
-                case RTextureLayer.AMBIENT:
-                    name = "ambient";
-                    break;
-                case RTextureLayer.DETAIL:
-                    name = "detail";
-                    break;
-                case RTextureLayer.DIFFUSE:
-                    name = "diffuse";
-                    break;
-                case RTextureLayer.GLOW:
-                    name = "glow";
-                    break;
-                case RTextureLayer.HEIGHT:
-                    name = "height";
-                    break;
-                case RTextureLayer.NORMAL:
-                    name = "normal";
-                    break;
-                case RTextureLayer.SPECULAR:
-                    name = "specular";
-                    break;
-                case RTextureLayer.TEXTURE7:
-                    name = "texture7";
-                    break;
-                case RTextureLayer.TEXTURE8:
-                    name = "texture8";
-                    break;
-                case RTextureLayer.TEXTURE9:
-                    name = "texture9";
-                    break;
-                case RTextureLayer.TEXTURE10:
-                    name = "texture10";
-                    break;
-                case RTextureLayer.TEXTURE11:
-                    name = "texture11";
-                    break;
-                case RTextureLayer.TEXTURE12:
-                    name = "texture12";
-                    break;
-                case RTextureLayer.TEXTURE13:
-                    name = "texture13";
-                    break;
-                case RTextureLayer.TEXTURE14:
-                    name = "texture14";
-                    break;
-                case RTextureLayer.TEXTURE15:
-                    name = "texture15";
-                    break;
-                 
-            }
+            var name = String.Format("texture{0}", (int)layer);
             return GetUniformLocation(name);
         }
         internal int GetTexUniformValue(RTextureLayer layer)
         {
-            RTextureUnit name = RTextureUnit.DIFFUSE;
-            switch(layer)
-            {
-                case RTextureLayer.AMBIENT:
-                    name = RTextureUnit.AMBIENT;
-                    break;
-                case RTextureLayer.DETAIL:
-                    name = RTextureUnit.DETAIL;
-                    break;
-                case RTextureLayer.DIFFUSE:
-                    name = RTextureUnit.DIFFUSE;
-                    break;
-                case RTextureLayer.GLOW:
-                    name = RTextureUnit.GLOW;
-                    break;
-                case RTextureLayer.HEIGHT:
-                    name = RTextureUnit.HEIGHT;
-                    break;
-                case RTextureLayer.NORMAL:
-                    name = RTextureUnit.NORMAL;
-                    break;
-                case RTextureLayer.SPECULAR:
-                    name = RTextureUnit.SPECULAR;
-                    break;
-                case RTextureLayer.TEXTURE7:
-                    name = RTextureUnit.TEXTURE7;
-                    break;
-                case RTextureLayer.TEXTURE8:
-                    name = RTextureUnit.TEXTURE8;
-                    break;
-                case RTextureLayer.TEXTURE9:
-                    name = RTextureUnit.TEXTURE9;
-                    break;
-                case RTextureLayer.TEXTURE10:
-                    name = RTextureUnit.TEXTURE10;
-                    break;
-                case RTextureLayer.TEXTURE11:
-                    name = RTextureUnit.TEXTURE11;
-                    break;
-                case RTextureLayer.TEXTURE12:
-                    name = RTextureUnit.TEXTURE12;
-                    break;
-                case RTextureLayer.TEXTURE13:
-                    name = RTextureUnit.TEXTURE13;
-                    break;
-                case RTextureLayer.TEXTURE14:
-                    name = RTextureUnit.TEXTURE14;
-                    break;
-                case RTextureLayer.TEXTURE15:
-                    name = RTextureUnit.TEXTURE15;
-                    break;
-
-            }
-            return (int)name;
+            return (int)layer;
         }
         internal int GetUniformLocation(string name)
         {
@@ -452,31 +359,31 @@ namespace Reactor.Types
             switch(rVertexElementUsage)
             {
                 case RVertexElementUsage.Position:
-                    name = "r_Position";
+                    name = r_position;
                     break;
                 case RVertexElementUsage.Color:
-                    name = "r_Color";
+                    name = r_color;
                     break;
                 case RVertexElementUsage.Normal:
-                    name = "r_Normal";
+                    name = r_normal;
                     break;
                 case RVertexElementUsage.Bitangent:
-                    name = "r_Bitangent";
+                    name = r_bitangent;
                     break;
                 case RVertexElementUsage.Tangent:
-                    name = "r_Tangent";
+                    name = r_tangent;
                     break;
                 case RVertexElementUsage.TextureCoordinate:
-                    name = "r_TexCoord";
+                    name = r_texcoord;
                     break;
                 case RVertexElementUsage.BlendIndices:
-                    name = "r_BlendIndices";
+                    name = r_blendindices;
                     break;
                 case RVertexElementUsage.BlendWeight:
-                    name = "r_BlendWeight";
+                    name = r_blendweight;
                     break;
                 case RVertexElementUsage.TessellateFactor:
-                    name = "r_TessellateFactor";
+                    name = r_tessellatefactor;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -485,10 +392,11 @@ namespace Reactor.Types
         }
         internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage, int usageIndex)
         {
-            int size;
-            ActiveAttribType type;
-            string name = GL.GetActiveAttrib(Id, usageIndex, out size, out type);
-            return GL.GetAttribLocation(Id, name);
+            int size=0;
+            ActiveAttribType type = ActiveAttribType.Float;
+            StringBuilder name = new StringBuilder();
+            GL.GetActiveAttrib(Id, usageIndex, size, new []{1}, new[]{1},new []{type}, name);
+            return GL.GetAttribLocation(Id, name.ToString());
         }
         public void Bind()
         {
@@ -515,7 +423,7 @@ namespace Reactor.Types
             if (GL.IsProgram(Id))
             {
                 GL.DeleteProgram(Id);
-                Id = -1;
+                Id = 0;
             }
         }
 
@@ -578,7 +486,7 @@ namespace Reactor.Types
     {
         internal static Assembly Assembly = Assembly.GetAssembly(typeof(RShaderResources));
         internal static string GetResourceString(string resource){
-            System.IO.StreamReader reader = new System.IO.StreamReader(Assembly.GetManifestResourceStream(resource));
+            StreamReader reader = new StreamReader(Assembly.GetManifestResourceStream(resource));
             string contents = reader.ReadToEnd();
             reader.Close();
             return contents;

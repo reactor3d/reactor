@@ -1,7 +1,7 @@
 ﻿// Author:
 //       Gabriel Reiser <gabe@reisergames.com>
 //
-// Copyright (c) 2010-2016 Reiser Games, LLC.
+// Copyright (c) 2010-2023 Reiser Games, LLC.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,45 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using OpenTK.Graphics;
-using OpenTK.Platform;
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Platform.Dummy;
-using OpenTK.Platform.Windows;
+using Reactor.Platform.GLFW;
+using Reactor.Types;
 
 namespace Reactor.Platform
 {
+    internal class DummyContext : IGraphicsContext
+    {
+        static RDisplayMode mode = new RDisplayMode(1, 1, 60);
+        public RDisplayMode CurrentMode()
+        {
+            return mode;
+        }
+
+        public void MakeCurrent()
+        {
+            Glfw.MakeContextCurrent(Window.None);
+        }
+
+        public void MakeNoneCurrent()
+        {
+            Glfw.MakeContextCurrent(Window.None);
+        }
+
+        public void SetMode(RDisplayMode mode)
+        {
+            return;
+        }
+
+        public RDisplayModes SupportedModes()
+        {
+            return new RDisplayModes(new List<RDisplayMode>() { mode });
+        }
+        public void SwapBuffers()
+        {
+
+        }
+    }
     public class DummyRenderControl : RenderControl
     {
         public DummyRenderControl()
@@ -41,17 +67,23 @@ namespace Reactor.Platform
 
         public override void Init()
         {
-            WindowInfo = OpenTK.Platform.Utilities.CreateDummyWindowInfo();
-            
-            Context = new GraphicsContext(ContextHandle.Zero, WindowInfo);
-            Context.MakeCurrent(WindowInfo);
-            //Load OpenGL function entry points into OpenTK.
-            Context.LoadAll();
+            unsafe
+            {
+
+                if (!Glfw.Init())
+                {
+                    return;
+                }
+                Context = new DummyContext();
+                Context.MakeCurrent();
+
+            }
+
         }
 
         public override void MakeCurrent()
         {
-            Context.MakeCurrent(WindowInfo);
+            Context.MakeCurrent();
         }
 
         public override void SwapBuffers()
@@ -59,11 +91,10 @@ namespace Reactor.Platform
             Context.SwapBuffers();
         }
 
-        public override void Destroy()
+        public override void Dispose()
         {
-            Context.Dispose();
-            WindowInfo.Dispose();
+            Glfw.Terminate();
         }
     }
-}
 
+}

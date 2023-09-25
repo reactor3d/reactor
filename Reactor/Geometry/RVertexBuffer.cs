@@ -21,20 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
 using Reactor.Platform;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor.Geometry
 {
     public class RVertexBuffer : IDisposable
     {
-        int vbo;
-        int vao;
+        uint vbo;
+        uint vao;
         internal bool _isDynamic;
         internal bool IsDisposed;
 
@@ -42,6 +38,14 @@ namespace Reactor.Geometry
         public RVertexDeclaration VertexDeclaration { get; private set; }
         public RBufferUsage BufferUsage { get; private set; }
 
+        public uint VBO
+        {
+            get { return vbo; }
+        }
+        public uint VAO
+        {
+            get { return vao; }
+        }
         public RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage, bool dynamic)
         {
             if(vertexDeclaration == null)
@@ -159,13 +163,15 @@ namespace Reactor.Geometry
 
             if (vbo == 0)
             {
-                GL.GenVertexArrays(1, out this.vao);
+                var uidx = new uint[1] { 0 };
+                GL.GenVertexArrays(1, uidx);
+                vao = uidx[0];
                 REngine.CheckGLError();
                 GL.BindVertexArray(this.vao);
                 REngine.CheckGLError();
 
-                GL.GenBuffers(1, out this.vbo);
-
+                GL.GenBuffers(1, uidx);
+                vbo = uidx[0];
                 REngine.CheckGLError();
                 GL.BindBuffer(BufferTarget.ArrayBuffer, this.vbo);
                 REngine.CheckGLError();
@@ -301,7 +307,7 @@ namespace Reactor.Geometry
             {
                 Threading.BlockOnUIThread(() =>
                     {
-                        GL.DeleteBuffers(1, ref vbo);
+                        GL.DeleteBuffers(1, new uint[1]{ vbo });
                         REngine.CheckGLError();
                     });
             }
