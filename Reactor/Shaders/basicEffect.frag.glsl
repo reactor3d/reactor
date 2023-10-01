@@ -6,9 +6,9 @@ in float logz;
 out vec4 color;
 void main()
 {
-   vec4 d = texture(diffuse, out_texcoord);
-   vec4 n = texture(normal, out_texcoord) + texture(height, out_texcoord);
-   color = ambient_color;
-   color += d * diffuse_color;
+   vec4 d = texture(texture0, out_texcoord);
+   vec4 n = texture(texture1, out_texcoord);
+   color = vec4(0.0);
+   color += d * base_color;
    //gl_FragDepth = logz;
 }

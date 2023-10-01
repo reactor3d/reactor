@@ -35,6 +35,10 @@
     <EmbeddedResource Include="Shaders\phong.frag.glsl" />
     <EmbeddedResource Include="Shaders\phong.vert.glsl" />
     <EmbeddedResource Include="Shaders\reactor.glsl" />
+    <None Remove="Resources\coder_crux.fnt" />
+    <EmbeddedResource Include="Resources\coder_crux.fnt" />
+    <None Remove="Resources\coder_crux_0.tga" />
+    <EmbeddedResource Include="Resources\coder_crux_0.tga" />
   </ItemGroup>
 
   <ItemGroup>

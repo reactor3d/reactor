@@ -92,12 +92,10 @@ namespace Reactor.Types
             }
 
             GL.LinkProgram(Id);
-            int linkStatus = 0;
-            GL.GetProgramv(Id, ProgramParameter.LinkStatus, linkStatus);
-            if(linkStatus == 0){
-                int[] lengths = new []{0};
-                StringBuilder log = new StringBuilder();
-                GL.GetProgramInfoLog(Id, 4096, lengths, log);
+            int[] buff = new int[]{0};
+            GL.GetProgramiv(Id, ProgramParameter.LinkStatus, buff);
+            if(buff[0] == 0){
+                var log = GL.GetProgramInfoLog(Id);
                 RLog.Error(log.ToString());
                 REngine.CheckGLError();
                 if (GL.IsProgram(Id))
@@ -117,41 +115,40 @@ namespace Reactor.Types
             //if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
 
             REngine.CheckGLError();
-            int numAttributes=0;
-            GL.GetProgramv(Id, ProgramParameter.ActiveAttributes, numAttributes);
+            GL.GetProgramiv(Id, ProgramParameter.ActiveAttributes, buff);
             REngine.CheckGLError();
-            _attributes = new Attribute[numAttributes];
-            for (int i = 0; i < numAttributes; i++)
+            _attributes = new Attribute[buff[0]];
+            for (int i = 0; i < buff[0]; i++)
             {
-                int size=0;
-                ActiveAttribType type = ActiveAttribType.Float;
-                int length=0;
-                StringBuilder name = new StringBuilder();
-                GL.GetActiveAttrib(Id, i, 4096, new []{length}, new[]{size}, new[]{type}, name);
+                int[] size=new []{0};
+                ActiveAttribType[] type = new []{ActiveAttribType.Float};
+                int[] length=new []{0};
+                StringBuilder name = new StringBuilder(64);
+                GL.GetActiveAttrib(Id, i, 64, length, size, type, name);
                 Attribute attrib = new Attribute();
                 attrib.name = name.ToString();
                 attrib.index = i;
                 attrib.location = GL.GetAttribLocation(Id, attrib.name);
-                attrib.type = type;
+                attrib.type = type[0];
                 _attributes[i] = attrib;
                 _attributeLocations.Add(attrib.name, attrib.location);
             }
 
-            int numUniforms=0;
-            GL.GetProgramv(Id, ProgramParameter.ActiveUniforms, numUniforms);
-            _uniforms = new Uniform[numUniforms];
-            for (int i = 0; i < numUniforms; i++)
+
+            GL.GetProgramiv(Id, ProgramParameter.ActiveUniforms, buff);
+            _uniforms = new Uniform[buff[0]];
+            for (int i = 0; i < buff[0]; i++)
             {
-                int size=0;
-                ActiveUniformType type = ActiveUniformType.Float;
-                int length=0;
-                StringBuilder name = new StringBuilder();
-                GL.GetActiveUniform(Id, i, 4096, new []{length}, new[]{size}, new[]{type}, name);
+                int[] size=new []{0};
+                ActiveUniformType[] type = new []{ActiveUniformType.Float};
+                int[] length=new []{0};
+                StringBuilder name = new StringBuilder(64);
+                GL.GetActiveUniform(Id, i, 64, length, size, type, name);
                 Uniform uni = new Uniform();
                 uni.index = i;
                 uni.name = name.ToString();
                 uni.location = GL.GetUniformLocation(Id, uni.name);
-                uni.type = type;
+                uni.type = type[0];
                 _uniforms[i] = uni;
                 _uniformLocations.Add(uni.name, uni.location);
 
@@ -229,7 +226,7 @@ namespace Reactor.Types
             int loc = GetTexUniformLocation(layer);
             GL.ProgramUniform1i(Id, loc, unival);
             REngine.CheckGLError();
-            GL.ActiveTexture((int)layer);
+            GL.ActiveTexture((int)TextureUnit.Texture0 + (int)layer);
             REngine.CheckGLError();
             texture.Bind();
             REngine.CheckGLError();

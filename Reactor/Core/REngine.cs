@@ -232,20 +232,18 @@ namespace Reactor
         }
         public void Clear()
         {
-            Clear(RColor.Black, true);
+            Clear(true);
         }
 
-        public void Clear(RColor color, bool depth = true)
+        public void Clear(bool depth = true)
         {
 
-            Clear(color, depth, true);
+            Clear(depth, true);
             
         }
-        public void Clear(RColor color, bool depth = false, bool stencil = false)
+        public void Clear(bool depth = false, bool stencil = false)
         {
-            
-            Vector4 clearColor = color.ToVector4();
-            GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
+
             ClearBufferMask mask = ClearBufferMask.ColorBufferBit;
             if (depth)
                 mask |= ClearBufferMask.DepthBufferBit;
@@ -260,7 +258,7 @@ namespace Reactor
         internal void Reset()
         {
             StartClock();
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
             GL.Enable(EnableCap.CullFace);
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.Enable(EnableCap.DepthTest);
@@ -276,6 +274,7 @@ namespace Reactor
             Tick(1);
             if(showFps)
                 Screen.RenderFPS(GetFPS());
+            GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
             _renderControl.SwapBuffers();
         }
 
@@ -332,15 +331,18 @@ namespace Reactor
 
             }
         }
+        [STAThread]
         public bool InitGameWindow(int width, int height, RWindowStyle windowStyle, string title = "Reactor")
         {
             RDisplayMode mode = new RDisplayMode(width, height, -1);
             return InitGameWindow(mode, windowStyle, title);
         }
+        [STAThread]
         public bool InitGameWindow(RDisplayMode displayMode, string title = "Reactor")
         {
             return InitGameWindow(displayMode, RWindowStyle.Normal, title);
         }
+        [STAThread]
         public bool InitGameWindow(RDisplayMode displayMode, RWindowStyle windowStyle, string title = "Reactor")
         {
             try
@@ -370,7 +372,7 @@ namespace Reactor
                 return false;
             }
         }
-
+        [STAThread]
         public bool Init()
         {
             try

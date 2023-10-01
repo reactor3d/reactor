@@ -10,21 +10,21 @@
 **/.vs/*
 # Build results
 **/.idea/*
-[Dd]ebug/
-[Rr]elease/
-x64/
-build/
-[Bb]in/
-[Oo]bj/
-[Pp]ackages/
-[Tt]arget/
+**/[Dd]ebug/
+**/[Rr]elease/
+**/x64/
+**/build/
+**/[Bb]in/
+**/[Oo]bj/
+**/[Pp]ackages/
+**/[Tt]arget/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
 
 # MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
+**/[Tt]est[Rr]esult*/
+**/[Bb]uild[Ll]og.*
 
 *.dll
 *.dylib
@@ -99,7 +99,7 @@ DocProject/Help/Html2
 DocProject/Help/html
 
 # Click-Once directory
-publish/
+**/publish/
 
 # Publish Web Output
 *.Publish.xml

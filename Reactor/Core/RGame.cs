@@ -62,7 +62,7 @@ namespace Reactor
             gameWindow.Render += GameWindow_RenderFrame;
             gameWindow.Update += GameWindow_UpdateFrame;
             gameWindow.Resize += GameWindow_Resize;
-            gameWindow.VSync = true;
+            gameWindow.VSync = false;
         }
 
         /// <summary>
@@ -150,8 +150,11 @@ namespace Reactor
 
         void GameWindow_RenderFrame()
         {
-            Engine.Reset();
-            Render();
+            if (!gameWindow.IsClosing || !gameWindow.IsClosed)
+            {
+                Engine.Reset();
+                Render();
+            }
         }
     }
 }

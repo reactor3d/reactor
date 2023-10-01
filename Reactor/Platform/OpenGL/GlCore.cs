@@ -486,8 +486,6 @@ namespace Reactor.Platform.OpenGL
             [DllImport(GL.Library, EntryPoint = "glGetObjectPtrLabel", ExactSpelling = true)]
             internal extern static void GetObjectPtrLabel([OutAttribute] IntPtr ptr, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute] StringBuilder label);
             [DllImport(GL.Library, EntryPoint = "glGetPointerv", ExactSpelling = true)]
-            internal extern static void GetPointerv(GetPointerParameter pname, [OutAttribute] IntPtr @params);
-            [DllImport(GL.Library, EntryPoint = "glGetProgramv", ExactSpelling = true)]
             internal extern static void GetProgramv(UInt32 program, ProgramParameter pname, [OutAttribute] Int32 @params);
             [DllImport(GL.Library, EntryPoint = "glGetProgramiv", ExactSpelling = true)]
             internal extern static void GetProgramiv(UInt32 program, ProgramParameter pname, [OutAttribute] Int32[] @params);

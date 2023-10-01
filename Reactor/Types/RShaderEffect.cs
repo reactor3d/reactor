@@ -69,7 +69,7 @@ namespace Reactor.Types
             //if(Type == RShaderEffectType.VERTEX)
                 //defineSource.Append(RShaderResources.Headers);
             
-            EffectSource = defineSource.ToString() + parsedSource;
+            EffectSource = defineSource + parsedSource;
             Semantics = new RShaderSemantics(ref EffectSource);
             //RLog.Info(EffectSource);
             switch (type)
@@ -98,18 +98,18 @@ namespace Reactor.Types
 
 
             }
-            GL.ShaderSource(Id, 1, new []{EffectSource}, new []{1});
+            int[] pars = new int[]{ EffectSource.Length };
+            GL.ShaderSource(Id, 1, new []{EffectSource}, pars);
+            pars[0] = 0;
             REngine.CheckGLError();
             GL.CompileShader(Id);
             REngine.CheckGLError();
-            int[] pars = new[]{0};
+
             GL.GetShaderiv(Id, ShaderParameter.CompileStatus, pars);
             if (pars[0] == 0)
             {
-                StringBuilder log = new StringBuilder();
-                var size = new[]{0};
-                GL.GetShaderInfoLog(Id, 4096, size, log);
-                RLog.Error(log.ToString());
+                var log = GL.GetShaderInfoLog(Id);
+                RLog.Error(log);
                 REngine.CheckGLError();
                 if (GL.IsShader(Id))
                 {

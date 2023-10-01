@@ -14,12 +14,11 @@ out float logz;
 		gl_Position = projection * view * world * vec4(r_Position, 1.0f);
 		out_normal = r_Normal;
         out_texcoord = r_TexCoord;
-		/*
+		
 		float FC = 1.0f/log(far_plane*near_plane+1.0f); 
 
 		//logz = gl_Position.w*C + 1;  //version with fragment code 
 		logz = log(gl_Position.w*near_plane + 1.0f)*FC;
 		gl_Position.z = (2.0f*logz - 1.0f)*gl_Position.w;
-		*/
 
 	}

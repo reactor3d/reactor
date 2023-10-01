@@ -27,7 +27,7 @@ namespace Reactor.Platform.GLFW
 #elif OSX
         public const string LIBRARY = "libglfw.3"; // mac
 #else
-        public const string LIBRARY = "glfw";
+        public const string LIBRARY = "glfw3";
 #endif
 
         private static readonly ErrorCallback errorCallback = GlfwError;
@@ -1497,6 +1497,8 @@ namespace Reactor.Platform.GLFW
         [DllImport(LIBRARY, EntryPoint = "glfwGetError", CallingConvention = CallingConvention.Cdecl)]
         private static extern ErrorCode GetErrorPrivate(out IntPtr description);
 
+        [DllImport(LIBRARY, EntryPoint = "glfwGetWin32Window", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr GetWin32Window(Window window);
         #endregion
 
         #region Methods
@@ -1758,6 +1760,10 @@ namespace Reactor.Platform.GLFW
             return GetWindowAttribute(window, (int) attribute) == (int) Constants.True;
         }
 
+        public static IntPtr GetWin32Handle(Window window)
+        {
+            return GetWin32Window(window);
+        }
         /// <summary>
         ///     Sets the system clipboard to the specified string.
         /// </summary>

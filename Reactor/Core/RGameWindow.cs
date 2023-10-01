@@ -25,6 +25,8 @@
 using System;
 using Reactor.Platform;
 using Reactor.Math;
+using Reactor.Platform.GLFW;
+using Reactor.Types;
 
 namespace Reactor
 {
@@ -58,6 +60,7 @@ namespace Reactor
         void OnClosing(object sender, EventArgs e)
         {
             if (Closed != null) Closed();
+            
         }
 
         void OnSizeChanged(object sender, EventArgs e)
@@ -67,10 +70,13 @@ namespace Reactor
 
         public void Run()
         {
-            while(true)
+            while(!IsClosing)
             {
+                
                 Threading.BlockOnUIThread(Update);
-                Threading.BlockOnUIThread(Render);
+                if(IsFocused)
+                    Threading.BlockOnUIThread(Render);
+                Glfw.PollEvents();
             }
         }
 

@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reactor.Platform.GLFW;
 using Reactor.Types;
 
 namespace Reactor.Platform
@@ -39,7 +40,8 @@ namespace Reactor.Platform
         }
         public GameWindowRenderControl(RDisplayMode displayMode, RWindowStyle style, string title) : base()
         {
-            GameWindow = new RGameWindow(displayMode.Width, displayMode.Height);
+            GameWindow = REngine.RGame.GameWindow;
+            Context = GameWindow;
             GameWindow.WindowStyle = style;
             GameWindow.SetMode(displayMode);
 

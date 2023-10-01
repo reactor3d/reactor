@@ -26,11 +26,10 @@ using Reactor.Math;
 using Reactor.Geometry;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Xml;
 using System.IO;
 using Reactor.Platform.glTF.Schema;
 using Reactor.Platform.glTF;
-using SharpFont;
+
 
 namespace Reactor.Loaders
 {

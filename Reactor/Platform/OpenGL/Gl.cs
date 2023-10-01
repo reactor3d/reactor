@@ -6495,33 +6495,6 @@ namespace Reactor.Platform.OpenGL
         /// <param name="params">
         /// Returns the requested object parameter.
         /// </param>
-        public static void GetProgramv(UInt32 program, ProgramParameter pname, [OutAttribute] Int32 @params)
-        {
-            Delegates.glGetProgramv(program, pname, @params);
-        }
-
-        /// <summary>
-        /// Returns a parameter from a program object.
-        /// <para>
-        /// glGetProgram returns in params the value of a parameter for a specific program object. The following
-        /// parameters are defined:.
-        /// </para>
-        /// </summary>
-        /// <param name="program">
-        /// Specifies the program object to be queried.
-        /// </param>
-        /// <param name="pname">
-        /// Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS,
-        /// GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS,
-        /// GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS,
-        /// GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE
-        /// GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS,
-        /// GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and
-        /// GL_GEOMETRY_OUTPUT_TYPE.
-        /// </param>
-        /// <param name="params">
-        /// Returns the requested object parameter.
-        /// </param>
         public static void GetProgramiv(UInt32 program, ProgramParameter pname, [OutAttribute] Int32[] @params)
         {
             Delegates.glGetProgramiv(program, pname, @params);

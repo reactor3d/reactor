@@ -30,6 +30,8 @@ using Reactor.Platform.OpenGL;
 using Reactor.Types.States;
 using System.IO;
 using System.Drawing;
+using Reactor.Fonts;
+using Reactor.Loaders;
 
 namespace Reactor
 {
@@ -77,7 +79,7 @@ namespace Reactor
            
             defaultShader = new RShader();
             defaultShader.Load(RShaderResources.Basic2dEffectVert, RShaderResources.Basic2dEffectFrag, null);
-            Fonts.Add(RFont.Default);
+            //Fonts.Add(RFont.Default);
             quad = new RMeshBuilder();
             quad.CreateQuad(new Vector2(0,0), new Vector2(1,1), true);
             quadVerts = new RVertexData2D[4];
@@ -133,24 +135,12 @@ namespace Reactor
         }
         
 
-        public RFont LoadFont(string path, int size)
+        public RFont LoadFont(string path)
         {
-            RFont font = new RFont();
-            font.Generate(RFileSystem.Instance.GetFilePath(path),size, (int)DPI.X);
-            return font;
-
-        }
-
-        public RFont LoadTextureFont(string definitionPath, string texturePath)
-        {
-            RFont font = new RFont();
-            BinaryReader reader = new BinaryReader(File.OpenRead(RFileSystem.Instance.GetFilePath(definitionPath)));
-            font.Load(ref reader);
-            font.Texture = new RTexture2D();
-            font.Texture.LoadFromDisk(RFileSystem.Instance.GetFilePath(texturePath));
+            BitmapFont fnt = BitmapFontLoader.LoadFontFromBinaryFile(path);
+            RFont font = new RFont(fnt);
             return font;
         }
-
 
         public void RenderFullscreenQuad(RShader shader)
         {
@@ -244,9 +234,6 @@ namespace Reactor
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.One);
             GL.Disable(EnableCap.CullFace);
             defaultShader.Bind();
-            defaultShader.SetSamplerValue(RTextureLayer.TEXTURE0, font.Texture);
-            
-
             defaultShader.SetUniformValue("projection", camera2d.Projection);
             defaultShader.SetUniformValue("view", camera2d.View);
             defaultShader.SetUniformValue("color", color.ToVector4());
@@ -299,7 +286,7 @@ namespace Reactor
         internal void RenderFPS(int fps)
         {
             Begin();
-            RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps",fps));
+            //RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps",fps));
             End();
         }
         internal void RenderFPS(float fps)
@@ -307,7 +294,7 @@ namespace Reactor
             if (float.IsInfinity(fps))
                 return;
             Begin();
-            RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps", System.Math.Round(fps)));
+            //RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps", System.Math.Round(fps)));
             End();
         }
         internal void RenderFPS(double fps)
@@ -315,7 +302,7 @@ namespace Reactor
             if (double.IsInfinity(fps))
                 return;
             Begin();
-            RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps", System.Math.Round(fps)));
+            //RenderText(RFont.Default, new Vector2(5, 5), String.Format("{0}fps", System.Math.Round(fps)));
             End();
         }
         void UpdateQuad(Math.Rectangle placement)

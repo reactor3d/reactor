@@ -1,11 +1,11 @@
-﻿in vec2 out_texcoords;
-in vec4 out_color;
+﻿in vec2 in_texcoords;
+in vec4 in_color;
 
-uniform sampler2D diffuse;
-uniform vec4 color;
+uniform sampler2D texture0;
+uniform vec4 base_color;
 out vec4 out_color;
 
 void main(){
-    vec4 t = texture(diffuse, out_texcoords.xy).rgba;
-    out_color = t * color;
+    vec4 t = texture(texture0, in_texcoords.xy).rgba;
+    out_color = t * base_color * in_color;
 }

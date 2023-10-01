@@ -146,7 +146,38 @@ namespace Reactor.Platform.OpenGL
             GetIntegerv(name, int1);
             return int1[0];
         }
+        
+        public static string GetProgramInfoLog(UInt32 program)
+        {
+            GL.GetProgramiv(program, ProgramParameter.InfoLogLength, int1);
+            if (int1[0] == 0) return String.Empty;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(int1[0]);
+            GL.GetProgramInfoLog(program, sb.Capacity, int1, sb);
+            return sb.ToString();
+        }
 
+        /// <summary>
+        /// Gets the program info from a shader program.
+        /// </summary>
+        /// <param name="shader">The ID of the shader program.</param>
+        public static string GetShaderInfoLog(UInt32 shader)
+        {
+            GL.GetShaderiv(shader, ShaderParameter.InfoLogLength, int1);
+            if (int1[0] == 0) return String.Empty;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(int1[0]);
+            GL.GetShaderInfoLog(shader, sb.Capacity, int1, sb);
+            return sb.ToString();
+        }
+
+        public static string GetActiveAttrib(uint shader, int index)
+        {
+            int[] l = new[] { 0 };
+            int[] s = new[] { 0 };
+            ActiveAttribType[] type = new []{ActiveAttribType.Float};
+            StringBuilder sb = new StringBuilder(64);
+            GL.GetActiveAttrib(shader, index, 64, l, s, type, sb);
+            return sb.ToString();
+        }
         /// <summary>
         /// Gets the current major OpenGL version (returns a cached result on subsequent calls).
         /// </summary>
@@ -190,6 +221,8 @@ namespace Reactor.Platform.OpenGL
                 return -1;
             }
         }
+        
+        
 
     }
 }

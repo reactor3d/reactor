@@ -488,8 +488,6 @@ namespace Reactor.Platform.OpenGL
             internal static GetObjectPtrLabel glGetObjectPtrLabel;
             internal delegate void GetPointerv(OpenGL.GetPointerParameter pname, [OutAttribute] IntPtr @params);
             internal static GetPointerv glGetPointerv;
-            internal delegate void GetProgramv(UInt32 program, OpenGL.ProgramParameter pname, [OutAttribute] Int32 @params);
-            internal static GetProgramv glGetProgramv;
             internal delegate void GetProgramiv(UInt32 program, OpenGL.ProgramParameter pname, [OutAttribute] Int32[] @params);
             internal static GetProgramiv glGetProgramiv;
             internal delegate void GetProgramBinary(UInt32 program, Int32 bufsize, [OutAttribute] Int32[] length, [OutAttribute] Int32[] binaryFormat, [OutAttribute] IntPtr binary);

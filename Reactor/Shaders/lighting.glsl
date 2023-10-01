@@ -11,15 +11,15 @@
 
 uniform Light r_Lights[6];
 uniform int r_NumLights = 6;
-uniform sampler2D diffuse;
-uniform sampler2D ambient;
-uniform sampler2D normal;
-uniform sampler2D specular;
-uniform sampler2D glow;
-uniform sampler2D detail;
-uniform sampler2D height;
+uniform sampler2D texture0;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
+uniform sampler2D texture3;
+uniform sampler2D texture4;
+uniform sampler2D texture5;
+uniform sampler2D texture6;
 
-uniform vec4 color;
+uniform vec4 base_color;
 
 float blinnPhongSpecular(
   vec3 lightDirection,
@@ -31,3 +31,4 @@ float blinnPhongSpecular(
   vec3 H = normalize(viewDirection + lightDirection);
   return pow(max(0.0, dot(surfaceNormal, H)), shininess);
 }
+
