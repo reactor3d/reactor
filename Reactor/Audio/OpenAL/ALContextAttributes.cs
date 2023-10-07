@@ -9,63 +9,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// Convenience class for handling ALContext attributes.
+    ///     Convenience class for handling ALContext attributes.
     /// </summary>
     public class ALContextAttributes
     {
         /// <summary>
-        /// Gets or sets the output buffer frequency in Hz.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
-        /// </summary>
-        public int? Frequency { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of mono sources.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
-        /// Not guaranteed to get exact number of mono sources when creating a context.
-        /// </summary>
-        public int? MonoSources { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of stereo sources.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
-        /// Not guaranteed to get exact number of mono sources when creating a context.
-        /// </summary>
-        public int? StereoSources { get; set; }
-
-        /// <summary>
-        /// Gets or sets the refrash interval in Hz.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
-        /// </summary>
-        public int? Refresh { get; set; }
-
-        /// <summary>
-        /// Gets or sets if the context is synchronous.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
-        /// </summary>
-        public bool? Sync { get; set; }
-
-        /// <summary>
-        /// Gets or sets additional attributes.
-        /// Will usually be the major and minor version numbers of the context. // FIXME: This needs verification. Docs say nothing about this.
-        /// </summary>
-        public int[] AdditionalAttributes { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ALContextAttributes"/> class.
-        /// Leaving all attributes to the driver implementation default values.
+        ///     Initializes a new instance of the <see cref="ALContextAttributes" /> class.
+        ///     Leaving all attributes to the driver implementation default values.
         /// </summary>
         public ALContextAttributes()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ALContextAttributes"/> class.
+        ///     Initializes a new instance of the <see cref="ALContextAttributes" /> class.
         /// </summary>
         /// <param name="frequency">The mixing output buffer frequency in Hz.</param>
         /// <param name="monoSources">The number of mono sources available. Not guaranteed.</param>
@@ -82,15 +43,60 @@ namespace Reactor.Audio.OpenAL
         }
 
         /// <summary>
-        /// Converts these context attributes to a <see cref="ALC.CreateContext(ALDevice, int[])"/> compatible list.
-        /// Alternativly, consider using the more convenient <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/> overload.
+        ///     Gets or sets the output buffer frequency in Hz.
+        ///     This does not actually change any AL state. To apply these attributes see
+        ///     <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)" />.
+        /// </summary>
+        public int? Frequency { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the number of mono sources.
+        ///     This does not actually change any AL state. To apply these attributes see
+        ///     <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)" />.
+        ///     Not guaranteed to get exact number of mono sources when creating a context.
+        /// </summary>
+        public int? MonoSources { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the number of stereo sources.
+        ///     This does not actually change any AL state. To apply these attributes see
+        ///     <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)" />.
+        ///     Not guaranteed to get exact number of mono sources when creating a context.
+        /// </summary>
+        public int? StereoSources { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the refrash interval in Hz.
+        ///     This does not actually change any AL state. To apply these attributes see
+        ///     <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)" />.
+        /// </summary>
+        public int? Refresh { get; set; }
+
+        /// <summary>
+        ///     Gets or sets if the context is synchronous.
+        ///     This does not actually change any AL state. To apply these attributes see
+        ///     <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)" />.
+        /// </summary>
+        public bool? Sync { get; set; }
+
+        /// <summary>
+        ///     Gets or sets additional attributes.
+        ///     Will usually be the major and minor version numbers of the context. // FIXME: This needs verification. Docs say
+        ///     nothing about this.
+        /// </summary>
+        public int[] AdditionalAttributes { get; set; }
+
+        /// <summary>
+        ///     Converts these context attributes to a <see cref="ALC.CreateContext(ALDevice, int[])" /> compatible list.
+        ///     Alternativly, consider using the more convenient <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)" />
+        ///     overload.
         /// </summary>
         /// <returns>The attibute list in the form of a span.</returns>
         public int[] CreateAttributeArray()
         {
             // The number of members * 2 + AdditionalAttributes
-            int[] attributeList = new int[(5 * 2) + (AdditionalAttributes?.Length ?? 0) + 1];
-            int index = 0;
+            var attributeList = new int[5 * 2 + (AdditionalAttributes?.Length ?? 0) + 1];
+            var index = 0;
 
             void AddAttribute(int? value, AlcContextAttributes attribute)
             {
@@ -105,10 +111,7 @@ namespace Reactor.Audio.OpenAL
             AddAttribute(MonoSources, AlcContextAttributes.MonoSources);
             AddAttribute(StereoSources, AlcContextAttributes.StereoSources);
             AddAttribute(Refresh, AlcContextAttributes.Refresh);
-            if (Sync != null)
-            {
-                AddAttribute((Sync ?? false) ? 1 : 0, AlcContextAttributes.Sync);
-            }
+            if (Sync != null) AddAttribute(Sync ?? false ? 1 : 0, AlcContextAttributes.Sync);
 
             if (AdditionalAttributes != null)
             {
@@ -123,14 +126,14 @@ namespace Reactor.Audio.OpenAL
         }
 
         /// <summary>
-        /// Parses a AL attribute list.
+        ///     Parses a AL attribute list.
         /// </summary>
         /// <param name="attributeArray">The AL context attribute list.</param>
-        /// <returns>The parsed <see cref="AlcContextAttributes"/> object.</returns>
+        /// <returns>The parsed <see cref="AlcContextAttributes" /> object.</returns>
         internal static ALContextAttributes FromArray(int[] attributeArray)
         {
-            List<int> extra = new List<int>();
-            ALContextAttributes attributes = new ALContextAttributes();
+            var extra = new List<int>();
+            var attributes = new ALContextAttributes();
 
             void ParseAttribute(int @enum, int value)
             {
@@ -152,15 +155,14 @@ namespace Reactor.Audio.OpenAL
                         attributes.Sync = value == 1;
                         break;
                     default:
-                        extra.Add(@enum); extra.Add(value);
+                        extra.Add(@enum);
+                        extra.Add(value);
                         break;
                 }
             }
 
-            for (int i = 0; i < attributeArray.Length - 1; i += 2)
-            {
+            for (var i = 0; i < attributeArray.Length - 1; i += 2)
                 ParseAttribute(attributeArray[i], attributeArray[i + 1]);
-            }
 
             attributes.AdditionalAttributes = extra.ToArray();
 
@@ -172,27 +174,22 @@ namespace Reactor.Audio.OpenAL
             where T : unmanaged
         {
             if (value == null)
-            {
                 return null;
-            }
-            else
-            {
-                return $"{title}: {value}";
-            }
+            return $"{title}: {value}";
         }
 
         /// <summary>
-        /// Converts the attributes to a string representation.
+        ///     Converts the attributes to a string representation.
         /// </summary>
         /// <returns>The string representation of the attributes.</returns>
         public override string ToString()
         {
             return $"{GetOptionalString(nameof(Frequency), Frequency)}, " +
-                $"{GetOptionalString(nameof(MonoSources), MonoSources)}, " +
-                $"{GetOptionalString(nameof(StereoSources), StereoSources)}, " +
-                $"{GetOptionalString(nameof(Refresh), Refresh)}, " +
-                $"{GetOptionalString(nameof(Sync), Sync)}" +
-                $"{((AdditionalAttributes != null) ? ", " + string.Join(", ", AdditionalAttributes) : string.Empty)}";
+                   $"{GetOptionalString(nameof(MonoSources), MonoSources)}, " +
+                   $"{GetOptionalString(nameof(StereoSources), StereoSources)}, " +
+                   $"{GetOptionalString(nameof(Refresh), Refresh)}, " +
+                   $"{GetOptionalString(nameof(Sync), Sync)}" +
+                   $"{(AdditionalAttributes != null ? ", " + string.Join(", ", AdditionalAttributes) : string.Empty)}";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,68 +22,69 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 
-#nullable disable
-
 namespace Newtonsoft.Json.Schema
 {
     /// <summary>
-    /// <para>
-    /// The value types allowed by the <see cref="JsonSchema"/>.
-    /// </para>
-    /// <note type="caution">
-    /// JSON Schema validation has been moved to its own package. See <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
-    /// </note>
+    ///     <para>
+    ///         The value types allowed by the <see cref="JsonSchema" />.
+    ///     </para>
+    ///     <note type="caution">
+    ///         JSON Schema validation has been moved to its own package. See
+    ///         <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
+    ///     </note>
     /// </summary>
     [Flags]
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     public enum JsonSchemaType
     {
         /// <summary>
-        /// No type specified.
+        ///     No type specified.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// String type.
+        ///     String type.
         /// </summary>
         String = 1,
 
         /// <summary>
-        /// Float type.
+        ///     Float type.
         /// </summary>
         Float = 2,
 
         /// <summary>
-        /// Integer type.
+        ///     Integer type.
         /// </summary>
         Integer = 4,
 
         /// <summary>
-        /// Boolean type.
+        ///     Boolean type.
         /// </summary>
         Boolean = 8,
 
         /// <summary>
-        /// Object type.
+        ///     Object type.
         /// </summary>
         Object = 16,
 
         /// <summary>
-        /// Array type.
+        ///     Array type.
         /// </summary>
         Array = 32,
 
         /// <summary>
-        /// Null type.
+        ///     Null type.
         /// </summary>
         Null = 64,
 
         /// <summary>
-        /// Any type.
+        ///     Any type.
         /// </summary>
         Any = String | Float | Integer | Boolean | Object | Array | Null
     }

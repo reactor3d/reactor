@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,44 +30,46 @@ using System;
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Specifies the state of the <see cref="JsonWriter"/>.
+    ///     Specifies the state of the <see cref="JsonWriter" />.
     /// </summary>
     public enum WriteState
     {
         /// <summary>
-        /// An exception has been thrown, which has left the <see cref="JsonWriter"/> in an invalid state.
-        /// You may call the <see cref="JsonWriter.Close()"/> method to put the <see cref="JsonWriter"/> in the <c>Closed</c> state.
-        /// Any other <see cref="JsonWriter"/> method calls result in an <see cref="InvalidOperationException"/> being thrown.
+        ///     An exception has been thrown, which has left the <see cref="JsonWriter" /> in an invalid state.
+        ///     You may call the <see cref="JsonWriter.Close()" /> method to put the <see cref="JsonWriter" /> in the <c>Closed</c>
+        ///     state.
+        ///     Any other <see cref="JsonWriter" /> method calls result in an <see cref="InvalidOperationException" /> being
+        ///     thrown.
         /// </summary>
         Error = 0,
 
         /// <summary>
-        /// The <see cref="JsonWriter.Close()"/> method has been called.
+        ///     The <see cref="JsonWriter.Close()" /> method has been called.
         /// </summary>
         Closed = 1,
 
         /// <summary>
-        /// An object is being written. 
+        ///     An object is being written.
         /// </summary>
         Object = 2,
 
         /// <summary>
-        /// An array is being written.
+        ///     An array is being written.
         /// </summary>
         Array = 3,
 
         /// <summary>
-        /// A constructor is being written.
+        ///     A constructor is being written.
         /// </summary>
         Constructor = 4,
 
         /// <summary>
-        /// A property is being written.
+        ///     A property is being written.
         /// </summary>
         Property = 5,
 
         /// <summary>
-        /// A <see cref="JsonWriter"/> write method has not been called.
+        ///     A <see cref="JsonWriter" /> write method has not been called.
         /// </summary>
         Start = 6
     }

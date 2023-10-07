@@ -29,7 +29,8 @@ namespace Reactor.Platform
 {
     internal class DummyContext : IGraphicsContext
     {
-        static RDisplayMode mode = new RDisplayMode(1, 1, 60);
+        private static readonly RDisplayMode mode = new RDisplayMode(1, 1, 60);
+
         public RDisplayMode CurrentMode()
         {
             return mode;
@@ -47,38 +48,25 @@ namespace Reactor.Platform
 
         public void SetMode(RDisplayMode mode)
         {
-            return;
         }
 
         public RDisplayModes SupportedModes()
         {
-            return new RDisplayModes(new List<RDisplayMode>() { mode });
+            return new RDisplayModes(new List<RDisplayMode> { mode });
         }
+
         public void SwapBuffers()
         {
-
         }
     }
+
     public class DummyRenderControl : RenderControl
     {
-        public DummyRenderControl()
-        {
-        }
-
         public override void Init()
         {
-            unsafe
-            {
-
-                if (!Glfw.Init())
-                {
-                    return;
-                }
-                Context = new DummyContext();
-                Context.MakeCurrent();
-
-            }
-
+            if (!Glfw.Init()) return;
+            Context = new DummyContext();
+            Context.MakeCurrent();
         }
 
         public override void MakeCurrent()
@@ -96,5 +84,4 @@ namespace Reactor.Platform
             Glfw.Terminate();
         }
     }
-
 }

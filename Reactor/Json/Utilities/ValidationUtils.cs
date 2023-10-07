@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,22 +22,19 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
 namespace Newtonsoft.Json.Utilities
 {
     internal static class ValidationUtils
     {
-        public static void ArgumentNotNull([NotNull]object? value, string parameterName)
+        public static void ArgumentNotNull([NotNull] object? value, string parameterName)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(parameterName);
-            }
+            if (value == null) throw new ArgumentNullException(parameterName);
         }
     }
 }

@@ -20,41 +20,62 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Math;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using Reactor.Math;
 
 namespace Reactor.Types
 {
     public class RUpdateNode : RSceneNode
     {
+        internal Matrix matrix = Matrix.Identity;
+        internal Vector3 position = Vector3.Zero;
+        internal Quaternion rotation = Quaternion.Identity;
+        internal Vector3 scale = Vector3.One;
         public bool IsEnabled { get; set; }
 
+        public Vector3 Position
+        {
+            get => position;
+            set => position = value;
+        }
+
+        public Matrix Matrix
+        {
+            get => matrix;
+            set
+            {
+                matrix = value;
+                Matrix.Decompose(out scale, out rotation, out position);
+            }
+        }
+
+        public Quaternion Rotation
+        {
+            get => rotation;
+            set => rotation = value;
+        }
+
+        public Vector3 Scale
+        {
+            get => scale;
+            set => scale = value;
+        }
+
         public event Action OnUpdate;
+
         public virtual void Update()
         {
-            UpdateMatrix();
             if (IsEnabled)
             {
+                UpdateMatrix();
                 if (OnUpdate != null)
                     OnUpdate();
             }
         }
-        internal Vector3 position = Vector3.Zero;
-        internal Matrix matrix = Matrix.Identity;
-        internal Quaternion rotation = Quaternion.Identity;
-        internal Vector3 scale = Vector3.One;
 
-        public Vector3 Position { get { return position; } set { position = value; } }
-        public Matrix Matrix { get { return matrix; } set { matrix = value; Matrix.Decompose(out scale, out rotation, out position); } }
-        public Quaternion Rotation { get { return rotation; } set { rotation = value; } }
-        public Vector3 Scale { get { return scale; } set { scale = value; } }
-
-        void UpdateMatrix()
+        private void UpdateMatrix()
         {
             //rotation = Quaternion.FromAxisAngle(Vector3.UnitX, rotation.X) * Quaternion.FromAxisAngle(Vector3.UnitY, rotation.Y) * Quaternion.FromAxisAngle(Vector3.UnitZ, rotation.Z);
             //rotation.Normalize();
@@ -62,40 +83,40 @@ namespace Reactor.Types
             BuildScalingMatrix(ref matrix);
             BuildRotationMatrix(ref matrix);
             BuildPositionMatrix(ref matrix);
-            
-            
-
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateX(float value)
         {
             rotation *= Quaternion.CreateFromAxisAngle(Vector3.UnitX, value);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateY(float value)
         {
-            rotation *= Quaternion.CreateFromAxisAngle (Vector3.UnitY, value);
+            rotation *= Quaternion.CreateFromAxisAngle(Vector3.UnitY, value);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateZ(float value)
         {
-            rotation *= Quaternion.CreateFromAxisAngle (Vector3.UnitZ, value);
+            rotation *= Quaternion.CreateFromAxisAngle(Vector3.UnitZ, value);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rotate(Quaternion value)
         {
             rotation *= value;
         }
+
         public void Rotate(float qx, float qy, float qz)
         {
-            
-            Quaternion q = Quaternion.CreateFromAxisAngle(Vector3.UnitX, qx) *
-                Quaternion.CreateFromAxisAngle(Vector3.UnitY, qy) *
-                Quaternion.CreateFromAxisAngle(Vector3.UnitZ, qz);
+            var q = Quaternion.CreateFromAxisAngle(Vector3.UnitX, qx) *
+                    Quaternion.CreateFromAxisAngle(Vector3.UnitY, qy) *
+                    Quaternion.CreateFromAxisAngle(Vector3.UnitZ, qz);
             rotation *= q;
         }
-        
+
         public void Move(float left, float up, float forward)
         {
             var p = Position;
@@ -114,10 +135,13 @@ namespace Reactor.Types
         {
             Position = value;
         }
+
         public void LookAt(Vector3 target)
         {
-            Matrix = Matrix.CreateScale (scale) * Matrix.CreateLookAt (position, target, Vector3.UnitY) * Matrix.CreateTranslation (position);
+            Matrix = Matrix.CreateScale(scale) * Matrix.CreateLookAt(position, target, Vector3.UnitY) *
+                     Matrix.CreateTranslation(position);
         }
+
         internal void BuildRotationMatrix(ref Matrix m)
         {
             //rotation.Normalize();
@@ -127,10 +151,12 @@ namespace Reactor.Types
             //m *= Matrix.CreateRotationZ(rotation.Z);
             //return m;
         }
+
         internal void BuildScalingMatrix(ref Matrix m)
         {
             m *= Matrix.CreateScale(Scale);
         }
+
         internal void BuildPositionMatrix(ref Matrix m)
         {
             m *= Matrix.CreateTranslation(Position);

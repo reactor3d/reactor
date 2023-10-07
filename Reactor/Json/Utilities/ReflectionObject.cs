@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,14 +22,17 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Globalization;
+using System.Reflection;
+using Newtonsoft.Json.Serialization;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 
@@ -45,24 +49,24 @@ namespace Newtonsoft.Json.Utilities
 
     internal class ReflectionObject
     {
-        public Serialization.ObjectConstructor<object>? Creator { get; }
-        public IDictionary<string, ReflectionMember> Members { get; }
-
-        private ReflectionObject(Serialization.ObjectConstructor<object>? creator)
+        private ReflectionObject(ObjectConstructor<object>? creator)
         {
             Members = new Dictionary<string, ReflectionMember>();
             Creator = creator;
         }
 
+        public ObjectConstructor<object>? Creator { get; }
+        public IDictionary<string, ReflectionMember> Members { get; }
+
         public object? GetValue(object target, string member)
         {
-            Func<object, object?> getter = Members[member].Getter!;
+            var getter = Members[member].Getter!;
             return getter(target);
         }
 
         public void SetValue(object target, string member, object? value)
         {
-            Action<object, object?> setter = Members[member].Setter!;
+            var setter = Members[member].Setter!;
             setter(target, value);
         }
 
@@ -78,9 +82,9 @@ namespace Newtonsoft.Json.Utilities
 
         public static ReflectionObject Create(Type t, MethodBase? creator, params string[] memberNames)
         {
-            ReflectionDelegateFactory delegateFactory = Serialization.JsonTypeReflector.ReflectionDelegateFactory;
+            var delegateFactory = JsonTypeReflector.ReflectionDelegateFactory;
 
-            Serialization.ObjectConstructor<object>? creatorConstructor = null;
+            ObjectConstructor<object>? creatorConstructor = null;
             if (creator != null)
             {
                 creatorConstructor = delegateFactory.CreateParameterizedConstructor(creator);
@@ -89,59 +93,58 @@ namespace Newtonsoft.Json.Utilities
             {
                 if (ReflectionUtils.HasDefaultConstructor(t, false))
                 {
-                    Func<object> ctor = delegateFactory.CreateDefaultConstructor<object>(t);
+                    var ctor = delegateFactory.CreateDefaultConstructor<object>(t);
 
                     creatorConstructor = args => ctor();
                 }
             }
 
-            ReflectionObject d = new ReflectionObject(creatorConstructor);
+            var d = new ReflectionObject(creatorConstructor);
 
-            foreach (string memberName in memberNames)
+            foreach (var memberName in memberNames)
             {
-                MemberInfo[] members = t.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public);
+                var members = t.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public);
                 if (members.Length != 1)
-                {
-                    throw new ArgumentException("Expected a single member with the name '{0}'.".FormatWith(CultureInfo.InvariantCulture, memberName));
-                }
+                    throw new ArgumentException(
+                        "Expected a single member with the name '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                            memberName));
 
-                MemberInfo member = members.Single();
+                var member = members.Single();
 
-                ReflectionMember reflectionMember = new ReflectionMember();
+                var reflectionMember = new ReflectionMember();
 
                 switch (member.MemberType())
                 {
                     case MemberTypes.Field:
                     case MemberTypes.Property:
                         if (ReflectionUtils.CanReadMemberValue(member, false))
-                        {
                             reflectionMember.Getter = delegateFactory.CreateGet<object>(member);
-                        }
 
                         if (ReflectionUtils.CanSetMemberValue(member, false, false))
-                        {
                             reflectionMember.Setter = delegateFactory.CreateSet<object>(member);
-                        }
                         break;
                     case MemberTypes.Method:
-                        MethodInfo method = (MethodInfo)member;
+                        var method = (MethodInfo)member;
                         if (method.IsPublic)
                         {
-                            ParameterInfo[] parameters = method.GetParameters();
+                            var parameters = method.GetParameters();
                             if (parameters.Length == 0 && method.ReturnType != typeof(void))
                             {
-                                MethodCall<object, object?> call = delegateFactory.CreateMethodCall<object>(method);
+                                var call = delegateFactory.CreateMethodCall<object>(method);
                                 reflectionMember.Getter = target => call(target);
                             }
                             else if (parameters.Length == 1 && method.ReturnType == typeof(void))
                             {
-                                MethodCall<object, object?> call = delegateFactory.CreateMethodCall<object>(method);
+                                var call = delegateFactory.CreateMethodCall<object>(method);
                                 reflectionMember.Setter = (target, arg) => call(target, arg);
                             }
                         }
+
                         break;
                     default:
-                        throw new ArgumentException("Unexpected member type '{0}' for member '{1}'.".FormatWith(CultureInfo.InvariantCulture, member.MemberType(), member.Name));
+                        throw new ArgumentException(
+                            "Unexpected member type '{0}' for member '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                                member.MemberType(), member.Name));
                 }
 
                 reflectionMember.MemberType = ReflectionUtils.GetMemberUnderlyingType(member);

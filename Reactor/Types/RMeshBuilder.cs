@@ -31,71 +31,80 @@ using Reactor.Types.States;
 namespace Reactor.Types
 {
     /// <summary>
-    /// The RMeshBuilder provides basic geometry building methods and represents a Mesh in it's basic form.  A vertex buffer, and index buffer, and a shader.
+    ///     The RMeshBuilder provides basic geometry building methods and represents a Mesh in it's basic form.  A vertex
+    ///     buffer, and index buffer, and a shader.
     /// </summary>
     public class RMeshBuilder : RRenderNode, IDisposable
     {
         #region Members
+
         internal RMaterial _material;
 
         internal RIndexBuffer _index;
-        
-        internal int vertCount = 0;
+
+        internal int vertCount;
+
         #endregion
 
         #region Properties
-        public RMaterial Material { get { return _material; } set { _material = value; } }
+
+        public RMaterial Material
+        {
+            get => _material;
+            set => _material = value;
+        }
+
         public RPrimitiveType PrimitiveType { get; set; }
+
         #endregion
 
         #region Methods
+
         public RMeshBuilder()
         {
-            this.Scale = Vector3.One;
-            this.Rotation = Quaternion.Identity;
-            this.Position = Vector3.Zero;
-            this._material = RMaterial.defaultMaterial;
-            this.IsDrawable = true;
-            this.CullEnable = true;
-            this.CullMode = RCullMode.CullClockwiseFace;
-            this.DepthWrite = true;
-            this.BlendEnable = true;
-            this.PrimitiveType = RPrimitiveType.Triangles;
+            Scale = Vector3.One;
+            Rotation = Quaternion.Identity;
+            Position = Vector3.Zero;
+            _material = RMaterial.defaultMaterial;
+            IsDrawable = true;
+            CullEnable = true;
+            CullMode = RCullMode.CullClockwiseFace;
+            DepthWrite = true;
+            BlendEnable = true;
+            PrimitiveType = RPrimitiveType.Triangles;
         }
-        
-        
-        
+
+
         public void CreateBox(Vector3 Center, Vector3 Size, bool FlipNormals)
         {
-
-            RVertexData[] vertices = new RVertexData[36];
+            var vertices = new RVertexData[36];
 
 
             // Calculate the position of the vertices on the top face.
-            Vector3 topLeftFront = Position + new Vector3(-1.0f, 1.0f, -1.0f) * Size;
-            Vector3 topLeftBack = Position + new Vector3(-1.0f, 1.0f, 1.0f) * Size;
-            Vector3 topRightFront = Position + new Vector3(1.0f, 1.0f, -1.0f) * Size;
-            Vector3 topRightBack = Position + new Vector3(1.0f, 1.0f, 1.0f) * Size;
+            var topLeftFront = Position + new Vector3(-1.0f, 1.0f, -1.0f) * Size;
+            var topLeftBack = Position + new Vector3(-1.0f, 1.0f, 1.0f) * Size;
+            var topRightFront = Position + new Vector3(1.0f, 1.0f, -1.0f) * Size;
+            var topRightBack = Position + new Vector3(1.0f, 1.0f, 1.0f) * Size;
 
             // Calculate the position of the vertices on the bottom face.
-            Vector3 btmLeftFront = Position + new Vector3(-1.0f, -1.0f, -1.0f) * Size;
-            Vector3 btmLeftBack = Position + new Vector3(-1.0f, -1.0f, 1.0f) * Size;
-            Vector3 btmRightFront = Position + new Vector3(1.0f, -1.0f, -1.0f) * Size;
-            Vector3 btmRightBack = Position + new Vector3(1.0f, -1.0f, 1.0f) * Size;
+            var btmLeftFront = Position + new Vector3(-1.0f, -1.0f, -1.0f) * Size;
+            var btmLeftBack = Position + new Vector3(-1.0f, -1.0f, 1.0f) * Size;
+            var btmRightFront = Position + new Vector3(1.0f, -1.0f, -1.0f) * Size;
+            var btmRightBack = Position + new Vector3(1.0f, -1.0f, 1.0f) * Size;
 
             // Normal vectors for each face (needed for lighting / display)
-            Vector3 normalFront = new Vector3(0.0f, 0.0f, -1.0f) * Size;
-            Vector3 normalBack = new Vector3(0.0f, 0.0f, 1.0f) * Size;
-            Vector3 normalTop = new Vector3(0.0f, 1.0f, 0.0f) * Size;
-            Vector3 normalBottom = new Vector3(0.0f, -1.0f, 0.0f) * Size;
-            Vector3 normalLeft = new Vector3(1.0f, 0.0f, 0.0f) * Size;
-            Vector3 normalRight = new Vector3(-1.0f, 0.0f, 0.0f) * Size;
+            var normalFront = new Vector3(0.0f, 0.0f, -1.0f) * Size;
+            var normalBack = new Vector3(0.0f, 0.0f, 1.0f) * Size;
+            var normalTop = new Vector3(0.0f, 1.0f, 0.0f) * Size;
+            var normalBottom = new Vector3(0.0f, -1.0f, 0.0f) * Size;
+            var normalLeft = new Vector3(1.0f, 0.0f, 0.0f) * Size;
+            var normalRight = new Vector3(-1.0f, 0.0f, 0.0f) * Size;
 
             // UV texture coordinates
-            Vector2 textureTopLeft = new Vector2(1.0f * Size.X, 0.0f * Size.Y);
-            Vector2 textureTopRight = new Vector2(0.0f * Size.X, 0.0f * Size.Y);
-            Vector2 textureBottomLeft = new Vector2(1.0f * Size.X, 1.0f * Size.Y);
-            Vector2 textureBottomRight = new Vector2(0.0f * Size.X, 1.0f * Size.Y);
+            var textureTopLeft = new Vector2(1.0f * Size.X, 0.0f * Size.Y);
+            var textureTopRight = new Vector2(0.0f * Size.X, 0.0f * Size.Y);
+            var textureBottomLeft = new Vector2(1.0f * Size.X, 1.0f * Size.Y);
+            var textureBottomRight = new Vector2(0.0f * Size.X, 1.0f * Size.Y);
 
             // Add the vertices for the FRONT face.
             vertices[0] = new RVertexData(topLeftFront, normalFront, Vector3.Zero, Vector3.Zero, textureTopLeft);
@@ -146,106 +155,101 @@ namespace Reactor.Types
             vertices[35] = new RVertexData(btmRightBack, normalRight, Vector3.Zero, Vector3.Zero, textureBottomRight);
 
             if (FlipNormals)
-            {
-                for (int i = 0; i < 36; i++)
-                {
+                for (var i = 0; i < 36; i++)
                     vertices[i].Normal *= -1.0f;
-                }
-            }
             VertexBuffer = new RVertexBuffer(typeof(RVertexData), vertices.Length,
-               RBufferUsage.WriteOnly);
+                RBufferUsage.WriteOnly);
 
-            VertexBuffer.SetData<RVertexData>(vertices);
+            VertexBuffer.SetData(vertices);
             vertices = null;
             vertCount = 36;
-            this.Position = Center;
-
+            Position = Center;
         }
 
         public void CreateFullscreenQuad()
         {
-            RViewport viewport = REngine.Instance._viewport;
+            var viewport = REngine.Instance._viewport;
             //CreateQuad(new Vector2(0, 0), new Vector2(1,1), true);
-            CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width,viewport.Height), true);
+            CreateQuad(new Vector2(0, 0), new Vector2(viewport.Width, viewport.Height), true);
         }
 
         /// <summary>
-        /// Creates a quad from screen coordinates.
+        ///     Creates a quad from screen coordinates.
         /// </summary>
         /// <param name="position">Position.</param>
         /// <param name="size">Size.</param>
         /// <param name="deviceNormalized">If set to <c>true</c> the position and size are already device normalized.</param>
         public void CreateQuad(Vector2 position, Vector2 size, bool deviceNormalized)
         {
-            RVertexData2D[] vertices = new RVertexData2D[4];
-            short[] indices = new short[6]{0,1,2,0,2,3};
-            if(!deviceNormalized)
+            var vertices = new RVertexData2D[4];
+            var indices = new short[6] { 0, 1, 2, 0, 2, 3 };
+            if (!deviceNormalized)
             {
                 // Kinda like a 2d unproject,  screen coords to device normal coords...
-                RViewport viewport = REngine.Instance._viewport;
-                Vector2 w = new Vector2(viewport.Width, viewport.Height);
-                Vector2 l = size;
-                Vector2 d = (l/w);
+                var viewport = REngine.Instance._viewport;
+                var w = new Vector2(viewport.Width, viewport.Height);
+                var l = size;
+                var d = l / w;
                 size.X = d.X;
                 size.Y = d.Y;
-                Vector2 p = (position/w);
+                var p = position / w;
                 position.X = p.X;
                 position.Y = p.Y;
             }
 
-            vertices[0] = new RVertexData2D(new Vector2(position.X,        position.Y),        new Vector2(0, 0));
-            vertices[1] = new RVertexData2D(new Vector2(position.X,        position.Y+size.Y), new Vector2(0, 1));
-            vertices[2] = new RVertexData2D(new Vector2(position.X+size.X, position.Y+size.Y), new Vector2(1, 1));
-            vertices[3] = new RVertexData2D(new Vector2(position.X+size.X, position.Y),        new Vector2(1, 0));
+            vertices[0] = new RVertexData2D(new Vector2(position.X, position.Y), new Vector2(0, 0));
+            vertices[1] = new RVertexData2D(new Vector2(position.X + size.X, position.Y), new Vector2(1, 0));
+            vertices[2] = new RVertexData2D(new Vector2(position.X + size.X, position.Y + size.Y), new Vector2(1, 1));
+            vertices[3] = new RVertexData2D(new Vector2(position.X, position.Y + size.Y), new Vector2(0, 1));
 
             VertexBuffer = new RVertexBuffer(vertices[0].Declaration, 4, RBufferUsage.WriteOnly);
-            VertexBuffer.SetData<RVertexData2D>(vertices);
+            VertexBuffer.SetData(vertices);
 
             _index = new RIndexBuffer(typeof(short), 6, RBufferUsage.WriteOnly);
-            _index.SetData<short>(indices);
-
-
+            _index.SetData(indices);
         }
 
         public void CreateSphere(Vector3 Center, float Radius, int Tessellation)
         {
-            int Stacks = Tessellation;
-            int Slices = Tessellation * 2;
+            var Stacks = Tessellation;
+            var Slices = Tessellation * 2;
 
-            List<RVertexData> vertices = new List<RVertexData>();
+            var vertices = new List<RVertexData>();
 
 
+            var dphi = MathHelper.Pi / Stacks;
+            var dtheta = MathHelper.TwoPi / Slices;
 
-            float dphi = MathHelper.Pi / Stacks;
-            float dtheta = MathHelper.TwoPi / Slices;
-
-            int index = 0;
-            vertices.Add(new RVertexData(new Vector3(0, -1f, 0) * Radius, new Vector3(0, -1f, 0),Vector3.Zero, Vector3.Zero, Vector2.Zero));
-            for (int i = 0; i < Stacks - 1; i++)
+            var index = 0;
+            vertices.Add(new RVertexData(new Vector3(0, -1f, 0) * Radius, new Vector3(0, -1f, 0), Vector3.Zero,
+                Vector3.Zero, Vector2.Zero));
+            for (var i = 0; i < Stacks - 1; i++)
             {
-                float latitude = ((i + 1) * MathHelper.Pi / Stacks) - MathHelper.PiOver2;
+                var latitude = (i + 1) * MathHelper.Pi / Stacks - MathHelper.PiOver2;
 
-                float dy = (float)System.Math.Sin(latitude);
-                float dxz = (float)System.Math.Cos(latitude);
+                var dy = (float)System.Math.Sin(latitude);
+                var dxz = (float)System.Math.Cos(latitude);
 
                 // Create a single ring of vertices at this latitude.
-                for (int j = 0; j < Slices; j++)
+                for (var j = 0; j < Slices; j++)
                 {
-                    float longitude = j * MathHelper.TwoPi / Slices;
+                    var longitude = j * MathHelper.TwoPi / Slices;
 
-                    float dx = (float)System.Math.Cos(longitude) * dxz;
-                    float dz = (float)System.Math.Sin(longitude) * dxz;
+                    var dx = (float)System.Math.Cos(longitude) * dxz;
+                    var dz = (float)System.Math.Sin(longitude) * dxz;
 
 
-                    Vector3 normal = new Vector3(dx, dy, dz);
-                    Vector3 position = normal * Radius;
-                    Vector2 tex = new Vector2(1.0f - ((float)j / (float)Slices - 1), (1.0f - ((float)(i) / (float)(Stacks - 1))));
-                    Vector3 tangent = Vector3.Cross(position, Vector3.UnitX);
-                    Vector3 binormal = Vector3.Cross(position, tangent);
+                    var normal = new Vector3(dx, dy, dz);
+                    var position = normal * Radius;
+                    var tex = new Vector2(1.0f - (j / (float)Slices - 1), 1.0f - i / (float)(Stacks - 1));
+                    var tangent = Vector3.Cross(position, Vector3.UnitX);
+                    var binormal = Vector3.Cross(position, tangent);
                     vertices.Add(new RVertexData(position, Vector3.Normalize(normal), binormal, tangent, tex));
                 }
             }
-            vertices.Add(new RVertexData(new Vector3(0, 1f, 0) * Radius, new Vector3(0, 1f, 0),Vector3.Zero, Vector3.Zero, Vector2.Zero));
+
+            vertices.Add(new RVertexData(new Vector3(0, 1f, 0) * Radius, new Vector3(0, 1f, 0), Vector3.Zero,
+                Vector3.Zero, Vector2.Zero));
             vertCount = vertices.Count;
             /*for (int x = 0; x < Stacks-1; x++)
                 for (int y = 0; y < Slices-1; y++)
@@ -275,10 +279,10 @@ namespace Reactor.Types
                     //vertices[y * Stacks + x].normal = normal;
                     //vertices[y * Stacks + x].normal.Normalize();
                     vertices[y * Stacks + x] = v;
-                    
+
                 }*/
-            List<ushort> indices = new List<ushort>();
-            for (int i = 0; i < Slices; i++)
+            var indices = new List<ushort>();
+            for (var i = 0; i < Slices; i++)
             {
                 indices.Add(0);
                 indices.Add((ushort)(1 + (i + 1) % Slices));
@@ -286,25 +290,23 @@ namespace Reactor.Types
             }
 
             // Fill the sphere body with triangles joining each pair of latitude rings.
-            for (int i = 0; i < Stacks-2; i++)
+            for (var i = 0; i < Stacks - 2; i++)
+            for (var j = 0; j < Slices; j++)
             {
-                for (int j = 0; j < Slices; j++)
-                {
-                    int nextI = i + 1;
-                    int nextJ = (j + 1) % Slices;
+                var nextI = i + 1;
+                var nextJ = (j + 1) % Slices;
 
-                    indices.Add((ushort)(1 + i * Slices + j));
-                    indices.Add((ushort)(1 + i * Slices + nextJ));
-                    indices.Add((ushort)(1 + nextI * Slices + j));
+                indices.Add((ushort)(1 + i * Slices + j));
+                indices.Add((ushort)(1 + i * Slices + nextJ));
+                indices.Add((ushort)(1 + nextI * Slices + j));
 
-                    indices.Add((ushort)(1 + i * Slices + nextJ));
-                    indices.Add((ushort)(1 + nextI * Slices + nextJ));
-                    indices.Add((ushort)(1 + nextI * Slices + j));
-                }
+                indices.Add((ushort)(1 + i * Slices + nextJ));
+                indices.Add((ushort)(1 + nextI * Slices + nextJ));
+                indices.Add((ushort)(1 + nextI * Slices + j));
             }
 
             // Create a fan connecting the top vertex to the top latitude ring.
-            for (int i = 0; i < Slices; i++)
+            for (var i = 0; i < Slices; i++)
             {
                 indices.Add((ushort)(vertices.Count - 1));
                 indices.Add((ushort)(vertices.Count - 2 - (i + 1) % Slices));
@@ -314,7 +316,7 @@ namespace Reactor.Types
             VertexBuffer = new RVertexBuffer(typeof(RVertexData), vertices.Count,
                 RBufferUsage.None);
 
-            VertexBuffer.SetData<RVertexData>(vertices.ToArray());
+            VertexBuffer.SetData(vertices.ToArray());
             //vertCount = vertices.Length;
             vertices = null;
 
@@ -323,13 +325,11 @@ namespace Reactor.Types
             _index.SetData(indices.ToArray());
             indices = null;
 
-            this.Position = Center;
-
-
+            Position = Center;
         }
 
-        public void CreatePoints(Vector3[] points, RColor[] colors) {
-
+        public void CreatePoints(Vector3[] points, RColor[] colors)
+        {
         }
 
         public override void Render()
@@ -354,21 +354,23 @@ namespace Reactor.Types
                 VertexBuffer.VertexDeclaration.Apply(_material.Shader, IntPtr.Zero);
 
                 _material.Shader.BindSemantics(matrix, REngine.camera.View, REngine.camera.Projection);
-                if (PrimitiveType == RPrimitiveType.Points) {
+                if (PrimitiveType == RPrimitiveType.Points)
+                {
                     GL.Enable(EnableCap.PointSprite);
                     GL.Enable(EnableCap.ProgramPointSize);
                 }
+
                 if (_index != null)
                 {
-
                     var shortIndices = _index.IndexElementSize == RIndexElementSize.SixteenBits;
                     var indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
                     var indexElementSize = shortIndices ? 2 : 4;
-                    var indexOffsetInBytes = (IntPtr)(indexElementSize);
+                    var indexOffsetInBytes = (IntPtr)indexElementSize;
                     var indexElementCount = _index.GetElementCountArray(PrimitiveType, vertCount);
                     _index.Bind();
                     REngine.CheckGLError();
-                    GL.DrawRangeElements((BeginMode)PrimitiveType,0,1, _index.IndexCount, indexElementType, indexOffsetInBytes);
+                    GL.DrawRangeElements((BeginMode)PrimitiveType, 0, 1, _index.IndexCount, indexElementType,
+                        indexOffsetInBytes);
                     REngine.CheckGLError();
                     _index.Unbind();
                     REngine.CheckGLError();
@@ -378,29 +380,27 @@ namespace Reactor.Types
                     GL.DrawArrays((BeginMode)PrimitiveType, 0, VertexBuffer.VertexCount);
                     REngine.CheckGLError();
                 }
+
                 if (PrimitiveType == RPrimitiveType.Points)
                 {
                     GL.Disable(EnableCap.PointSprite);
                     GL.Disable(EnableCap.ProgramPointSize);
                 }
+
                 _material.Shader.Unbind();
 
                 VertexBuffer.Unbind();
                 VertexBuffer.UnbindVertexArray();
             }
-
         }
-        
+
         public void Dispose()
         {
-            if(_index != null)
+            if (_index != null)
                 _index.Dispose();
             VertexBuffer.Dispose();
-
         }
-
 
         #endregion
     }
 }
-

@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,27 +22,38 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections;
 using System.Globalization;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using Newtonsoft.Json.Utilities;
-using System.Runtime.Serialization;
 
 namespace Newtonsoft.Json.Serialization
 {
     internal class JsonSerializerProxy : JsonSerializer
     {
+        private readonly JsonSerializer _serializer;
         private readonly JsonSerializerInternalReader? _serializerReader;
         private readonly JsonSerializerInternalWriter? _serializerWriter;
-        private readonly JsonSerializer _serializer;
 
-        public override event EventHandler<ErrorEventArgs>? Error
+        public JsonSerializerProxy(JsonSerializerInternalReader serializerReader)
         {
-            add => _serializer.Error += value;
-            remove => _serializer.Error -= value;
+            ValidationUtils.ArgumentNotNull(serializerReader, nameof(serializerReader));
+
+            _serializerReader = serializerReader;
+            _serializer = serializerReader.Serializer;
+        }
+
+        public JsonSerializerProxy(JsonSerializerInternalWriter serializerWriter)
+        {
+            ValidationUtils.ArgumentNotNull(serializerWriter, nameof(serializerWriter));
+
+            _serializerWriter = serializerWriter;
+            _serializer = serializerWriter.Serializer;
         }
 
         public override IReferenceResolver? ReferenceResolver
@@ -222,68 +234,40 @@ namespace Newtonsoft.Json.Serialization
             set => _serializer.CheckAdditionalContent = value;
         }
 
+        public override event EventHandler<ErrorEventArgs>? Error
+        {
+            add => _serializer.Error += value;
+            remove => _serializer.Error -= value;
+        }
+
         internal JsonSerializerInternalBase GetInternalSerializer()
         {
             if (_serializerReader != null)
-            {
                 return _serializerReader;
-            }
-            else
-            {
-                return _serializerWriter!;
-            }
-        }
-
-        public JsonSerializerProxy(JsonSerializerInternalReader serializerReader)
-        {
-            ValidationUtils.ArgumentNotNull(serializerReader, nameof(serializerReader));
-
-            _serializerReader = serializerReader;
-            _serializer = serializerReader.Serializer;
-        }
-
-        public JsonSerializerProxy(JsonSerializerInternalWriter serializerWriter)
-        {
-            ValidationUtils.ArgumentNotNull(serializerWriter, nameof(serializerWriter));
-
-            _serializerWriter = serializerWriter;
-            _serializer = serializerWriter.Serializer;
+            return _serializerWriter!;
         }
 
         internal override object? DeserializeInternal(JsonReader reader, Type? objectType)
         {
             if (_serializerReader != null)
-            {
                 return _serializerReader.Deserialize(reader, objectType, false);
-            }
-            else
-            {
-                return _serializer.Deserialize(reader, objectType);
-            }
+            return _serializer.Deserialize(reader, objectType);
         }
 
         internal override void PopulateInternal(JsonReader reader, object target)
         {
             if (_serializerReader != null)
-            {
                 _serializerReader.Populate(reader, target);
-            }
             else
-            {
                 _serializer.Populate(reader, target);
-            }
         }
 
         internal override void SerializeInternal(JsonWriter jsonWriter, object? value, Type? rootType)
         {
             if (_serializerWriter != null)
-            {
                 _serializerWriter.Serialize(jsonWriter, value, rootType);
-            }
             else
-            {
                 _serializer.Serialize(jsonWriter, value);
-            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
@@ -52,7 +53,7 @@ namespace Reactor.Platform.GLFW
         /// <inheritdoc cref="Object.Equals(object)" />
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || obj is NativeWindow other && Equals(other);
+            return ReferenceEquals(this, obj) || (obj is NativeWindow other && Equals(other));
         }
 
         /// <inheritdoc cref="Object.GetHashCode" />
@@ -521,8 +522,9 @@ namespace Reactor.Platform.GLFW
                     Glfw.HideWindow(Window);
             }
         }
+
         /// <summary>
-        /// Sets the Window's VSync or SwapInterval.
+        ///     Sets the Window's VSync or SwapInterval.
         /// </summary>
         public bool VSync
         {
@@ -533,13 +535,18 @@ namespace Reactor.Platform.GLFW
                 Glfw.SwapInterval(value ? 1 : 0);
             }
         }
+
         public RWindowStyle WindowStyle
         {
-            get => Glfw.GetWindowAttribute(Window, WindowAttribute.Decorated) ? RWindowStyle.Normal : RWindowStyle.Borderless;
+            get => Glfw.GetWindowAttribute(Window, WindowAttribute.Decorated)
+                ? RWindowStyle.Normal
+                : RWindowStyle.Borderless;
             set
             {
-                if (value == RWindowStyle.Borderless) { Glfw.SetWindowAttribute(Window, WindowAttribute.Decorated, false); }
-                else { Glfw.SetWindowAttribute(Window, WindowAttribute.Decorated, true); }
+                if (value == RWindowStyle.Borderless)
+                    Glfw.SetWindowAttribute(Window, WindowAttribute.Decorated, false);
+                else
+                    Glfw.SetWindowAttribute(Window, WindowAttribute.Decorated, true);
             }
         }
 
@@ -675,6 +682,7 @@ namespace Reactor.Platform.GLFW
         {
             Glfw.MakeContextCurrent(Window);
         }
+
         /// <summary>
         ///     Makes no window and context the current.
         /// </summary>
@@ -1101,7 +1109,7 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="x">The new position on the x-axis.</param>
         /// <param name="y">The new position on the y-axis.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "UnusedParameter.Global")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Global")]
         protected virtual void OnPositionChanged(double x, double y)
         {
             PositionChanged?.Invoke(this, EventArgs.Empty);

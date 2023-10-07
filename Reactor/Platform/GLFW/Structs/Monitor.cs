@@ -28,7 +28,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     <c>true</c> if the specified <see cref="object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(Monitor other) { return handle.Equals(other.handle); }
+        public bool Equals(Monitor other)
+        {
+            return handle.Equals(other.handle);
+        }
 
         /// <summary>
         ///     Determines whether the specified <see cref="object" />, is equal to this instance.
@@ -50,7 +53,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
-        public override int GetHashCode() { return handle.GetHashCode(); }
+        public override int GetHashCode()
+        {
+            return handle.GetHashCode();
+        }
 
         /// <summary>
         ///     Implements the operator ==.
@@ -60,7 +66,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator ==(Monitor left, Monitor right) { return left.Equals(right); }
+        public static bool operator ==(Monitor left, Monitor right)
+        {
+            return left.Equals(right);
+        }
 
         /// <summary>
         ///     Implements the operator !=.
@@ -70,7 +79,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator !=(Monitor left, Monitor right) { return !left.Equals(right); }
+        public static bool operator !=(Monitor left, Monitor right)
+        {
+            return !left.Equals(right);
+        }
 
         /// <summary>
         ///     Returns a <see cref="string" /> that represents this instance.
@@ -78,7 +90,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     A <see cref="string" /> that represents this instance.
         /// </returns>
-        public override string ToString() { return handle.ToString(); }
+        public override string ToString()
+        {
+            return handle.ToString();
+        }
 
         /// <summary>
         ///     Gets the position, in screen coordinates of the valid work are for the monitor.

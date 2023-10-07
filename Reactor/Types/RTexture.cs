@@ -20,288 +20,256 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.IO;
-using System.Drawing;
 
-using Reactor.Platform.OpenGL;
+using System;
+using System.Drawing;
+using System.IO;
 using Newtonsoft.Json;
+using Reactor.Platform.OpenGL;
+using Reactor.Utilities;
+using Rectangle = Reactor.Math.Rectangle;
 
 namespace Reactor.Types
 {
     public class RTexture : IDisposable
     {
-        private static int[] int1 = new[] { 0 };
-        private static uint[] uint1 = new uint[] { 0 };
-        private static float[] float1 = new float[] { 0 };
-        [JsonIgnore]
-        public uint Id;
-        [JsonProperty("name")]
-        public string Name;
-        [JsonProperty("filename")]
-        public string Filename;
-        [JsonIgnore]
-        public Reactor.Math.Rectangle Bounds;
-        [JsonIgnore]
-        bool bound;
-        internal TextureTarget textureTarget;
+        internal static RTexture2D defaultWhite = new RTexture2D(true);
+
+        [JsonIgnore] private bool bound;
+
+        [JsonIgnore] public Rectangle Bounds;
+
+        [JsonProperty("filename")] public string Filename;
+
+        [JsonIgnore] public uint Id;
+
+        [JsonProperty("name")] public string Name;
+
         protected RPixelFormat pixelFormat = RPixelFormat.Rgba;
         protected PixelType pixelType = PixelType.UnsignedByte;
+        internal TextureTarget textureTarget;
+
+        #region IDisposable implementation
+
+        public void Dispose()
+        {
+            if (bound) Unbind();
+
+            if (Id != 0)
+            {
+                Allocator.UInt32_1[0] = Id;
+                GL.DeleteTextures(1, Allocator.UInt32_1);
+            }
+        }
+
+        #endregion
+
         internal void LoadFromData(byte[] data, string name, bool isCompressed)
         {
-            if(isCompressed)
-            {
+            if (isCompressed)
                 try
                 {
-                    ImageDDS.LoadFromData( data, name, out Id, out textureTarget, out pixelFormat, out pixelType );
-
-                }catch(Exception e){
-                    RLog.Error("Error loading texture for: "+name);
+                    ImageDDS.LoadFromData(data, name, out Id, out textureTarget, out pixelFormat, out pixelType);
+                }
+                catch (Exception e)
+                {
+                    RLog.Error("Error loading texture for: " + name);
                     RLog.Error(e.Message);
                     RLog.Error(e);
                 }
-            }
             else
-            {
                 try
                 {
-                    ImageGDI.LoadFromData( data, out Id, out textureTarget, out pixelFormat, out pixelType );
-                }catch(Exception e){
-                    RLog.Error("Error loading texture for: "+name);
+                    ImageGDI.LoadFromData(data, out Id, out textureTarget, out pixelFormat, out pixelType, out Bounds);
+                }
+                catch (Exception e)
+                {
+                    RLog.Error("Error loading texture for: " + name);
                     RLog.Error(e.Message);
                     RLog.Error(e);
                 }
-            }
-            if ( Id == 0 || textureTarget == 0)
-            {
-                RLog.Error("Error generating OpenGL texture for: "+name);
 
-            }
+            if (Id == 0 || textureTarget == 0) RLog.Error("Error generating OpenGL texture for: " + name);
 
-            // load succeeded, Texture can be used.
-            Bind();
-            GL.TexParameteri( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
-            GL.GetTexParameteriv( textureTarget, GetTextureParameter.TextureMaxLevel, int1 );
-            if ( int1[0] == 0 ) // if no MipMaps are present, use linear Filter
-                GL.TexParameteri( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
-            else // MipMaps are present, use trilinear Filter
-                GL.TexParameteri( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.LinearMipmapLinear );
-
-
-            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureHeight, int1);
-            var height = int1[0];
-            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWidth, int1);
-            var width = int1[0];
-
-            Bounds = new Reactor.Math.Rectangle(0, 0, width, height);
-            RLog.Info("Texture loaded for: "+name);
+            CreateProperties(TextureTarget.Texture2D);
+            RLog.Info("Texture loaded for: " + name);
+            Name = name.TrimEnd(Path.GetExtension(name).ToCharArray());
+            Filename = name;
+            Unbind();
         }
+
         internal void LoadFromBitmap(Bitmap bitmap)
         {
             try
             {
-                ImageGDI.LoadFromBitmap( ref bitmap, out Id, out textureTarget, out pixelFormat, out pixelType );
-            }catch(Exception e){
+                ImageGDI.LoadFromBitmap(ref bitmap, out Id, out textureTarget, out pixelFormat, out pixelType,
+                    out Bounds);
+            }
+            catch (Exception e)
+            {
                 RLog.Error("Error loading texture from bitmap...");
                 RLog.Error(e);
             }
-            if ( Id == 0 || textureTarget == 0)
-            {
-                RLog.Error("Error generating OpenGL texture from bitmap");
 
-            }
-            // load succeeded, Texture can be used.
-            /*Bind();
-            GL.TexParameter( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
-            REngine.CheckGLError();
-
-            GL.TexParameter( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
-            
-            REngine.CheckGLError();
-            GL.TexParameter(textureTarget, TextureParameterName.TextureMaxLod, 0);
-            REngine.CheckGLError();
-            GL.TexParameter(textureTarget, TextureParameterName.TextureMinLod, 0);
-            REngine.CheckGLError();
-            */
-            Bounds = new Reactor.Math.Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            if (Id == 0 || textureTarget == 0) RLog.Error("Error generating OpenGL texture from bitmap");
+            CreateProperties(TextureTarget.Texture2D);
+            Bounds = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
         }
+
         internal void LoadFromDisk(string filename)
         {
-            if(Path.GetExtension(filename).ToLower() == ".dds"){
+            if (Path.GetExtension(filename).ToLower() == ".dds")
                 try
                 {
-                    ImageDDS.LoadFromDisk( RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget, out pixelFormat, out pixelType );
-
-                }catch(Exception e){
-                    RLog.Error("Error loading texture from: "+filename);
+                    ImageDDS.LoadFromDisk(RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget,
+                        out pixelFormat, out pixelType);
+                }
+                catch (Exception e)
+                {
+                    RLog.Error("Error loading texture from: " + filename);
                     RLog.Error(e);
                 }
-            }
-            else {
+            else
                 try
                 {
-                    ImageGDI.LoadFromDisk( RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget, out pixelFormat, out pixelType );
-                }catch(Exception e){
-                    RLog.Error("Error loading texture from: "+filename);
+                    ImageGDI.LoadFromDisk(RFileSystem.Instance.GetFilePath(filename), out Id, out textureTarget,
+                        out pixelFormat, out pixelType, out Bounds);
+                }
+                catch (Exception e)
+                {
+                    RLog.Error("Error loading texture from: " + filename);
                     RLog.Error(e);
                     return;
                 }
-            }
-            if ( Id == 0 || textureTarget == 0)
+
+            if (Id == 0 || textureTarget == 0)
             {
-                RLog.Error("Error generating OpenGL texture from: "+filename);
+                RLog.Error("Error generating OpenGL texture from: " + filename);
                 return;
-
             }
 
-                // load succeeded, Texture can be used.
-                Bind();
-                int max_level = 0;
-                int min_level = 0;
-                
-                REngine.CheckGLError();
-                GL.TexParameteri(textureTarget, TextureParameterName.TextureBaseLevel,min_level);
-                REngine.CheckGLError();
-                GL.TexParameteri(textureTarget, TextureParameterName.TextureMaxLevel,max_level);
-                REngine.CheckGLError();
-            GL.TexParameteri( textureTarget, TextureParameterName.TextureMagFilter, (int) RTextureMagFilter.Linear );
-            REngine.CheckGLError();
-            GL.TexParameteri( textureTarget, TextureParameterName.TextureMinFilter, (int) RTextureMinFilter.Linear );
-            REngine.CheckGLError();
-            GL.TexParameteri(textureTarget, TextureParameterName.TextureMaxLod, 0);
-            REngine.CheckGLError();
-            GL.TexParameteri(textureTarget, TextureParameterName.TextureMinLod, 0);
-            REngine.CheckGLError();
-            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureHeight, int1);
-            var height = int1[0];
-            GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWidth, int1);
-            var width = int1[0];
-            Bounds = new Reactor.Math.Rectangle(0, 0, width, height);
-            RLog.Info("Texture loaded from: "+filename);
+            CreateProperties(TextureTarget.Texture2D);
+            RLog.Info("Texture loaded from: " + filename);
+            Name = filename.TrimEnd(Path.GetExtension(filename).ToCharArray());
+            Filename = filename;
+            Unbind();
         }
 
-        internal void Bind(){
-            GL.BindTexture( textureTarget, Id );
+        internal void Bind()
+        {
+            GL.BindTexture(textureTarget, Id);
             REngine.CheckGLError();
             bound = true;
         }
 
-        internal void SetActive()
+        internal void SetActive(RTextureLayer layer)
         {
-            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.ActiveTexture((int)layer);
             REngine.CheckGLError();
-
         }
 
-        internal void Unbind(){
-            GL.BindTexture( textureTarget, 0);
+        internal void Unbind()
+        {
+            GL.BindTexture(textureTarget, 0);
             bound = false;
         }
 
         public void SetTextureMagFilter(RTextureMagFilter value)
         {
-            if(Id != 0)
-            {
-                GL.TexParameteri(textureTarget, TextureParameterName.TextureMagFilter, (int)value);
-                REngine.CheckGLError();
-            }
+            Bind();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureMagFilter, (int)value);
+            REngine.CheckGLError();
+            Unbind();
         }
 
         public void SetTextureMinFilter(RTextureMinFilter value)
         {
-            if(Id != 0)
-            {
-                GL.TexParameteri(textureTarget, TextureParameterName.TextureMinFilter, (int)value);
-                REngine.CheckGLError();
-            }
+            Bind();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureMinFilter, (int)value);
+            REngine.CheckGLError();
+            Unbind();
         }
 
         public void SetTextureWrapMode(RTextureWrapMode modeS, RTextureWrapMode modeT)
         {
-            if(Id != 0)
-            {
-                Bind();
-                try
-                {
-                GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapS, (int) modeS);
-                REngine.CheckGLError();
-                GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapT, (int) modeT);
-                REngine.CheckGLError();
-                }catch(EngineGLException ex)
-                {
-                    
-                }
-            }
+            Bind();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapS, (int)modeS);
+            REngine.CheckGLError();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapT, (int)modeT);
+            REngine.CheckGLError();
+            Unbind();
         }
 
         public RTextureMagFilter GetTextureMagFilter()
         {
-            if(Id != 0)
+            if (Id != 0)
             {
-                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureMagFilter, int1);
-                return (RTextureMagFilter)int1[0];
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureMagFilter, Allocator.Int32_1);
+                return (RTextureMagFilter)Allocator.Int32_1[0];
             }
+
             return 0;
         }
+
         public RTextureMinFilter GetTextureMinFilter()
         {
-            if(Id != 0)
+            if (Id != 0)
             {
-                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureMinFilter, int1);
-                return (RTextureMinFilter)int1[0];
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureMinFilter, Allocator.Int32_1);
+                return (RTextureMinFilter)Allocator.Int32_1[0];
             }
+
             return 0;
         }
 
         public RTextureWrapMode GetTextureWrapModeS()
         {
-            if(Id!=0)
+            if (Id != 0)
             {
-                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWrapS, int1);
-                return (RTextureWrapMode)int1[0];
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWrapS, Allocator.Int32_1);
+                return (RTextureWrapMode)Allocator.Int32_1[0];
             }
+
             return 0;
         }
 
         public RTextureWrapMode GetTextureWrapModeT()
         {
-            if(Id!=0)
+            if (Id != 0)
             {
-                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWrapT, int1);
-                return (RTextureWrapMode)int1[0];
+                GL.GetTexParameteriv(textureTarget, GetTextureParameter.TextureWrapT, Allocator.Int32_1);
+                return (RTextureWrapMode)Allocator.Int32_1[0];
             }
+
             return 0;
         }
+
         public RPixelFormat GetPixelFormat()
         {
-            if(Id != 0)
-            {
+            if (Id != 0)
                 return pixelFormat;
-            }
-            else return 0;
-        }
-        public void SetPixelFormat(RPixelFormat format)
-        {
-            if(Id != 0)
-            {
-                pixelFormat = format;
-            }
-            
-        }
-        protected bool isPowerOfTwo (uint x)
-        {
-            while (((x % 2) == 0) && x > 1) /* While x is even and > 1 */
-                x /= 2;
-            return (x == 1);
+            return 0;
         }
 
-        public T[] GetData<T>()where T : struct
+        public void SetPixelFormat(RPixelFormat format)
         {
-            GL.ActiveTexture(TextureUnit.Texture0);
+            if (Id != 0) pixelFormat = format;
+        }
+
+        protected bool isPowerOfTwo(uint x)
+        {
+            while (x % 2 == 0 && x > 1) /* While x is even and > 1 */
+                x /= 2;
+            return x == 1;
+        }
+
+        public T[] GetData<T>() where T : struct
+        {
+            GL.ActiveTexture((int)TextureUnit.Texture0);
             REngine.CheckGLError();
             Bind();
             REngine.CheckGLError();
-            T[] pixels = new T[Bounds.Width * Bounds.Height];
+            var pixels = new T[Bounds.Width * Bounds.Height];
             unsafe
             {
                 fixed (T* ptr = &pixels[0])
@@ -310,16 +278,18 @@ namespace Reactor.Types
                     GL.GetTexImage(textureTarget, 0, (PixelFormat)pixelFormat, pixelType, p);
                 }
             }
-            
+
             REngine.CheckGLError();
             Unbind();
             REngine.CheckGLError();
 
             return pixels;
         }
-        public void SetData<T>(T[] data, RPixelFormat format, int x, int y, int width, int height, bool packAlignment=true) where T : struct
+
+        public void SetData<T>(T[] data, RPixelFormat format, int x, int y, int width, int height,
+            bool packAlignment = true) where T : struct
         {
-            if(!packAlignment)
+            if (!packAlignment)
                 GL.PixelStorei(PixelStoreParameter.UnpackAlignment, 1);
             Bind();
             unsafe
@@ -327,15 +297,17 @@ namespace Reactor.Types
                 fixed (T* ptr = &data[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexSubImage2D(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, p);
+                    GL.TexSubImage2D(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte,
+                        p);
                 }
             }
-            
+
             REngine.CheckGLError();
             Unbind();
-            if(!packAlignment)
+            if (!packAlignment)
                 GL.PixelStorei(PixelStoreParameter.PackAlignment, 1);
         }
+
         public void SetData(RColor[] colors, RPixelFormat format, int x, int y, int width, int height)
         {
             Bind();
@@ -344,10 +316,11 @@ namespace Reactor.Types
                 fixed (RColor* ptr = &colors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexSubImage2D(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte, p);
+                    GL.TexSubImage2D(textureTarget, 0, x, y, width, height, (PixelFormat)format, PixelType.UnsignedByte,
+                        p);
                 }
             }
-            
+
             REngine.CheckGLError();
             Unbind();
             REngine.CheckGLError();
@@ -358,50 +331,43 @@ namespace Reactor.Types
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
-        #region IDisposable implementation
-
-        public void Dispose()
-        {
-            if(bound){
-                Unbind();
-            }
-
-            if (Id != 0)
-            {
-                uint1[0] = Id;
-                GL.DeleteTextures(1, uint1);
-            }
-        }
-
-        #endregion
-
         protected void CreateProperties(TextureTarget target, bool mipmapped = false)
         {
             textureTarget = target;
-            SetTextureMagFilter(RTextureMagFilter.Linear);
-            SetTextureMinFilter(mipmapped ? RTextureMinFilter.LinearMipmapLinear : RTextureMinFilter.Linear);
-            SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+            Bind();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureMinFilter, (int)TextureParameter.Nearest);
+            REngine.CheckGLError();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureMagFilter, (int)TextureParameter.Nearest);
+            REngine.CheckGLError();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapS, (int)TextureParameter.Repeat);
+            REngine.CheckGLError();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapR, (int)TextureParameter.Repeat);
+            REngine.CheckGLError();
+            GL.TexParameteri(textureTarget, TextureParameterName.TextureWrapT, (int)TextureParameter.ClampToEdge);
+            REngine.CheckGLError();
+            //SetTextureMagFilter(RTextureMagFilter.Linear);
+            //SetTextureMinFilter(RTextureMinFilter.Linear);
+            //SetTextureWrapMode(RTextureWrapMode.Repeat, RTextureWrapMode.Repeat);
+            Unbind();
             REngine.CheckGLError();
         }
-
-        internal static RTexture2D defaultWhite = new RTexture2D(true);
     }
 
     public enum RTextureMagFilter
     {
         Nearest = TextureParameter.Nearest,
-        Linear = TextureParameter.Linear,
-
+        Linear = TextureParameter.Linear
     }
+
     public enum RTextureMinFilter
     {
         Nearest = TextureParameter.Nearest,
-        Linear = TextureParameter.Linear,
-        NearestMipmapNearest = TextureParameter.NearestMipMapNearest,
-        LinearMipmapNearest = TextureParameter.LinearMipMapNearest,
-        NearestMipmapLinear = TextureParameter.NearestMipMapLinear,
-        LinearMipmapLinear = TextureParameter.LinearMipMapLinear,
 
+        Linear = TextureParameter.Linear
+        //NearestMipmapNearest = TextureParameter.NearestMipMapNearest,
+        //LinearMipmapNearest = TextureParameter.LinearMipMapNearest,
+        //NearestMipmapLinear = TextureParameter.NearestMipMapLinear,
+        //LinearMipmapLinear = TextureParameter.LinearMipMapLinear,
     }
 
     public enum RTextureWrapMode
@@ -409,6 +375,6 @@ namespace Reactor.Types
         Clamp = TextureParameter.ClampToEdge,
         ClampToBorder = TextureParameter.ClampToBorder,
         Repeat = TextureParameter.Repeat,
-        Mirrior = TextureParameter.MirroredRepeat
+        Mirror = TextureParameter.MirroredRepeat
     }
 }

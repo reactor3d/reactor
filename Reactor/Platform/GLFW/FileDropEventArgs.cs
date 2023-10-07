@@ -14,7 +14,10 @@ namespace Reactor.Platform.GLFW
         ///     Initializes a new instance of the <see cref="FileDropEventArgs" /> class.
         /// </summary>
         /// <param name="filenames">The dropped filenames.</param>
-        public FileDropEventArgs(string[] filenames) { Filenames = filenames; }
+        public FileDropEventArgs(string[] filenames)
+        {
+            Filenames = filenames;
+        }
 
         #endregion
 

@@ -20,32 +20,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Reactor.Platform.GLFW;
+
 using Reactor.Types;
 
 namespace Reactor.Platform
 {
     public class GameWindowRenderControl : RenderControl
     {
-        public RGameWindow GameWindow { get; internal set; }
-
-        public GameWindowRenderControl() : base()
+        public GameWindowRenderControl()
         {
             GameWindow = new RGameWindow(1280, 720);
         }
-        public GameWindowRenderControl(RDisplayMode displayMode, RWindowStyle style, string title) : base()
+
+        public GameWindowRenderControl(RDisplayMode displayMode, RWindowStyle style, string title)
         {
             GameWindow = REngine.RGame.GameWindow;
             Context = GameWindow;
             GameWindow.WindowStyle = style;
             GameWindow.SetMode(displayMode);
-
         }
+
+        public RGameWindow GameWindow { get; internal set; }
+
         public override void Init()
         {
             Context = GameWindow;

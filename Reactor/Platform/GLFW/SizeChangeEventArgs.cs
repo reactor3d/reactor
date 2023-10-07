@@ -28,13 +28,18 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="width">The new width.</param>
         /// <param name="height">The new height.</param>
-        public SizeChangeEventArgs(int width, int height) : this(new Size(width, height)) { }
+        public SizeChangeEventArgs(int width, int height) : this(new Size(width, height))
+        {
+        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SizeChangeEventArgs" /> class.
         /// </summary>
         /// <param name="size">The new size.</param>
-        public SizeChangeEventArgs(Size size) { Size = size; }
+        public SizeChangeEventArgs(Size size)
+        {
+            Size = size;
+        }
 
         #endregion
     }

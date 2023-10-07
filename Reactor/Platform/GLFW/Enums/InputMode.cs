@@ -1,9 +1,9 @@
 ﻿namespace Reactor.Platform.GLFW
 {
-    /// <summary>
-    ///     Strongly-typed values for getting/setting the input mode hints.
-    /// </summary>
-    public enum InputMode
+	/// <summary>
+	///     Strongly-typed values for getting/setting the input mode hints.
+	/// </summary>
+	public enum InputMode
     {
 	    /// <summary>
 	    ///     If specified, enables setting the mouse behavior.

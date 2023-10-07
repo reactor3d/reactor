@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,16 +30,18 @@ using System;
 namespace Newtonsoft.Json.Serialization
 {
     /// <summary>
-    /// Used by <see cref="JsonSerializer"/> to resolve a <see cref="JsonContract"/> for a given <see cref="Type"/>.
+    ///     Used by <see cref="JsonSerializer" /> to resolve a <see cref="JsonContract" /> for a given <see cref="Type" />.
     /// </summary>
     /// <example>
-    ///   <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\SerializationTests.cs" region="ReducingSerializedJsonSizeContractResolverObject" title="IContractResolver Class" />
-    ///   <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\SerializationTests.cs" region="ReducingSerializedJsonSizeContractResolverExample" title="IContractResolver Example" />
+    ///     <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\SerializationTests.cs"
+    ///         region="ReducingSerializedJsonSizeContractResolverObject" title="IContractResolver Class" />
+    ///     <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\SerializationTests.cs"
+    ///         region="ReducingSerializedJsonSizeContractResolverExample" title="IContractResolver Example" />
     /// </example>
     public interface IContractResolver
     {
         /// <summary>
-        /// Resolves the contract for a given type.
+        ///     Resolves the contract for a given type.
         /// </summary>
         /// <param name="type">The type to resolve a contract for.</param>
         /// <returns>The contract for a given type.</returns>

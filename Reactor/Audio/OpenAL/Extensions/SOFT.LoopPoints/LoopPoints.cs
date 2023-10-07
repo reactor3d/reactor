@@ -12,7 +12,7 @@ namespace Reactor.Audio.OpenAL
             static LoopPoints()
             {
                 // We need to register the resolver for OpenAL before we can DllImport functions.
-                ALBase.RegisterOpenALResolver();
+                RegisterOpenALResolver();
             }
 
             private LoopPoints()
@@ -20,7 +20,7 @@ namespace Reactor.Audio.OpenAL
             }
 
             /// <summary>
-            /// Checks if this extension is present.
+            ///     Checks if this extension is present.
             /// </summary>
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent()
@@ -28,13 +28,13 @@ namespace Reactor.Audio.OpenAL
                 return AL.IsExtensionPresent(ExtensionName);
             }
 
-            [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
-            public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, int* values);
+            [DllImport(Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+            public static extern unsafe void Buffer(int buffer, BufferLoopPoint param, int* values);
 
-            [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            [DllImport(Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
             public static extern void Buffer(int buffer, BufferLoopPoint param, ref int values);
 
-            public static unsafe void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values)
+            public static void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values)
             {
                 Buffer(buffer, param, ref MemoryMarshal.GetReference(values));
             }

@@ -21,8 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-
 namespace Reactor.Types
 {
     public enum RKey
@@ -150,4 +148,3 @@ namespace Reactor.Types
         Menu = 348
     }
 }
-

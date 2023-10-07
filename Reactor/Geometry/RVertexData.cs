@@ -20,9 +20,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using Reactor.Math;
 
+using Reactor.Math;
 
 namespace Reactor.Geometry
 {
@@ -36,13 +35,7 @@ namespace Reactor.Geometry
 
         private static readonly RVertexDeclaration VertexDeclaration;
 
-        public RVertexDeclaration Declaration
-        {
-            get
-            {
-                return VertexDeclaration;
-            }
-        }
+        public RVertexDeclaration Declaration => VertexDeclaration;
 
         public RVertexData(Vector3 Position, Vector3 Normal, Vector3 Bitangent, Vector3 Tangent, Vector2 TexCoord)
         {
@@ -55,15 +48,16 @@ namespace Reactor.Geometry
 
         static RVertexData()
         {
-            RVertexElement[] elements = new RVertexElement[]
-                { 
-                    new RVertexElement(0, RVertexElementFormat.Vector3, RVertexElementUsage.Position),
-                    new RVertexElement(sizeof(float) * (3 * 1), RVertexElementFormat.Vector3, RVertexElementUsage.Normal),
-                    new RVertexElement(sizeof(float) * (3 * 2), RVertexElementFormat.Vector3, RVertexElementUsage.Bitangent),
-                    new RVertexElement(sizeof(float) * (3 * 3), RVertexElementFormat.Vector3, RVertexElementUsage.Tangent),
-                    new RVertexElement(sizeof(float) * (3 * 4), RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
-                };
-            RVertexDeclaration declaration = new RVertexDeclaration(elements);
+            RVertexElement[] elements =
+            {
+                new RVertexElement(0, RVertexElementFormat.Vector3, RVertexElementUsage.Position),
+                new RVertexElement(sizeof(float) * 3 * 1, RVertexElementFormat.Vector3, RVertexElementUsage.Normal),
+                new RVertexElement(sizeof(float) * 3 * 2, RVertexElementFormat.Vector3, RVertexElementUsage.Bitangent),
+                new RVertexElement(sizeof(float) * 3 * 3, RVertexElementFormat.Vector3, RVertexElementUsage.Tangent),
+                new RVertexElement(sizeof(float) * 3 * 4, RVertexElementFormat.Vector2,
+                    RVertexElementUsage.TextureCoordinate)
+            };
+            var declaration = new RVertexDeclaration(elements);
             VertexDeclaration = declaration;
         }
     }
@@ -72,44 +66,28 @@ namespace Reactor.Geometry
     {
         public Vector2 Position;
         public Vector2 TexCoord;
-        public Vector4 Color;
 
 
         private static readonly RVertexDeclaration VertexDeclaration;
 
-        public RVertexDeclaration Declaration
-        {
-            get
-            {
-                return VertexDeclaration;
-            }
-        }
-
-        public RVertexData2D(Vector2 Position, Vector2 TexCoord, Vector4 Color)
-        {
-            this.Position = Position;
-            this.TexCoord = TexCoord;
-            this.Color = Color;
-        }
+        public RVertexDeclaration Declaration => VertexDeclaration;
 
         public RVertexData2D(Vector2 Position, Vector2 TexCoord)
         {
             this.Position = Position;
             this.TexCoord = TexCoord;
-            this.Color = Vector4.One;
         }
+
 
         static RVertexData2D()
         {
-            RVertexElement[] elements = new RVertexElement[]
-                { 
-                    new RVertexElement(0, RVertexElementFormat.Vector2, RVertexElementUsage.Position),
-                    new RVertexElement(8, RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate),
-                    new RVertexElement(16, RVertexElementFormat.Vector4, RVertexElementUsage.Color)
-                };
-            RVertexDeclaration declaration = new RVertexDeclaration(elements);
+            RVertexElement[] elements =
+            {
+                new RVertexElement(0, RVertexElementFormat.Vector2, RVertexElementUsage.Position),
+                new RVertexElement(8, RVertexElementFormat.Vector2, RVertexElementUsage.TextureCoordinate)
+            };
+            var declaration = new RVertexDeclaration(elements);
             VertexDeclaration = declaration;
         }
     }
 }
-

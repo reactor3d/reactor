@@ -21,18 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 #if WINDOWS
 using System.Windows.Forms;
 #endif
 
 namespace Reactor.Platform
 {
-    #if WINDOWS
+#if WINDOWS
     public class FormRenderControl : RenderControl
     {
         public Form Form { get; internal set; }
@@ -67,5 +62,5 @@ namespace Reactor.Platform
             WindowInfo.Dispose();
         }
     }
-    #endif
+#endif
 }

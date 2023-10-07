@@ -22,32 +22,32 @@
 // THE SOFTWARE.
 
 using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Reactor.Types
 {
     internal class RShaderSemantics : Dictionary<RShaderSemanticDefinition, RShaderSemantic>
     {
-        const string PARSER_REGEX = @"uniform\s(?<type>.\w*)\s(?<name>.\w*)\s[:]\s(?<macro>.\w*);";
+        private const string PARSER_REGEX = @"uniform\s(?<type>.\w*)\s(?<name>.\w*)\s[:]\s(?<macro>.\w*);";
+
         internal RShaderSemantics(ref string source)
         {
-            
             source = Regex.Replace(source, PARSER_REGEX, delegate(Match match)
             {
-
-                RShaderSemantic semantic = new RShaderSemantic()
+                var semantic = new RShaderSemantic
                 {
                     type = match.Groups["type"].Value.ToLower(),
                     name = match.Groups["name"].Value.ToLower()
                 };
                 Add(GetSemanticDefinition(match.Groups["macro"].Value.ToUpper()), semantic);
-                var returnValue = String.Format("uniform {0} {1};", match.Groups["type"].Value, match.Groups["name"].Value);
+                var returnValue = string.Format("uniform {0} {1};", match.Groups["type"].Value,
+                    match.Groups["name"].Value);
                 return returnValue;
             });
         }
 
-        RShaderSemanticDefinition GetSemanticDefinition(string semantic)
+        private RShaderSemanticDefinition GetSemanticDefinition(string semantic)
         {
             return (RShaderSemanticDefinition)Enum.Parse(typeof(RShaderSemanticDefinition), semantic, true);
         }
@@ -79,4 +79,3 @@ namespace Reactor.Types
         TIME
     }
 }
-

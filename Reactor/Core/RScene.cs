@@ -20,17 +20,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Math;
-using Reactor.Types;
+
 using System;
 using System.Collections.Generic;
+using Reactor.Math;
+using Reactor.Types;
 
 namespace Reactor
 {
     public class RScene : RSingleton<RScene>
     {
-        private RSceneNode _root;
-        private List<RLight> _lights;
+        private readonly List<RLight> _lights;
+        private readonly RSceneNode _root;
+
         public RScene()
         {
             _root = new RSceneNode();
@@ -51,18 +53,20 @@ namespace Reactor
 
         public T Create<T>(string name) where T : RSceneNode
         {
-            T node = RSceneNode.Create<T>();
-            RLog.Info("Created a new node named: "+name);
+            var node = RNode.Create<T>();
+            RLog.Info("Created a new node named: " + name);
 
             return node;
         }
+
         public RMesh CreateMesh(string name)
         {
             return CreateMesh(name, _root);
         }
+
         public RMesh CreateMesh(string name, RSceneNode parent)
         {
-            RMesh mesh = RMesh.Create<RMesh>();
+            var mesh = RNode.Create<RMesh>();
             mesh.Name = name;
             mesh.Children = new List<RSceneNode>();
             mesh.Parent = parent;
@@ -74,9 +78,10 @@ namespace Reactor
         {
             return CreateMeshBuilder(name, _root);
         }
+
         public RMeshBuilder CreateMeshBuilder(string name, RSceneNode parent)
         {
-            RMeshBuilder mesh = (RMeshBuilder)Activator.CreateInstance(typeof(RMeshBuilder), true);
+            var mesh = (RMeshBuilder)Activator.CreateInstance(typeof(RMeshBuilder), true);
             mesh.Name = name;
             mesh.Children = new List<RSceneNode>();
             mesh.Parent = parent;
@@ -84,9 +89,9 @@ namespace Reactor
             return mesh;
         }
 
-        public RLight CreateLight(RLightType lightType=RLightType.POINT)
+        public RLight CreateLight(RLightType lightType = RLightType.POINT)
         {
-            var light = new RLight()
+            var light = new RLight
             {
                 Id = _lights.Count,
                 Type = lightType,
@@ -97,53 +102,60 @@ namespace Reactor
             _lights.Add(light);
             return light;
         }
+
         public List<RLight> GetLightsForBounds(BoundingBox aabb)
         {
-            List<RLight> affectedLights = new List<RLight>();
-            foreach(var light in _lights)
-            {
-                if (light.Type == RLightType.DIRECTIONAL)
-                    affectedLights.Add(light);
-                if(light.Type == RLightType.POINT)
-                {
-                    BoundingSphere sphere = new BoundingSphere(light.Position, light.Radius);
-                    if (sphere.Intersects(aabb))
-                        affectedLights.Add(light);
-                    if (sphere.Contains(aabb) != ContainmentType.Disjoint)
-                        affectedLights.Add(light);
-                }
-                if (affectedLights.Count == 5)
-                    break;
-            }
-            return affectedLights;
-        }
-
-        public List<RLight> GetLightsForBounds(BoundingSphere bounds)
-        {
-            List<RLight> affectedLights = new List<RLight>();
+            var affectedLights = new List<RLight>();
             foreach (var light in _lights)
             {
                 if (light.Type == RLightType.DIRECTIONAL)
                     affectedLights.Add(light);
                 if (light.Type == RLightType.POINT)
                 {
-                    BoundingSphere sphere = new BoundingSphere(light.Position, light.Radius);
+                    var sphere = new BoundingSphere(light.Position, light.Radius);
+                    if (sphere.Intersects(aabb))
+                        affectedLights.Add(light);
+                    if (sphere.Contains(aabb) != ContainmentType.Disjoint)
+                        affectedLights.Add(light);
+                }
+
+                if (affectedLights.Count == 5)
+                    break;
+            }
+
+            return affectedLights;
+        }
+
+        public List<RLight> GetLightsForBounds(BoundingSphere bounds)
+        {
+            var affectedLights = new List<RLight>();
+            foreach (var light in _lights)
+            {
+                if (light.Type == RLightType.DIRECTIONAL)
+                    affectedLights.Add(light);
+                if (light.Type == RLightType.POINT)
+                {
+                    var sphere = new BoundingSphere(light.Position, light.Radius);
                     if (sphere.Intersects(bounds))
                         affectedLights.Add(light);
                     if (sphere.Contains(bounds) != ContainmentType.Disjoint)
                         affectedLights.Add(light);
                 }
+
                 if (affectedLights.Count == 5)
                     break;
             }
+
             return affectedLights;
         }
 
-        public List<RLight> GetClosestLights(Vector3 WorldPosition) {
-            List<RLight> list = new List<RLight>(_lights);
+        public List<RLight> GetClosestLights(Vector3 WorldPosition)
+        {
+            var list = new List<RLight>(_lights);
             list.Sort((light1, light2) =>
             {
-                return Vector3.Distance(light1.Position, WorldPosition).CompareTo(Vector3.Distance(light2.Position, WorldPosition));
+                return Vector3.Distance(light1.Position, WorldPosition)
+                    .CompareTo(Vector3.Distance(light2.Position, WorldPosition));
             });
             return list;
         }
@@ -154,26 +166,26 @@ namespace Reactor
             _root.Children.Clear();
         }
     }
+
     public class ROctree
     {
-
         private const int ChildCount = 8;
 
-        private float looseness = 0;
+        private BoundingBox bounds = default;
 
-        private int depth = 0;
+        private readonly Vector3 center = Vector3.Zero;
 
-        private Vector3 center = Vector3.Zero;
+        private ROctree[] children;
 
-        private float length = 0f;
+        private readonly int depth;
 
-        private BoundingBox bounds = default(BoundingBox);
+        private readonly float length;
 
-        private List<RRenderNode> objects = new List<RRenderNode>();
+        private readonly float looseness;
 
-        private ROctree[] children = null;
+        private readonly List<RRenderNode> objects = new List<RRenderNode>();
 
-        private float worldSize = 0f;
+        private readonly float worldSize;
 
         public ROctree(float worldSize, float looseness, int depth)
             : this(worldSize, looseness, depth, 0, Vector3.Zero)
@@ -192,19 +204,16 @@ namespace Reactor
             this.looseness = looseness;
             this.depth = depth;
             this.center = center;
-            this.length = this.looseness * this.worldSize / (float)System.Math.Pow(2, this.depth);
-            float radius = this.length / 2f;
+            length = this.looseness * this.worldSize / (float)System.Math.Pow(2, this.depth);
+            var radius = length / 2f;
 
             // Create the bounding box.
-            Vector3 min = this.center + new Vector3(-radius);
-            Vector3 max = this.center + new Vector3(radius);
-            this.bounds = new BoundingBox(min, max);
+            var min = this.center + new Vector3(-radius);
+            var max = this.center + new Vector3(radius);
+            bounds = new BoundingBox(min, max);
 
             // Split the octree if the depth hasn't been reached.
-            if (this.depth < maxDepth)
-            {
-                this.Split(maxDepth);
-            }
+            if (this.depth < maxDepth) Split(maxDepth);
         }
 
         public void Remove(ref RRenderNode obj)
@@ -214,107 +223,87 @@ namespace Reactor
 
         public bool HasChanged(BoundingBox transformebbox)
         {
-            return this.bounds.Contains(transformebbox) == ContainmentType.Contains;
+            return bounds.Contains(transformebbox) == ContainmentType.Contains;
         }
 
         public bool StillInside(Vector3 center, float radius)
         {
-            Vector3 min = center - new Vector3(radius);
-            Vector3 max = center + new Vector3(radius);
-            BoundingBox bounds = new BoundingBox(min, max);
+            var min = center - new Vector3(radius);
+            var max = center + new Vector3(radius);
+            var bounds = new BoundingBox(min, max);
 
-            if (this.children != null)
+            if (children != null)
                 return false;
 
             if (this.bounds.Contains(bounds) == ContainmentType.Contains)
-            {
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool StillInside(BoundingBox bounds)
         {
-            if (this.children != null)
+            if (children != null)
                 return false;
 
             if (this.bounds.Contains(bounds) == ContainmentType.Contains)
-            {
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public ROctree Add(ref RRenderNode o, Vector3 center, float radius)
         {
-            Vector3 min = center - new Vector3(radius);
-            Vector3 max = center + new Vector3(radius);
-            BoundingBox bounds = new BoundingBox(min, max);
+            var min = center - new Vector3(radius);
+            var max = center + new Vector3(radius);
+            var bounds = new BoundingBox(min, max);
 
-            if (this.bounds.Contains(bounds) == ContainmentType.Contains)
-            {
-                return this.Add(ref o, bounds, center, radius);
-            }
+            if (this.bounds.Contains(bounds) == ContainmentType.Contains) return Add(ref o, bounds, center, radius);
             return null;
         }
 
         public ROctree Add(ref RRenderNode o, BoundingBox transformebbox)
         {
-            float radius = (transformebbox.Max - transformebbox.Min).Length() / 2;
-            Vector3 center = (transformebbox.Max + transformebbox.Min) / 2;
+            var radius = (transformebbox.Max - transformebbox.Min).Length() / 2;
+            var center = (transformebbox.Max + transformebbox.Min) / 2;
 
-            if (this.bounds.Contains(transformebbox) == ContainmentType.Contains)
-            {
-                return this.Add(ref o, transformebbox, center, radius);
-            }
+            if (bounds.Contains(transformebbox) == ContainmentType.Contains)
+                return Add(ref o, transformebbox, center, radius);
             return null;
         }
 
         private ROctree Add(ref RRenderNode o, BoundingBox bounds, Vector3 center, float radius)
         {
-            if (this.children != null)
+            if (children != null)
             {
                 // Find which child the object is closest to based on where the
                 // object's center is located in relation to the octree's center.
-                int index = (center.X <= this.center.X ? 0 : 1) +
-                    (center.Y >= this.center.Y ? 0 : 4) +
-                    (center.Z <= this.center.Z ? 0 : 2);
+                var index = (center.X <= this.center.X ? 0 : 1) +
+                            (center.Y >= this.center.Y ? 0 : 4) +
+                            (center.Z <= this.center.Z ? 0 : 2);
 
                 // Add the object to the child if it is fully contained within
                 // it.
-                if (this.children[index].bounds.Contains(bounds) == ContainmentType.Contains)
-                {
-                    return this.children[index].Add(ref o, bounds, center, radius);
-
-                }
+                if (children[index].bounds.Contains(bounds) == ContainmentType.Contains)
+                    return children[index].Add(ref o, bounds, center, radius);
             }
-            this.objects.Add(o);
+
+            objects.Add(o);
             return this;
         }
 
         public int Draw(Matrix view, Matrix projection, ref List<RSceneNode> objects)
         {
-            BoundingFrustum frustum = new BoundingFrustum(view * projection);
-            ContainmentType containment = frustum.Contains(this.bounds);
+            var frustum = new BoundingFrustum(view * projection);
+            var containment = frustum.Contains(bounds);
 
-            return this.Draw(frustum, view, projection, containment, ref objects);
+            return Draw(frustum, view, projection, containment, ref objects);
         }
 
         private int Draw(BoundingFrustum frustum, Matrix view, Matrix projection,
             ContainmentType containment, ref List<RSceneNode> objects)
         {
-            int count = 0;
+            var count = 0;
 
-            if (containment != ContainmentType.Contains)
-            {
-                containment = frustum.Contains(this.bounds);
-            }
+            if (containment != ContainmentType.Contains) containment = frustum.Contains(bounds);
 
             // Draw the octree only if it is atleast partially in view.
             if (containment != ContainmentType.Disjoint)
@@ -322,21 +311,14 @@ namespace Reactor
                 // Draw the octree's bounds if there are objects in the octree.
                 if (this.objects.Count > 0)
                 {
-                    foreach(var obj in this.objects)
-                    {
-                        obj.Render();
-                    }
+                    foreach (var obj in this.objects) obj.Render();
                     count++;
                 }
 
                 // Draw the octree's children.
-                if (this.children != null)
-                {
-                    foreach (ROctree child in this.children)
-                    {
+                if (children != null)
+                    foreach (var child in children)
                         count += child.Draw(frustum, view, projection, containment, ref objects);
-                    }
-                }
             }
 
             return count;
@@ -344,27 +326,26 @@ namespace Reactor
 
         private void Split(int maxDepth)
         {
-            this.children = new ROctree[ROctree.ChildCount];
-            int depth = this.depth + 1;
-            float quarter = this.length / this.looseness / 4f;
+            children = new ROctree[ChildCount];
+            var depth = this.depth + 1;
+            var quarter = length / looseness / 4f;
 
-            this.children[0] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(-quarter, quarter, -quarter));
-            this.children[1] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(quarter, quarter, -quarter));
-            this.children[2] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(-quarter, quarter, quarter));
-            this.children[3] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(quarter, quarter, quarter));
-            this.children[4] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(-quarter, -quarter, -quarter));
-            this.children[5] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(quarter, -quarter, -quarter));
-            this.children[6] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(-quarter, -quarter, quarter));
-            this.children[7] = new ROctree(this.worldSize, this.looseness,
-                maxDepth, depth, this.center + new Vector3(quarter, -quarter, quarter));
+            children[0] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(-quarter, quarter, -quarter));
+            children[1] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(quarter, quarter, -quarter));
+            children[2] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(-quarter, quarter, quarter));
+            children[3] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(quarter, quarter, quarter));
+            children[4] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(-quarter, -quarter, -quarter));
+            children[5] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(quarter, -quarter, -quarter));
+            children[6] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(-quarter, -quarter, quarter));
+            children[7] = new ROctree(worldSize, looseness,
+                maxDepth, depth, center + new Vector3(quarter, -quarter, quarter));
         }
-
     }
 }

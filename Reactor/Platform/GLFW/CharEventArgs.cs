@@ -31,7 +31,7 @@ namespace Reactor.Platform.GLFW
         /// <value>
         ///     The character.
         /// </value>
-        public string Char => char.ConvertFromUtf32(unchecked((int) CodePoint));
+        public string Char => char.ConvertFromUtf32(unchecked((int)CodePoint));
 
         /// <summary>
         ///     Gets the platform independent code point.

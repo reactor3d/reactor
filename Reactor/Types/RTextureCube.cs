@@ -23,36 +23,49 @@
 
 using System;
 using Reactor.Platform.OpenGL;
+using Reactor.Utilities;
 
 namespace Reactor.Types
 {
-    public class RTexture3D : RTexture
+    public class RTextureCube : RTexture
     {
-        private static uint[] uint1 = new uint[] { 0 };
-        public void Create(RPixelFormat format, ref RTexture2D posX, ref RTexture2D posY, ref RTexture2D posZ, ref RTexture2D negX, ref RTexture2D negY, ref RTexture2D negZ)
+        public RTexture NegativeX { get; }
+        public RTexture NegativeY { get; }
+        public RTexture NegativeZ { get; }
+        public RTexture PositiveX { get; }
+        public RTexture PositiveY { get; }
+        public RTexture PositiveZ { get; }
+
+        //private static uint[] uint1 = new uint[] { 0 };
+        public void Create(RPixelFormat format, ref RTexture2D posX, ref RTexture2D posY, ref RTexture2D posZ,
+            ref RTexture2D negX, ref RTexture2D negY, ref RTexture2D negZ)
         {
-            PixelInternalFormat inf = PixelInternalFormat.Rgba;
-            PixelFormat pf = PixelFormat.Rgba;
-            if(format == RPixelFormat.Bgr)
+            var inf = PixelInternalFormat.Rgba;
+            var pf = PixelFormat.Rgba;
+            if (format == RPixelFormat.Bgr)
             {
                 inf = PixelInternalFormat.Rgb;
                 pf = PixelFormat.Bgr;
             }
+
             if (format == RPixelFormat.Rgb)
             {
                 inf = PixelInternalFormat.Rgb;
                 pf = PixelFormat.Rgb;
             }
+
             if (format == RPixelFormat.Bgra)
             {
                 inf = PixelInternalFormat.Rgba;
                 pf = PixelFormat.Bgra;
             }
+
             if (format == RPixelFormat.Rgba)
             {
                 inf = PixelInternalFormat.Rgba;
                 pf = PixelFormat.Rgba;
             }
+
             GL.ActiveTexture(TextureUnit.Texture0);
             var posXcolors = posX.GetData<RColor>();
             var posYcolors = posY.GetData<RColor>();
@@ -62,8 +75,8 @@ namespace Reactor.Types
             var negZcolors = negZ.GetData<RColor>();
 
             Bounds = posX.Bounds;
-            GL.GenTextures(1, uint1);
-            Id = uint1[0];
+            GL.GenTextures(1, Allocator.UInt32_1);
+            Id = Allocator.UInt32_1[0];
             textureTarget = TextureTarget.TextureCubeMap;
             GL.BindTexture(textureTarget, Id);
             SetTextureMagFilter(RTextureMagFilter.Nearest);
@@ -74,32 +87,43 @@ namespace Reactor.Types
                 fixed (RColor* ptr = &posXcolors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, inf, Bounds.Width, Bounds.Height, 0, pf,
+                        PixelType.UnsignedByte, p);
                 }
+
                 fixed (RColor* ptr = &posYcolors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveY, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveY, 0, inf, Bounds.Width, Bounds.Height, 0, pf,
+                        PixelType.UnsignedByte, p);
                 }
+
                 fixed (RColor* ptr = &posZcolors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf,
+                        PixelType.UnsignedByte, p);
                 }
+
                 fixed (RColor* ptr = &negXcolors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeX, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeX, 0, inf, Bounds.Width, Bounds.Height, 0, pf,
+                        PixelType.UnsignedByte, p);
                 }
+
                 fixed (RColor* ptr = &negYcolors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeY, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeY, 0, inf, Bounds.Width, Bounds.Height, 0, pf,
+                        PixelType.UnsignedByte, p);
                 }
+
                 fixed (RColor* ptr = &negZcolors[0])
                 {
                     var p = new IntPtr(ptr);
-                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf, PixelType.UnsignedByte, p);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapNegativeZ, 0, inf, Bounds.Width, Bounds.Height, 0, pf,
+                        PixelType.UnsignedByte, p);
                 }
             }
         }

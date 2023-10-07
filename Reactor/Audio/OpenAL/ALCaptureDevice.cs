@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// Handle to an OpenAL capture device.
+    ///     Handle to an OpenAL capture device.
     /// </summary>
     public struct ALCaptureDevice : IEquatable<ALCaptureDevice>
     {
@@ -51,6 +51,9 @@ namespace Reactor.Audio.OpenAL
             return !(left == right);
         }
 
-        public static implicit operator IntPtr(ALCaptureDevice device) => device.Handle;
+        public static implicit operator IntPtr(ALCaptureDevice device)
+        {
+            return device.Handle;
+        }
     }
 }

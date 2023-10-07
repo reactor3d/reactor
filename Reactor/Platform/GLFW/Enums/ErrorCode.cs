@@ -10,8 +10,7 @@ namespace Reactor.Platform.GLFW
         /// <summary>
         ///     An unknown or undefined error.
         /// </summary>
-        [Obsolete("Use None")]
-        Unknown = 0x00000000,
+        [Obsolete("Use None")] Unknown = 0x00000000,
 
         /// <summary>
         ///     No error has occurred.

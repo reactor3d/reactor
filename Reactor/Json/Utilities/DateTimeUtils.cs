@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,12 +22,13 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Xml;
-using System.Globalization;
 
 namespace Newtonsoft.Json.Utilities
 {
@@ -70,7 +72,8 @@ namespace Newtonsoft.Json.Utilities
                 case DateTimeKind.Utc:
                     return XmlDateTimeSerializationMode.Utc;
                 default:
-                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(kind), kind, "Unexpected DateTimeKind value.");
+                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(kind), kind,
+                        "Unexpected DateTimeKind value.");
             }
         }
 #else
@@ -125,6 +128,7 @@ namespace Newtonsoft.Json.Utilities
                 case DateTimeKind.Local:
                     return value;
             }
+
             return value;
         }
 
@@ -141,15 +145,13 @@ namespace Newtonsoft.Json.Utilities
                 case DateTimeKind.Local:
                     return value.ToUniversalTime();
             }
+
             return value;
         }
 
         private static long ToUniversalTicks(DateTime dateTime)
         {
-            if (dateTime.Kind == DateTimeKind.Utc)
-            {
-                return dateTime.Ticks;
-            }
+            if (dateTime.Kind == DateTimeKind.Utc) return dateTime.Ticks;
 
             return ToUniversalTicks(dateTime, dateTime.GetUtcOffset());
         }
@@ -159,27 +161,19 @@ namespace Newtonsoft.Json.Utilities
             // special case min and max value
             // they never have a timezone appended to avoid issues
             if (dateTime.Kind == DateTimeKind.Utc || dateTime == DateTime.MaxValue || dateTime == DateTime.MinValue)
-            {
                 return dateTime.Ticks;
-            }
 
-            long ticks = dateTime.Ticks - offset.Ticks;
-            if (ticks > 3155378975999999999L)
-            {
-                return 3155378975999999999L;
-            }
+            var ticks = dateTime.Ticks - offset.Ticks;
+            if (ticks > 3155378975999999999L) return 3155378975999999999L;
 
-            if (ticks < 0L)
-            {
-                return 0L;
-            }
+            if (ticks < 0L) return 0L;
 
             return ticks;
         }
 
         internal static long ConvertDateTimeToJavaScriptTicks(DateTime dateTime, TimeSpan offset)
         {
-            long universialTicks = ToUniversalTicks(dateTime, offset);
+            var universialTicks = ToUniversalTicks(dateTime, offset);
 
             return UniversialTicksToJavaScriptTicks(universialTicks);
         }
@@ -191,36 +185,38 @@ namespace Newtonsoft.Json.Utilities
 
         internal static long ConvertDateTimeToJavaScriptTicks(DateTime dateTime, bool convertToUtc)
         {
-            long ticks = (convertToUtc) ? ToUniversalTicks(dateTime) : dateTime.Ticks;
+            var ticks = convertToUtc ? ToUniversalTicks(dateTime) : dateTime.Ticks;
 
             return UniversialTicksToJavaScriptTicks(ticks);
         }
 
         private static long UniversialTicksToJavaScriptTicks(long universialTicks)
         {
-            long javaScriptTicks = (universialTicks - InitialJavaScriptDateTicks) / 10000;
+            var javaScriptTicks = (universialTicks - InitialJavaScriptDateTicks) / 10000;
 
             return javaScriptTicks;
         }
 
         internal static DateTime ConvertJavaScriptTicksToDateTime(long javaScriptTicks)
         {
-            DateTime dateTime = new DateTime((javaScriptTicks * 10000) + InitialJavaScriptDateTicks, DateTimeKind.Utc);
+            var dateTime = new DateTime(javaScriptTicks * 10000 + InitialJavaScriptDateTicks, DateTimeKind.Utc);
 
             return dateTime;
         }
 
         #region Parse
-        internal static bool TryParseDateTimeIso(StringReference text, DateTimeZoneHandling dateTimeZoneHandling, out DateTime dt)
+
+        internal static bool TryParseDateTimeIso(StringReference text, DateTimeZoneHandling dateTimeZoneHandling,
+            out DateTime dt)
         {
-            DateTimeParser dateTimeParser = new DateTimeParser();
+            var dateTimeParser = new DateTimeParser();
             if (!dateTimeParser.Parse(text.Chars, text.StartIndex, text.Length))
             {
                 dt = default;
                 return false;
             }
 
-            DateTime d = CreateDateTime(dateTimeParser);
+            var d = CreateDateTime(dateTimeParser);
 
             long ticks;
 
@@ -232,7 +228,7 @@ namespace Newtonsoft.Json.Utilities
 
                 case ParserTimeZone.LocalWestOfUtc:
                 {
-                    TimeSpan offset = new TimeSpan(dateTimeParser.ZoneHour, dateTimeParser.ZoneMinute, 0);
+                    var offset = new TimeSpan(dateTimeParser.ZoneHour, dateTimeParser.ZoneMinute, 0);
                     ticks = d.Ticks + offset.Ticks;
                     if (ticks <= DateTime.MaxValue.Ticks)
                     {
@@ -241,18 +237,16 @@ namespace Newtonsoft.Json.Utilities
                     else
                     {
                         ticks += d.GetUtcOffset().Ticks;
-                        if (ticks > DateTime.MaxValue.Ticks)
-                        {
-                            ticks = DateTime.MaxValue.Ticks;
-                        }
+                        if (ticks > DateTime.MaxValue.Ticks) ticks = DateTime.MaxValue.Ticks;
 
                         d = new DateTime(ticks, DateTimeKind.Local);
                     }
+
                     break;
                 }
                 case ParserTimeZone.LocalEastOfUtc:
                 {
-                    TimeSpan offset = new TimeSpan(dateTimeParser.ZoneHour, dateTimeParser.ZoneMinute, 0);
+                    var offset = new TimeSpan(dateTimeParser.ZoneHour, dateTimeParser.ZoneMinute, 0);
                     ticks = d.Ticks - offset.Ticks;
                     if (ticks >= DateTime.MinValue.Ticks)
                     {
@@ -261,13 +255,11 @@ namespace Newtonsoft.Json.Utilities
                     else
                     {
                         ticks += d.GetUtcOffset().Ticks;
-                        if (ticks < DateTime.MinValue.Ticks)
-                        {
-                            ticks = DateTime.MinValue.Ticks;
-                        }
+                        if (ticks < DateTime.MinValue.Ticks) ticks = DateTime.MinValue.Ticks;
 
                         d = new DateTime(ticks, DateTimeKind.Local);
                     }
+
                     break;
                 }
             }
@@ -331,69 +323,57 @@ namespace Newtonsoft.Json.Utilities
                 is24Hour = false;
             }
 
-            DateTime d = new DateTime(dateTimeParser.Year, dateTimeParser.Month, dateTimeParser.Day, dateTimeParser.Hour, dateTimeParser.Minute, dateTimeParser.Second);
+            var d = new DateTime(dateTimeParser.Year, dateTimeParser.Month, dateTimeParser.Day, dateTimeParser.Hour,
+                dateTimeParser.Minute, dateTimeParser.Second);
             d = d.AddTicks(dateTimeParser.Fraction);
 
-            if (is24Hour)
-            {
-                d = d.AddDays(1);
-            }
+            if (is24Hour) d = d.AddDays(1);
             return d;
         }
 
-        internal static bool TryParseDateTime(StringReference s, DateTimeZoneHandling dateTimeZoneHandling, string? dateFormatString, CultureInfo culture, out DateTime dt)
+        internal static bool TryParseDateTime(StringReference s, DateTimeZoneHandling dateTimeZoneHandling,
+            string? dateFormatString, CultureInfo culture, out DateTime dt)
         {
             if (s.Length > 0)
             {
-                int i = s.StartIndex;
+                var i = s.StartIndex;
                 if (s[i] == '/')
                 {
                     if (s.Length >= 9 && s.StartsWith("/Date(") && s.EndsWith(")/"))
-                    {
                         if (TryParseDateTimeMicrosoft(s, dateTimeZoneHandling, out dt))
-                        {
                             return true;
-                        }
-                    }
                 }
                 else if (s.Length >= 19 && s.Length <= 40 && char.IsDigit(s[i]) && s[i + 10] == 'T')
                 {
-                    if (TryParseDateTimeIso(s, dateTimeZoneHandling, out dt))
-                    {
-                        return true;
-                    }
+                    if (TryParseDateTimeIso(s, dateTimeZoneHandling, out dt)) return true;
                 }
 
                 if (!StringUtils.IsNullOrEmpty(dateFormatString))
-                {
                     if (TryParseDateTimeExact(s.ToString(), dateTimeZoneHandling, dateFormatString, culture, out dt))
-                    {
                         return true;
-                    }
-                }
             }
 
             dt = default;
             return false;
         }
 
-        internal static bool TryParseDateTime(string s, DateTimeZoneHandling dateTimeZoneHandling, string? dateFormatString, CultureInfo culture, out DateTime dt)
+        internal static bool TryParseDateTime(string s, DateTimeZoneHandling dateTimeZoneHandling,
+            string? dateFormatString, CultureInfo culture, out DateTime dt)
         {
             if (s.Length > 0)
             {
                 if (s[0] == '/')
                 {
-                    if (s.Length >= 9 && s.StartsWith("/Date(", StringComparison.Ordinal) && s.EndsWith(")/", StringComparison.Ordinal))
-                    {
-                        if (TryParseDateTimeMicrosoft(new StringReference(s.ToCharArray(), 0, s.Length), dateTimeZoneHandling, out dt))
-                        {
+                    if (s.Length >= 9 && s.StartsWith("/Date(", StringComparison.Ordinal) &&
+                        s.EndsWith(")/", StringComparison.Ordinal))
+                        if (TryParseDateTimeMicrosoft(new StringReference(s.ToCharArray(), 0, s.Length),
+                                dateTimeZoneHandling, out dt))
                             return true;
-                        }
-                    }
                 }
                 else if (s.Length >= 19 && s.Length <= 40 && char.IsDigit(s[0]) && s[10] == 'T')
                 {
-                    if (DateTime.TryParseExact(s, IsoDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out dt))
+                    if (DateTime.TryParseExact(s, IsoDateFormat, CultureInfo.InvariantCulture,
+                            DateTimeStyles.RoundtripKind, out dt))
                     {
                         dt = EnsureDateTime(dt, dateTimeZoneHandling);
                         return true;
@@ -401,12 +381,8 @@ namespace Newtonsoft.Json.Utilities
                 }
 
                 if (!StringUtils.IsNullOrEmpty(dateFormatString))
-                {
                     if (TryParseDateTimeExact(s, dateTimeZoneHandling, dateFormatString, culture, out dt))
-                    {
                         return true;
-                    }
-                }
             }
 
             dt = default;
@@ -489,16 +465,14 @@ namespace Newtonsoft.Json.Utilities
         }
 #endif
 
-        private static bool TryParseMicrosoftDate(StringReference text, out long ticks, out TimeSpan offset, out DateTimeKind kind)
+        private static bool TryParseMicrosoftDate(StringReference text, out long ticks, out TimeSpan offset,
+            out DateTimeKind kind)
         {
             kind = DateTimeKind.Utc;
 
-            int index = text.IndexOf('+', 7, text.Length - 8);
+            var index = text.IndexOf('+', 7, text.Length - 8);
 
-            if (index == -1)
-            {
-                index = text.IndexOf('-', 7, text.Length - 8);
-            }
+            if (index == -1) index = text.IndexOf('-', 7, text.Length - 8);
 
             if (index != -1)
             {
@@ -516,18 +490,20 @@ namespace Newtonsoft.Json.Utilities
                 index = text.Length - 2;
             }
 
-            return (ConvertUtils.Int64TryParse(text.Chars, 6 + text.StartIndex, index - 6, out ticks) == ParseResult.Success);
+            return ConvertUtils.Int64TryParse(text.Chars, 6 + text.StartIndex, index - 6, out ticks) ==
+                   ParseResult.Success;
         }
 
-        private static bool TryParseDateTimeMicrosoft(StringReference text, DateTimeZoneHandling dateTimeZoneHandling, out DateTime dt)
+        private static bool TryParseDateTimeMicrosoft(StringReference text, DateTimeZoneHandling dateTimeZoneHandling,
+            out DateTime dt)
         {
-            if (!TryParseMicrosoftDate(text, out long ticks, out _, out DateTimeKind kind))
+            if (!TryParseMicrosoftDate(text, out var ticks, out _, out var kind))
             {
                 dt = default;
                 return false;
             }
 
-            DateTime utcDateTime = ConvertJavaScriptTicksToDateTime(ticks);
+            var utcDateTime = ConvertJavaScriptTicksToDateTime(ticks);
 
             switch (kind)
             {
@@ -546,9 +522,10 @@ namespace Newtonsoft.Json.Utilities
             return true;
         }
 
-        private static bool TryParseDateTimeExact(string text, DateTimeZoneHandling dateTimeZoneHandling, string dateFormatString, CultureInfo culture, out DateTime dt)
+        private static bool TryParseDateTimeExact(string text, DateTimeZoneHandling dateTimeZoneHandling,
+            string dateFormatString, CultureInfo culture, out DateTime dt)
         {
-            if (DateTime.TryParseExact(text, dateFormatString, culture, DateTimeStyles.RoundtripKind, out DateTime temp))
+            if (DateTime.TryParseExact(text, dateFormatString, culture, DateTimeStyles.RoundtripKind, out var temp))
             {
                 temp = EnsureDateTime(temp, dateTimeZoneHandling);
                 dt = temp;
@@ -589,41 +566,39 @@ namespace Newtonsoft.Json.Utilities
 
         private static bool TryReadOffset(StringReference offsetText, int startIndex, out TimeSpan offset)
         {
-            bool negative = (offsetText[startIndex] == '-');
+            var negative = offsetText[startIndex] == '-';
 
-            if (ConvertUtils.Int32TryParse(offsetText.Chars, startIndex + 1, 2, out int hours) != ParseResult.Success)
+            if (ConvertUtils.Int32TryParse(offsetText.Chars, startIndex + 1, 2, out var hours) != ParseResult.Success)
             {
                 offset = default;
                 return false;
             }
 
-            int minutes = 0;
+            var minutes = 0;
             if (offsetText.Length - startIndex > 5)
-            {
                 if (ConvertUtils.Int32TryParse(offsetText.Chars, startIndex + 3, 2, out minutes) != ParseResult.Success)
                 {
                     offset = default;
                     return false;
                 }
-            }
 
             offset = TimeSpan.FromHours(hours) + TimeSpan.FromMinutes(minutes);
-            if (negative)
-            {
-                offset = offset.Negate();
-            }
+            if (negative) offset = offset.Negate();
 
             return true;
         }
+
         #endregion
 
         #region Write
-        internal static void WriteDateTimeString(TextWriter writer, DateTime value, DateFormatHandling format, string? formatString, CultureInfo culture)
+
+        internal static void WriteDateTimeString(TextWriter writer, DateTime value, DateFormatHandling format,
+            string? formatString, CultureInfo culture)
         {
             if (StringUtils.IsNullOrEmpty(formatString))
             {
-                char[] chars = new char[64];
-                int pos = WriteDateTimeString(chars, 0, value, null, value.Kind, format);
+                var chars = new char[64];
+                var pos = WriteDateTimeString(chars, 0, value, null, value.Kind, format);
                 writer.Write(chars, 0, pos);
             }
             else
@@ -632,20 +607,21 @@ namespace Newtonsoft.Json.Utilities
             }
         }
 
-        internal static int WriteDateTimeString(char[] chars, int start, DateTime value, TimeSpan? offset, DateTimeKind kind, DateFormatHandling format)
+        internal static int WriteDateTimeString(char[] chars, int start, DateTime value, TimeSpan? offset,
+            DateTimeKind kind, DateFormatHandling format)
         {
-            int pos = start;
+            var pos = start;
 
             if (format == DateFormatHandling.MicrosoftDateFormat)
             {
-                TimeSpan o = offset ?? value.GetUtcOffset();
+                var o = offset ?? value.GetUtcOffset();
 
-                long javaScriptTicks = ConvertDateTimeToJavaScriptTicks(value, o);
+                var javaScriptTicks = ConvertDateTimeToJavaScriptTicks(value, o);
 
                 @"\/Date(".CopyTo(0, chars, pos, 7);
                 pos += 7;
 
-                string ticksText = javaScriptTicks.ToString(CultureInfo.InvariantCulture);
+                var ticksText = javaScriptTicks.ToString(CultureInfo.InvariantCulture);
                 ticksText.CopyTo(0, chars, pos, ticksText.Length);
                 pos += ticksText.Length;
 
@@ -653,9 +629,7 @@ namespace Newtonsoft.Json.Utilities
                 {
                     case DateTimeKind.Unspecified:
                         if (value != DateTime.MaxValue && value != DateTime.MinValue)
-                        {
                             pos = WriteDateTimeOffset(chars, pos, o, format);
-                        }
                         break;
                     case DateTimeKind.Local:
                         pos = WriteDateTimeOffset(chars, pos, o, format);
@@ -685,9 +659,9 @@ namespace Newtonsoft.Json.Utilities
 
         internal static int WriteDefaultIsoDate(char[] chars, int start, DateTime dt)
         {
-            int length = 19;
+            var length = 19;
 
-            GetDateValues(dt, out int year, out int month, out int day);
+            GetDateValues(dt, out var year, out var month, out var day);
 
             CopyIntToCharArray(chars, start, year, 4);
             chars[start + 4] = '-';
@@ -701,12 +675,12 @@ namespace Newtonsoft.Json.Utilities
             chars[start + 16] = ':';
             CopyIntToCharArray(chars, start + 17, dt.Second, 2);
 
-            int fraction = (int)(dt.Ticks % 10000000L);
+            var fraction = (int)(dt.Ticks % 10000000L);
 
             if (fraction != 0)
             {
-                int digits = 7;
-                while ((fraction % 10) == 0)
+                var digits = 7;
+                while (fraction % 10 == 0)
                 {
                     digits--;
                     fraction /= 10;
@@ -725,25 +699,22 @@ namespace Newtonsoft.Json.Utilities
         {
             while (digits-- != 0)
             {
-                chars[start + digits] = (char)((value % 10) + 48);
+                chars[start + digits] = (char)(value % 10 + 48);
                 value /= 10;
             }
         }
 
         internal static int WriteDateTimeOffset(char[] chars, int start, TimeSpan offset, DateFormatHandling format)
         {
-            chars[start++] = (offset.Ticks >= 0L) ? '+' : '-';
+            chars[start++] = offset.Ticks >= 0L ? '+' : '-';
 
-            int absHours = Math.Abs(offset.Hours);
+            var absHours = Math.Abs(offset.Hours);
             CopyIntToCharArray(chars, start, absHours, 2);
             start += 2;
 
-            if (format == DateFormatHandling.IsoDateFormat)
-            {
-                chars[start++] = ':';
-            }
+            if (format == DateFormatHandling.IsoDateFormat) chars[start++] = ':';
 
-            int absMinutes = Math.Abs(offset.Minutes);
+            var absMinutes = Math.Abs(offset.Minutes);
             CopyIntToCharArray(chars, start, absMinutes, 2);
             start += 2;
 
@@ -756,7 +727,8 @@ namespace Newtonsoft.Json.Utilities
             if (StringUtils.IsNullOrEmpty(formatString))
             {
                 char[] chars = new char[64];
-                int pos = WriteDateTimeString(chars, 0, (format == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, format);
+                int pos =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      WriteDateTimeString(chars, 0, (format == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, format);
 
                 writer.Write(chars, 0, pos);
             }
@@ -766,37 +738,32 @@ namespace Newtonsoft.Json.Utilities
             }
         }
 #endif
+
         #endregion
 
         private static void GetDateValues(DateTime td, out int year, out int month, out int day)
         {
-            long ticks = td.Ticks;
+            var ticks = td.Ticks;
             // n = number of days since 1/1/0001
-            int n = (int)(ticks / TicksPerDay);
+            var n = (int)(ticks / TicksPerDay);
             // y400 = number of whole 400-year periods since 1/1/0001
-            int y400 = n / DaysPer400Years;
+            var y400 = n / DaysPer400Years;
             // n = day number within 400-year period
             n -= y400 * DaysPer400Years;
             // y100 = number of whole 100-year periods within 400-year period
-            int y100 = n / DaysPer100Years;
+            var y100 = n / DaysPer100Years;
             // Last 100-year period has an extra day, so decrement result if 4
-            if (y100 == 4)
-            {
-                y100 = 3;
-            }
+            if (y100 == 4) y100 = 3;
             // n = day number within 100-year period
             n -= y100 * DaysPer100Years;
             // y4 = number of whole 4-year periods within 100-year period
-            int y4 = n / DaysPer4Years;
+            var y4 = n / DaysPer4Years;
             // n = day number within 4-year period
             n -= y4 * DaysPer4Years;
             // y1 = number of whole years within 4-year period
-            int y1 = n / DaysPerYear;
+            var y1 = n / DaysPerYear;
             // Last year has an extra day, so decrement result if 4
-            if (y1 == 4)
-            {
-                y1 = 3;
-            }
+            if (y1 == 4) y1 = 3;
 
             year = y400 * 400 + y100 * 100 + y4 * 4 + y1 + 1;
 
@@ -805,16 +772,13 @@ namespace Newtonsoft.Json.Utilities
 
             // Leap year calculation looks different from IsLeapYear since y1, y4,
             // and y100 are relative to year 1, not year 0
-            bool leapYear = y1 == 3 && (y4 != 24 || y100 == 3);
-            int[] days = leapYear ? DaysToMonth366 : DaysToMonth365;
+            var leapYear = y1 == 3 && (y4 != 24 || y100 == 3);
+            var days = leapYear ? DaysToMonth366 : DaysToMonth365;
             // All months have less than 32 days, so n >> 5 is a good conservative
             // estimate for the month
-            int m = n >> 5 + 1;
+            var m = n >> (5 + 1);
             // m = 1-based month number
-            while (n >= days[m])
-            {
-                m++;
-            }
+            while (n >= days[m]) m++;
 
             month = m;
 

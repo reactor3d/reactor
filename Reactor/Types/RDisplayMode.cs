@@ -20,72 +20,49 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+using Reactor.Math;
 
 namespace Reactor.Types
 {
     public class RDisplayMode
     {
+        #region Constructors
+
+        public RDisplayMode(int width, int height, int refreshRate)
+        {
+            Width = width;
+            Height = height;
+            RefreshRate = refreshRate;
+            //this.format = format;
+        }
+
+        #endregion Constructors
+
         #region Fields
 
         //private RSurfaceFormat format;
-        private int height;
-        private int refreshRate;
-        private int width;
 
         #endregion Fields
 
         #region Properties
 
-        public float AspectRatio
-        {
-            get { return (float)width / (float)height; }
-        }
+        public float AspectRatio => Width / (float)Height;
 
         /*public RSurfaceFormat Format
         {
             get { return format; }
         }*/
 
-        public int Height
-        {
-            get { return this.height; }
-        }
+        public int Height { get; }
 
-        public int RefreshRate
-        {
-            get { return this.refreshRate; }
-        }
+        public int RefreshRate { get; }
 
-        public int Width
-        {
-            get { return this.width; }
-        }
+        public int Width { get; }
 
-        public Rectangle TitleSafeArea
-        {
-            get { return new Rectangle(0, 0, Width, Height); }
-        }
+        public Rectangle TitleSafeArea => new Rectangle(0, 0, Width, Height);
 
         #endregion Properties
-
-        #region Constructors
-
-        public RDisplayMode(int width, int height, int refreshRate)
-        {
-            this.width = width;
-            this.height = height;
-            this.refreshRate = refreshRate;
-            //this.format = format;
-        }
-
-        #endregion Constructors
 
         #region Operators
 
@@ -97,17 +74,12 @@ namespace Reactor.Types
         public static bool operator ==(RDisplayMode left, RDisplayMode right)
         {
             if (ReferenceEquals(left, right)) //Same object or both are null
-            {
                 return true;
-            }
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-            {
-                return false;
-            }
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null)) return false;
             return
-                (left.height == right.height) &&
-                (left.refreshRate == right.refreshRate) &&
-                (left.width == right.width);
+                left.Height == right.Height &&
+                left.RefreshRate == right.RefreshRate &&
+                left.Width == right.Width;
         }
 
         #endregion Operators
@@ -121,12 +93,12 @@ namespace Reactor.Types
 
         public override int GetHashCode()
         {
-            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ this.refreshRate.GetHashCode());
+            return Width.GetHashCode() ^ Height.GetHashCode() ^ RefreshRate.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "{{Width:" + this.width + " Height:" + this.height + " RefreshRate:" + this.refreshRate + "}}";
+            return "{{Width:" + Width + " Height:" + Height + " RefreshRate:" + RefreshRate + "}}";
         }
 
         #endregion Public Methods

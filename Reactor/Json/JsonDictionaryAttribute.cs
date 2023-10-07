@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,20 +30,20 @@ using System;
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Instructs the <see cref="JsonSerializer"/> how to serialize the collection.
+    ///     Instructs the <see cref="JsonSerializer" /> how to serialize the collection.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public sealed class JsonDictionaryAttribute : JsonContainerAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonDictionaryAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="JsonDictionaryAttribute" /> class.
         /// </summary>
         public JsonDictionaryAttribute()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonDictionaryAttribute"/> class with the specified container Id.
+        ///     Initializes a new instance of the <see cref="JsonDictionaryAttribute" /> class with the specified container Id.
         /// </summary>
         /// <param name="id">The container Id.</param>
         public JsonDictionaryAttribute(string id)

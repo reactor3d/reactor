@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,31 +22,28 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-#endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+#endregion
 
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Specifies metadata property handling options for the <see cref="JsonSerializer"/>.
+    ///     Specifies metadata property handling options for the <see cref="JsonSerializer" />.
     /// </summary>
     public enum MetadataPropertyHandling
     {
         /// <summary>
-        /// Read metadata properties located at the start of a JSON object.
+        ///     Read metadata properties located at the start of a JSON object.
         /// </summary>
         Default = 0,
 
         /// <summary>
-        /// Read metadata properties located anywhere in a JSON object. Note that this setting will impact performance.
+        ///     Read metadata properties located anywhere in a JSON object. Note that this setting will impact performance.
         /// </summary>
         ReadAhead = 1,
 
         /// <summary>
-        /// Do not try to read metadata properties.
+        ///     Do not try to read metadata properties.
         /// </summary>
         Ignore = 2
     }

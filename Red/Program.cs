@@ -1,17 +1,15 @@
 ﻿using System;
 
-namespace Red
-{
+namespace Red;
 
-    class Program
+internal class Program
+{
+    [STAThread]
+    private static void Main(string[] args)
     {
-        [STAThread]
-        static void Main(string[] args)
+        using (var app = new RedApp())
         {
-            using (var app = new RedApp())
-            {
-                app.Run();
-            }
+            app.Run();
         }
     }
 }

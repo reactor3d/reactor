@@ -20,39 +20,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Runtime.InteropServices;
 using Reactor.Platform;
 using Reactor.Platform.OpenGL;
+using Reactor.Utilities;
 
 namespace Reactor.Geometry
 {
     public class RVertexBuffer : IDisposable
     {
-        uint vbo;
-        uint vao;
         internal bool _isDynamic;
         internal bool IsDisposed;
 
-        public int VertexCount { get; private set; }
-        public RVertexDeclaration VertexDeclaration { get; private set; }
-        public RBufferUsage BufferUsage { get; private set; }
-
-        public uint VBO
+        public RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage,
+            bool dynamic)
         {
-            get { return vbo; }
-        }
-        public uint VAO
-        {
-            get { return vao; }
-        }
-        public RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage, bool dynamic)
-        {
-            if(vertexDeclaration == null)
+            if (vertexDeclaration == null)
                 throw new ArgumentNullException("vertexDeclaration", "vertexDeclaration not set! was null.");
-            this.VertexDeclaration = vertexDeclaration;
-            this.VertexCount = vertexCount;
-            this.BufferUsage = bufferUsage;
+            VertexDeclaration = vertexDeclaration;
+            VertexCount = vertexCount;
+            BufferUsage = bufferUsage;
 
             _isDynamic = dynamic;
 
@@ -60,120 +49,141 @@ namespace Reactor.Geometry
         }
 
         public RVertexBuffer(Type type, int vertexCount, RBufferUsage bufferUsage, bool dynamic) :
-        this(RVertexDeclaration.FromType(type), vertexCount, bufferUsage, dynamic)
+            this(RVertexDeclaration.FromType(type), vertexCount, bufferUsage, dynamic)
         {
-
         }
 
         public RVertexBuffer(RVertexDeclaration vertexDeclaration, int vertexCount, RBufferUsage bufferUsage) :
-        this(vertexDeclaration, vertexCount, bufferUsage, false)
+            this(vertexDeclaration, vertexCount, bufferUsage, false)
         {
         }
 
         public RVertexBuffer(Type type, int vertexCount, RBufferUsage bufferUsage) :
-        this(RVertexDeclaration.FromType(type), vertexCount, bufferUsage, false)
+            this(RVertexDeclaration.FromType(type), vertexCount, bufferUsage, false)
         {
+        }
+
+        public int VertexCount { get; }
+        public RVertexDeclaration VertexDeclaration { get; }
+        public RBufferUsage BufferUsage { get; }
+
+        public uint VBO { get; private set; }
+
+        public uint VAO { get; private set; }
+
+        public void Dispose()
+        {
+            if (!IsDisposed)
+                Threading.BlockOnUIThread(() =>
+                {
+                    Allocator.UInt32_1[0] = VBO;
+                    GL.DeleteBuffers(1, Allocator.UInt32_1);
+                    REngine.CheckGLError();
+                });
+            IsDisposed = true;
         }
 
         /// <summary>
-        /// The GraphicsDevice is resetting, so GPU resources must be recreated.
+        ///     The GraphicsDevice is resetting, so GPU resources must be recreated.
         /// </summary>
-        internal protected void GraphicsDeviceResetting()
+        protected internal void GraphicsDeviceResetting()
         {
-            vbo = 0;
+            VBO = 0;
         }
 
-        public void GetData<T> (int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct
+        public void GetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride)
+            where T : struct
         {
             if (data == null)
                 throw new ArgumentNullException("data", "This method does not accept null for this parameter.");
-            if (data.Length < (startIndex + elementCount))
-                throw new ArgumentOutOfRangeException("elementCount", "This parameter must be a valid index within the array.");
+            if (data.Length < startIndex + elementCount)
+                throw new ArgumentOutOfRangeException("elementCount",
+                    "This parameter must be a valid index within the array.");
             if (BufferUsage == RBufferUsage.WriteOnly)
-                throw new NotSupportedException("Calling GetData on a resource that was created with BufferUsage.WriteOnly is not supported.");
-            if ((elementCount * vertexStride) > (VertexCount * VertexDeclaration.VertexStride))
-                throw new InvalidOperationException("The array is not the correct size for the amount of data requested.");
+                throw new NotSupportedException(
+                    "Calling GetData on a resource that was created with BufferUsage.WriteOnly is not supported.");
+            if (elementCount * vertexStride > VertexCount * VertexDeclaration.VertexStride)
+                throw new InvalidOperationException(
+                    "The array is not the correct size for the amount of data requested.");
 
             if (Threading.IsOnUIThread())
-            {
                 GetBufferData(offsetInBytes, data, startIndex, elementCount, vertexStride);
-            }
             else
-            {
-                Threading.BlockOnUIThread (() => GetBufferData(offsetInBytes, data, startIndex, elementCount, vertexStride));
-            }
+                Threading.BlockOnUIThread(() =>
+                    GetBufferData(offsetInBytes, data, startIndex, elementCount, vertexStride));
         }
 
         public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
             var elementSizeInByte = Marshal.SizeOf(typeof(T));
-            this.GetData<T>(0, data, startIndex, elementCount, elementSizeInByte);
+            GetData(0, data, startIndex, elementCount, elementSizeInByte);
         }
 
         public void GetData<T>(T[] data) where T : struct
         {
             var elementSizeInByte = Marshal.SizeOf(typeof(T));
-            this.GetData<T>(0, data, 0, data.Length, elementSizeInByte);
+            GetData(0, data, 0, data.Length, elementSizeInByte);
         }
 
-        public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct
+        public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride)
+            where T : struct
         {
-            SetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, VertexDeclaration.VertexStride, RVertexDataOptions.None);
+            SetDataInternal(offsetInBytes, data, startIndex, elementCount, VertexDeclaration.VertexStride,
+                RVertexDataOptions.None);
         }
 
         public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
-            SetDataInternal<T>(0, data, startIndex, elementCount, VertexDeclaration.VertexStride, RVertexDataOptions.None);
+            SetDataInternal(0, data, startIndex, elementCount, VertexDeclaration.VertexStride, RVertexDataOptions.None);
         }
 
         public void SetData<T>(T[] data) where T : struct
         {
-            SetDataInternal<T>(0, data, 0, data.Length, VertexDeclaration.VertexStride, RVertexDataOptions.None);
+            SetDataInternal(0, data, 0, data.Length, VertexDeclaration.VertexStride, RVertexDataOptions.None);
         }
 
-        protected void SetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, RVertexDataOptions options) where T : struct
+        protected void SetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount,
+            int vertexStride, RVertexDataOptions options) where T : struct
         {
             if (data == null)
                 throw new ArgumentNullException("data is null");
-            if (data.Length < (startIndex + elementCount))
-                throw new InvalidOperationException("The array specified in the data parameter is not the correct size for the amount of data requested.");
+            if (data.Length < startIndex + elementCount)
+                throw new InvalidOperationException(
+                    "The array specified in the data parameter is not the correct size for the amount of data requested.");
 
             var bufferSize = VertexCount * VertexDeclaration.VertexStride;
 
-            if ((vertexStride > bufferSize) || (vertexStride < VertexDeclaration.VertexStride))
-                throw new ArgumentOutOfRangeException("One of the following conditions is true:\nThe vertex stride is larger than the vertex buffer.\nThe vertex stride is too small for the type of data requested.");
+            if (vertexStride > bufferSize || vertexStride < VertexDeclaration.VertexStride)
+                throw new ArgumentOutOfRangeException(
+                    "One of the following conditions is true:\nThe vertex stride is larger than the vertex buffer.\nThe vertex stride is too small for the type of data requested.");
 
             var elementSizeInBytes = Marshal.SizeOf(typeof(T));
 
             if (Threading.IsOnUIThread())
-            {
-                SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data, startIndex, elementCount, vertexStride, options);
-            }
+                SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data, startIndex, elementCount,
+                    vertexStride, options);
             else
-            {
-                Threading.BlockOnUIThread(() => SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data, startIndex, elementCount, vertexStride, options));
-            }
+                Threading.BlockOnUIThread(() => SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data,
+                    startIndex, elementCount, vertexStride, options));
         }
 
         /// <summary>
-        /// If the VBO does not exist, create it.
+        ///     If the VBO does not exist, create it.
         /// </summary>
-        void GenerateIfRequired()
+        private void GenerateIfRequired()
         {
-
-            if (vbo == 0)
+            if (VBO == 0)
             {
-                var uidx = new uint[1] { 0 };
-                GL.GenVertexArrays(1, uidx);
-                vao = uidx[0];
+                GL.GenVertexArrays(1, Allocator.UInt32_1);
+                VAO = Allocator.UInt32_1[0];
                 REngine.CheckGLError();
-                GL.BindVertexArray(this.vao);
+                GL.BindVertexArray(VAO);
                 REngine.CheckGLError();
 
-                GL.GenBuffers(1, uidx);
-                vbo = uidx[0];
+                GL.GenBuffers(1, Allocator.UInt32_1);
+                VBO = Allocator.UInt32_1[0];
                 REngine.CheckGLError();
-                GL.BindBuffer(BufferTarget.ArrayBuffer, this.vbo);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
                 REngine.CheckGLError();
                 GL.BufferData(BufferTarget.ArrayBuffer,
                     new IntPtr(VertexDeclaration.VertexStride * VertexCount), IntPtr.Zero,
@@ -183,68 +193,71 @@ namespace Reactor.Geometry
         }
 
 
-
-        private void GetBufferData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct
+        private void GetBufferData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride)
+            where T : struct
         {
-            GL.BindBuffer (BufferTarget.ArrayBuffer, vbo);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             REngine.CheckGLError();
             var elementSizeInByte = Marshal.SizeOf(typeof(T));
-            IntPtr ptr = GL.MapBuffer (BufferTarget.ArrayBuffer, BufferAccess.ReadOnly);
+            var ptr = GL.MapBuffer(BufferTarget.ArrayBuffer, BufferAccess.ReadOnly);
             REngine.CheckGLError();
             // Pointer to the start of data to read in the index buffer
-            ptr = new IntPtr (ptr.ToInt64 () + offsetInBytes);
-            if (typeof(T) == typeof(byte)) {
-                byte[] buffer = data as byte[];
+            ptr = new IntPtr(ptr.ToInt64() + offsetInBytes);
+            if (typeof(T) == typeof(byte))
+            {
+                var buffer = data as byte[];
                 // If data is already a byte[] we can skip the temporary buffer
                 // Copy from the vertex buffer to the destination array
-                Marshal.Copy (ptr, buffer, 0, buffer.Length);
-            } else {
+                Marshal.Copy(ptr, buffer, 0, buffer.Length);
+            }
+            else
+            {
                 // Temporary buffer to store the copied section of data
-                byte[] buffer = new byte[elementCount * vertexStride - offsetInBytes];
+                var buffer = new byte[elementCount * vertexStride - offsetInBytes];
                 // Copy from the vertex buffer to the temporary buffer
                 Marshal.Copy(ptr, buffer, 0, buffer.Length);
 
-                var dataHandle = GCHandle.Alloc (data, GCHandleType.Pinned);
-                var dataPtr = (IntPtr)(dataHandle.AddrOfPinnedObject ().ToInt64 () + startIndex * elementSizeInByte);
+                var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
+                var dataPtr = (IntPtr)(dataHandle.AddrOfPinnedObject().ToInt64() + startIndex * elementSizeInByte);
 
                 // Copy from the temporary buffer to the destination array
 
-                int dataSize = Marshal.SizeOf(typeof(T));
+                var dataSize = Marshal.SizeOf(typeof(T));
                 if (dataSize == vertexStride)
                     Marshal.Copy(buffer, 0, dataPtr, buffer.Length);
                 else
-                {
                     // If the user is asking for a specific element within the vertex buffer, copy them one by one...
-                    for (int i = 0; i < elementCount; i++)
+                    for (var i = 0; i < elementCount; i++)
                     {
                         Marshal.Copy(buffer, i * vertexStride, dataPtr, dataSize);
                         dataPtr = (IntPtr)(dataPtr.ToInt64() + dataSize);
                     }
-                }
 
-                dataHandle.Free ();
+                dataHandle.Free();
 
                 //Buffer.BlockCopy(buffer, 0, data, startIndex * elementSizeInByte, elementCount * elementSizeInByte);
             }
+
             GL.UnmapBuffer(BufferTarget.ArrayBuffer);
             REngine.CheckGLError();
         }
-            
 
-        private void SetBufferData<T>(int bufferSize, int elementSizeInBytes, int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, RVertexDataOptions options) where T : struct
+
+        private void SetBufferData<T>(int bufferSize, int elementSizeInBytes, int offsetInBytes, T[] data,
+            int startIndex, int elementCount, int vertexStride, RVertexDataOptions options) where T : struct
         {
             GenerateIfRequired();
 
             var sizeInBytes = elementSizeInBytes * elementCount;
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             REngine.CheckGLError();
 
             if (options == RVertexDataOptions.Discard)
             {
                 // By assigning NULL data to the buffer this gives a hint
                 // to the device to discard the previous content.
-                GL.BufferData(  BufferTarget.ArrayBuffer,
-                    (IntPtr)bufferSize, 
+                GL.BufferData(BufferTarget.ArrayBuffer,
+                    (IntPtr)bufferSize,
                     IntPtr.Zero,
                     _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
                 REngine.CheckGLError();
@@ -263,9 +276,11 @@ namespace Reactor.Geometry
         {
             if (Threading.IsOnUIThread())
             {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
                 REngine.CheckGLError();
-            }else {
+            }
+            else
+            {
                 Threading.BlockOnUIThread(() => { Bind(); });
             }
         }
@@ -276,43 +291,43 @@ namespace Reactor.Geometry
             {
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 REngine.CheckGLError();
-            } else {
+            }
+            else
+            {
                 Threading.BlockOnUIThread(() => { Unbind(); });
             }
         }
+
         public void BindVertexArray()
         {
-            if (!Threading.IsOnUIThread()) { Threading.BlockOnUIThread(() => { BindVertexArray(); }); }
+            if (!Threading.IsOnUIThread())
+            {
+                Threading.BlockOnUIThread(() => { BindVertexArray(); });
+            }
             else
             {
                 GenerateIfRequired();
                 REngine.CheckGLError();
-                GL.BindVertexArray(vao);
+                GL.BindVertexArray(VAO);
                 REngine.CheckGLError();
             }
         }
 
         public void UnbindVertexArray()
         {
-            if (!Threading.IsOnUIThread()) { Threading.BlockOnUIThread(() => { UnbindVertexArray(); }); }
+            if (!Threading.IsOnUIThread())
+            {
+                Threading.BlockOnUIThread(() => { UnbindVertexArray(); });
+            }
             else
             {
                 GL.BindVertexArray(0);
                 REngine.CheckGLError();
             }
         }
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                Threading.BlockOnUIThread(() =>
-                    {
-                        GL.DeleteBuffers(1, new uint[1]{ vbo });
-                        REngine.CheckGLError();
-                    });
-            }
-            IsDisposed = true;
 
+        public void Clear()
+        {
         }
     }
 }

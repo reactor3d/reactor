@@ -1,7 +1,7 @@
 namespace Newtonsoft.Json.Linq
 {
     /// <summary>
-    /// Specifies how JSON arrays are merged together.
+    ///     Specifies how JSON arrays are merged together.
     /// </summary>
     public enum MergeArrayHandling
     {

@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,106 +22,103 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-#endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+#endregion
 
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Specifies the type of JSON token.
+    ///     Specifies the type of JSON token.
     /// </summary>
     public enum JsonToken
     {
         /// <summary>
-        /// This is returned by the <see cref="JsonReader"/> if a read method has not been called.
+        ///     This is returned by the <see cref="JsonReader" /> if a read method has not been called.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// An object start token.
+        ///     An object start token.
         /// </summary>
         StartObject = 1,
 
         /// <summary>
-        /// An array start token.
+        ///     An array start token.
         /// </summary>
         StartArray = 2,
 
         /// <summary>
-        /// A constructor start token.
+        ///     A constructor start token.
         /// </summary>
         StartConstructor = 3,
 
         /// <summary>
-        /// An object property name.
+        ///     An object property name.
         /// </summary>
         PropertyName = 4,
 
         /// <summary>
-        /// A comment.
+        ///     A comment.
         /// </summary>
         Comment = 5,
 
         /// <summary>
-        /// Raw JSON.
+        ///     Raw JSON.
         /// </summary>
         Raw = 6,
 
         /// <summary>
-        /// An integer.
+        ///     An integer.
         /// </summary>
         Integer = 7,
 
         /// <summary>
-        /// A float.
+        ///     A float.
         /// </summary>
         Float = 8,
 
         /// <summary>
-        /// A string.
+        ///     A string.
         /// </summary>
         String = 9,
 
         /// <summary>
-        /// A boolean.
+        ///     A boolean.
         /// </summary>
         Boolean = 10,
 
         /// <summary>
-        /// A null token.
+        ///     A null token.
         /// </summary>
         Null = 11,
 
         /// <summary>
-        /// An undefined token.
+        ///     An undefined token.
         /// </summary>
         Undefined = 12,
 
         /// <summary>
-        /// An object end token.
+        ///     An object end token.
         /// </summary>
         EndObject = 13,
 
         /// <summary>
-        /// An array end token.
+        ///     An array end token.
         /// </summary>
         EndArray = 14,
 
         /// <summary>
-        /// A constructor end token.
+        ///     A constructor end token.
         /// </summary>
         EndConstructor = 15,
 
         /// <summary>
-        /// A Date.
+        ///     A Date.
         /// </summary>
         Date = 16,
 
         /// <summary>
-        /// Byte data.
+        ///     Byte data.
         /// </summary>
         Bytes = 17
     }

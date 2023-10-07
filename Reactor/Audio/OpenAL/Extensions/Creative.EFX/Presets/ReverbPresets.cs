@@ -6,17 +6,18 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
+
 using Reactor.Math;
 
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// A set of reverb presets that can be used with the extension.
+    ///     A set of reverb presets that can be used with the extension.
     /// </summary>
     public static class ReverbPresets
     {
         /// <summary>
-        /// A reverb preset (approximating a generic location).
+        ///     A reverb preset (approximating a generic location).
         /// </summary>
         public static readonly ReverbProperties Generic = new ReverbProperties
         (
@@ -46,7 +47,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a padded cell).
+        ///     A reverb preset (approximating a padded cell).
         /// </summary>
         public static readonly ReverbProperties PaddedCell = new ReverbProperties
         (
@@ -76,7 +77,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a room).
+        ///     A reverb preset (approximating a room).
         /// </summary>
         public static readonly ReverbProperties Room = new ReverbProperties
         (
@@ -106,7 +107,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a bathroom).
+        ///     A reverb preset (approximating a bathroom).
         /// </summary>
         public static readonly ReverbProperties Bathroom = new ReverbProperties
         (
@@ -136,7 +137,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a living room).
+        ///     A reverb preset (approximating a living room).
         /// </summary>
         public static readonly ReverbProperties LivingRoom = new ReverbProperties
         (
@@ -166,7 +167,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a stone room).
+        ///     A reverb preset (approximating a stone room).
         /// </summary>
         public static readonly ReverbProperties StoneRoom = new ReverbProperties
         (
@@ -196,7 +197,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an auditorium).
+        ///     A reverb preset (approximating an auditorium).
         /// </summary>
         public static readonly ReverbProperties Auditorium = new ReverbProperties
         (
@@ -226,7 +227,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a concert hall).
+        ///     A reverb preset (approximating a concert hall).
         /// </summary>
         public static readonly ReverbProperties ConcertHall = new ReverbProperties
         (
@@ -256,7 +257,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a cave).
+        ///     A reverb preset (approximating a cave).
         /// </summary>
         public static readonly ReverbProperties Cave = new ReverbProperties
         (
@@ -286,7 +287,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an arena).
+        ///     A reverb preset (approximating an arena).
         /// </summary>
         public static readonly ReverbProperties Arena = new ReverbProperties
         (
@@ -316,7 +317,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hangar).
+        ///     A reverb preset (approximating a hangar).
         /// </summary>
         public static readonly ReverbProperties Hangar = new ReverbProperties
         (
@@ -346,7 +347,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a carpeted hallway).
+        ///     A reverb preset (approximating a carpeted hallway).
         /// </summary>
         public static readonly ReverbProperties CarpetedHallway = new ReverbProperties
         (
@@ -376,7 +377,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hallway).
+        ///     A reverb preset (approximating a hallway).
         /// </summary>
         public static readonly ReverbProperties Hallway = new ReverbProperties
         (
@@ -406,7 +407,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a stone corridor).
+        ///     A reverb preset (approximating a stone corridor).
         /// </summary>
         public static readonly ReverbProperties StoneCorridor = new ReverbProperties
         (
@@ -436,7 +437,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an alley).
+        ///     A reverb preset (approximating an alley).
         /// </summary>
         public static readonly ReverbProperties Alley = new ReverbProperties
         (
@@ -466,7 +467,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a forest).
+        ///     A reverb preset (approximating a forest).
         /// </summary>
         public static readonly ReverbProperties Forest = new ReverbProperties
         (
@@ -496,7 +497,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a city).
+        ///     A reverb preset (approximating a city).
         /// </summary>
         public static readonly ReverbProperties City = new ReverbProperties
         (
@@ -526,7 +527,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a mountain).
+        ///     A reverb preset (approximating a mountain).
         /// </summary>
         public static readonly ReverbProperties Mountains = new ReverbProperties
         (
@@ -556,7 +557,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a quarry).
+        ///     A reverb preset (approximating a quarry).
         /// </summary>
         public static readonly ReverbProperties Quarry = new ReverbProperties
         (
@@ -586,7 +587,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a plain).
+        ///     A reverb preset (approximating a plain).
         /// </summary>
         public static readonly ReverbProperties Plain = new ReverbProperties
         (
@@ -616,7 +617,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a parking lot).
+        ///     A reverb preset (approximating a parking lot).
         /// </summary>
         public static readonly ReverbProperties ParkingLot = new ReverbProperties
         (
@@ -646,7 +647,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a sewer pipe).
+        ///     A reverb preset (approximating a sewer pipe).
         /// </summary>
         public static readonly ReverbProperties Sewerpipe = new ReverbProperties
         (
@@ -676,7 +677,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an underwater location).
+        ///     A reverb preset (approximating an underwater location).
         /// </summary>
         public static readonly ReverbProperties Underwater = new ReverbProperties
         (
@@ -706,7 +707,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a drugged state).
+        ///     A reverb preset (approximating a drugged state).
         /// </summary>
         public static readonly ReverbProperties Drugged = new ReverbProperties
         (
@@ -736,7 +737,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a dizzy state).
+        ///     A reverb preset (approximating a dizzy state).
         /// </summary>
         public static readonly ReverbProperties Dizzy = new ReverbProperties
         (
@@ -766,7 +767,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a psychotic state).
+        ///     A reverb preset (approximating a psychotic state).
         /// </summary>
         public static readonly ReverbProperties Psychotic = new ReverbProperties
         (
@@ -798,7 +799,7 @@ namespace Reactor.Audio.OpenAL
         /* Castle Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a small room in a castle).
+        ///     A reverb preset (approximating a small room in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleSmallRoom = new ReverbProperties
         (
@@ -828,7 +829,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a short passage in a castle).
+        ///     A reverb preset (approximating a short passage in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleShortPassage = new ReverbProperties
         (
@@ -858,7 +859,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a medium room in a castle).
+        ///     A reverb preset (approximating a medium room in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleMediumRoom = new ReverbProperties
         (
@@ -888,7 +889,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large room in a castle).
+        ///     A reverb preset (approximating a large room in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleLargeRoom = new ReverbProperties
         (
@@ -918,7 +919,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a long passage in a castle).
+        ///     A reverb preset (approximating a long passage in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleLongPassage = new ReverbProperties
         (
@@ -948,7 +949,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hall in a castle).
+        ///     A reverb preset (approximating a hall in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleHall = new ReverbProperties
         (
@@ -978,7 +979,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a cupboard in a castle).
+        ///     A reverb preset (approximating a cupboard in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleCupboard = new ReverbProperties
         (
@@ -1008,7 +1009,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a castle courtyard).
+        ///     A reverb preset (approximating a castle courtyard).
         /// </summary>
         public static readonly ReverbProperties CastleCourtyard = new ReverbProperties
         (
@@ -1038,7 +1039,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an alcove in a castle).
+        ///     A reverb preset (approximating an alcove in a castle).
         /// </summary>
         public static readonly ReverbProperties CastleAlcove = new ReverbProperties
         (
@@ -1070,7 +1071,7 @@ namespace Reactor.Audio.OpenAL
         /* Factory Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a small room in a factory).
+        ///     A reverb preset (approximating a small room in a factory).
         /// </summary>
         public static readonly ReverbProperties FactorySmallRoom = new ReverbProperties
         (
@@ -1100,7 +1101,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a short passage in a factory).
+        ///     A reverb preset (approximating a short passage in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryShortPassage = new ReverbProperties
         (
@@ -1130,7 +1131,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a medium room in a factory).
+        ///     A reverb preset (approximating a medium room in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryMediumRoom = new ReverbProperties
         (
@@ -1160,7 +1161,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large room in a factory).
+        ///     A reverb preset (approximating a large room in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryLargeRoom = new ReverbProperties
         (
@@ -1190,7 +1191,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a long passage in a factory).
+        ///     A reverb preset (approximating a long passage in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryLongPassage = new ReverbProperties
         (
@@ -1220,7 +1221,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hall in a factory).
+        ///     A reverb preset (approximating a hall in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryHall = new ReverbProperties
         (
@@ -1250,7 +1251,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a cupboard in a factory).
+        ///     A reverb preset (approximating a cupboard in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryCupboard = new ReverbProperties
         (
@@ -1280,7 +1281,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a factory courtyard).
+        ///     A reverb preset (approximating a factory courtyard).
         /// </summary>
         public static readonly ReverbProperties FactoryCourtyard = new ReverbProperties
         (
@@ -1310,7 +1311,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an alcove in a factory).
+        ///     A reverb preset (approximating an alcove in a factory).
         /// </summary>
         public static readonly ReverbProperties FactoryAlcove = new ReverbProperties
         (
@@ -1342,7 +1343,7 @@ namespace Reactor.Audio.OpenAL
         /* Ice Palace Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a small room in an ice palace).
+        ///     A reverb preset (approximating a small room in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceSmallRoom = new ReverbProperties
         (
@@ -1372,7 +1373,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a short passage in an ice palace).
+        ///     A reverb preset (approximating a short passage in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceShortPassage = new ReverbProperties
         (
@@ -1402,7 +1403,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a medium room in an ice palace).
+        ///     A reverb preset (approximating a medium room in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceMediumRoom = new ReverbProperties
         (
@@ -1432,7 +1433,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large room in an ice palace).
+        ///     A reverb preset (approximating a large room in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceLargeRoom = new ReverbProperties
         (
@@ -1462,7 +1463,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a long passage in an ice palace).
+        ///     A reverb preset (approximating a long passage in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceLongPassage = new ReverbProperties
         (
@@ -1492,7 +1493,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hall in an ice palace).
+        ///     A reverb preset (approximating a hall in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceHall = new ReverbProperties
         (
@@ -1522,7 +1523,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a cupboard in an ice palace).
+        ///     A reverb preset (approximating a cupboard in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceCupboard = new ReverbProperties
         (
@@ -1552,7 +1553,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an ice palace courtyard).
+        ///     A reverb preset (approximating an ice palace courtyard).
         /// </summary>
         public static readonly ReverbProperties IcePalaceCourtyard = new ReverbProperties
         (
@@ -1582,7 +1583,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an alcove in an ice palace).
+        ///     A reverb preset (approximating an alcove in an ice palace).
         /// </summary>
         public static readonly ReverbProperties IcePalaceAlcove = new ReverbProperties
         (
@@ -1614,7 +1615,7 @@ namespace Reactor.Audio.OpenAL
         /* Space Station Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a small room in a space station).
+        ///     A reverb preset (approximating a small room in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationSmallRoom = new ReverbProperties
         (
@@ -1644,7 +1645,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a short passage in a space station).
+        ///     A reverb preset (approximating a short passage in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationShortPassage = new ReverbProperties
         (
@@ -1674,7 +1675,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a medium room in a space station).
+        ///     A reverb preset (approximating a medium room in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationMediumRoom = new ReverbProperties
         (
@@ -1704,7 +1705,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large room in a space station).
+        ///     A reverb preset (approximating a large room in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationLargeRoom = new ReverbProperties
         (
@@ -1734,7 +1735,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a long passage in a space station).
+        ///     A reverb preset (approximating a long passage in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationLongPassage = new ReverbProperties
         (
@@ -1764,7 +1765,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hall in a space station).
+        ///     A reverb preset (approximating a hall in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationHall = new ReverbProperties
         (
@@ -1794,7 +1795,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a cupboard in a space station).
+        ///     A reverb preset (approximating a cupboard in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationCupboard = new ReverbProperties
         (
@@ -1824,7 +1825,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an alcove in a space station).
+        ///     A reverb preset (approximating an alcove in a space station).
         /// </summary>
         public static readonly ReverbProperties SpaceStationAlcove = new ReverbProperties
         (
@@ -1856,7 +1857,7 @@ namespace Reactor.Audio.OpenAL
         /* Wooden Galleon Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a small room in a wooden galleon).
+        ///     A reverb preset (approximating a small room in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonSmallRoom = new ReverbProperties
         (
@@ -1886,7 +1887,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a short passage in a wooden galleon).
+        ///     A reverb preset (approximating a short passage in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonShortPassage = new ReverbProperties
         (
@@ -1916,7 +1917,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a medium room in a wooden galleon).
+        ///     A reverb preset (approximating a medium room in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonMediumRoom = new ReverbProperties
         (
@@ -1946,7 +1947,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large room in a wooden galleon).
+        ///     A reverb preset (approximating a large room in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonLargeRoom = new ReverbProperties
         (
@@ -1976,7 +1977,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a long passsage in a wooden galleon).
+        ///     A reverb preset (approximating a long passsage in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonLongPassage = new ReverbProperties
         (
@@ -2006,7 +2007,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hall in a wooden galleon).
+        ///     A reverb preset (approximating a hall in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonHall = new ReverbProperties
         (
@@ -2036,7 +2037,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a cupboard in a wooden galleon).
+        ///     A reverb preset (approximating a cupboard in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonCupboard = new ReverbProperties
         (
@@ -2066,7 +2067,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a courtyard on a wooden galleon).
+        ///     A reverb preset (approximating a courtyard on a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonCourtyard = new ReverbProperties
         (
@@ -2096,7 +2097,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an alcove in a wooden galleon).
+        ///     A reverb preset (approximating an alcove in a wooden galleon).
         /// </summary>
         public static readonly ReverbProperties WoodenGalleonAlcove = new ReverbProperties
         (
@@ -2128,7 +2129,7 @@ namespace Reactor.Audio.OpenAL
         /* Sports Presets */
 
         /// <summary>
-        /// A reverb preset (approximating an empty sports stadium).
+        ///     A reverb preset (approximating an empty sports stadium).
         /// </summary>
         public static readonly ReverbProperties SportEmptyStadium = new ReverbProperties
         (
@@ -2158,7 +2159,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a squash court).
+        ///     A reverb preset (approximating a squash court).
         /// </summary>
         public static readonly ReverbProperties SportSquashCourt = new ReverbProperties
         (
@@ -2188,7 +2189,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a small swimming pool).
+        ///     A reverb preset (approximating a small swimming pool).
         /// </summary>
         public static readonly ReverbProperties SportSmallSwimmingPool = new ReverbProperties
         (
@@ -2218,7 +2219,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large swimming pool).
+        ///     A reverb preset (approximating a large swimming pool).
         /// </summary>
         public static readonly ReverbProperties SportLargeSwimmingPool = new ReverbProperties
         (
@@ -2248,7 +2249,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a gymnasium).
+        ///     A reverb preset (approximating a gymnasium).
         /// </summary>
         public static readonly ReverbProperties SportGymnasium = new ReverbProperties
         (
@@ -2278,7 +2279,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a full stadium).
+        ///     A reverb preset (approximating a full stadium).
         /// </summary>
         public static readonly ReverbProperties SportFullStadium = new ReverbProperties
         (
@@ -2308,7 +2309,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a tannoy stadium).
+        ///     A reverb preset (approximating a tannoy stadium).
         /// </summary>
         public static readonly ReverbProperties SportStadiumTannoy = new ReverbProperties
         (
@@ -2340,7 +2341,7 @@ namespace Reactor.Audio.OpenAL
         /* Prefab Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a workshop).
+        ///     A reverb preset (approximating a workshop).
         /// </summary>
         public static readonly ReverbProperties PrefabWorkshop = new ReverbProperties
         (
@@ -2370,7 +2371,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a school room).
+        ///     A reverb preset (approximating a school room).
         /// </summary>
         public static readonly ReverbProperties PrefabSchoolRoom = new ReverbProperties
         (
@@ -2400,7 +2401,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a practise room).
+        ///     A reverb preset (approximating a practise room).
         /// </summary>
         public static readonly ReverbProperties PrefabPractiseRoom = new ReverbProperties
         (
@@ -2430,7 +2431,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an outhouse).
+        ///     A reverb preset (approximating an outhouse).
         /// </summary>
         public static readonly ReverbProperties PrefabOuthouse = new ReverbProperties
         (
@@ -2460,7 +2461,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a caravan).
+        ///     A reverb preset (approximating a caravan).
         /// </summary>
         public static readonly ReverbProperties PrefabCaravan = new ReverbProperties
         (
@@ -2492,7 +2493,7 @@ namespace Reactor.Audio.OpenAL
         /* Dome and Pipe Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a dome in a tomb).
+        ///     A reverb preset (approximating a dome in a tomb).
         /// </summary>
         public static readonly ReverbProperties DomeTomb = new ReverbProperties
         (
@@ -2522,7 +2523,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a small pipe).
+        ///     A reverb preset (approximating a small pipe).
         /// </summary>
         public static readonly ReverbProperties PipeSmall = new ReverbProperties
         (
@@ -2552,7 +2553,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating the dome in St. Paul's Cathedral, London).
+        ///     A reverb preset (approximating the dome in St. Paul's Cathedral, London).
         /// </summary>
         public static readonly ReverbProperties DomeSaintPauls = new ReverbProperties
         (
@@ -2582,7 +2583,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a long, thin pipe).
+        ///     A reverb preset (approximating a long, thin pipe).
         /// </summary>
         public static readonly ReverbProperties PipeLongThin = new ReverbProperties
         (
@@ -2612,7 +2613,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a large pipe).
+        ///     A reverb preset (approximating a large pipe).
         /// </summary>
         public static readonly ReverbProperties PipeLarge = new ReverbProperties
         (
@@ -2642,7 +2643,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a resonant pipe).
+        ///     A reverb preset (approximating a resonant pipe).
         /// </summary>
         public static readonly ReverbProperties PipeResonant = new ReverbProperties
         (
@@ -2674,7 +2675,7 @@ namespace Reactor.Audio.OpenAL
         /* Outdoors Presets */
 
         /// <summary>
-        /// A reverb preset (approximating an outdoors backyard).
+        ///     A reverb preset (approximating an outdoors backyard).
         /// </summary>
         public static readonly ReverbProperties OutdoorsBackyard = new ReverbProperties
         (
@@ -2704,7 +2705,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating rolling plains).
+        ///     A reverb preset (approximating rolling plains).
         /// </summary>
         public static readonly ReverbProperties OutdoorsRollingPlains = new ReverbProperties
         (
@@ -2734,7 +2735,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a deep canyon).
+        ///     A reverb preset (approximating a deep canyon).
         /// </summary>
         public static readonly ReverbProperties OutdoorsDeepCanyon = new ReverbProperties
         (
@@ -2764,7 +2765,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a creek).
+        ///     A reverb preset (approximating a creek).
         /// </summary>
         public static readonly ReverbProperties OutdoorsCreek = new ReverbProperties
         (
@@ -2794,7 +2795,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a valley).
+        ///     A reverb preset (approximating a valley).
         /// </summary>
         public static readonly ReverbProperties OutdoorsValley = new ReverbProperties
         (
@@ -2826,7 +2827,7 @@ namespace Reactor.Audio.OpenAL
         /* Mood Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a heavenly mood).
+        ///     A reverb preset (approximating a heavenly mood).
         /// </summary>
         public static readonly ReverbProperties MoodHeaven = new ReverbProperties
         (
@@ -2856,7 +2857,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a hellish mood).
+        ///     A reverb preset (approximating a hellish mood).
         /// </summary>
         public static readonly ReverbProperties MoodHell = new ReverbProperties
         (
@@ -2886,7 +2887,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an abstract memory).
+        ///     A reverb preset (approximating an abstract memory).
         /// </summary>
         public static readonly ReverbProperties MoodMemory = new ReverbProperties
         (
@@ -2918,7 +2919,7 @@ namespace Reactor.Audio.OpenAL
         /* Driving Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a person in the commentator's seat).
+        ///     A reverb preset (approximating a person in the commentator's seat).
         /// </summary>
         public static readonly ReverbProperties DrivingCommentator = new ReverbProperties
         (
@@ -2948,7 +2949,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a pit or garage).
+        ///     A reverb preset (approximating a pit or garage).
         /// </summary>
         public static readonly ReverbProperties DrivingPitGarage = new ReverbProperties
         (
@@ -2978,7 +2979,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating driving in a race car).
+        ///     A reverb preset (approximating driving in a race car).
         /// </summary>
         public static readonly ReverbProperties DrivingInCarRacer = new ReverbProperties
         (
@@ -3008,7 +3009,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating driving in a sports car).
+        ///     A reverb preset (approximating driving in a sports car).
         /// </summary>
         public static readonly ReverbProperties DrivingInCarSports = new ReverbProperties
         (
@@ -3038,7 +3039,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating driving in a luxury car).
+        ///     A reverb preset (approximating driving in a luxury car).
         /// </summary>
         public static readonly ReverbProperties DrivingInCarLuxury = new ReverbProperties
         (
@@ -3068,7 +3069,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating driving on a course with a full grand stand).
+        ///     A reverb preset (approximating driving on a course with a full grand stand).
         /// </summary>
         public static readonly ReverbProperties DrivingFullGrandStand = new ReverbProperties
         (
@@ -3098,7 +3099,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an empty grand stand).
+        ///     A reverb preset (approximating an empty grand stand).
         /// </summary>
         public static readonly ReverbProperties DrivingEmptyGrandStand = new ReverbProperties
         (
@@ -3128,7 +3129,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating driving in a tunnel).
+        ///     A reverb preset (approximating driving in a tunnel).
         /// </summary>
         public static readonly ReverbProperties DrivingTunnel = new ReverbProperties
         (
@@ -3160,7 +3161,7 @@ namespace Reactor.Audio.OpenAL
         /* City Presets */
 
         /// <summary>
-        /// A reverb preset (approximating city streets).
+        ///     A reverb preset (approximating city streets).
         /// </summary>
         public static readonly ReverbProperties CityStreets = new ReverbProperties
         (
@@ -3190,7 +3191,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a subway).
+        ///     A reverb preset (approximating a subway).
         /// </summary>
         public static readonly ReverbProperties CitySubway = new ReverbProperties
         (
@@ -3220,7 +3221,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a museum).
+        ///     A reverb preset (approximating a museum).
         /// </summary>
         public static readonly ReverbProperties CityMuseum = new ReverbProperties
         (
@@ -3250,7 +3251,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a library).
+        ///     A reverb preset (approximating a library).
         /// </summary>
         public static readonly ReverbProperties CityLibrary = new ReverbProperties
         (
@@ -3280,7 +3281,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an underpass).
+        ///     A reverb preset (approximating an underpass).
         /// </summary>
         public static readonly ReverbProperties CityUnderpass = new ReverbProperties
         (
@@ -3310,7 +3311,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating an abandoned location).
+        ///     A reverb preset (approximating an abandoned location).
         /// </summary>
         public static readonly ReverbProperties CityAbandoned = new ReverbProperties
         (
@@ -3342,7 +3343,7 @@ namespace Reactor.Audio.OpenAL
         /* Misc. Presets */
 
         /// <summary>
-        /// A reverb preset (approximating a dusty room).
+        ///     A reverb preset (approximating a dusty room).
         /// </summary>
         public static readonly ReverbProperties DustyRoom = new ReverbProperties
         (
@@ -3372,7 +3373,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a chapel).
+        ///     A reverb preset (approximating a chapel).
         /// </summary>
         public static readonly ReverbProperties Chapel = new ReverbProperties
         (
@@ -3402,7 +3403,7 @@ namespace Reactor.Audio.OpenAL
         );
 
         /// <summary>
-        /// A reverb preset (approximating a small, water-filled room).
+        ///     A reverb preset (approximating a small, water-filled room).
         /// </summary>
         public static readonly ReverbProperties SmallWaterRoom = new ReverbProperties
         (

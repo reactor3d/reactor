@@ -11,14 +11,14 @@
 
 namespace Reactor.Fonts
 {
-  internal enum BitmapFontFormat
-  {
-    None,
+    internal enum BitmapFontFormat
+    {
+        None,
 
-    Binary,
+        Binary,
 
-    Text,
+        Text,
 
-    Xml
-  }
+        Xml
+    }
 }

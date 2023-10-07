@@ -36,7 +36,8 @@ namespace Reactor.Audio.OpenAL.Native
                 case string str:
                     return Marshal.StringToHGlobalAnsi(str);
                 default:
-                    throw new ArgumentException($"{nameof(ConstCharPtrMarshaler)} only supports marshaling of strings. Got '{ManagedObj.GetType()}'");
+                    throw new ArgumentException(
+                        $"{nameof(ConstCharPtrMarshaler)} only supports marshaling of strings. Got '{ManagedObj.GetType()}'");
             }
         }
 
@@ -47,7 +48,10 @@ namespace Reactor.Audio.OpenAL.Native
 
         // See https://docs.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.custommarshalers.typetotypeinfomarshaler.getinstance
 #pragma warning disable IDE0060 // Remove unused parameter
-        public static ICustomMarshaler GetInstance(string cookie) => Instance;
+        public static ICustomMarshaler GetInstance(string cookie)
+        {
+            return Instance;
+        }
 #pragma warning restore IDE0060 // Remove unused parameter
     }
 }

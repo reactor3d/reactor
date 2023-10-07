@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,17 +22,16 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
 #if HAVE_CONCURRENT_DICTIONARY
 using System.Collections.Concurrent;
 #endif
-using System.Threading;
 
 namespace Newtonsoft.Json.Utilities
 {
@@ -62,10 +62,7 @@ namespace Newtonsoft.Json.Utilities
 #if HAVE_CONCURRENT_DICTIONARY
             return _concurrentStore.GetOrAdd(key, _creator);
 #else
-            if (!_store.TryGetValue(key, out TValue value))
-            {
-                return AddValue(key);
-            }
+            if (!_store.TryGetValue(key, out var value)) return AddValue(key);
 
             return value;
 #endif
@@ -74,7 +71,7 @@ namespace Newtonsoft.Json.Utilities
 #if !HAVE_CONCURRENT_DICTIONARY
         private TValue AddValue(TKey key)
         {
-            TValue value = _creator(key);
+            var value = _creator(key);
 
             lock (_lock)
             {
@@ -86,12 +83,9 @@ namespace Newtonsoft.Json.Utilities
                 else
                 {
                     // double check locking
-                    if (_store.TryGetValue(key, out TValue checkValue))
-                    {
-                        return checkValue;
-                    }
+                    if (_store.TryGetValue(key, out var checkValue)) return checkValue;
 
-                    Dictionary<TKey, TValue> newStore = new Dictionary<TKey, TValue>(_store);
+                    var newStore = new Dictionary<TKey, TValue>(_store);
                     newStore[key] = value;
 
 #if HAVE_MEMORY_BARRIER

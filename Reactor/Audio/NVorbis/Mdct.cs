@@ -12,38 +12,26 @@ using System.Threading;
 
 namespace NVorbis
 {
-    class Mdct
+    internal class Mdct
     {
-        const float M_PI = 3.14159265358979323846264f;
+        private const float M_PI = 3.14159265358979323846264f;
 
-        static Dictionary<int, Mdct> _setupCache = new Dictionary<int, Mdct>(2);
+        private static readonly Dictionary<int, Mdct> _setupCache = new Dictionary<int, Mdct>(2);
 
-        public static void Reverse(float[] samples, int sampleCount)
-        {
-            GetSetup(sampleCount).CalcReverse(samples);
-        }
+        private readonly float[] _A;
+        private readonly float[] _B;
+        private readonly float[] _C;
+        private readonly ushort[] _bitrev;
 
-        static Mdct GetSetup(int n)
-        {
-            lock (_setupCache)
-            {
-                if (!_setupCache.ContainsKey(n))
-                {
-                    _setupCache[n] = new Mdct(n);
-                }
-
-                return _setupCache[n];
-            }
-        }
-
-        int _n, _n2, _n4, _n8, _ld;
-
-        float[] _A, _B, _C;
-        ushort[] _bitrev;
+        private readonly int _n;
+        private readonly int _n2;
+        private readonly int _n4;
+        private readonly int _n8;
+        private readonly int _ld;
 
         private Mdct(int n)
         {
-            this._n = n;
+            _n = n;
             _n2 = n >> 1;
             _n4 = _n2 >> 1;
             _n8 = _n4 >> 1;
@@ -62,6 +50,7 @@ namespace NVorbis
                 _B[k2] = (float)Math.Cos((k2 + 1) * M_PI / n / 2) * .5f;
                 _B[k2 + 1] = (float)Math.Sin((k2 + 1) * M_PI / n / 2) * .5f;
             }
+
             for (k = k2 = 0; k < _n8; ++k, k2 += 2)
             {
                 _C[k2] = (float)Math.Cos(2 * (k2 + 1) * M_PI / n);
@@ -70,36 +59,25 @@ namespace NVorbis
 
             // now, calc the bit reverse table
             _bitrev = new ushort[_n8];
-            for (int i = 0; i < _n8; ++i)
-            {
-                _bitrev[i] = (ushort)(Utils.BitReverse((uint)i, _ld - 3) << 2);
-            }
+            for (var i = 0; i < _n8; ++i) _bitrev[i] = (ushort)(Utils.BitReverse((uint)i, _ld - 3) << 2);
         }
 
-        #region Buffer Handling
-
-        // This addresses the two constraints we have to deal with:
-        //  1) Each Mdct instance must maintain a buffer of n / 2 size without allocating each pass
-        //  2) Mdct must be thread-safe
-        // To handle these constraints, we use a "thread-local" dictionary
-
-        Dictionary<int, float[]> _threadLocalBuffers = new Dictionary<int, float[]>(1);
-        float[] GetBuffer()
+        public static void Reverse(float[] samples, int sampleCount)
         {
-            lock (_threadLocalBuffers)
+            GetSetup(sampleCount).CalcReverse(samples);
+        }
+
+        private static Mdct GetSetup(int n)
+        {
+            lock (_setupCache)
             {
-                float[] buf;
-                if (!_threadLocalBuffers.TryGetValue(Thread.CurrentThread.ManagedThreadId, out buf))
-                {
-                    _threadLocalBuffers[Thread.CurrentThread.ManagedThreadId] = (buf = new float[_n2]);
-                }
-                return buf;
+                if (!_setupCache.ContainsKey(n)) _setupCache[n] = new Mdct(n);
+
+                return _setupCache[n];
             }
         }
 
-        #endregion
-
-        void CalcReverse(float[] buffer)
+        private void CalcReverse(float[] buffer)
         {
             float[] u, v, buf2;
 
@@ -110,13 +88,13 @@ namespace NVorbis
 
             {
                 var d = _n2 - 2; // buf2
-                var AA = 0;     // A
-                var e = 0;      // buffer
-                var e_stop = _n2;// buffer
+                var AA = 0; // A
+                var e = 0; // buffer
+                var e_stop = _n2; // buffer
                 while (e != e_stop)
                 {
-                    buf2[d + 1] = (buffer[e] * _A[AA] - buffer[e + 2] * _A[AA + 1]);
-                    buf2[d] = (buffer[e] * _A[AA + 1] + buffer[e + 2] * _A[AA]);
+                    buf2[d + 1] = buffer[e] * _A[AA] - buffer[e + 2] * _A[AA + 1];
+                    buf2[d] = buffer[e] * _A[AA + 1] + buffer[e + 2] * _A[AA];
                     d -= 2;
                     AA += 2;
                     e += 4;
@@ -125,8 +103,8 @@ namespace NVorbis
                 e = _n2 - 3;
                 while (d >= 0)
                 {
-                    buf2[d + 1] = (-buffer[e + 2] * _A[AA] - -buffer[e] * _A[AA + 1]);
-                    buf2[d] = (-buffer[e + 2] * _A[AA + 1] + -buffer[e] * _A[AA]);
+                    buf2[d + 1] = -buffer[e + 2] * _A[AA] - -buffer[e] * _A[AA + 1];
+                    buf2[d] = -buffer[e + 2] * _A[AA + 1] + -buffer[e] * _A[AA];
                     d -= 2;
                     AA += 2;
                     e -= 4;
@@ -140,13 +118,13 @@ namespace NVorbis
             // step 2
 
             {
-                var AA = _n2 - 8;    // A
+                var AA = _n2 - 8; // A
 
-                var e0 = _n4;        // v
-                var e1 = 0;         // v
+                var e0 = _n4; // v
+                var e1 = 0; // v
 
-                var d0 = _n4;        // u
-                var d1 = 0;         // u
+                var d0 = _n4; // u
+                var d1 = 0; // u
 
                 while (AA >= 0)
                 {
@@ -194,10 +172,8 @@ namespace NVorbis
                 var k0 = _n >> (l + 2);
                 var k0_2 = k0 >> 1;
                 var lim = 1 << (l + 1);
-                for (int i = 0; i < lim; ++i)
-                {
+                for (var i = 0; i < lim; ++i)
                     step3_inner_r_loop(_n >> (l + 4), u, _n2 - 1 - k0 * i, -k0_2, 1 << (l + 3));
-                }
             }
 
             // iterations x ... end
@@ -207,11 +183,11 @@ namespace NVorbis
                 var k1 = 1 << (l + 3);
                 var k0_2 = k0 >> 1;
                 var rlim = _n >> (l + 6);
-                var lim = 1 << l + 1;
+                var lim = 1 << (l + 1);
                 var i_off = _n2 - 1;
                 var A0 = 0;
 
-                for (int r = rlim; r > 0; --r)
+                for (var r = rlim; r > 0; --r)
                 {
                     step3_inner_s_loop(lim, u, i_off, -k0_2, A0, k1, k0);
                     A0 += k1 * 4;
@@ -226,8 +202,8 @@ namespace NVorbis
             {
                 var bit = 0;
 
-                var d0 = _n4 - 4;    // v
-                var d1 = _n2 - 4;    // v
+                var d0 = _n4 - 4; // v
+                var d1 = _n2 - 4; // v
                 while (d0 >= 0)
                 {
                     int k4;
@@ -252,8 +228,8 @@ namespace NVorbis
 
             // step 7
             {
-                var c = 0;      // C
-                var d = 0;      // v
+                var c = 0; // C
+                var d = 0; // v
                 var e = _n2 - 4; // v
 
                 while (d < e)
@@ -298,9 +274,9 @@ namespace NVorbis
             {
                 var b = _n2 - 8; // B
                 var e = _n2 - 8; // buf2
-                var d0 = 0;     // buffer
-                var d1 = _n2 - 4;// buffer
-                var d2 = _n2;    // buffer
+                var d0 = 0; // buffer
+                var d1 = _n2 - 4; // buffer
+                var d2 = _n2; // buffer
                 var d3 = _n - 4; // buffer
                 while (e >= 0)
                 {
@@ -349,12 +325,12 @@ namespace NVorbis
             }
         }
 
-        void step3_iter0_loop(int n, float[] e, int i_off, int k_off)
+        private void step3_iter0_loop(int n, float[] e, int i_off, int k_off)
         {
-            var ee0 = i_off;        // e
-            var ee2 = ee0 + k_off;  // e
+            var ee0 = i_off; // e
+            var ee2 = ee0 + k_off; // e
             var a = 0;
-            for (int i = n >> 2; i > 0; --i)
+            for (var i = n >> 2; i > 0; --i)
             {
                 float k00_20, k01_21;
 
@@ -395,15 +371,15 @@ namespace NVorbis
             }
         }
 
-        void step3_inner_r_loop(int lim, float[] e, int d0, int k_off, int k1)
+        private void step3_inner_r_loop(int lim, float[] e, int d0, int k_off, int k1)
         {
             float k00_20, k01_21;
 
-            var e0 = d0;            // e
-            var e2 = e0 + k_off;    // e
-            int a = 0;
+            var e0 = d0; // e
+            var e2 = e0 + k_off; // e
+            var a = 0;
 
-            for (int i = lim >> 2; i > 0; --i)
+            for (var i = lim >> 2; i > 0; --i)
             {
                 k00_20 = e[e0] - e[e2];
                 k01_21 = e[e0 - 1] - e[e2 - 1];
@@ -446,7 +422,7 @@ namespace NVorbis
             }
         }
 
-        void step3_inner_s_loop(int n, float[] e, int i_off, int k_off, int a, int a_off, int k0)
+        private void step3_inner_s_loop(int n, float[] e, int i_off, int k_off, int a, int a_off, int k0)
         {
             var A0 = _A[a];
             var A1 = _A[a + 1];
@@ -459,10 +435,10 @@ namespace NVorbis
 
             float k00, k11;
 
-            var ee0 = i_off;        // e
-            var ee2 = ee0 + k_off;  // e
+            var ee0 = i_off; // e
+            var ee2 = ee0 + k_off; // e
 
-            for (int i = n; i > 0; --i)
+            for (var i = n; i > 0; --i)
             {
                 k00 = e[ee0] - e[ee2];
                 k11 = e[ee0 - 1] - e[ee2 - 1];
@@ -497,11 +473,11 @@ namespace NVorbis
             }
         }
 
-        void step3_inner_s_loop_ld654(int n, float[] e, int i_off, int base_n)
+        private void step3_inner_s_loop_ld654(int n, float[] e, int i_off, int base_n)
         {
             var a_off = base_n >> 3;
             var A2 = _A[a_off];
-            var z = i_off;          // e
+            var z = i_off; // e
             var @base = z - 16 * n; // e
 
             while (z > @base)
@@ -570,5 +546,27 @@ namespace NVorbis
             e[z - 5] = k11 - k22;
             e[z - 7] = k11 + k22;
         }
+
+        #region Buffer Handling
+
+        // This addresses the two constraints we have to deal with:
+        //  1) Each Mdct instance must maintain a buffer of n / 2 size without allocating each pass
+        //  2) Mdct must be thread-safe
+        // To handle these constraints, we use a "thread-local" dictionary
+
+        private readonly Dictionary<int, float[]> _threadLocalBuffers = new Dictionary<int, float[]>(1);
+
+        private float[] GetBuffer()
+        {
+            lock (_threadLocalBuffers)
+            {
+                float[] buf;
+                if (!_threadLocalBuffers.TryGetValue(Thread.CurrentThread.ManagedThreadId, out buf))
+                    _threadLocalBuffers[Thread.CurrentThread.ManagedThreadId] = buf = new float[_n2];
+                return buf;
+            }
+        }
+
+        #endregion
     }
 }

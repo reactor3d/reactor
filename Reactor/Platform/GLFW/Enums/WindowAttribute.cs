@@ -1,9 +1,9 @@
 ﻿namespace Reactor.Platform.GLFW
 {
-    /// <summary>
-    ///     Strongly-typed values used for getting/setting window hints.
-    /// </summary>
-    public enum WindowAttribute
+	/// <summary>
+	///     Strongly-typed values used for getting/setting window hints.
+	/// </summary>
+	public enum WindowAttribute
     {
 	    /// <summary>
 	    ///     Indicates whether the windowed mode window will be given input focus when created.

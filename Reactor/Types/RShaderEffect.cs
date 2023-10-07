@@ -31,75 +31,74 @@ namespace Reactor.Types
 {
     public class RShaderEffect : IDisposable
     {
-        public uint Id { get; internal set; }
         public string EffectSource;
-        public RShaderEffectType Type;
         internal RShaderSemantics Semantics;
+        public RShaderEffectType Type;
 
         public RShaderEffect(string source, int type, string[] defines)
         {
             Type = (RShaderEffectType)type;
 
-                StringBuilder defineSource = new StringBuilder();
-                defineSource.Append("#version 410\r\n");
+            var defineSource = new StringBuilder();
+            defineSource.Append("#version 410\r\n");
 
-                if(defines != null)
-                    foreach(string define in defines){
-                        defineSource.AppendFormat("#{0};\r\n", define);
-                    }
-                                                      //regex for finding the file referenced inside double-quotes...
-            var parsedSource = Regex.Replace(source, @"#include ""(.*?)""", delegate(Match match){
-                if(match.Success)
+            if (defines != null)
+                foreach (var define in defines)
+                    defineSource.AppendFormat("#{0};\r\n", define);
+            //regex for finding the file referenced inside double-quotes...
+            var parsedSource = Regex.Replace(source, @"#include ""(.*?)""", delegate(Match match)
+            {
+                if (match.Success)
                 {
-                    string fileInclude = match.Groups[1].Value;
-                    if(fileInclude.ToLower().Equals("headers.glsl"))
+                    var fileInclude = match.Groups[1].Value;
+                    if (fileInclude.ToLower().Equals("headers.glsl"))
                         return RShaderResources.Headers;
-                    if(fileInclude.ToLower().Equals("lighting.glsl"))
+                    if (fileInclude.ToLower().Equals("lighting.glsl"))
                         return RShaderResources.Lighting;
                     if (fileInclude.ToLower().Equals("noise.glsl"))
                         return RShaderResources.Noise;
-                    StreamReader reader = new StreamReader(RFileSystem.Instance.GetFile(match.ToString()));
-                    string inc = reader.ReadToEnd();
+                    var reader = new StreamReader(RFileSystem.Instance.GetFile(match.ToString()));
+                    var inc = reader.ReadToEnd();
                     return inc;
                 }
+
                 return "";
             });
-                //source = source.Replace("#include \"headers.glsl\"", RShaderResources.Headers);
-                //source = source.Replace("#include \"lighting.glsl\"", RShaderResources.Lighting);
+            //source = source.Replace("#include \"headers.glsl\"", RShaderResources.Headers);
+            //source = source.Replace("#include \"lighting.glsl\"", RShaderResources.Lighting);
             //if(Type == RShaderEffectType.VERTEX)
-                //defineSource.Append(RShaderResources.Headers);
-            
+            //defineSource.Append(RShaderResources.Headers);
+
             EffectSource = defineSource + parsedSource;
             Semantics = new RShaderSemantics(ref EffectSource);
             //RLog.Info(EffectSource);
             switch (type)
             {
-                case ((int)RShaderEffectType.GEOMETRY):
+                case (int)RShaderEffectType.GEOMETRY:
                     Id = GL.CreateShader(ShaderType.GeometryShader);
                     break;
-                case ((int)RShaderEffectType.FRAGMENT):
+                case (int)RShaderEffectType.FRAGMENT:
                     Id = GL.CreateShader(ShaderType.FragmentShader);
                     break;
-                case ((int)RShaderEffectType.VERTEX):
+                case (int)RShaderEffectType.VERTEX:
                     Id = GL.CreateShader(ShaderType.VertexShader);
                     break;
-                case ((int)RShaderEffectType.TESS_CONTROL):
+                case (int)RShaderEffectType.TESS_CONTROL:
                     Id = GL.CreateShader(ShaderType.TessControlShader);
                     break;
-                case ((int)RShaderEffectType.TESS_EVAL):
+                case (int)RShaderEffectType.TESS_EVAL:
                     Id = GL.CreateShader(ShaderType.TessEvaluationShader);
                     break;
-                case ((int)RShaderEffectType.COMPUTE):
+                case (int)RShaderEffectType.COMPUTE:
                     Id = GL.CreateShader(ShaderType.ComputeShader);
                     break;
                 default:
                     Id = GL.CreateShader(ShaderType.FragmentShader);
                     break;
-
-
             }
-            int[] pars = new int[]{ EffectSource.Length };
-            GL.ShaderSource(Id, 1, new []{EffectSource}, pars);
+
+            int[] pars = { EffectSource.Length };
+            GL.ShaderSource(Id, 1, new[] { EffectSource }, pars);
             pars[0] = 0;
             REngine.CheckGLError();
             GL.CompileShader(Id);
@@ -116,17 +115,14 @@ namespace Reactor.Types
                     GL.DeleteShader(Id);
                     REngine.CheckGLError();
                 }
+
                 Id = 0;
 
                 throw new InvalidOperationException("Shader Compilation Failed");
             }
         }
 
-        ~RShaderEffect()
-        {
-            
-            
-        }
+        public uint Id { get; internal set; }
 
         #region IDisposable implementation
 
@@ -140,9 +136,15 @@ namespace Reactor.Types
                     REngine.CheckGLError();
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         #endregion
+
+        ~RShaderEffect()
+        {
+        }
     }
 }

@@ -22,28 +22,22 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using Reactor.Platform;
-using Reactor.Math;
 using Reactor.Platform.GLFW;
-using Reactor.Types;
 
 namespace Reactor
 {
     public sealed class RGameWindow : RNativeWindow, IEquatable<RGameWindow>
     {
-        private double r = 1.0f / 60.0f;
-        private double u = 1.0f / 60.0f;
-        public double RenderFrequency { get => r; set { r = value; } }
-        public double UpdateFrequency { get => u; set { u = value; } }
-
+        private static long startFrameTime;
 
         public Action Render;
-        public Action Update;
         public Action Resize;
-        public Action Closed;
+        public Action Update;
 
-        public RGameWindow():base()
+        public RGameWindow()
         {
             init();
         }
@@ -52,38 +46,38 @@ namespace Reactor
         {
             init();
         }
-        void init()
-        {
-            base.Closing += OnClosing;
-            base.SizeChanged += OnSizeChanged;
-        }
-        void OnClosing(object sender, EventArgs e)
-        {
-            if (Closed != null) Closed();
-            
-        }
 
-        void OnSizeChanged(object sender, EventArgs e)
-        {
-            if (Resize != null) Resize();
-        }
-
-        public void Run()
-        {
-            while(!IsClosing)
-            {
-                
-                Threading.BlockOnUIThread(Update);
-                if(IsFocused)
-                    Threading.BlockOnUIThread(Render);
-                Glfw.PollEvents();
-            }
-        }
+        public double RenderFrequency { get; set; } = 1.0 / 60.0;
 
         public bool Equals(RGameWindow other)
         {
             return Handle == other.Handle;
         }
+
+        private void init()
+        {
+            SizeChanged += OnSizeChanged;
+        }
+
+        private void OnSizeChanged(object sender, EventArgs e)
+        {
+            var size = CurrentBackBufferSize();
+            var vp = REngine.Instance.GetViewport();
+            vp.Width = size.Width;
+            vp.Height = size.Height;
+            REngine.Instance.SetViewport(vp);
+            if (Resize != null) Resize();
+        }
+
+        public void Run()
+        {
+            while (!IsClosing)
+            {
+                Glfw.PollEvents();
+                Threading.BlockOnUIThread(Update);
+                if (IsFocused)
+                    Threading.BlockOnUIThread(Render);
+            }
+        }
     }
 }
-

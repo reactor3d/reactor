@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,30 +22,28 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
-using Newtonsoft.Json.Utilities;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using Newtonsoft.Json.Utilities;
 
 namespace Newtonsoft.Json.Serialization
 {
     /// <summary>
-    /// A collection of <see cref="JsonProperty"/> objects.
+    ///     A collection of <see cref="JsonProperty" /> objects.
     /// </summary>
     public class JsonPropertyCollection : KeyedCollection<string, JsonProperty>
     {
-        private readonly Type _type;
         private readonly List<JsonProperty> _list;
+        private readonly Type _type;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonPropertyCollection"/> class.
+        ///     Initializes a new instance of the <see cref="JsonPropertyCollection" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         public JsonPropertyCollection(Type type)
@@ -58,7 +57,7 @@ namespace Newtonsoft.Json.Serialization
         }
 
         /// <summary>
-        /// When implemented in a derived class, extracts the key from the specified element.
+        ///     When implemented in a derived class, extracts the key from the specified element.
         /// </summary>
         /// <param name="item">The element from which to extract the key.</param>
         /// <returns>The key for the specified element.</returns>
@@ -68,7 +67,7 @@ namespace Newtonsoft.Json.Serialization
         }
 
         /// <summary>
-        /// Adds a <see cref="JsonProperty"/> object.
+        ///     Adds a <see cref="JsonProperty" /> object.
         /// </summary>
         /// <param name="property">The property to add to the collection.</param>
         public void AddProperty(JsonProperty property)
@@ -78,13 +77,10 @@ namespace Newtonsoft.Json.Serialization
             if (Contains(property.PropertyName))
             {
                 // don't overwrite existing property with ignored property
-                if (property.Ignored)
-                {
-                    return;
-                }
+                if (property.Ignored) return;
 
-                JsonProperty existingProperty = this[property.PropertyName];
-                bool duplicateProperty = true;
+                var existingProperty = this[property.PropertyName];
+                var duplicateProperty = true;
 
                 if (existingProperty.Ignored)
                 {
@@ -97,55 +93,52 @@ namespace Newtonsoft.Json.Serialization
                     if (property.DeclaringType != null && existingProperty.DeclaringType != null)
                     {
                         if (property.DeclaringType.IsSubclassOf(existingProperty.DeclaringType)
-                            || (existingProperty.DeclaringType.IsInterface() && property.DeclaringType.ImplementInterface(existingProperty.DeclaringType)))
+                            || (existingProperty.DeclaringType.IsInterface() &&
+                                property.DeclaringType.ImplementInterface(existingProperty.DeclaringType)))
                         {
                             // current property is on a derived class and hides the existing
                             Remove(existingProperty);
                             duplicateProperty = false;
                         }
+
                         if (existingProperty.DeclaringType.IsSubclassOf(property.DeclaringType)
-                            || (property.DeclaringType.IsInterface() && existingProperty.DeclaringType.ImplementInterface(property.DeclaringType)))
-                        {
+                            || (property.DeclaringType.IsInterface() &&
+                                existingProperty.DeclaringType.ImplementInterface(property.DeclaringType)))
                             // current property is hidden by the existing so don't add it
                             return;
-                        }
-                        
-                        if (_type.ImplementInterface(existingProperty.DeclaringType) && _type.ImplementInterface(property.DeclaringType))
-                        {
+
+                        if (_type.ImplementInterface(existingProperty.DeclaringType) &&
+                            _type.ImplementInterface(property.DeclaringType))
                             // current property was already defined on another interface
                             return;
-                        }
                     }
                 }
 
                 if (duplicateProperty)
-                {
-                    throw new JsonSerializationException("A member with the name '{0}' already exists on '{1}'. Use the JsonPropertyAttribute to specify another name.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, _type));
-                }
+                    throw new JsonSerializationException(
+                        "A member with the name '{0}' already exists on '{1}'. Use the JsonPropertyAttribute to specify another name."
+                            .FormatWith(CultureInfo.InvariantCulture, property.PropertyName, _type));
             }
 
             Add(property);
         }
 
         /// <summary>
-        /// Gets the closest matching <see cref="JsonProperty"/> object.
-        /// First attempts to get an exact case match of <paramref name="propertyName"/> and then
-        /// a case insensitive match.
+        ///     Gets the closest matching <see cref="JsonProperty" /> object.
+        ///     First attempts to get an exact case match of <paramref name="propertyName" /> and then
+        ///     a case insensitive match.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>A matching property if found.</returns>
         public JsonProperty? GetClosestMatchProperty(string propertyName)
         {
-            JsonProperty? property = GetProperty(propertyName, StringComparison.Ordinal);
-            if (property == null)
-            {
-                property = GetProperty(propertyName, StringComparison.OrdinalIgnoreCase);
-            }
+            var property = GetProperty(propertyName, StringComparison.Ordinal);
+            if (property == null) property = GetProperty(propertyName, StringComparison.OrdinalIgnoreCase);
 
             return property;
         }
 
-        private bool TryGetValue(string key, [NotNullWhen(true)]out JsonProperty? item)
+        private bool TryGetValue(string key, [NotNullWhen(true)] out JsonProperty? item)
         {
             if (Dictionary == null)
             {
@@ -157,7 +150,7 @@ namespace Newtonsoft.Json.Serialization
         }
 
         /// <summary>
-        /// Gets a property by property name.
+        ///     Gets a property by property name.
         /// </summary>
         /// <param name="propertyName">The name of the property to get.</param>
         /// <param name="comparisonType">Type property name string comparison.</param>
@@ -167,21 +160,15 @@ namespace Newtonsoft.Json.Serialization
             // KeyedCollection has an ordinal comparer
             if (comparisonType == StringComparison.Ordinal)
             {
-                if (TryGetValue(propertyName, out JsonProperty? property))
-                {
-                    return property;
-                }
+                if (TryGetValue(propertyName, out var property)) return property;
 
                 return null;
             }
 
-            for (int i = 0; i < _list.Count; i++)
+            for (var i = 0; i < _list.Count; i++)
             {
-                JsonProperty property = _list[i];
-                if (string.Equals(propertyName, property.PropertyName, comparisonType))
-                {
-                    return property;
-                }
+                var property = _list[i];
+                if (string.Equals(propertyName, property.PropertyName, comparisonType)) return property;
             }
 
             return null;

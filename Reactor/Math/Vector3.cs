@@ -20,14 +20,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Text;
-using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
-using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Reactor.Math
 {
@@ -35,35 +33,34 @@ namespace Reactor.Math
     [StructLayout(LayoutKind.Explicit, Size = 12, Pack = 4)]
     public struct Vector3i : IEquatable<Vector3i>
     {
-        [FieldOffset(0)]
-        public int X;
-        [FieldOffset(4)]
-        public int Y;
-        [FieldOffset(8)]
-        public int Z;
-        
+        [FieldOffset(0)] public int X;
+        [FieldOffset(4)] public int Y;
+        [FieldOffset(8)] public int Z;
+
         public override bool Equals(object obj)
         {
             if (!(obj is Vector3i))
                 return false;
 
             var other = (Vector3i)obj;
-            return  X == other.X &&
-                    Y == other.Y &&
-                    Z == other.Z;
+            return X == other.X &&
+                   Y == other.Y &&
+                   Z == other.Z;
         }
+
         public bool Equals(Vector3i other)
         {
-            return  X == other.X && 
-                    Y == other.Y &&
-                    Z == other.Z;
+            return X == other.X &&
+                   Y == other.Y &&
+                   Z == other.Z;
         }
 
         public override int GetHashCode()
         {
-            return (X ^ Y ^ Z);
+            return X ^ Y ^ Z;
         }
     }
+
     [Serializable]
     [StructLayout(LayoutKind.Explicit, Size = 12, Pack = 4)]
     public struct Vector3 : IEquatable<Vector3>
@@ -71,92 +68,44 @@ namespace Reactor.Math
         #region Private Fields
 
         private static Vector3 zero = new Vector3(0f, 0f, 0f);
-        private static Vector3 one = new Vector3(1f, 1f, 1f);
-        private static Vector3 unitX = new Vector3(1f, 0f, 0f);
-        private static Vector3 unitY = new Vector3(0f, 1f, 0f);
-        private static Vector3 unitZ = new Vector3(0f, 0f, 1f);
-        private static Vector3 up = new Vector3(0f, 1f, 0f);
-        private static Vector3 down = new Vector3(0f, -1f, 0f);
-        private static Vector3 right = new Vector3(1f, 0f, 0f);
-        private static Vector3 left = new Vector3(-1f, 0f, 0f);
-        private static Vector3 forward = new Vector3(0f, 0f, -1f);
-        private static Vector3 backward = new Vector3(0f, 0f, 1f);
 
         #endregion Private Fields
 
 
         #region Public Fields
 
-        [FieldOffset(0)]
-        public float X;
+        [FieldOffset(0)] public float X;
 
-        [FieldOffset(4)]
-        public float Y;
+        [FieldOffset(4)] public float Y;
 
-        [FieldOffset(8)]
-        public float Z;
+        [FieldOffset(8)] public float Z;
 
         #endregion Public Fields
 
 
         #region Properties
 
-        public static Vector3 Zero
-        {
-            get { return zero; }
-        }
+        public static Vector3 Zero => zero;
 
-        public static Vector3 One
-        {
-            get { return one; }
-        }
+        public static Vector3 One { get; } = new Vector3(1f, 1f, 1f);
 
-        public static Vector3 UnitX
-        {
-            get { return unitX; }
-        }
+        public static Vector3 UnitX { get; } = new Vector3(1f, 0f, 0f);
 
-        public static Vector3 UnitY
-        {
-            get { return unitY; }
-        }
+        public static Vector3 UnitY { get; } = new Vector3(0f, 1f, 0f);
 
-        public static Vector3 UnitZ
-        {
-            get { return unitZ; }
-        }
+        public static Vector3 UnitZ { get; } = new Vector3(0f, 0f, 1f);
 
-        public static Vector3 Up
-        {
-            get { return up; }
-        }
+        public static Vector3 Up { get; } = new Vector3(0f, 1f, 0f);
 
-        public static Vector3 Down
-        {
-            get { return down; }
-        }
+        public static Vector3 Down { get; } = new Vector3(0f, -1f, 0f);
 
-        public static Vector3 Right
-        {
-            get { return right; }
-        }
+        public static Vector3 Right { get; } = new Vector3(1f, 0f, 0f);
 
-        public static Vector3 Left
-        {
-            get { return left; }
-        }
+        public static Vector3 Left { get; } = new Vector3(-1f, 0f, 0f);
 
-        public static Vector3 Forward
-        {
-            get { return forward; }
-        }
+        public static Vector3 Forward { get; } = new Vector3(0f, 0f, -1f);
 
-        public static Vector3 Backward
-        {
-            get { return backward; }
-        }
-
-
+        public static Vector3 Backward { get; } = new Vector3(0f, 0f, 1f);
 
         #endregion Properties
 
@@ -165,32 +114,32 @@ namespace Reactor.Math
 
         public Vector3(float x, float y, float z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
 
         public Vector3(float value)
         {
-            this.X = value;
-            this.Y = value;
-            this.Z = value;
+            X = value;
+            Y = value;
+            Z = value;
         }
 
 
         public Vector3(Vector2 value, float z)
         {
-            this.X = value.X;
-            this.Y = value.Y;
-            this.Z = z;
+            X = value.X;
+            Y = value.Y;
+            Z = z;
         }
-
 
         #endregion Constructors
 
 
         #region Public Methods
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Add(Vector3 value1, Vector3 value2)
         {
@@ -199,6 +148,7 @@ namespace Reactor.Math
             value1.Z += value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Add(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
@@ -206,6 +156,7 @@ namespace Reactor.Math
             result.Y = value1.Y + value2.Y;
             result.Z = value1.Z + value2.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Barycentric(Vector3 value1, Vector3 value2, Vector3 value3, float amount1, float amount2)
         {
@@ -214,14 +165,17 @@ namespace Reactor.Math
                 MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2),
                 MathHelper.Barycentric(value1.Z, value2.Z, value3.Z, amount1, amount2));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Barycentric(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, float amount1, float amount2, out Vector3 result)
+        public static void Barycentric(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, float amount1,
+            float amount2, out Vector3 result)
         {
             result = new Vector3(
                 MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2),
                 MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2),
                 MathHelper.Barycentric(value1.Z, value2.Z, value3.Z, amount1, amount2));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 CatmullRom(Vector3 value1, Vector3 value2, Vector3 value3, Vector3 value4, float amount)
         {
@@ -230,14 +184,17 @@ namespace Reactor.Math
                 MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount),
                 MathHelper.CatmullRom(value1.Z, value2.Z, value3.Z, value4.Z, amount));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CatmullRom(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, ref Vector3 value4, float amount, out Vector3 result)
+        public static void CatmullRom(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, ref Vector3 value4,
+            float amount, out Vector3 result)
         {
             result = new Vector3(
                 MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
                 MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount),
                 MathHelper.CatmullRom(value1.Z, value2.Z, value3.Z, value4.Z, amount));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Clamp(Vector3 value1, Vector3 min, Vector3 max)
         {
@@ -246,6 +203,7 @@ namespace Reactor.Math
                 MathHelper.Clamp(value1.Y, min.Y, max.Y),
                 MathHelper.Clamp(value1.Z, min.Z, max.Z));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Clamp(ref Vector3 value1, ref Vector3 min, ref Vector3 max, out Vector3 result)
         {
@@ -254,19 +212,22 @@ namespace Reactor.Math
                 MathHelper.Clamp(value1.Y, min.Y, max.Y),
                 MathHelper.Clamp(value1.Z, min.Z, max.Z));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Cross(Vector3 vector1, Vector3 vector2)
         {
             Cross(ref vector1, ref vector2, out vector1);
             return vector1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Cross(ref Vector3 vector1, ref Vector3 vector2, out Vector3 result)
         {
             result = new Vector3(vector1.Y * vector2.Z - vector2.Y * vector1.Z,
-                                 -(vector1.X * vector2.Z - vector2.X * vector1.Z),
-                                 vector1.X * vector2.Y - vector2.X * vector1.Y);
+                -(vector1.X * vector2.Z - vector2.X * vector1.Z),
+                vector1.X * vector2.Y - vector2.X * vector1.Y);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Distance(Vector3 vector1, Vector3 vector2)
         {
@@ -274,12 +235,14 @@ namespace Reactor.Math
             DistanceSquared(ref vector1, ref vector2, out result);
             return (float)System.Math.Sqrt(result);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Distance(ref Vector3 value1, ref Vector3 value2, out float result)
         {
             DistanceSquared(ref value1, ref value2, out result);
             result = (float)System.Math.Sqrt(result);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float DistanceSquared(Vector3 value1, Vector3 value2)
         {
@@ -287,6 +250,7 @@ namespace Reactor.Math
             DistanceSquared(ref value1, ref value2, out result);
             return result;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DistanceSquared(ref Vector3 value1, ref Vector3 value2, out float result)
         {
@@ -294,6 +258,7 @@ namespace Reactor.Math
                      (value1.Y - value2.Y) * (value1.Y - value2.Y) +
                      (value1.Z - value2.Z) * (value1.Z - value2.Z);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Divide(Vector3 value1, Vector3 value2)
         {
@@ -302,23 +267,26 @@ namespace Reactor.Math
             value1.Z /= value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Divide(Vector3 value1, float value2)
         {
-            float factor = 1 / value2;
+            var factor = 1 / value2;
             value1.X *= factor;
             value1.Y *= factor;
             value1.Z *= factor;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Divide(ref Vector3 value1, float divisor, out Vector3 result)
         {
-            float factor = 1 / divisor;
+            var factor = 1 / divisor;
             result.X = value1.X * factor;
             result.Y = value1.Y * factor;
             result.Z = value1.Z * factor;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Divide(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
@@ -326,16 +294,19 @@ namespace Reactor.Math
             result.Y = value1.Y / value2.Y;
             result.Z = value1.Z / value2.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Dot(Vector3 vector1, Vector3 vector2)
         {
             return vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Dot(ref Vector3 vector1, ref Vector3 vector2, out float result)
         {
             result = vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {
@@ -344,15 +315,16 @@ namespace Reactor.Math
 
             var other = (Vector3)obj;
             return X == other.X &&
-                    Y == other.Y &&
-                    Z == other.Z;
+                   Y == other.Y &&
+                   Z == other.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Vector3 other)
         {
             return X == other.X &&
-                    Y == other.Y &&
-                    Z == other.Z;
+                   Y == other.Y &&
+                   Z == other.Z;
         }
 
         public override int GetHashCode()
@@ -365,20 +337,24 @@ namespace Reactor.Math
                 return hashCode;
             }
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Hermite(Vector3 value1, Vector3 tangent1, Vector3 value2, Vector3 tangent2, float amount)
         {
-            Vector3 result = new Vector3();
+            var result = new Vector3();
             Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
             return result;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Hermite(ref Vector3 value1, ref Vector3 tangent1, ref Vector3 value2, ref Vector3 tangent2, float amount, out Vector3 result)
+        public static void Hermite(ref Vector3 value1, ref Vector3 tangent1, ref Vector3 value2, ref Vector3 tangent2,
+            float amount, out Vector3 result)
         {
             result.X = MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount);
             result.Y = MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount);
             result.Z = MathHelper.Hermite(value1.Z, tangent1.Z, value2.Z, tangent2.Z, amount);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Length()
         {
@@ -386,6 +362,7 @@ namespace Reactor.Math
             DistanceSquared(ref this, ref zero, out result);
             return (float)System.Math.Sqrt(result);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float LengthSquared()
         {
@@ -393,6 +370,7 @@ namespace Reactor.Math
             DistanceSquared(ref this, ref zero, out result);
             return result;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Lerp(Vector3 value1, Vector3 value2, float amount)
         {
@@ -401,6 +379,7 @@ namespace Reactor.Math
                 MathHelper.Lerp(value1.Y, value2.Y, amount),
                 MathHelper.Lerp(value1.Z, value2.Z, amount));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Lerp(ref Vector3 value1, ref Vector3 value2, float amount, out Vector3 result)
         {
@@ -409,6 +388,7 @@ namespace Reactor.Math
                 MathHelper.Lerp(value1.Y, value2.Y, amount),
                 MathHelper.Lerp(value1.Z, value2.Z, amount));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Max(Vector3 value1, Vector3 value2)
         {
@@ -417,6 +397,7 @@ namespace Reactor.Math
                 MathHelper.Max(value1.Y, value2.Y),
                 MathHelper.Max(value1.Z, value2.Z));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Max(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
@@ -425,6 +406,7 @@ namespace Reactor.Math
                 MathHelper.Max(value1.Y, value2.Y),
                 MathHelper.Max(value1.Z, value2.Z));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Min(Vector3 value1, Vector3 value2)
         {
@@ -433,6 +415,7 @@ namespace Reactor.Math
                 MathHelper.Min(value1.Y, value2.Y),
                 MathHelper.Min(value1.Z, value2.Z));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Min(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
@@ -441,6 +424,7 @@ namespace Reactor.Math
                 MathHelper.Min(value1.Y, value2.Y),
                 MathHelper.Min(value1.Z, value2.Z));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Multiply(Vector3 value1, Vector3 value2)
         {
@@ -449,6 +433,7 @@ namespace Reactor.Math
             value1.Z *= value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Multiply(Vector3 value1, float scaleFactor)
         {
@@ -457,6 +442,7 @@ namespace Reactor.Math
             value1.Z *= scaleFactor;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Multiply(ref Vector3 value1, float scaleFactor, out Vector3 result)
         {
@@ -464,6 +450,7 @@ namespace Reactor.Math
             result.Y = value1.Y * scaleFactor;
             result.Z = value1.Z * scaleFactor;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Multiply(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
@@ -471,28 +458,33 @@ namespace Reactor.Math
             result.Y = value1.Y * value2.Y;
             result.Z = value1.Z * value2.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Negate(Vector3 value)
         {
             value = new Vector3(-value.X, -value.Y, -value.Z);
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Negate(ref Vector3 value, out Vector3 result)
         {
             result = new Vector3(-value.X, -value.Y, -value.Z);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Normalize()
         {
             Normalize(ref this, out this);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Normalize(Vector3 vector)
         {
             Normalize(ref vector, out vector);
             return vector;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Normalize(ref Vector3 value, out Vector3 result)
         {
@@ -502,10 +494,11 @@ namespace Reactor.Math
             result.X = value.X * factor;
             result.Y = value.Y * factor;
             result.Z = value.Z * factor;
-            if (float.IsNaN(result.X)) { result.X = 0; }
-            if (float.IsNaN(result.Y)) { result.Y = 0; }
-            if (float.IsNaN(result.Z)) { result.Z = 0; }
+            if (float.IsNaN(result.X)) result.X = 0;
+            if (float.IsNaN(result.Y)) result.Y = 0;
+            if (float.IsNaN(result.Z)) result.Z = 0;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Reflect(Vector3 vector, Vector3 normal)
         {
@@ -514,13 +507,14 @@ namespace Reactor.Math
             // R = I - (2 * N * ( DotProduct[ I,N] ))
             Vector3 reflectedVector;
             // inline the dotProduct here instead of calling method
-            float dotProduct = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
-            reflectedVector.X = vector.X - (2.0f * normal.X) * dotProduct;
-            reflectedVector.Y = vector.Y - (2.0f * normal.Y) * dotProduct;
-            reflectedVector.Z = vector.Z - (2.0f * normal.Z) * dotProduct;
+            var dotProduct = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+            reflectedVector.X = vector.X - 2.0f * normal.X * dotProduct;
+            reflectedVector.Y = vector.Y - 2.0f * normal.Y * dotProduct;
+            reflectedVector.Z = vector.Z - 2.0f * normal.Z * dotProduct;
 
             return reflectedVector;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Reflect(ref Vector3 vector, ref Vector3 normal, out Vector3 result)
         {
@@ -529,12 +523,12 @@ namespace Reactor.Math
             // R = I - (2 * N * ( DotProduct[ I,N] ))
 
             // inline the dotProduct here instead of calling method
-            float dotProduct = ((vector.X * normal.X) + (vector.Y * normal.Y)) + (vector.Z * normal.Z);
-            result.X = vector.X - (2.0f * normal.X) * dotProduct;
-            result.Y = vector.Y - (2.0f * normal.Y) * dotProduct;
-            result.Z = vector.Z - (2.0f * normal.Z) * dotProduct;
-
+            var dotProduct = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+            result.X = vector.X - 2.0f * normal.X * dotProduct;
+            result.Y = vector.Y - 2.0f * normal.Y * dotProduct;
+            result.Z = vector.Z - 2.0f * normal.Z * dotProduct;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 SmoothStep(Vector3 value1, Vector3 value2, float amount)
         {
@@ -543,6 +537,7 @@ namespace Reactor.Math
                 MathHelper.SmoothStep(value1.Y, value2.Y, amount),
                 MathHelper.SmoothStep(value1.Z, value2.Z, amount));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SmoothStep(ref Vector3 value1, ref Vector3 value2, float amount, out Vector3 result)
         {
@@ -551,6 +546,7 @@ namespace Reactor.Math
                 MathHelper.SmoothStep(value1.Y, value2.Y, amount),
                 MathHelper.SmoothStep(value1.Z, value2.Z, amount));
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Subtract(Vector3 value1, Vector3 value2)
         {
@@ -559,6 +555,7 @@ namespace Reactor.Math
             value1.Z -= value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Subtract(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
@@ -569,33 +566,38 @@ namespace Reactor.Math
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(32);
+            var sb = new StringBuilder(32);
             sb.Append("{X:");
-            sb.Append(this.X);
+            sb.Append(X);
             sb.Append(" Y:");
-            sb.Append(this.Y);
+            sb.Append(Y);
             sb.Append(" Z:");
-            sb.Append(this.Z);
+            sb.Append(Z);
             sb.Append("}");
             return sb.ToString();
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Transform(Vector3 position, Matrix matrix)
         {
             Transform(ref position, ref matrix, out position);
             return position;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(ref Vector3 position, ref Matrix matrix, out Vector3 result)
         {
-            result = new Vector3((position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41,
-                                 (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42,
-                                 (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43);
+            result = new Vector3(
+                position.X * matrix.M11 + position.Y * matrix.M21 + position.Z * matrix.M31 + matrix.M41,
+                position.X * matrix.M12 + position.Y * matrix.M22 + position.Z * matrix.M32 + matrix.M42,
+                position.X * matrix.M13 + position.Y * matrix.M23 + position.Z * matrix.M33 + matrix.M43);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(Vector3[] sourceArray, ref Matrix matrix, Vector3[] destinationArray)
         {
-            Debug.Assert(destinationArray.Length >= sourceArray.Length, "The destination array is smaller than the source array.");
+            Debug.Assert(destinationArray.Length >= sourceArray.Length,
+                "The destination array is smaller than the source array.");
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
@@ -604,13 +606,15 @@ namespace Reactor.Math
                 var position = sourceArray[i];
                 destinationArray[i] =
                     new Vector3(
-                        (position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41,
-                        (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42,
-                        (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43);
+                        position.X * matrix.M11 + position.Y * matrix.M21 + position.Z * matrix.M31 + matrix.M41,
+                        position.X * matrix.M12 + position.Y * matrix.M22 + position.Z * matrix.M32 + matrix.M42,
+                        position.X * matrix.M13 + position.Y * matrix.M23 + position.Z * matrix.M33 + matrix.M43);
             }
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Matrix matrix, Vector3[] destinationArray, int destinationIndex, int length)
+        public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Matrix matrix,
+            Vector3[] destinationArray, int destinationIndex, int length)
         {
             Debug.Assert(sourceArray.Length - sourceIndex >= length,
                 "The source array is too small for the given sourceIndex and length.");
@@ -624,14 +628,14 @@ namespace Reactor.Math
                 var position = sourceArray[sourceIndex + i];
                 destinationArray[destinationIndex + i] =
                     new Vector3(
-                        (position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41,
-                        (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42,
-                        (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43);
+                        position.X * matrix.M11 + position.Y * matrix.M21 + position.Z * matrix.M31 + matrix.M41,
+                        position.X * matrix.M12 + position.Y * matrix.M22 + position.Z * matrix.M32 + matrix.M42,
+                        position.X * matrix.M13 + position.Y * matrix.M23 + position.Z * matrix.M33 + matrix.M43);
             }
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
+        ///     Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -645,7 +649,7 @@ namespace Reactor.Math
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
+        ///     Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="value">The vector to transform.</param>
         /// <param name="rotation">The quaternion to rotate the vector by.</param>
@@ -653,9 +657,9 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(ref Vector3 value, ref Quaternion rotation, out Vector3 result)
         {
-            float x = 2 * (rotation.Y * value.Z - rotation.Z * value.Y);
-            float y = 2 * (rotation.Z * value.X - rotation.X * value.Z);
-            float z = 2 * (rotation.X * value.Y - rotation.Y * value.X);
+            var x = 2 * (rotation.Y * value.Z - rotation.Z * value.Y);
+            var y = 2 * (rotation.Z * value.X - rotation.X * value.Z);
+            var z = 2 * (rotation.X * value.Y - rotation.Y * value.X);
 
             result.X = value.X + x * rotation.W + (rotation.Y * z - rotation.Z * y);
             result.Y = value.Y + y * rotation.W + (rotation.Z * x - rotation.X * z);
@@ -663,7 +667,7 @@ namespace Reactor.Math
         }
 
         /// <summary>
-        /// Transforms an array of vectors by a quaternion rotation.
+        ///     Transforms an array of vectors by a quaternion rotation.
         /// </summary>
         /// <param name="sourceArray">The vectors to transform</param>
         /// <param name="rotation">The quaternion to rotate the vector by.</param>
@@ -671,7 +675,8 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(Vector3[] sourceArray, ref Quaternion rotation, Vector3[] destinationArray)
         {
-            Debug.Assert(destinationArray.Length >= sourceArray.Length, "The destination array is smaller than the source array.");
+            Debug.Assert(destinationArray.Length >= sourceArray.Length,
+                "The destination array is smaller than the source array.");
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
@@ -679,9 +684,9 @@ namespace Reactor.Math
             {
                 var position = sourceArray[i];
 
-                float x = 2 * (rotation.Y * position.Z - rotation.Z * position.Y);
-                float y = 2 * (rotation.Z * position.X - rotation.X * position.Z);
-                float z = 2 * (rotation.X * position.Y - rotation.Y * position.X);
+                var x = 2 * (rotation.Y * position.Z - rotation.Z * position.Y);
+                var y = 2 * (rotation.Z * position.X - rotation.X * position.Z);
+                var z = 2 * (rotation.X * position.Y - rotation.Y * position.X);
 
                 destinationArray[i] =
                     new Vector3(
@@ -692,7 +697,7 @@ namespace Reactor.Math
         }
 
         /// <summary>
-        /// Transforms an array of vectors within a given range by a quaternion rotation.
+        ///     Transforms an array of vectors within a given range by a quaternion rotation.
         /// </summary>
         /// <param name="sourceArray">The vectors to transform.</param>
         /// <param name="sourceIndex">The starting index in the source array.</param>
@@ -701,7 +706,8 @@ namespace Reactor.Math
         /// <param name="destinationIndex">The starting index in the destination array.</param>
         /// <param name="length">The number of vectors to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Quaternion rotation, Vector3[] destinationArray, int destinationIndex, int length)
+        public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Quaternion rotation,
+            Vector3[] destinationArray, int destinationIndex, int length)
         {
             Debug.Assert(sourceArray.Length - sourceIndex >= length,
                 "The source array is too small for the given sourceIndex and length.");
@@ -714,9 +720,9 @@ namespace Reactor.Math
             {
                 var position = sourceArray[sourceIndex + i];
 
-                float x = 2 * (rotation.Y * position.Z - rotation.Z * position.Y);
-                float y = 2 * (rotation.Z * position.X - rotation.X * position.Z);
-                float z = 2 * (rotation.X * position.Y - rotation.Y * position.X);
+                var x = 2 * (rotation.Y * position.Z - rotation.Z * position.Y);
+                var y = 2 * (rotation.Z * position.X - rotation.X * position.Z);
+                var z = 2 * (rotation.X * position.Y - rotation.Y * position.X);
 
                 destinationArray[destinationIndex + i] =
                     new Vector3(
@@ -732,30 +738,34 @@ namespace Reactor.Math
             TransformNormal(ref normal, ref matrix, out normal);
             return normal;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformNormal(ref Vector3 normal, ref Matrix matrix, out Vector3 result)
         {
-            result = new Vector3((normal.X * matrix.M11) + (normal.Y * matrix.M21) + (normal.Z * matrix.M31),
-                                 (normal.X * matrix.M12) + (normal.Y * matrix.M22) + (normal.Z * matrix.M32),
-                                 (normal.X * matrix.M13) + (normal.Y * matrix.M23) + (normal.Z * matrix.M33));
+            result = new Vector3(normal.X * matrix.M11 + normal.Y * matrix.M21 + normal.Z * matrix.M31,
+                normal.X * matrix.M12 + normal.Y * matrix.M22 + normal.Z * matrix.M32,
+                normal.X * matrix.M13 + normal.Y * matrix.M23 + normal.Z * matrix.M33);
         }
 
         #endregion Public methods
 
 
         #region Operators
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Vector3 value1, Vector3 value2)
         {
             return value1.X == value2.X
-                && value1.Y == value2.Y
-                && value1.Z == value2.Z;
+                   && value1.Y == value2.Y
+                   && value1.Z == value2.Z;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Vector3 value1, Vector3 value2)
         {
             return !(value1 == value2);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator +(Vector3 value1, Vector3 value2)
         {
@@ -764,12 +774,14 @@ namespace Reactor.Math
             value1.Z += value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator -(Vector3 value)
         {
             value = new Vector3(-value.X, -value.Y, -value.Z);
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator -(Vector3 value1, Vector3 value2)
         {
@@ -778,6 +790,7 @@ namespace Reactor.Math
             value1.Z -= value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(Vector3 value1, Vector3 value2)
         {
@@ -786,6 +799,7 @@ namespace Reactor.Math
             value1.Z *= value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(Vector3 value, float scaleFactor)
         {
@@ -794,6 +808,7 @@ namespace Reactor.Math
             value.Z *= scaleFactor;
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(Vector3 value, double scaleFactor)
         {
@@ -802,6 +817,7 @@ namespace Reactor.Math
             value.Z *= (float)scaleFactor;
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(float scaleFactor, Vector3 value)
         {
@@ -810,6 +826,7 @@ namespace Reactor.Math
             value.Z *= scaleFactor;
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(double scaleFactor, Vector3 value)
         {
@@ -818,14 +835,16 @@ namespace Reactor.Math
             value.Z *= (float)scaleFactor;
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(Vector3 value1, Matrix value2)
         {
-            float x = value1.X * value2.M11 + value1.Y * value2.M21 + value1.Z * value2.M31;
-            float y = value1.X * value2.M12 + value1.Y * value2.M22 + value1.Z * value2.M32;
-            float z = value1.X * value2.M13 + value1.Y * value2.M23 + value1.Z * value2.M33;
+            var x = value1.X * value2.M11 + value1.Y * value2.M21 + value1.Z * value2.M31;
+            var y = value1.X * value2.M12 + value1.Y * value2.M22 + value1.Z * value2.M32;
+            var z = value1.X * value2.M13 + value1.Y * value2.M23 + value1.Z * value2.M33;
             return new Vector3(x, y, z);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator /(Vector3 value1, Vector3 value2)
         {
@@ -834,19 +853,21 @@ namespace Reactor.Math
             value1.Z /= value2.Z;
             return value1;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator /(Vector3 value, float divider)
         {
-            float factor = 1.0f / divider;
+            var factor = 1.0f / divider;
             value.X *= factor;
             value.Y *= factor;
             value.Z *= factor;
             return value;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator /(Vector3 value, double divider)
         {
-            float factor = 1.0f / (float)divider;
+            var factor = 1.0f / (float)divider;
             value.X *= factor;
             value.Y *= factor;
             value.Z *= factor;
@@ -864,6 +885,7 @@ namespace Reactor.Math
         {
             return new Vector3(value.X, value.Y, value.Z);
         }
+
         #endregion
     }
 }

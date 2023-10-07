@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,13 +30,20 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Utilities;
 
-#nullable disable
-
 namespace Newtonsoft.Json.Schema
 {
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     internal class JsonSchemaModel
     {
+        public JsonSchemaModel()
+        {
+            Type = JsonSchemaType.Any;
+            AllowAdditionalProperties = true;
+            AllowAdditionalItems = true;
+            Required = false;
+        }
+
         public bool Required { get; set; }
         public JsonSchemaType Type { get; set; }
         public int? MinimumLength { get; set; }
@@ -59,22 +68,11 @@ namespace Newtonsoft.Json.Schema
         public IList<JToken> Enum { get; set; }
         public JsonSchemaType Disallow { get; set; }
 
-        public JsonSchemaModel()
-        {
-            Type = JsonSchemaType.Any;
-            AllowAdditionalProperties = true;
-            AllowAdditionalItems = true;
-            Required = false;
-        }
-
         public static JsonSchemaModel Create(IList<JsonSchema> schemata)
         {
-            JsonSchemaModel model = new JsonSchemaModel();
+            var model = new JsonSchemaModel();
 
-            foreach (JsonSchema schema in schemata)
-            {
-                Combine(model, schema);
-            }
+            foreach (var schema in schemata) Combine(model, schema);
 
             return model;
         }
@@ -104,21 +102,16 @@ namespace Newtonsoft.Json.Schema
             model.UniqueItems = model.UniqueItems || schema.UniqueItems;
             if (schema.Enum != null)
             {
-                if (model.Enum == null)
-                {
-                    model.Enum = new List<JToken>();
-                }
+                if (model.Enum == null) model.Enum = new List<JToken>();
 
                 model.Enum.AddRangeDistinct(schema.Enum, JToken.EqualityComparer);
             }
+
             model.Disallow = model.Disallow | (schema.Disallow ?? JsonSchemaType.None);
 
             if (schema.Pattern != null)
             {
-                if (model.Patterns == null)
-                {
-                    model.Patterns = new List<string>();
-                }
+                if (model.Patterns == null) model.Patterns = new List<string>();
 
                 model.Patterns.AddDistinct(schema.Pattern);
             }

@@ -20,28 +20,23 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reactor.Types.States
 {
     public enum RBlend
     {
-        One,				
-        Zero,	 			
-        SourceColor,		
-        InverseSourceColor,	
-        SourceAlpha,		
-        InverseSourceAlpha,	
-        DestinationColor,	
-        InverseDestinationColor,	
-        DestinationAlpha,	
-        InverseDestinationAlpha,	
-        BlendFactor,		
-        InverseBlendFactor,	
-        SourceAlphaSaturation,	
+        One,
+        Zero,
+        SourceColor,
+        InverseSourceColor,
+        SourceAlpha,
+        InverseSourceAlpha,
+        DestinationColor,
+        InverseDestinationColor,
+        DestinationAlpha,
+        InverseDestinationAlpha,
+        BlendFactor,
+        InverseBlendFactor,
+        SourceAlphaSaturation
     }
 }

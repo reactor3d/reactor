@@ -20,73 +20,64 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Types;
+
 using System.Collections.Generic;
-using Reactor.Math;
+using Reactor.Types;
 
 namespace Reactor
 {
     public class RTextures : RSingleton<RTextures>
     {
-
         internal static Dictionary<string, RTexture> Textures = new Dictionary<string, RTexture>();
 
-        public RTextures()
-        {
-             
-        }
-        public RTexture CreateTexture<TRTexture>(byte[] data, string name, bool isCompressed) where TRTexture : RTexture, new()
+        public RTexture CreateTexture<T>(byte[] data, string name, bool isCompressed) where T : RTexture, new()
         {
             if (Textures.ContainsKey(name))
                 return Textures[name];
-            RTexture texture = new TRTexture();
+            RTexture texture = new T();
             texture.Name = name;
             texture.LoadFromData(data, name, isCompressed);
             Textures.Add(name, texture);
             return texture;
         }
-        public RTexture CreateTexture<TRTexture>(string name, string filename) where TRTexture : RTexture, new()
+
+        public RTexture CreateTexture<T>(string name, string filename) where T : RTexture, new()
         {
             if (Textures.ContainsKey(name))
                 return Textures[name];
-            RTexture texture = new TRTexture();
+            RTexture texture = new T();
             texture.Name = name;
             texture.LoadFromDisk(filename);
             Textures.Add(name, texture);
             return texture;
         }
+
         public RTexture GetTexture(string name)
         {
-            if(Textures.ContainsKey(name))
+            if (Textures.ContainsKey(name))
                 return Textures[name];
-            else
-                return null;
+            return null;
         }
+
         public bool RemoveTexture(string name)
         {
-            if(Textures.ContainsKey(name))
+            if (Textures.ContainsKey(name))
             {
                 Textures[name].Dispose();
                 Textures.Remove(name);
                 return true;
             }
-            else 
-            {
-                return false;
-            }
+
+            return false;
         }
 
 
         internal static RTexture GetTexture(uint texture)
         {
-            foreach(RTexture t in Textures.Values)
-            {
-                if(t.Id == texture){
+            foreach (var t in Textures.Values)
+                if (t.Id == texture)
                     return t;
-                }
-            }
             return null;
         }
-            
     }
 }

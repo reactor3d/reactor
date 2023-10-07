@@ -56,6 +56,7 @@ namespace Reactor.Audio
         //internal static readonly XRamExtension XRam = new XRamExtension();
         //internal static readonly EffectsExtension Efx = new EffectsExtension();
         internal static ALContext Context = ALC.GetCurrentContext();
+
         internal static void Check()
         {
             ALError error;

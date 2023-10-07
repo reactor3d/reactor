@@ -22,7 +22,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using Reactor.Math;
 
 namespace Reactor.Types
@@ -32,19 +31,18 @@ namespace Reactor.Types
         public Vector2 Offset = new Vector2();
         public Vector2 Origin = new Vector2();
         public Rectangle ScaledBounds = new Rectangle();
+
         public RColor Color { get; set; }
-        public RTextureSprite() : base()
-        {
-        }
 
         public void Render(bool flipped = false)
         {
-            Rectangle bounds = new Rectangle((int)(Origin.X + Offset.X), (int)(Origin.Y + Offset.Y), this.Bounds.Width, this.Bounds.Height);
+            var bounds = new Rectangle((int)(Origin.X + Offset.X), (int)(Origin.Y + Offset.Y), Bounds.Width,
+                Bounds.Height);
             if (flipped)
-                RScreen.Instance.RenderTexture(this, bounds, Color, Matrix.CreateRotationY(MathHelper.ToRadians(180f)), false);
+                RScreen.Instance.RenderTexture(this, bounds, Color, Matrix.CreateRotationY(MathHelper.ToRadians(180f)),
+                    false);
             else
                 RScreen.Instance.RenderTexture(this, bounds, Color, Matrix.Identity, false);
         }
     }
 }
-

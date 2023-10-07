@@ -38,7 +38,6 @@ namespace Reactor.Platform.GLFW
 
         static Glfw()
         {
-
             Init();
             SetErrorCallback(errorCallback);
 #if OPENGL
@@ -291,7 +290,7 @@ namespace Reactor.Platform.GLFW
             for (var i = 0; i < count; i++)
             {
                 var value = Marshal.ReadByte(ptr, i);
-                hat |= (Hat) value;
+                hat |= (Hat)value;
             }
 
             return hat;
@@ -412,9 +411,7 @@ namespace Reactor.Platform.GLFW
                 var monitors = new Monitor[count];
                 var offset = 0;
                 for (var i = 0; i < count; i++, offset += IntPtr.Size)
-                {
                     monitors[i] = Marshal.PtrToStructure<Monitor>(ptr + offset);
-                }
 
                 return monitors;
             }
@@ -1499,6 +1496,7 @@ namespace Reactor.Platform.GLFW
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetWin32Window", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetWin32Window(Window window);
+
         #endregion
 
         #region Methods
@@ -1528,7 +1526,7 @@ namespace Reactor.Platform.GLFW
         /// <returns>The client API.</returns>
         public static ClientApi GetClientApi(Window window)
         {
-            return (ClientApi) GetWindowAttribute(window, (int) ContextAttributes.ClientApi);
+            return (ClientApi)GetWindowAttribute(window, (int)ContextAttributes.ClientApi);
         }
 
         /// <summary>
@@ -1550,7 +1548,7 @@ namespace Reactor.Platform.GLFW
         /// <returns>The API used to create the context.</returns>
         public static ContextApi GetContextCreationApi(Window window)
         {
-            return (ContextApi) GetWindowAttribute(window, (int) ContextAttributes.ContextCreationApi);
+            return (ContextApi)GetWindowAttribute(window, (int)ContextAttributes.ContextCreationApi);
         }
 
         /// <summary>
@@ -1582,7 +1580,7 @@ namespace Reactor.Platform.GLFW
         /// <returns>The current gamma ramp, or empty structure if an error occurred.</returns>
         public static GammaRamp GetGammaRamp(Monitor monitor)
         {
-            return (GammaRamp) Marshal.PtrToStructure<GammaRampInternal>(GetGammaRampInternal(monitor));
+            return (GammaRamp)Marshal.PtrToStructure<GammaRampInternal>(GetGammaRampInternal(monitor));
         }
 
         /// <summary>
@@ -1592,7 +1590,7 @@ namespace Reactor.Platform.GLFW
         /// <returns><c>true</c> if window context is debug context, otherwise <c>false</c>.</returns>
         public static bool GetIsDebugContext(Window window)
         {
-            return GetWindowAttribute(window, (int) ContextAttributes.OpenglDebugContext) == (int) Constants.True;
+            return GetWindowAttribute(window, (int)ContextAttributes.OpenglDebugContext) == (int)Constants.True;
         }
 
         /// <summary>
@@ -1602,7 +1600,7 @@ namespace Reactor.Platform.GLFW
         /// <returns><c>true</c> if window context is forward compatible, otherwise <c>false</c>.</returns>
         public static bool GetIsForwardCompatible(Window window)
         {
-            return GetWindowAttribute(window, (int) ContextAttributes.OpenglForwardCompat) == (int) Constants.True;
+            return GetWindowAttribute(window, (int)ContextAttributes.OpenglForwardCompat) == (int)Constants.True;
         }
 
         /// <summary>
@@ -1634,7 +1632,7 @@ namespace Reactor.Platform.GLFW
             var ptr = GetJoystickButtons(joystick, out var count);
             var states = new InputState[count];
             for (var i = 0; i < count; i++)
-                states[i] = (InputState) Marshal.ReadByte(ptr, i);
+                states[i] = (InputState)Marshal.ReadByte(ptr, i);
             return states;
         }
 
@@ -1703,7 +1701,7 @@ namespace Reactor.Platform.GLFW
         /// <returns>Profile of the window.</returns>
         public static Profile GetProfile(Window window)
         {
-            return (Profile) GetWindowAttribute(window, (int) ContextAttributes.OpenglProfile);
+            return (Profile)GetWindowAttribute(window, (int)ContextAttributes.OpenglProfile);
         }
 
         /// <summary>
@@ -1713,7 +1711,7 @@ namespace Reactor.Platform.GLFW
         /// <returns>Current set value of the robustness.</returns>
         public static Robustness GetRobustness(Window window)
         {
-            return (Robustness) GetWindowAttribute(window, (int) ContextAttributes.ContextRobustness);
+            return (Robustness)GetWindowAttribute(window, (int)ContextAttributes.ContextRobustness);
         }
 
         /// <summary>
@@ -1757,13 +1755,14 @@ namespace Reactor.Platform.GLFW
         /// <returns>The value of the attribute, or zero if an error occurred.</returns>
         public static bool GetWindowAttribute(Window window, WindowAttribute attribute)
         {
-            return GetWindowAttribute(window, (int) attribute) == (int) Constants.True;
+            return GetWindowAttribute(window, (int)attribute) == (int)Constants.True;
         }
 
         public static IntPtr GetWin32Handle(Window window)
         {
             return GetWin32Window(window);
         }
+
         /// <summary>
         ///     Sets the system clipboard to the specified string.
         /// </summary>
@@ -1813,7 +1812,10 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="hint">The hint.</param>
         /// <param name="value">The value.</param>
-        public static void WindowHint(Hint hint, ClientApi value) { WindowHint(hint, (int) value); }
+        public static void WindowHint(Hint hint, ClientApi value)
+        {
+            WindowHint(hint, (int)value);
+        }
 
         /// <summary>
         ///     Sets hints for the next call to <see cref="CreateWindow" />. The hints, once set, retain their values
@@ -1827,7 +1829,10 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="hint">The hint.</param>
         /// <param name="value">The value.</param>
-        public static void WindowHint(Hint hint, Constants value) { WindowHint(hint, (int) value); }
+        public static void WindowHint(Hint hint, Constants value)
+        {
+            WindowHint(hint, (int)value);
+        }
 
         /// <summary>
         ///     Sets hints for the next call to <see cref="CreateWindow" />. The hints, once set, retain their values
@@ -1841,7 +1846,10 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="hint">The hint.</param>
         /// <param name="value">The value.</param>
-        public static void WindowHint(Hint hint, ContextApi value) { WindowHint(hint, (int) value); }
+        public static void WindowHint(Hint hint, ContextApi value)
+        {
+            WindowHint(hint, (int)value);
+        }
 
         /// <summary>
         ///     Sets hints for the next call to <see cref="CreateWindow" />. The hints, once set, retain their values
@@ -1855,7 +1863,10 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="hint">The hint.</param>
         /// <param name="value">The value.</param>
-        public static void WindowHint(Hint hint, Robustness value) { WindowHint(hint, (int) value); }
+        public static void WindowHint(Hint hint, Robustness value)
+        {
+            WindowHint(hint, (int)value);
+        }
 
         /// <summary>
         ///     Sets hints for the next call to <see cref="CreateWindow" />. The hints, once set, retain their values
@@ -1869,7 +1880,10 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="hint">The hint.</param>
         /// <param name="value">The value.</param>
-        public static void WindowHint(Hint hint, Profile value) { WindowHint(hint, (int) value); }
+        public static void WindowHint(Hint hint, Profile value)
+        {
+            WindowHint(hint, (int)value);
+        }
 
         /// <summary>
         ///     Sets hints for the next call to <see cref="CreateWindow" />. The hints, once set, retain their values
@@ -1883,13 +1897,16 @@ namespace Reactor.Platform.GLFW
         /// </summary>
         /// <param name="hint">The hint.</param>
         /// <param name="value">The value.</param>
-        public static void WindowHint(Hint hint, ReleaseBehavior value) { WindowHint(hint, (int) value); }
+        public static void WindowHint(Hint hint, ReleaseBehavior value)
+        {
+            WindowHint(hint, (int)value);
+        }
 
         private static void GetContextVersion(Window window, out int major, out int minor, out int revision)
         {
-            major = GetWindowAttribute(window, (int) ContextAttributes.ContextVersionMajor);
-            minor = GetWindowAttribute(window, (int) ContextAttributes.ContextVersionMinor);
-            revision = GetWindowAttribute(window, (int) ContextAttributes.ContextVersionRevision);
+            major = GetWindowAttribute(window, (int)ContextAttributes.ContextVersionMajor);
+            minor = GetWindowAttribute(window, (int)ContextAttributes.ContextVersionMinor);
+            revision = GetWindowAttribute(window, (int)ContextAttributes.ContextVersionRevision);
         }
 
         private static void GlfwError(ErrorCode code, IntPtr message)

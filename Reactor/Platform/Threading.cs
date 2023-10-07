@@ -22,25 +22,15 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Reactor.Platform.GLFW;
 using Reactor.Platform.OpenGL;
 using Reactor.Types;
 
 namespace Reactor.Platform
 {
-    
     public class RThreadPool : RSingleton<RThreadPool>
     {
-        
-        public RThreadPool()
-        {
-        }
         public int ThreadCount
         {
             get
@@ -53,51 +43,36 @@ namespace Reactor.Platform
 
         public async void Queue(Action action, object state)
         {
-            if(state != null)
-            {
-                ThreadPool.QueueUserWorkItem((o) =>
-                {
-                    action.DynamicInvoke(o);
-                }, state);
-            }
+            if (state != null)
+                ThreadPool.QueueUserWorkItem(o => { action.DynamicInvoke(o); }, state);
             else
-            {
-                ThreadPool.QueueUserWorkItem((_) =>
-                {
-                    action.Invoke();
-                });
-            }
+                ThreadPool.QueueUserWorkItem(_ => { action.Invoke(); });
         }
+
         public async void Queue(Action action, Action callback)
         {
-            ThreadPool.QueueUserWorkItem((_) =>
+            ThreadPool.QueueUserWorkItem(_ =>
             {
-                action.BeginInvoke((r) =>
+                action.BeginInvoke(r =>
                 {
                     action.EndInvoke(r);
-                    if (r.IsCompleted)
-                    {
-                        callback();
-                    }
+                    if (r.IsCompleted) callback();
                 }, null);
-                
             });
         }
+
         public async void Queue(Task task)
         {
-            ThreadPool.QueueUserWorkItem((_) => 
-            {
-                task.Start(TaskScheduler.Default);
-
-            });
+            ThreadPool.QueueUserWorkItem(_ => { task.Start(TaskScheduler.Default); });
         }
     }
+
     internal class Threading
     {
         public const int kMaxWaitForUIThread = 750; // In milliseconds
 
 
-        static int mainThreadId;
+        private static readonly int mainThreadId;
         public static IGraphicsContext BackgroundContext;
 
         static Threading()
@@ -107,7 +82,7 @@ namespace Reactor.Platform
 
 
         /// <summary>
-        /// Checks if the code is currently running on the UI thread.
+        ///     Checks if the code is currently running on the UI thread.
         /// </summary>
         /// <returns>true if the code is currently running on the UI thread.</returns>
         public static bool IsOnUIThread()
@@ -116,7 +91,7 @@ namespace Reactor.Platform
         }
 
         /// <summary>
-        /// Throws an exception if the code is not currently running on the UI thread.
+        ///     Throws an exception if the code is not currently running on the UI thread.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the code is not currently running on the UI thread.</exception>
         public static void EnsureUIThread()
@@ -126,8 +101,8 @@ namespace Reactor.Platform
         }
 
         /// <summary>
-        /// Runs the given action on the UI thread and blocks the current thread while the action is running.
-        /// If the current thread is the UI thread, the action will run immediately.
+        ///     Runs the given action on the UI thread and blocks the current thread while the action is running.
+        ///     If the current thread is the UI thread, the action will run immediately.
         /// </summary>
         /// <param name="action">The action to be run on the UI thread</param>
         internal static void BlockOnUIThread(Action action)
@@ -158,14 +133,10 @@ namespace Reactor.Platform
 
         public void RunOnThreadPool(Action action)
         {
-            if(!IsOnUIThread())
-            {
+            if (!IsOnUIThread())
                 action();
-            }
             else
-            {
                 new Thread(() => { action(); }).Start();
-            }
         }
     }
 }

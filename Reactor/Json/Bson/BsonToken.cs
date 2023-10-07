@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,12 +22,11 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System.Collections;
 using System.Collections.Generic;
-
-#nullable disable
 
 namespace Newtonsoft.Json.Bson
 {
@@ -41,12 +41,6 @@ namespace Newtonsoft.Json.Bson
     {
         private readonly List<BsonProperty> _children = new List<BsonProperty>();
 
-        public void Add(string name, BsonToken token)
-        {
-            _children.Add(new BsonProperty { Name = new BsonString(name, false), Value = token });
-            token.Parent = this;
-        }
-
         public override BsonType Type => BsonType.Object;
 
         public IEnumerator<BsonProperty> GetEnumerator()
@@ -58,17 +52,17 @@ namespace Newtonsoft.Json.Bson
         {
             return GetEnumerator();
         }
+
+        public void Add(string name, BsonToken token)
+        {
+            _children.Add(new BsonProperty { Name = new BsonString(name, false), Value = token });
+            token.Parent = this;
+        }
     }
 
     internal class BsonArray : BsonToken, IEnumerable<BsonToken>
     {
         private readonly List<BsonToken> _children = new List<BsonToken>();
-
-        public void Add(BsonToken token)
-        {
-            _children.Add(token);
-            token.Parent = this;
-        }
 
         public override BsonType Type => BsonType.Array;
 
@@ -80,6 +74,12 @@ namespace Newtonsoft.Json.Bson
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public void Add(BsonToken token)
+        {
+            _children.Add(token);
+            token.Parent = this;
         }
     }
 
@@ -98,18 +98,15 @@ namespace Newtonsoft.Json.Bson
 
     internal class BsonValue : BsonToken
     {
-        private readonly object _value;
-        private readonly BsonType _type;
-
         public BsonValue(object value, BsonType type)
         {
-            _value = value;
-            _type = type;
+            Value = value;
+            Type = type;
         }
 
-        public object Value => _value;
+        public object Value { get; }
 
-        public override BsonType Type => _type;
+        public override BsonType Type { get; }
     }
 
     internal class BsonBoolean : BsonValue
@@ -125,37 +122,37 @@ namespace Newtonsoft.Json.Bson
 
     internal class BsonString : BsonValue
     {
-        public int ByteCount { get; set; }
-        public bool IncludeLength { get; }
-
         public BsonString(object value, bool includeLength)
             : base(value, BsonType.String)
         {
             IncludeLength = includeLength;
         }
+
+        public int ByteCount { get; set; }
+        public bool IncludeLength { get; }
     }
 
     internal class BsonBinary : BsonValue
     {
-        public BsonBinaryType BinaryType { get; set; }
-
         public BsonBinary(byte[] value, BsonBinaryType binaryType)
             : base(value, BsonType.Binary)
         {
             BinaryType = binaryType;
         }
+
+        public BsonBinaryType BinaryType { get; set; }
     }
 
     internal class BsonRegex : BsonToken
     {
-        public BsonString Pattern { get; set; }
-        public BsonString Options { get; set; }
-
         public BsonRegex(string pattern, string options)
         {
             Pattern = new BsonString(pattern, false);
             Options = new BsonString(options, false);
         }
+
+        public BsonString Pattern { get; set; }
+        public BsonString Options { get; set; }
 
         public override BsonType Type => BsonType.Regex;
     }

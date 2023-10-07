@@ -48,6 +48,9 @@ namespace Reactor.Audio.OpenAL
             return !(left == right);
         }
 
-        public static implicit operator IntPtr(ALContext context) => context.Handle;
+        public static implicit operator IntPtr(ALContext context)
+        {
+            return context.Handle;
+        }
     }
 }

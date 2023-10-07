@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -72,13 +74,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(bool value)
@@ -93,13 +91,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(byte value)
@@ -114,13 +108,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(char value)
@@ -135,13 +125,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(byte[]? value)
@@ -149,13 +135,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value == null)
-            {
                 base.WriteUndefined();
-            }
             else
-            {
                 base.WriteValue(value);
-            }
         }
 
         public override void WriteValue(DateTime value)
@@ -170,13 +152,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
 #if HAVE_DATE_TIME_OFFSET
@@ -214,13 +192,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteUndefined()
@@ -249,13 +223,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(Guid value)
@@ -270,13 +240,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(int value)
@@ -291,13 +257,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(long value)
@@ -312,13 +274,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(object? value)
@@ -336,14 +294,10 @@ namespace Newtonsoft.Json.Serialization
                 _textWriter.WriteValue(value);
                 _innerWriter.WriteValue(value);
                 if (value == null)
-                {
                     base.WriteUndefined();
-                }
                 else
-                {
                     // base.WriteValue(value) will error
                     InternalWriteValue(JsonToken.String);
-                }
             }
         }
 
@@ -359,13 +313,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(short value)
@@ -380,13 +330,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(string? value)
@@ -408,13 +354,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(uint value)
@@ -429,13 +371,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(ulong value)
@@ -450,13 +388,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteValue(Uri? value)
@@ -464,13 +398,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value == null)
-            {
                 base.WriteUndefined();
-            }
             else
-            {
                 base.WriteValue(value);
-            }
         }
 
         public override void WriteValue(ushort value)
@@ -485,13 +415,9 @@ namespace Newtonsoft.Json.Serialization
             _textWriter.WriteValue(value);
             _innerWriter.WriteValue(value);
             if (value.HasValue)
-            {
                 base.WriteValue(value.GetValueOrDefault());
-            }
             else
-            {
                 base.WriteUndefined();
-            }
         }
 
         public override void WriteWhitespace(string ws)

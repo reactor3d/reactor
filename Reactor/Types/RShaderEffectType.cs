@@ -23,7 +23,7 @@
 
 namespace Reactor.Types
 {
-    public enum RShaderEffectType : int
+    public enum RShaderEffectType
     {
         VERTEX = 0,
         FRAGMENT = 1,

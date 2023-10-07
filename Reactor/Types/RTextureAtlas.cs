@@ -30,7 +30,8 @@ namespace Reactor.Types
 {
     public class RTextureAtlas : RTexture2D
     {
-        const int FixedWidth = 64;
+        private const int FixedWidth = 64;
+
         public RTextureAtlas()
         {
             textureTarget = TextureTarget.Texture2D;
@@ -42,7 +43,7 @@ namespace Reactor.Types
             REngine.CheckGLError();
             textures.Sort(new RTextureSizeSorter());
             textures.Reverse();
-            Rectangle largest = textures[0].Bounds;
+            var largest = textures[0].Bounds;
             //int cellSize = System.Math.Max(largest.Width, largest.Height);
             //double sqr = System.Math.Sqrt((double)textures.Count);
             //int remainder = ((int)(sqr*100) % 100);
@@ -71,115 +72,116 @@ namespace Reactor.Types
             while(!this.isPowerOfTwo((uint)bounds.Width))
                 bounds.Width += 1;
                 */
-            AtlasNode root = new AtlasNode();
+            var root = new AtlasNode();
             root.bounds = new Rectangle(0, 0, 512, 512);
             Create(512, 512, textures[0].GetPixelFormat(), RSurfaceFormat.Color);
             uint index = 0;
-            int unclaimed = 0;
+            var unclaimed = 0;
 
             REngine.CheckGLError();
-            foreach(RTextureSprite sprite in textures)
+            foreach (var sprite in textures)
             {
-                try{
-                    AtlasNode node = root.Insert(sprite.Bounds);
-                    if(node != null)
+                try
+                {
+                    var node = root.Insert(sprite.Bounds);
+                    if (node != null)
                     {
                         RLog.Info(node.ToString());
                         sprite.ScaledBounds = node.bounds;
 
                         //Pack(sprite, sprite.GetPixelFormat());
-                    } else {
+                    }
+                    else
+                    {
                         unclaimed++;
                     }
-
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     RLog.Error(e);
                 }
+
                 index++;
-
             }
-
         }
 
         private void Pack(RTextureSprite sprite, RPixelFormat format)
         {
-            byte[] data = sprite.GetData<byte>();
-            SetData<byte>(data, format, (int)sprite.Offset.X, (int)sprite.Offset.Y, sprite.ScaledBounds.Width, sprite.ScaledBounds.Height, false);
+            var data = sprite.GetData<byte>();
+            SetData(data, format, (int)sprite.Offset.X, (int)sprite.Offset.Y, sprite.ScaledBounds.Width,
+                sprite.ScaledBounds.Height, false);
         }
     }
+
     internal class AtlasNode
     {
-        public AtlasNode left;
-        public AtlasNode right;
         public Rectangle bounds;
         public bool filled;
+        public AtlasNode left;
+        public AtlasNode right;
 
         public AtlasNode()
         {
             left = null;
             right = null;
-            this.bounds = Rectangle.Empty;
+            bounds = Rectangle.Empty;
             filled = false;
         }
+
         public AtlasNode Insert(Rectangle sBounds)
         {
-            if(this.left != null)
+            if (left != null)
             {
-                AtlasNode newNode = this.left.Insert(sBounds);
-                if(newNode != null)
+                var newNode = left.Insert(sBounds);
+                if (newNode != null)
                     return newNode;
 
-                return this.right.Insert(sBounds);
+                return right.Insert(sBounds);
+            }
+
+            if (filled) // occupied!
+                return null;
+            if (bounds.Width < sBounds.Width || bounds.Height < sBounds.Height) // bounds are too small for this image
+                return null;
+            if (bounds.Width == sBounds.Width && bounds.Height == sBounds.Height)
+            {
+                // fits just right!
+                filled = true;
+                return this;
+            }
+
+            //otherwise split and traverse further...
+            left = new AtlasNode();
+            right = new AtlasNode();
+
+            // decide which way to split
+            var dw = bounds.Width - sBounds.Width;
+            var dh = bounds.Height - sBounds.Height;
+            if (dw > dh)
+            {
+                left.bounds = new Rectangle(bounds.X, bounds.Y, sBounds.Width, bounds.Height);
+                right.bounds = new Rectangle(bounds.X + sBounds.Width, bounds.Y, bounds.Width - sBounds.Width,
+                    bounds.Height);
             }
             else
             {
-                if(this.filled) // occupied!
-                    return null;
-                if(this.bounds.Width < sBounds.Width || this.bounds.Height < sBounds.Height)  // bounds are too small for this image
-                    return null;
-                if(this.bounds.Width == sBounds.Width && this.bounds.Height == sBounds.Height)
-                {
-                    // fits just right!
-                    filled = true;
-                    return this;
-                }
-
-                    //otherwise split and traverse further...
-                    this.left = new AtlasNode();
-                    this.right = new AtlasNode();
-
-                    // decide which way to split
-                    int dw = this.bounds.Width - sBounds.Width;
-                    int dh = this.bounds.Height - sBounds.Height;
-                    if (dw > dh) {
-                        this.left.bounds = new Rectangle(this.bounds.X, this.bounds.Y, sBounds.Width, this.bounds.Height);
-                        this.right.bounds = new Rectangle(this.bounds.X+sBounds.Width, this.bounds.Y, this.bounds.Width - sBounds.Width, this.bounds.Height);
-                    }
-                    else {
-                        this.left.bounds = new Rectangle(this.bounds.X, this.bounds.Y, this.bounds.Width, sBounds.Height);
-                        this.right.bounds = new Rectangle(this.bounds.X, this.bounds.Y+sBounds.Height, this.bounds.Width, this.bounds.Height - sBounds.Height);
-                    }
-
-                    return this.left.Insert(sBounds);
-
+                left.bounds = new Rectangle(bounds.X, bounds.Y, bounds.Width, sBounds.Height);
+                right.bounds = new Rectangle(bounds.X, bounds.Y + sBounds.Height, bounds.Width,
+                    bounds.Height - sBounds.Height);
             }
+
+            return left.Insert(sBounds);
         }
     }
+
     internal class RTextureSizeSorter : IComparer<RTextureSprite>
     {
         public int Compare(RTextureSprite left, RTextureSprite right)
         {
-            if(left.Bounds.Height > right.Bounds.Height)
+            if (left.Bounds.Height > right.Bounds.Height)
                 return 1;
-            else
-                return -1;
+            return -1;
             return 0;
-            
         }
-
-
     }
 }
-

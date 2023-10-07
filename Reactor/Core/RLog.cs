@@ -20,9 +20,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.IO;
-using System.Threading.Tasks;
+
 namespace Reactor
 {
     public class RLog
@@ -31,57 +32,54 @@ namespace Reactor
         internal static string LogPath = REngine.RootPath + "/debug.log";
         internal static object mutex = new object();
 
-        static void WriteLine(string output)
+        private static void WriteLine(string output)
         {
-                if(Enabled)
-                {
-                    StreamWriter Writer = new StreamWriter(new FileStream(LogPath, FileMode.OpenOrCreate));
-                    Writer.WriteLine(output);
-                    Writer.Flush();
-                    Writer.Close();
-                    Console.WriteLine(output);
-                }
+            if (Enabled)
+            {
+                var Writer = new StreamWriter(new FileStream(LogPath, FileMode.OpenOrCreate));
+                Writer.WriteLine(output);
+                Writer.Flush();
+                Writer.Close();
+                Console.WriteLine(output);
+            }
         }
-        
+
         public static void Info(string message)
         {
-            string output = String.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
+            var output = string.Format("{0} - {1} : {2}", "INFO", DateTime.Now.ToString(), message);
             WriteLine(output);
             System.Diagnostics.Debug.WriteLine(output);
         }
 
         public static void Warn(string message)
         {
-            string output = String.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
+            var output = string.Format("{0} - {1} : {2}", "WARN", DateTime.Now.ToString(), message);
             WriteLine(output);
             System.Diagnostics.Debug.WriteLine(output);
-
         }
 
         public static void Error(string message)
         {
-            string output = String.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
+            var output = string.Format("{0} - {1} : {2}", "ERROR", DateTime.Now.ToString(), message);
             WriteLine(output);
             System.Diagnostics.Debug.WriteLine(output);
-
         }
 
         public static void Error(Exception e)
         {
             Error(e.Message);
             Error(e.StackTrace);
-            if(e.InnerException != null)
+            if (e.InnerException != null)
                 Error(e.InnerException);
         }
 
         public static void Debug(string message)
         {
 #if DEBUG
-            string output = String.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
+            var output = string.Format("{0} - {1} : {2}", "DEBUG", DateTime.Now.ToString(), message);
             WriteLine(output);
             System.Diagnostics.Debug.WriteLine(output);
 #endif
         }
     }
 }
-

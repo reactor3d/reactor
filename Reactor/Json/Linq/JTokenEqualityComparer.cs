@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System.Collections.Generic;
@@ -28,17 +30,17 @@ using System.Collections.Generic;
 namespace Newtonsoft.Json.Linq
 {
     /// <summary>
-    /// Compares tokens to determine whether they are equal.
+    ///     Compares tokens to determine whether they are equal.
     /// </summary>
     public class JTokenEqualityComparer : IEqualityComparer<JToken>
     {
         /// <summary>
-        /// Determines whether the specified objects are equal.
+        ///     Determines whether the specified objects are equal.
         /// </summary>
-        /// <param name="x">The first object of type <see cref="JToken"/> to compare.</param>
-        /// <param name="y">The second object of type <see cref="JToken"/> to compare.</param>
+        /// <param name="x">The first object of type <see cref="JToken" /> to compare.</param>
+        /// <param name="y">The second object of type <see cref="JToken" /> to compare.</param>
         /// <returns>
-        /// <c>true</c> if the specified objects are equal; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified objects are equal; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(JToken x, JToken y)
         {
@@ -46,17 +48,17 @@ namespace Newtonsoft.Json.Linq
         }
 
         /// <summary>
-        /// Returns a hash code for the specified object.
+        ///     Returns a hash code for the specified object.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> for which a hash code is to be returned.</param>
+        /// <param name="obj">The <see cref="System.Object" /> for which a hash code is to be returned.</param>
         /// <returns>A hash code for the specified object.</returns>
-        /// <exception cref="System.ArgumentNullException">The type of <paramref name="obj"/> is a reference type and <paramref name="obj"/> is <c>null</c>.</exception>
+        /// <exception cref="System.ArgumentNullException">
+        ///     The type of <paramref name="obj" /> is a reference type and
+        ///     <paramref name="obj" /> is <c>null</c>.
+        /// </exception>
         public int GetHashCode(JToken obj)
         {
-            if (obj == null)
-            {
-                return 0;
-            }
+            if (obj == null) return 0;
 
             return obj.GetDeepHashCode();
         }

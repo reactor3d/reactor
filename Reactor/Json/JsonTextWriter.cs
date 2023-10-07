@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,26 +22,22 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.IO;
+using Newtonsoft.Json.Utilities;
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
-using System.Text;
-using System.IO;
-using System.Xml;
-using Newtonsoft.Json.Utilities;
-using System.Diagnostics;
 
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Represents a writer that provides a fast, non-cached, forward-only way of generating JSON data.
+    ///     Represents a writer that provides a fast, non-cached, forward-only way of generating JSON data.
     /// </summary>
-    public partial class JsonTextWriter : JsonWriter
+    public class JsonTextWriter : JsonWriter
     {
         private const int IndentCharBufferSize = 12;
         private readonly TextWriter _writer;
@@ -48,7 +45,6 @@ namespace Newtonsoft.Json
         private char _indentChar;
         private int _indentation;
         private char _quoteChar;
-        private bool _quoteName;
         private bool[]? _charEscapeFlags;
         private char[]? _writeBuffer;
         private IArrayPool<char>? _arrayPool;
@@ -58,51 +54,43 @@ namespace Newtonsoft.Json
         {
             get
             {
-                if (_base64Encoder == null)
-                {
-                    _base64Encoder = new Base64Encoder(_writer);
-                }
+                if (_base64Encoder == null) _base64Encoder = new Base64Encoder(_writer);
 
                 return _base64Encoder;
             }
         }
 
         /// <summary>
-        /// Gets or sets the writer's character array pool.
+        ///     Gets or sets the writer's character array pool.
         /// </summary>
         public IArrayPool<char>? ArrayPool
         {
             get => _arrayPool;
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
+                if (value == null) throw new ArgumentNullException(nameof(value));
 
                 _arrayPool = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets how many <see cref="JsonTextWriter.IndentChar"/>s to write for each level in the hierarchy when <see cref="JsonWriter.Formatting"/> is set to <see cref="Formatting.Indented"/>.
+        ///     Gets or sets how many <see cref="JsonTextWriter.IndentChar" />s to write for each level in the hierarchy when
+        ///     <see cref="JsonWriter.Formatting" /> is set to <see cref="Formatting.Indented" />.
         /// </summary>
         public int Indentation
         {
             get => _indentation;
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Indentation value must be greater than 0.");
-                }
+                if (value < 0) throw new ArgumentException("Indentation value must be greater than 0.");
 
                 _indentation = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets which character to use to quote attribute values.
+        ///     Gets or sets which character to use to quote attribute values.
         /// </summary>
         public char QuoteChar
         {
@@ -110,9 +98,8 @@ namespace Newtonsoft.Json
             set
             {
                 if (value != '"' && value != '\'')
-                {
-                    throw new ArgumentException(@"Invalid JavaScript string quote character. Valid quote characters are ' and "".");
-                }
+                    throw new ArgumentException(
+                        @"Invalid JavaScript string quote character. Valid quote characters are ' and "".");
 
                 _quoteChar = value;
                 UpdateCharEscapeFlags();
@@ -120,7 +107,8 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Gets or sets which character to use for indenting when <see cref="JsonWriter.Formatting"/> is set to <see cref="Formatting.Indented"/>.
+        ///     Gets or sets which character to use for indenting when <see cref="JsonWriter.Formatting" /> is set to
+        ///     <see cref="Formatting.Indented" />.
         /// </summary>
         public char IndentChar
         {
@@ -136,28 +124,22 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether object names will be surrounded with quotes.
+        ///     Gets or sets a value indicating whether object names will be surrounded with quotes.
         /// </summary>
-        public bool QuoteName
-        {
-            get => _quoteName;
-            set => _quoteName = value;
-        }
+        public bool QuoteName { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonTextWriter"/> class using the specified <see cref="TextWriter"/>.
+        ///     Initializes a new instance of the <see cref="JsonTextWriter" /> class using the specified <see cref="TextWriter" />
+        ///     .
         /// </summary>
-        /// <param name="textWriter">The <see cref="TextWriter"/> to write to.</param>
+        /// <param name="textWriter">The <see cref="TextWriter" /> to write to.</param>
         public JsonTextWriter(TextWriter textWriter)
         {
-            if (textWriter == null)
-            {
-                throw new ArgumentNullException(nameof(textWriter));
-            }
+            if (textWriter == null) throw new ArgumentNullException(nameof(textWriter));
 
             _writer = textWriter;
             _quoteChar = '"';
-            _quoteName = true;
+            QuoteName = true;
             _indentChar = ' ';
             _indentation = 2;
 
@@ -169,7 +151,8 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Flushes whatever is in the buffer to the underlying <see cref="TextWriter"/> and also flushes the underlying <see cref="TextWriter"/>.
+        ///     Flushes whatever is in the buffer to the underlying <see cref="TextWriter" /> and also flushes the underlying
+        ///     <see cref="TextWriter" />.
         /// </summary>
         public override void Flush()
         {
@@ -177,9 +160,10 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Closes this writer.
-        /// If <see cref="JsonWriter.CloseOutput"/> is set to <c>true</c>, the underlying <see cref="TextWriter"/> is also closed.
-        /// If <see cref="JsonWriter.AutoCompleteOnClose"/> is set to <c>true</c>, the JSON is auto-completed.
+        ///     Closes this writer.
+        ///     If <see cref="JsonWriter.CloseOutput" /> is set to <c>true</c>, the underlying <see cref="TextWriter" /> is also
+        ///     closed.
+        ///     If <see cref="JsonWriter.AutoCompleteOnClose" /> is set to <c>true</c>, the JSON is auto-completed.
         /// </summary>
         public override void Close()
         {
@@ -207,7 +191,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the beginning of a JSON object.
+        ///     Writes the beginning of a JSON object.
         /// </summary>
         public override void WriteStartObject()
         {
@@ -217,7 +201,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the beginning of a JSON array.
+        ///     Writes the beginning of a JSON array.
         /// </summary>
         public override void WriteStartArray()
         {
@@ -227,7 +211,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the start of a constructor with the given name.
+        ///     Writes the start of a constructor with the given name.
         /// </summary>
         /// <param name="name">The name of the constructor.</param>
         public override void WriteStartConstructor(string name)
@@ -240,7 +224,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the specified end token.
+        ///     Writes the specified end token.
         /// </summary>
         /// <param name="token">The end token to write.</param>
         protected override void WriteEnd(JsonToken token)
@@ -262,20 +246,20 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the property name of a name/value pair on a JSON object.
+        ///     Writes the property name of a name/value pair on a JSON object.
         /// </summary>
         /// <param name="name">The name of the property.</param>
         public override void WritePropertyName(string name)
         {
             InternalWritePropertyName(name);
 
-            WriteEscapedString(name, _quoteName);
+            WriteEscapedString(name, QuoteName);
 
             _writer.Write(':');
         }
 
         /// <summary>
-        /// Writes the property name of a name/value pair on a JSON object.
+        ///     Writes the property name of a name/value pair on a JSON object.
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="escape">A flag to indicate whether the text should be escaped when it is written as a JSON property name.</param>
@@ -285,21 +269,15 @@ namespace Newtonsoft.Json
 
             if (escape)
             {
-                WriteEscapedString(name, _quoteName);
+                WriteEscapedString(name, QuoteName);
             }
             else
             {
-                if (_quoteName)
-                {
-                    _writer.Write(_quoteChar);
-                }
+                if (QuoteName) _writer.Write(_quoteChar);
 
                 _writer.Write(name);
 
-                if (_quoteName)
-                {
-                    _writer.Write(_quoteChar);
-                }
+                if (QuoteName) _writer.Write(_quoteChar);
             }
 
             _writer.Write(':');
@@ -316,53 +294,45 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes indent characters.
+        ///     Writes indent characters.
         /// </summary>
         protected override void WriteIndent()
         {
             // levels of indentation multiplied by the indent count
-            int currentIndentCount = Top * _indentation;
+            var currentIndentCount = Top * _indentation;
 
-            int newLineLen = SetIndentChars();
+            var newLineLen = SetIndentChars();
 
             _writer.Write(_indentChars, 0, newLineLen + Math.Min(currentIndentCount, IndentCharBufferSize));
 
             while ((currentIndentCount -= IndentCharBufferSize) > 0)
-            {
                 _writer.Write(_indentChars, newLineLen, Math.Min(currentIndentCount, IndentCharBufferSize));
-            }
         }
 
         private int SetIndentChars()
         {
             // Set _indentChars to be a newline followed by IndentCharBufferSize indent characters.
-            string writerNewLine = _writer.NewLine;
-            int newLineLen = writerNewLine.Length;
-            bool match = _indentChars != null && _indentChars.Length == IndentCharBufferSize + newLineLen;
+            var writerNewLine = _writer.NewLine;
+            var newLineLen = writerNewLine.Length;
+            var match = _indentChars != null && _indentChars.Length == IndentCharBufferSize + newLineLen;
             if (match)
-            {
-                for (int i = 0; i != newLineLen; ++i)
-                {
+                for (var i = 0; i != newLineLen; ++i)
                     if (writerNewLine[i] != _indentChars![i])
                     {
                         match = false;
                         break;
                     }
-                }
-            }
 
             if (!match)
-            {
                 // If we're here, either _indentChars hasn't been set yet, or _writer.NewLine
                 // has been changed, or _indentChar has been changed.
                 _indentChars = (writerNewLine + new string(_indentChar, IndentCharBufferSize)).ToCharArray();
-            }
 
             return newLineLen;
         }
 
         /// <summary>
-        /// Writes the JSON value delimiter.
+        ///     Writes the JSON value delimiter.
         /// </summary>
         protected override void WriteValueDelimiter()
         {
@@ -370,7 +340,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes an indent space.
+        ///     Writes an indent space.
         /// </summary>
         protected override void WriteIndentSpace()
         {
@@ -383,11 +353,12 @@ namespace Newtonsoft.Json
         }
 
         #region WriteValue methods
+
         /// <summary>
-        /// Writes a <see cref="Object"/> value.
-        /// An error will raised if the value cannot be written as a single JSON token.
+        ///     Writes a <see cref="object" /> value.
+        ///     An error will raised if the value cannot be written as a single JSON token.
         /// </summary>
-        /// <param name="value">The <see cref="Object"/> value to write.</param>
+        /// <param name="value">The <see cref="object" /> value to write.</param>
         public override void WriteValue(object? value)
         {
 #if HAVE_BIG_INTEGER
@@ -404,7 +375,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a null value.
+        ///     Writes a null value.
         /// </summary>
         public override void WriteNull()
         {
@@ -413,7 +384,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes an undefined value.
+        ///     Writes an undefined value.
         /// </summary>
         public override void WriteUndefined()
         {
@@ -422,7 +393,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes raw JSON.
+        ///     Writes raw JSON.
         /// </summary>
         /// <param name="json">The raw JSON to write.</param>
         public override void WriteRaw(string? json)
@@ -433,33 +404,30 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="String"/> value.
+        ///     Writes a <see cref="string" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="String"/> value to write.</param>
+        /// <param name="value">The <see cref="string" /> value to write.</param>
         public override void WriteValue(string? value)
         {
             InternalWriteValue(JsonToken.String);
 
             if (value == null)
-            {
                 WriteValueInternal(JsonConvert.Null, JsonToken.Null);
-            }
             else
-            {
                 WriteEscapedString(value, true);
-            }
         }
 
         private void WriteEscapedString(string value, bool quote)
         {
             EnsureWriteBuffer();
-            JavaScriptUtils.WriteEscapedJavaScriptString(_writer, value, _quoteChar, quote, _charEscapeFlags!, StringEscapeHandling, _arrayPool, ref _writeBuffer);
+            JavaScriptUtils.WriteEscapedJavaScriptString(_writer, value, _quoteChar, quote, _charEscapeFlags!,
+                StringEscapeHandling, _arrayPool, ref _writeBuffer);
         }
 
         /// <summary>
-        /// Writes a <see cref="Int32"/> value.
+        ///     Writes a <see cref="int" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Int32"/> value to write.</param>
+        /// <param name="value">The <see cref="int" /> value to write.</param>
         public override void WriteValue(int value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -467,9 +435,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="UInt32"/> value.
+        ///     Writes a <see cref="uint" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="UInt32"/> value to write.</param>
+        /// <param name="value">The <see cref="uint" /> value to write.</param>
         [CLSCompliant(false)]
         public override void WriteValue(uint value)
         {
@@ -478,9 +446,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Int64"/> value.
+        ///     Writes a <see cref="long" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Int64"/> value to write.</param>
+        /// <param name="value">The <see cref="long" /> value to write.</param>
         public override void WriteValue(long value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -488,9 +456,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="UInt64"/> value.
+        ///     Writes a <see cref="ulong" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="UInt64"/> value to write.</param>
+        /// <param name="value">The <see cref="ulong" /> value to write.</param>
         [CLSCompliant(false)]
         public override void WriteValue(ulong value)
         {
@@ -499,9 +467,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Single"/> value.
+        ///     Writes a <see cref="float" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Single"/> value to write.</param>
+        /// <param name="value">The <see cref="float" /> value to write.</param>
         public override void WriteValue(float value)
         {
             InternalWriteValue(JsonToken.Float);
@@ -509,9 +477,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Single"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Single" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Single"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Single" /> value to write.</param>
         public override void WriteValue(float? value)
         {
             if (value == null)
@@ -521,14 +489,16 @@ namespace Newtonsoft.Json
             else
             {
                 InternalWriteValue(JsonToken.Float);
-                WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true), JsonToken.Float);
+                WriteValueInternal(
+                    JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true),
+                    JsonToken.Float);
             }
         }
 
         /// <summary>
-        /// Writes a <see cref="Double"/> value.
+        ///     Writes a <see cref="Double" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Double"/> value to write.</param>
+        /// <param name="value">The <see cref="Double" /> value to write.</param>
         public override void WriteValue(double value)
         {
             InternalWriteValue(JsonToken.Float);
@@ -536,9 +506,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Double"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Double" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Double"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Double" /> value to write.</param>
         public override void WriteValue(double? value)
         {
             if (value == null)
@@ -548,14 +518,16 @@ namespace Newtonsoft.Json
             else
             {
                 InternalWriteValue(JsonToken.Float);
-                WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true), JsonToken.Float);
+                WriteValueInternal(
+                    JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true),
+                    JsonToken.Float);
             }
         }
 
         /// <summary>
-        /// Writes a <see cref="Boolean"/> value.
+        ///     Writes a <see cref="Boolean" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Boolean"/> value to write.</param>
+        /// <param name="value">The <see cref="Boolean" /> value to write.</param>
         public override void WriteValue(bool value)
         {
             InternalWriteValue(JsonToken.Boolean);
@@ -563,9 +535,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Int16"/> value.
+        ///     Writes a <see cref="Int16" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Int16"/> value to write.</param>
+        /// <param name="value">The <see cref="Int16" /> value to write.</param>
         public override void WriteValue(short value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -573,9 +545,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="UInt16"/> value.
+        ///     Writes a <see cref="UInt16" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="UInt16"/> value to write.</param>
+        /// <param name="value">The <see cref="UInt16" /> value to write.</param>
         [CLSCompliant(false)]
         public override void WriteValue(ushort value)
         {
@@ -584,9 +556,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Char"/> value.
+        ///     Writes a <see cref="Char" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Char"/> value to write.</param>
+        /// <param name="value">The <see cref="Char" /> value to write.</param>
         public override void WriteValue(char value)
         {
             InternalWriteValue(JsonToken.String);
@@ -594,9 +566,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Byte"/> value.
+        ///     Writes a <see cref="Byte" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Byte"/> value to write.</param>
+        /// <param name="value">The <see cref="Byte" /> value to write.</param>
         public override void WriteValue(byte value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -604,9 +576,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="SByte"/> value.
+        ///     Writes a <see cref="SByte" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="SByte"/> value to write.</param>
+        /// <param name="value">The <see cref="SByte" /> value to write.</param>
         [CLSCompliant(false)]
         public override void WriteValue(sbyte value)
         {
@@ -615,9 +587,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Decimal"/> value.
+        ///     Writes a <see cref="Decimal" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Decimal"/> value to write.</param>
+        /// <param name="value">The <see cref="Decimal" /> value to write.</param>
         public override void WriteValue(decimal value)
         {
             InternalWriteValue(JsonToken.Float);
@@ -625,9 +597,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="DateTime"/> value.
+        ///     Writes a <see cref="DateTime" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="DateTime"/> value to write.</param>
+        /// <param name="value">The <see cref="DateTime" /> value to write.</param>
         public override void WriteValue(DateTime value)
         {
             InternalWriteValue(JsonToken.Date);
@@ -635,7 +607,7 @@ namespace Newtonsoft.Json
 
             if (StringUtils.IsNullOrEmpty(DateFormatString))
             {
-                int length = WriteValueToBuffer(value);
+                var length = WriteValueToBuffer(value);
 
                 _writer.Write(_writeBuffer, 0, length);
             }
@@ -652,7 +624,7 @@ namespace Newtonsoft.Json
             EnsureWriteBuffer();
             MiscellaneousUtils.Assert(_writeBuffer != null);
 
-            int pos = 0;
+            var pos = 0;
             _writeBuffer[pos++] = _quoteChar;
             pos = DateTimeUtils.WriteDateTimeString(_writeBuffer, pos, value, null, value.Kind, DateFormatHandling);
             _writeBuffer[pos++] = _quoteChar;
@@ -660,9 +632,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Byte"/>[] value.
+        ///     Writes a <see cref="Byte" />[] value.
         /// </summary>
-        /// <param name="value">The <see cref="Byte"/>[] value to write.</param>
+        /// <param name="value">The <see cref="Byte" />[] value to write.</param>
         public override void WriteValue(byte[]? value)
         {
             if (value == null)
@@ -709,16 +681,17 @@ namespace Newtonsoft.Json
 
             int pos = 0;
             _writeBuffer[pos++] = _quoteChar;
-            pos = DateTimeUtils.WriteDateTimeString(_writeBuffer, pos, (DateFormatHandling == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, DateFormatHandling);
+            pos =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DateTimeUtils.WriteDateTimeString(_writeBuffer, pos, (DateFormatHandling == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, DateFormatHandling);
             _writeBuffer[pos++] = _quoteChar;
             return pos;
         }
 #endif
 
         /// <summary>
-        /// Writes a <see cref="Guid"/> value.
+        ///     Writes a <see cref="Guid" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Guid"/> value to write.</param>
+        /// <param name="value">The <see cref="Guid" /> value to write.</param>
         public override void WriteValue(Guid value)
         {
             InternalWriteValue(JsonToken.String);
@@ -737,9 +710,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="TimeSpan"/> value.
+        ///     Writes a <see cref="TimeSpan" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="TimeSpan"/> value to write.</param>
+        /// <param name="value">The <see cref="TimeSpan" /> value to write.</param>
         public override void WriteValue(TimeSpan value)
         {
             InternalWriteValue(JsonToken.String);
@@ -757,9 +730,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Uri"/> value.
+        ///     Writes a <see cref="Uri" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Uri"/> value to write.</param>
+        /// <param name="value">The <see cref="Uri" /> value to write.</param>
         public override void WriteValue(Uri? value)
         {
             if (value == null)
@@ -772,10 +745,11 @@ namespace Newtonsoft.Json
                 WriteEscapedString(value.OriginalString, true);
             }
         }
+
         #endregion
 
         /// <summary>
-        /// Writes a comment <c>/*...*/</c> containing the specified text. 
+        ///     Writes a comment <c>/*...*/</c> containing the specified text.
         /// </summary>
         /// <param name="text">Text to place inside the comment.</param>
         public override void WriteComment(string? text)
@@ -788,7 +762,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the given white space.
+        ///     Writes the given white space.
         /// </summary>
         /// <param name="ws">The string of white space characters.</param>
         public override void WriteWhitespace(string ws)
@@ -801,10 +775,8 @@ namespace Newtonsoft.Json
         private void EnsureWriteBuffer()
         {
             if (_writeBuffer == null)
-            {
                 // maximum buffer sized used when writing iso date
                 _writeBuffer = BufferUtils.RentBuffer(_arrayPool, 35);
-            }
         }
 
         private void WriteIntegerValue(long value)
@@ -815,20 +787,20 @@ namespace Newtonsoft.Json
             }
             else
             {
-                bool negative = value < 0;
+                var negative = value < 0;
                 WriteIntegerValue(negative ? (ulong)-value : (ulong)value, negative);
             }
         }
 
         private void WriteIntegerValue(ulong value, bool negative)
         {
-            if (!negative & value <= 9)
+            if (!negative & (value <= 9))
             {
                 _writer.Write((char)('0' + value));
             }
             else
             {
-                int length = WriteNumberToBuffer(value, negative);
+                var length = WriteNumberToBuffer(value, negative);
                 _writer.Write(_writeBuffer, 0, length);
             }
         }
@@ -836,15 +808,13 @@ namespace Newtonsoft.Json
         private int WriteNumberToBuffer(ulong value, bool negative)
         {
             if (value <= uint.MaxValue)
-            {
                 // avoid the 64 bit division if possible
                 return WriteNumberToBuffer((uint)value, negative);
-            }
 
             EnsureWriteBuffer();
             MiscellaneousUtils.Assert(_writeBuffer != null);
 
-            int totalLength = MathUtils.IntLength(value);
+            var totalLength = MathUtils.IntLength(value);
 
             if (negative)
             {
@@ -852,12 +822,12 @@ namespace Newtonsoft.Json
                 _writeBuffer[0] = '-';
             }
 
-            int index = totalLength;
+            var index = totalLength;
 
             do
             {
-                ulong quotient = value / 10;
-                ulong digit = value - (quotient * 10);
+                var quotient = value / 10;
+                var digit = value - quotient * 10;
                 _writeBuffer[--index] = (char)('0' + digit);
                 value = quotient;
             } while (value != 0);
@@ -873,20 +843,20 @@ namespace Newtonsoft.Json
             }
             else
             {
-                bool negative = value < 0;
+                var negative = value < 0;
                 WriteIntegerValue(negative ? (uint)-value : (uint)value, negative);
             }
         }
 
         private void WriteIntegerValue(uint value, bool negative)
         {
-            if (!negative & value <= 9)
+            if (!negative & (value <= 9))
             {
                 _writer.Write((char)('0' + value));
             }
             else
             {
-                int length = WriteNumberToBuffer(value, negative);
+                var length = WriteNumberToBuffer(value, negative);
                 _writer.Write(_writeBuffer, 0, length);
             }
         }
@@ -896,7 +866,7 @@ namespace Newtonsoft.Json
             EnsureWriteBuffer();
             MiscellaneousUtils.Assert(_writeBuffer != null);
 
-            int totalLength = MathUtils.IntLength(value);
+            var totalLength = MathUtils.IntLength(value);
 
             if (negative)
             {
@@ -904,12 +874,12 @@ namespace Newtonsoft.Json
                 _writeBuffer[0] = '-';
             }
 
-            int index = totalLength;
+            var index = totalLength;
 
             do
             {
-                uint quotient = value / 10;
-                uint digit = value - (quotient * 10);
+                var quotient = value / 10;
+                var digit = value - quotient * 10;
                 _writeBuffer[--index] = (char)('0' + digit);
                 value = quotient;
             } while (value != 0);

@@ -12,20 +12,17 @@ namespace Reactor.Platform.GLFW
         /// <summary>
         ///     An array of value describing the response of the red channel.
         /// </summary>
-        [MarshalAs(UnmanagedType.LPArray)]
-        public ushort[] Red;
+        [MarshalAs(UnmanagedType.LPArray)] public ushort[] Red;
 
         /// <summary>
         ///     An array of value describing the response of the green channel.
         /// </summary>
-        [MarshalAs(UnmanagedType.LPArray)]
-        public readonly ushort[] Green;
+        [MarshalAs(UnmanagedType.LPArray)] public readonly ushort[] Green;
 
         /// <summary>
         ///     An array of value describing the response of the blue channel.
         /// </summary>
-        [MarshalAs(UnmanagedType.LPArray)]
-        public readonly ushort[] Blue;
+        [MarshalAs(UnmanagedType.LPArray)] public readonly ushort[] Blue;
 
         /// <summary>
         ///     The number of elements in each array.
@@ -46,7 +43,7 @@ namespace Reactor.Platform.GLFW
                 Red = red;
                 Green = green;
                 Blue = blue;
-                Size = (uint) red.Length;
+                Size = (uint)red.Length;
             }
             else
             {

@@ -27,7 +27,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Cursor" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(Cursor other) { return cursor.Equals(other.cursor); }
+        public bool Equals(Cursor other)
+        {
+            return cursor.Equals(other.cursor);
+        }
 
         /// <summary>
         ///     Determines whether the specified <see cref="object" />, is equal to this instance.
@@ -49,7 +52,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
-        public override int GetHashCode() { return cursor.GetHashCode(); }
+        public override int GetHashCode()
+        {
+            return cursor.GetHashCode();
+        }
 
         /// <summary>
         ///     Implements the operator ==.
@@ -59,7 +65,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator ==(Cursor left, Cursor right) { return left.Equals(right); }
+        public static bool operator ==(Cursor left, Cursor right)
+        {
+            return left.Equals(right);
+        }
 
         /// <summary>
         ///     Implements the operator !=.
@@ -69,6 +78,9 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator !=(Cursor left, Cursor right) { return !left.Equals(right); }
+        public static bool operator !=(Cursor left, Cursor right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

@@ -23,33 +23,34 @@
 
 using System;
 using Reactor.Platform.OpenGL;
+using Reactor.Utilities;
 
 namespace Reactor.Types
 {
     public class RTexture2D : RTexture
     {
-        private static uint[] uint1 = new uint[] { 0 };
-        public RTexture2D():base()
+        public RTexture2D()
         {
-
         }
-        internal RTexture2D(bool defaultWhite):base()
+
+        internal RTexture2D(bool defaultWhite)
         {
-
-                Create(1, 1, RPixelFormat.Rgba, RSurfaceFormat.Color);
-                SetData(new RColor[] { new RColor(1f, 1f, 1f, 1f) }, RPixelFormat.Rgba, 0, 0, 1, 1, true);
-                REngine.CheckGLError();
-
+            Create(1, 1, RPixelFormat.Rgba, RSurfaceFormat.Color);
+            SetData(new[] { new RColor(1f, 1f, 1f, 1f) }, RPixelFormat.Rgba, 0, 0, 1, 1, true);
+            REngine.CheckGLError();
         }
-        public void Create(int width, int height, RPixelFormat format, RSurfaceFormat surfaceFormat, bool multisample = false)
-        {
 
-            GL.GenTextures(1, uint1);
-            Id = uint1[0];
-            if (multisample){
+        public void Create(int width, int height, RPixelFormat format, RSurfaceFormat surfaceFormat,
+            bool multisample = false)
+        {
+            GL.GenTextures(1, Allocator.UInt32_1);
+            Id = Allocator.UInt32_1[0];
+            if (multisample)
+            {
                 textureTarget = TextureTarget.Texture2DMultisample;
                 GL.BindTexture(TextureTarget.Texture2DMultisample, Id);
-                GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Rgba, width, height, true);
+                GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Rgba,
+                    width, height, true);
                 REngine.CheckGLError();
                 CreateProperties(TextureTarget.Texture2DMultisample, true);
                 REngine.CheckGLError();
@@ -58,28 +59,32 @@ namespace Reactor.Types
             {
                 textureTarget = TextureTarget.Texture2D;
                 GL.BindTexture(TextureTarget.Texture2D, Id);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, (PixelFormat)format, GetPixelTypeForSurface(surfaceFormat), IntPtr.Zero);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0,
+                    (PixelFormat)format, GetPixelTypeForSurface(surfaceFormat), IntPtr.Zero);
                 REngine.CheckGLError();
-                CreateProperties(TextureTarget.Texture2D, false);
+                CreateProperties(TextureTarget.Texture2D);
                 REngine.CheckGLError();
             }
-
         }
+
         public void CreateDepth(int width, int height, RPixelFormat format, RDepthFormat depthFormat)
         {
-            GL.GenTextures(1, uint1);
-            Id = uint1[0];
+            GL.GenTextures(1, Allocator.UInt32_1);
+            Id = Allocator.UInt32_1[0];
             textureTarget = TextureTarget.Texture2D;
             GL.BindTexture(textureTarget, Id);
             REngine.CheckGLError();
-            GL.TexImage2D(textureTarget, 0, GetPixelInternalForDepth(depthFormat), width, height, 0, (PixelFormat)format, GetPixelTypeForDepth(depthFormat), IntPtr.Zero);
+            GL.TexImage2D(textureTarget, 0, GetPixelInternalForDepth(depthFormat), width, height, 0,
+                (PixelFormat)format, GetPixelTypeForDepth(depthFormat), IntPtr.Zero);
             REngine.CheckGLError();
-            CreateProperties(textureTarget, false);
+            CreateProperties(textureTarget);
             REngine.CheckGLError();
         }
 
-        PixelType GetPixelTypeForSurface(RSurfaceFormat surface) {
-            switch(surface) {
+        private PixelType GetPixelTypeForSurface(RSurfaceFormat surface)
+        {
+            switch (surface)
+            {
                 case RSurfaceFormat.HalfVector2:
                 case RSurfaceFormat.HalfVector4:
                 case RSurfaceFormat.HalfSingle:
@@ -96,8 +101,10 @@ namespace Reactor.Types
             }
         }
 
-        PixelInternalFormat GetPixelInternalForDepth(RDepthFormat depthFormat) {
-            switch(depthFormat) {
+        private PixelInternalFormat GetPixelInternalForDepth(RDepthFormat depthFormat)
+        {
+            switch (depthFormat)
+            {
                 case RDepthFormat.Depth16:
                     return PixelInternalFormat.DepthComponent16;
                 case RDepthFormat.Depth24:
@@ -110,8 +117,11 @@ namespace Reactor.Types
                     return PixelInternalFormat.DepthStencil;
             }
         }
-        PixelType GetPixelTypeForDepth(RDepthFormat depthFormat) {
-            switch(depthFormat) {
+
+        private PixelType GetPixelTypeForDepth(RDepthFormat depthFormat)
+        {
+            switch (depthFormat)
+            {
                 case RDepthFormat.Depth16:
                 case RDepthFormat.Depth24:
                     return PixelType.UnsignedInt;
@@ -123,6 +133,4 @@ namespace Reactor.Types
             }
         }
     }
-
-    
 }

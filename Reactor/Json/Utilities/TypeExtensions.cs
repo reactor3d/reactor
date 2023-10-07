@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,15 +22,15 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 #endif
@@ -40,7 +41,8 @@ namespace Newtonsoft.Json.Utilities
     {
 #if DOTNET || PORTABLE
 #if !DOTNET
-        private static readonly BindingFlags DefaultFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
+        private static readonly BindingFlags DefaultFlags =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
 
         public static MethodInfo? GetGetMethod(this PropertyInfo propertyInfo)
         {
@@ -568,7 +570,7 @@ namespace Newtonsoft.Json.Utilities
             return type.GetTypeInfo().IsValueType;
 #endif
         }
-        
+
         public static bool IsPrimitive(this Type type)
         {
 #if HAVE_FULL_REFLECTION
@@ -578,9 +580,10 @@ namespace Newtonsoft.Json.Utilities
 #endif
         }
 
-        public static bool AssignableToTypeName(this Type type, string fullTypeName, bool searchInterfaces, [NotNullWhen(true)]out Type? match)
+        public static bool AssignableToTypeName(this Type type, string fullTypeName, bool searchInterfaces,
+            [NotNullWhen(true)] out Type? match)
         {
-            Type current = type;
+            var current = type;
 
             while (current != null)
             {
@@ -594,16 +597,12 @@ namespace Newtonsoft.Json.Utilities
             }
 
             if (searchInterfaces)
-            {
-                foreach (Type i in type.GetInterfaces())
-                {
+                foreach (var i in type.GetInterfaces())
                     if (string.Equals(i.Name, fullTypeName, StringComparison.Ordinal))
                     {
                         match = type;
                         return true;
                     }
-                }
-            }
 
             match = null;
             return false;
@@ -616,16 +615,12 @@ namespace Newtonsoft.Json.Utilities
 
         public static bool ImplementInterface(this Type type, Type interfaceType)
         {
-            for (Type currentType = type; currentType != null; currentType = currentType.BaseType())
+            for (var currentType = type; currentType != null; currentType = currentType.BaseType())
             {
                 IEnumerable<Type> interfaces = currentType.GetInterfaces();
-                foreach (Type i in interfaces)
-                {
+                foreach (var i in interfaces)
                     if (i == interfaceType || (i != null && i.ImplementInterface(interfaceType)))
-                    {
                         return true;
-                    }
-                }
             }
 
             return false;

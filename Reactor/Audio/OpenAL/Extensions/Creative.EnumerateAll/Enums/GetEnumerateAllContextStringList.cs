@@ -10,13 +10,14 @@
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.EnumerateAll.GetStringList(ALDevice, GetEnumerateAllContextStringList)" />.
+    ///     Defines available parameters for
+    ///     <see cref="ALC.EnumerateAll.GetStringList(ALDevice, GetEnumerateAllContextStringList)" />.
     /// </summary>
     public enum GetEnumerateAllContextStringList
     {
         /// <summary>
-        /// Gets the specifier strings for all available devices.
+        ///     Gets the specifier strings for all available devices.
         /// </summary>
-        AllDevicesSpecifier = 0x1013,
+        AllDevicesSpecifier = 0x1013
     }
 }

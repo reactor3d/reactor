@@ -30,73 +30,75 @@ using System.Text;
 using Reactor.Geometry;
 using Reactor.Math;
 using Reactor.Platform.OpenGL;
+using Reactor.Utilities;
 
 namespace Reactor.Types
 {
     public class RShader : IDisposable
     {
-        const string r_position = "r_Position";
-        const string r_color = "r_Color";
-        const string r_normal = "r_Normal";
-        const string r_bitangent = "r_Bitangent";
-        const string r_tangent = "r_Tangent";
-        const string r_texcoord = "r_TexCoord";
-        const string r_blendindices = "r_BlendIndices";
-        const string r_blendweight = "r_BlendWeight";
-        const string r_tessellatefactor = "r_TessellateFactor";
+        private const string r_position = "r_Position";
+        private const string r_color = "r_Color";
+        private const string r_normal = "r_Normal";
+        private const string r_bitangent = "r_Bitangent";
+        private const string r_tangent = "r_Tangent";
+        private const string r_texcoord = "r_TexCoord";
+        private const string r_blendindices = "r_BlendIndices";
+        private const string r_blendweight = "r_BlendWeight";
+        private const string r_tessellatefactor = "r_TessellateFactor";
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Attribute
-        {
-            public ActiveAttribType type;
-            public int index;
-            public string name;
-            public int location;
-        }
+        internal static RShader basicShader;
+        private readonly Dictionary<string, int> _attributeLocations = new Dictionary<string, int>();
 
-        private struct Uniform
-        {
-            public ActiveUniformType type;
-            public int index;
-            public string name;
-            public int location;
-        }
-        private Attribute[] _attributes;
-        private Uniform[] _uniforms;
-        
-        private readonly Dictionary<RShaderSemanticDefinition,RShaderSemantic> _semantics = new Dictionary<RShaderSemanticDefinition,RShaderSemantic>();
+        private readonly Dictionary<RShaderSemanticDefinition, RShaderSemantic> _semantics =
+            new Dictionary<RShaderSemanticDefinition, RShaderSemantic>();
 
         private readonly Dictionary<string, int> _uniformLocations = new Dictionary<string, int>();
-        private readonly Dictionary<string, int> _attributeLocations = new Dictionary<string, int>();
+        private Attribute[] _attributes;
+        private Uniform[] _uniforms;
+        private readonly RShaderEffect[] effects = new RShaderEffect[6];
         public uint Id { get; internal set; }
-        RShaderEffect[] effects = new RShaderEffect[6];
 
-        public void Load(string vertSource, string fragSource) {
+
+        public void Dispose()
+        {
+            if (GL.IsProgram(Id))
+            {
+                GL.DeleteProgram(Id);
+                Id = 0;
+            }
+        }
+
+        public void Load(string vertSource, string fragSource)
+        {
             Load(vertSource, fragSource, null, null);
         }
-        public void Load(string vertSource, string fragSource, string geomSource) {
+
+        public void Load(string vertSource, string fragSource, string geomSource)
+        {
             Load(vertSource, fragSource, geomSource, null);
         }
+
         public void Load(string vertSource, string fragSource, string geomSource, string[] defines)
         {
-            effects[(int)RShaderEffectType.VERTEX] = new RShaderEffect(vertSource, (int)RShaderEffectType.VERTEX, defines);
-            effects[(int)RShaderEffectType.FRAGMENT] = new RShaderEffect(fragSource, (int)RShaderEffectType.FRAGMENT, defines);
-            if(geomSource != null) {
-                effects[(int)RShaderEffectType.GEOMETRY] = new RShaderEffect(geomSource, (int)RShaderEffectType.GEOMETRY, defines);
-            }
+            effects[(int)RShaderEffectType.VERTEX] =
+                new RShaderEffect(vertSource, (int)RShaderEffectType.VERTEX, defines);
+            effects[(int)RShaderEffectType.FRAGMENT] =
+                new RShaderEffect(fragSource, (int)RShaderEffectType.FRAGMENT, defines);
+            if (geomSource != null)
+                effects[(int)RShaderEffectType.GEOMETRY] =
+                    new RShaderEffect(geomSource, (int)RShaderEffectType.GEOMETRY, defines);
             Id = GL.CreateProgram();
-            foreach (RShaderEffect effect in effects)
-            {
-                if(effect!=null)
+            foreach (var effect in effects)
+                if (effect != null)
                     GL.AttachShader(Id, effect.Id);
-            }
 
             GL.LinkProgram(Id);
-            int[] buff = new int[]{0};
-            GL.GetProgramiv(Id, ProgramParameter.LinkStatus, buff);
-            if(buff[0] == 0){
+            int[] buff = { 0 };
+            GL.GetProgramiv(Id, ProgramParameter.LinkStatus, Allocator.Int32_1);
+            if (Allocator.Int32_1[0] == 0)
+            {
                 var log = GL.GetProgramInfoLog(Id);
-                RLog.Error(log.ToString());
+                RLog.Error(log);
                 REngine.CheckGLError();
                 if (GL.IsProgram(Id))
                 {
@@ -104,28 +106,28 @@ namespace Reactor.Types
                     REngine.CheckGLError();
                     Id = 0;
                 }
+
                 return;
             }
 
 
-            
             //int status;
             //GL.ValidateProgram(Id);
             //GL.GetProgram(Id, GetProgramParameterName.ValidateStatus, out status);
             //if (status != 1) throw new Exception(GL.GetProgramInfoLog(Id));
 
             REngine.CheckGLError();
-            GL.GetProgramiv(Id, ProgramParameter.ActiveAttributes, buff);
+            GL.GetProgramiv(Id, ProgramParameter.ActiveAttributes, Allocator.Int32_1);
             REngine.CheckGLError();
-            _attributes = new Attribute[buff[0]];
-            for (int i = 0; i < buff[0]; i++)
+            _attributes = new Attribute[Allocator.Int32_1[0]];
+            for (var i = 0; i < Allocator.Int32_1[0]; i++)
             {
-                int[] size=new []{0};
-                ActiveAttribType[] type = new []{ActiveAttribType.Float};
-                int[] length=new []{0};
-                StringBuilder name = new StringBuilder(64);
+                int[] size = { 0 };
+                ActiveAttribType[] type = { ActiveAttribType.Float };
+                int[] length = { 0 };
+                var name = new StringBuilder(64);
                 GL.GetActiveAttrib(Id, i, 64, length, size, type, name);
-                Attribute attrib = new Attribute();
+                var attrib = new Attribute();
                 attrib.name = name.ToString();
                 attrib.index = i;
                 attrib.location = GL.GetAttribLocation(Id, attrib.name);
@@ -135,225 +137,206 @@ namespace Reactor.Types
             }
 
 
-            GL.GetProgramiv(Id, ProgramParameter.ActiveUniforms, buff);
-            _uniforms = new Uniform[buff[0]];
-            for (int i = 0; i < buff[0]; i++)
+            GL.GetProgramiv(Id, ProgramParameter.ActiveUniforms, Allocator.Int32_1);
+            _uniforms = new Uniform[Allocator.Int32_1[0]];
+            for (var i = 0; i < Allocator.Int32_1[0]; i++)
             {
-                int[] size=new []{0};
-                ActiveUniformType[] type = new []{ActiveUniformType.Float};
-                int[] length=new []{0};
-                StringBuilder name = new StringBuilder(64);
+                int[] size = { 0 };
+                ActiveUniformType[] type = { ActiveUniformType.Float };
+                int[] length = { 0 };
+                var name = new StringBuilder(64);
                 GL.GetActiveUniform(Id, i, 64, length, size, type, name);
-                Uniform uni = new Uniform();
+                var uni = new Uniform();
                 uni.index = i;
                 uni.name = name.ToString();
                 uni.location = GL.GetUniformLocation(Id, uni.name);
                 uni.type = type[0];
                 _uniforms[i] = uni;
                 _uniformLocations.Add(uni.name, uni.location);
-
             }
-            foreach(var effect in effects)
-            {
-                if(effect!=null)
+
+            foreach (var effect in effects)
+                if (effect != null)
                 {
                     if (effect.Semantics != null)
-                    {
                         foreach (var keyPair in effect.Semantics)
-                        {
                             _semantics.Add(keyPair.Key, keyPair.Value);
-                        }
-                    }
 
                     effect.Dispose();
                 }
-                
-            }
+
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, bool value)
         {
-            if(value)
-                GL.ProgramUniform1i(Id, GetUniformLocation(name), 1);
+            if (value)
+                GL.Uniform1i(GetUniformLocation(name), 1);
             else
-                GL.ProgramUniform1i(Id, GetUniformLocation(name), 0);
+                GL.Uniform1i(GetUniformLocation(name), 0);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, int value)
         {
-            GL.ProgramUniform1i(Id, GetUniformLocation(name), value);
+            GL.Uniform1i(GetUniformLocation(name), value);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, double value)
         {
-            GL.ProgramUniform1f(Id, GetUniformLocation(name), (float)value);
+            GL.Uniform1f(GetUniformLocation(name), (float)value);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, float value)
         {
-            GL.ProgramUniform1f(Id, GetUniformLocation(name), value);
+            GL.Uniform1f(GetUniformLocation(name), value);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, Vector2 value)
         {
-            GL.ProgramUniform2f(Id, GetUniformLocation(name), value.X, value.Y);
+            GL.Uniform2f(GetUniformLocation(name), value.X, value.Y);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, Vector3 value)
         {
-            GL.ProgramUniform3f(Id, GetUniformLocation(name), value.X, value.Y, value.Z);
+            GL.Uniform3f(GetUniformLocation(name), value.X, value.Y, value.Z);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, Vector4 value)
         {
-            GL.ProgramUniform4f(Id, GetUniformLocation(name), value.X, value.Y, value.Z, value.W);
+            GL.Uniform4f(GetUniformLocation(name), value.X, value.Y, value.Z, value.W);
             REngine.CheckGLError();
         }
+
         public void SetUniformValue(string name, RColor value)
         {
             SetUniformValue(name, value.ToVector4());
         }
+
         public void SetUniformValue(string name, Matrix value)
         {
             var v = Matrix.ToFloatArray(value);
-            GL.ProgramUniformMatrix4fv(Id, GetUniformLocation(name),1, false, v);
+            GL.UniformMatrix4fv(GetUniformLocation(name), 1, false, v);
             REngine.CheckGLError();
         }
 
         public void SetSamplerValue(RTextureLayer layer, RTexture texture)
         {
-            int unival = GetTexUniformValue(layer);
-            int loc = GetTexUniformLocation(layer);
-            GL.ProgramUniform1i(Id, loc, unival);
-            REngine.CheckGLError();
-            GL.ActiveTexture((int)TextureUnit.Texture0 + (int)layer);
-            REngine.CheckGLError();
+            texture.SetActive(layer);
             texture.Bind();
+            var loc = GetTexUniformLocation(layer);
+            var sampler = (int)layer - (int)RTextureLayer.TEXTURE0;
+            GL.Uniform1i(loc, sampler);
             REngine.CheckGLError();
-
-        }
-
-        public void SetSamplerValue(RTextureLayer layer, RFrameBuffer frameBuffer) {
-            SetSamplerValue(layer, frameBuffer.BackBuffer);            
         }
 
         public int GetUniformBySemantic(RShaderSemanticDefinition semantic)
         {
             return GetUniformLocation(_semantics[semantic].name);
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, bool value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "bool")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, int value)
         {
-            if(_semantics.ContainsKey(semantic))
-            {
+            if (_semantics.ContainsKey(semantic))
                 if (_semantics[semantic].type == "int")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, double value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "double")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, float value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "float")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Vector2 value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "vec2")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Vector3 value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "vec3")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Vector4 value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "vec4")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, Matrix value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "mat4")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         public void SetUniformBySemantic(RShaderSemanticDefinition semantic, RColor value)
         {
             if (_semantics.ContainsKey(semantic))
-            {
                 if (_semantics[semantic].type == "vec4")
                     SetUniformValue(_semantics[semantic].name, value);
-            }
         }
+
         internal int GetTexUniformLocation(RTextureLayer layer)
         {
-            var name = String.Format("texture{0}", (int)layer);
+            var v = (int)layer - (int)RTextureLayer.TEXTURE0;
+            var name = $"texture{v}";
             return GetUniformLocation(name);
         }
-        internal int GetTexUniformValue(RTextureLayer layer)
-        {
-            return (int)layer;
-        }
+
         internal int GetUniformLocation(string name)
         {
-            if (_uniformLocations.ContainsKey(name))
+            if (_uniformLocations.ContainsKey(name)) return _uniformLocations[name];
+
+            var location = GL.GetUniformLocation(Id, name);
+            REngine.CheckGLError();
+            if (location != -1)
             {
-                return _uniformLocations[name];
+                _uniformLocations.Add(name, location);
+                return location;
             }
-            else
-            {
-                int location = GL.GetUniformLocation(Id, name);
-                REngine.CheckGLError();
-                if(location != -1){
-                    _uniformLocations.Add(name, location);
-                    return location;
-                } else {
-                    return -1;
-                }
-            }
+
+            return -1;
         }
+
         internal int GetAttribLocation(string name)
         {
-            for(int i=0; i<_attributes.Length; i++){
-                if(_attributes[i].name == name){
+            for (var i = 0; i < _attributes.Length; i++)
+                if (_attributes[i].name == name)
                     return _attributes[i].location;
-                }
-            }
             return GL.GetAttribLocation(Id, name);
-
         }
+
         internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage)
         {
-            string name = "";
-            switch(rVertexElementUsage)
+            var name = "";
+            switch (rVertexElementUsage)
             {
                 case RVertexElementUsage.Position:
                     name = r_position;
@@ -385,16 +368,19 @@ namespace Reactor.Types
                 default:
                     throw new NotImplementedException();
             }
+
             return GetAttribLocation(name);
         }
+
         internal int GetAttribLocation(RVertexElementUsage rVertexElementUsage, int usageIndex)
         {
-            int size=0;
-            ActiveAttribType type = ActiveAttribType.Float;
-            StringBuilder name = new StringBuilder();
-            GL.GetActiveAttrib(Id, usageIndex, size, new []{1}, new[]{1},new []{type}, name);
+            var size = 0;
+            var type = ActiveAttribType.Float;
+            var name = new StringBuilder();
+            GL.GetActiveAttrib(Id, usageIndex, size, new[] { 1 }, new[] { 1 }, new[] { type }, name);
             return GL.GetAttribLocation(Id, name.ToString());
         }
+
         public void Bind()
         {
             if (Id != 0)
@@ -414,21 +400,10 @@ namespace Reactor.Types
             REngine.CheckGLError();
         }
 
-
-        public void Dispose()
-        {
-            if (GL.IsProgram(Id))
-            {
-                GL.DeleteProgram(Id);
-                Id = 0;
-            }
-        }
-
         internal void BindSemantics(Matrix Model, Matrix View, Matrix Projection)
         {
-            foreach(var keyPair in _semantics)
-            {
-                switch(keyPair.Key)
+            foreach (var keyPair in _semantics)
+                switch (keyPair.Key)
                 {
                     case RShaderSemanticDefinition.VIEW:
                         SetUniformBySemantic(RShaderSemanticDefinition.VIEW, View);
@@ -464,30 +439,40 @@ namespace Reactor.Types
                         SetUniformBySemantic(RShaderSemanticDefinition.NEAR_PLANE, REngine.camera.Near);
                         break;
                 }
-            }
         }
 
-        internal static RShader basicShader;
         public static RShader GetBasicShader()
         {
             return basicShader;
         }
+
         internal static void InitShaders()
         {
             basicShader = new RShader();
             basicShader.Load(RShaderResources.BasicEffectVert, RShaderResources.BasicEffectFrag, null);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct Attribute
+        {
+            public ActiveAttribType type;
+            public int index;
+            public string name;
+            public int location;
+        }
+
+        private struct Uniform
+        {
+            public ActiveUniformType type;
+            public int index;
+            public string name;
+            public int location;
         }
     }
 
     internal static class RShaderResources
     {
         internal static Assembly Assembly = Assembly.GetAssembly(typeof(RShaderResources));
-        internal static string GetResourceString(string resource){
-            StreamReader reader = new StreamReader(Assembly.GetManifestResourceStream(resource));
-            string contents = reader.ReadToEnd();
-            reader.Close();
-            return contents;
-        }
         internal static string Headers = GetResourceString("Reactor.Shaders.headers.glsl");
         internal static string Lighting = GetResourceString("Reactor.Shaders.lighting.glsl");
         internal static string Noise = GetResourceString("Reactor.Shaders.noise.glsl");
@@ -500,5 +485,13 @@ namespace Reactor.Types
 
         internal static string HDRVert = GetResourceString("Reactor.Shaders.hdr.vert.glsl");
         internal static string HDRFrag = GetResourceString("Reactor.Shaders.hdr.frag.glsl");
+
+        internal static string GetResourceString(string resource)
+        {
+            var reader = new StreamReader(Assembly.GetManifestResourceStream(resource));
+            var contents = reader.ReadToEnd();
+            reader.Close();
+            return contents;
+        }
     }
 }

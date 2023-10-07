@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,18 +22,19 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
-using Newtonsoft.Json.Utilities;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using Newtonsoft.Json.Utilities;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 
@@ -41,9 +43,9 @@ using System.Linq;
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Represents a writer that provides a fast, non-cached, forward-only way of generating JSON data.
+    ///     Represents a writer that provides a fast, non-cached, forward-only way of generating JSON data.
     /// </summary>
-    public abstract partial class JsonWriter : IDisposable
+    public abstract class JsonWriter : IDisposable
     {
         internal enum State
         {
@@ -62,33 +64,72 @@ namespace Newtonsoft.Json
         // array that gives a new state based on the current state an the token being written
         private static readonly State[][] StateArray;
 
-        internal static readonly State[][] StateArrayTempate = new[]
+        internal static readonly State[][] StateArrayTempate =
         {
             //                                      Start                    PropertyName            ObjectStart         Object            ArrayStart              Array                   ConstructorStart        Constructor             Closed       Error
             //
-            /* None                        */new[] { State.Error,            State.Error,            State.Error,        State.Error,      State.Error,            State.Error,            State.Error,            State.Error,            State.Error, State.Error },
-            /* StartObject                 */new[] { State.ObjectStart,      State.ObjectStart,      State.Error,        State.Error,      State.ObjectStart,      State.ObjectStart,      State.ObjectStart,      State.ObjectStart,      State.Error, State.Error },
-            /* StartArray                  */new[] { State.ArrayStart,       State.ArrayStart,       State.Error,        State.Error,      State.ArrayStart,       State.ArrayStart,       State.ArrayStart,       State.ArrayStart,       State.Error, State.Error },
-            /* StartConstructor            */new[] { State.ConstructorStart, State.ConstructorStart, State.Error,        State.Error,      State.ConstructorStart, State.ConstructorStart, State.ConstructorStart, State.ConstructorStart, State.Error, State.Error },
-            /* Property                    */new[] { State.Property,         State.Error,            State.Property,     State.Property,   State.Error,            State.Error,            State.Error,            State.Error,            State.Error, State.Error },
-            /* Comment                     */new[] { State.Start,            State.Property,         State.ObjectStart,  State.Object,     State.ArrayStart,       State.Array,            State.Constructor,      State.Constructor,      State.Error, State.Error },
-            /* Raw                         */new[] { State.Start,            State.Property,         State.ObjectStart,  State.Object,     State.ArrayStart,       State.Array,            State.Constructor,      State.Constructor,      State.Error, State.Error },
-            /* Value (this will be copied) */new[] { State.Start,            State.Object,           State.Error,        State.Error,      State.Array,            State.Array,            State.Constructor,      State.Constructor,      State.Error, State.Error }
+            /* None                        */
+            new[]
+            {
+                State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error,
+                State.Error, State.Error
+            },
+            /* StartObject                 */
+            new[]
+            {
+                State.ObjectStart, State.ObjectStart, State.Error, State.Error, State.ObjectStart, State.ObjectStart,
+                State.ObjectStart, State.ObjectStart, State.Error, State.Error
+            },
+            /* StartArray                  */
+            new[]
+            {
+                State.ArrayStart, State.ArrayStart, State.Error, State.Error, State.ArrayStart, State.ArrayStart,
+                State.ArrayStart, State.ArrayStart, State.Error, State.Error
+            },
+            /* StartConstructor            */
+            new[]
+            {
+                State.ConstructorStart, State.ConstructorStart, State.Error, State.Error, State.ConstructorStart,
+                State.ConstructorStart, State.ConstructorStart, State.ConstructorStart, State.Error, State.Error
+            },
+            /* Property                    */
+            new[]
+            {
+                State.Property, State.Error, State.Property, State.Property, State.Error, State.Error, State.Error,
+                State.Error, State.Error, State.Error
+            },
+            /* Comment                     */
+            new[]
+            {
+                State.Start, State.Property, State.ObjectStart, State.Object, State.ArrayStart, State.Array,
+                State.Constructor, State.Constructor, State.Error, State.Error
+            },
+            /* Raw                         */
+            new[]
+            {
+                State.Start, State.Property, State.ObjectStart, State.Object, State.ArrayStart, State.Array,
+                State.Constructor, State.Constructor, State.Error, State.Error
+            },
+            /* Value (this will be copied) */
+            new[]
+            {
+                State.Start, State.Object, State.Error, State.Error, State.Array, State.Array, State.Constructor,
+                State.Constructor, State.Error, State.Error
+            }
         };
 
         internal static State[][] BuildStateArray()
         {
-            List<State[]> allStates = StateArrayTempate.ToList();
-            State[] errorStates = StateArrayTempate[0];
-            State[] valueStates = StateArrayTempate[7];
+            var allStates = StateArrayTempate.ToList();
+            var errorStates = StateArrayTempate[0];
+            var valueStates = StateArrayTempate[7];
 
-            EnumInfo enumValuesAndNames = EnumUtils.GetEnumValuesAndNames(typeof(JsonToken));
+            var enumValuesAndNames = EnumUtils.GetEnumValuesAndNames(typeof(JsonToken));
 
-            foreach (ulong valueToken in enumValuesAndNames.Values)
-            {
+            foreach (var valueToken in enumValuesAndNames.Values)
                 if (allStates.Count <= (int)valueToken)
                 {
-                    JsonToken token = (JsonToken)valueToken;
+                    var token = (JsonToken)valueToken;
                     switch (token)
                     {
                         case JsonToken.Integer:
@@ -106,7 +147,6 @@ namespace Newtonsoft.Json
                             break;
                     }
                 }
-            }
 
             return allStates.ToArray();
         }
@@ -122,41 +162,40 @@ namespace Newtonsoft.Json
         private Formatting _formatting;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the destination should be closed when this writer is closed.
+        ///     Gets or sets a value indicating whether the destination should be closed when this writer is closed.
         /// </summary>
         /// <value>
-        /// <c>true</c> to close the destination when this writer is closed; otherwise <c>false</c>. The default is <c>true</c>.
+        ///     <c>true</c> to close the destination when this writer is closed; otherwise <c>false</c>. The default is <c>true</c>
+        ///     .
         /// </value>
         public bool CloseOutput { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the JSON should be auto-completed when this writer is closed.
+        ///     Gets or sets a value indicating whether the JSON should be auto-completed when this writer is closed.
         /// </summary>
         /// <value>
-        /// <c>true</c> to auto-complete the JSON when this writer is closed; otherwise <c>false</c>. The default is <c>true</c>.
+        ///     <c>true</c> to auto-complete the JSON when this writer is closed; otherwise <c>false</c>. The default is
+        ///     <c>true</c>.
         /// </value>
         public bool AutoCompleteOnClose { get; set; }
 
         /// <summary>
-        /// Gets the top.
+        ///     Gets the top.
         /// </summary>
         /// <value>The top.</value>
         protected internal int Top
         {
             get
             {
-                int depth = _stack?.Count ?? 0;
-                if (Peek() != JsonContainerType.None)
-                {
-                    depth++;
-                }
+                var depth = _stack?.Count ?? 0;
+                if (Peek() != JsonContainerType.None) depth++;
 
                 return depth;
             }
         }
 
         /// <summary>
-        /// Gets the state of the writer.
+        ///     Gets the state of the writer.
         /// </summary>
         public WriteState WriteState
         {
@@ -191,32 +230,26 @@ namespace Newtonsoft.Json
         {
             get
             {
-                if (_currentPosition.Type == JsonContainerType.None || _stack == null)
-                {
-                    return string.Empty;
-                }
+                if (_currentPosition.Type == JsonContainerType.None || _stack == null) return string.Empty;
 
                 return JsonPosition.BuildPath(_stack, null);
             }
         }
 
         /// <summary>
-        /// Gets the path of the writer. 
+        ///     Gets the path of the writer.
         /// </summary>
         public string Path
         {
             get
             {
-                if (_currentPosition.Type == JsonContainerType.None)
-                {
-                    return string.Empty;
-                }
+                if (_currentPosition.Type == JsonContainerType.None) return string.Empty;
 
-                bool insideContainer = (_currentState != State.ArrayStart
-                                        && _currentState != State.ConstructorStart
-                                        && _currentState != State.ObjectStart);
+                var insideContainer = _currentState != State.ArrayStart
+                                      && _currentState != State.ConstructorStart
+                                      && _currentState != State.ObjectStart;
 
-                JsonPosition? current = insideContainer ? (JsonPosition?)_currentPosition : null;
+                var current = insideContainer ? (JsonPosition?)_currentPosition : null;
 
                 return JsonPosition.BuildPath(_stack!, current);
             }
@@ -226,11 +259,10 @@ namespace Newtonsoft.Json
         private DateTimeZoneHandling _dateTimeZoneHandling;
         private StringEscapeHandling _stringEscapeHandling;
         private FloatFormatHandling _floatFormatHandling;
-        private string? _dateFormatString;
         private CultureInfo? _culture;
 
         /// <summary>
-        /// Gets or sets a value indicating how JSON text output should be formatted.
+        ///     Gets or sets a value indicating how JSON text output should be formatted.
         /// </summary>
         public Formatting Formatting
         {
@@ -238,16 +270,14 @@ namespace Newtonsoft.Json
             set
             {
                 if (value < Formatting.None || value > Formatting.Indented)
-                {
                     throw new ArgumentOutOfRangeException(nameof(value));
-                }
 
                 _formatting = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets how dates are written to JSON text.
+        ///     Gets or sets how dates are written to JSON text.
         /// </summary>
         public DateFormatHandling DateFormatHandling
         {
@@ -255,16 +285,14 @@ namespace Newtonsoft.Json
             set
             {
                 if (value < DateFormatHandling.IsoDateFormat || value > DateFormatHandling.MicrosoftDateFormat)
-                {
                     throw new ArgumentOutOfRangeException(nameof(value));
-                }
 
                 _dateFormatHandling = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets how <see cref="DateTime"/> time zones are handled when writing JSON text.
+        ///     Gets or sets how <see cref="DateTime" /> time zones are handled when writing JSON text.
         /// </summary>
         public DateTimeZoneHandling DateTimeZoneHandling
         {
@@ -272,16 +300,14 @@ namespace Newtonsoft.Json
             set
             {
                 if (value < DateTimeZoneHandling.Local || value > DateTimeZoneHandling.RoundtripKind)
-                {
                     throw new ArgumentOutOfRangeException(nameof(value));
-                }
 
                 _dateTimeZoneHandling = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets how strings are escaped when writing JSON text.
+        ///     Gets or sets how strings are escaped when writing JSON text.
         /// </summary>
         public StringEscapeHandling StringEscapeHandling
         {
@@ -289,9 +315,7 @@ namespace Newtonsoft.Json
             set
             {
                 if (value < StringEscapeHandling.Default || value > StringEscapeHandling.EscapeHtml)
-                {
                     throw new ArgumentOutOfRangeException(nameof(value));
-                }
 
                 _stringEscapeHandling = value;
                 OnStringEscapeHandlingChanged();
@@ -304,9 +328,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Gets or sets how special floating point numbers, e.g. <see cref="Double.NaN"/>,
-        /// <see cref="Double.PositiveInfinity"/> and <see cref="Double.NegativeInfinity"/>,
-        /// are written to JSON text.
+        ///     Gets or sets how special floating point numbers, e.g. <see cref="Double.NaN" />,
+        ///     <see cref="Double.PositiveInfinity" /> and <see cref="Double.NegativeInfinity" />,
+        ///     are written to JSON text.
         /// </summary>
         public FloatFormatHandling FloatFormatHandling
         {
@@ -314,25 +338,20 @@ namespace Newtonsoft.Json
             set
             {
                 if (value < FloatFormatHandling.String || value > FloatFormatHandling.DefaultValue)
-                {
                     throw new ArgumentOutOfRangeException(nameof(value));
-                }
 
                 _floatFormatHandling = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets how <see cref="DateTime"/> and <see cref="DateTimeOffset"/> values are formatted when writing JSON text.
+        ///     Gets or sets how <see cref="DateTime" /> and <see cref="DateTimeOffset" /> values are formatted when writing JSON
+        ///     text.
         /// </summary>
-        public string? DateFormatString
-        {
-            get => _dateFormatString;
-            set => _dateFormatString = value;
-        }
+        public string? DateFormatString { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture used when writing JSON. Defaults to <see cref="CultureInfo.InvariantCulture"/>.
+        ///     Gets or sets the culture used when writing JSON. Defaults to <see cref="CultureInfo.InvariantCulture" />.
         /// </summary>
         public CultureInfo Culture
         {
@@ -341,7 +360,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonWriter"/> class.
+        ///     Initializes a new instance of the <see cref="JsonWriter" /> class.
         /// </summary>
         protected JsonWriter()
         {
@@ -355,20 +374,14 @@ namespace Newtonsoft.Json
 
         internal void UpdateScopeWithFinishedValue()
         {
-            if (_currentPosition.HasIndex)
-            {
-                _currentPosition.Position++;
-            }
+            if (_currentPosition.HasIndex) _currentPosition.Position++;
         }
 
         private void Push(JsonContainerType value)
         {
             if (_currentPosition.Type != JsonContainerType.None)
             {
-                if (_stack == null)
-                {
-                    _stack = new List<JsonPosition>();
-                }
+                if (_stack == null) _stack = new List<JsonPosition>();
 
                 _stack.Add(_currentPosition);
             }
@@ -378,7 +391,7 @@ namespace Newtonsoft.Json
 
         private JsonContainerType Pop()
         {
-            JsonPosition oldPosition = _currentPosition;
+            var oldPosition = _currentPosition;
 
             if (_stack != null && _stack.Count > 0)
             {
@@ -399,25 +412,22 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Flushes whatever is in the buffer to the destination and also flushes the destination.
+        ///     Flushes whatever is in the buffer to the destination and also flushes the destination.
         /// </summary>
         public abstract void Flush();
 
         /// <summary>
-        /// Closes this writer.
-        /// If <see cref="CloseOutput"/> is set to <c>true</c>, the destination is also closed.
-        /// If <see cref="AutoCompleteOnClose"/> is set to <c>true</c>, the JSON is auto-completed.
+        ///     Closes this writer.
+        ///     If <see cref="CloseOutput" /> is set to <c>true</c>, the destination is also closed.
+        ///     If <see cref="AutoCompleteOnClose" /> is set to <c>true</c>, the JSON is auto-completed.
         /// </summary>
         public virtual void Close()
         {
-            if (AutoCompleteOnClose)
-            {
-                AutoCompleteAll();
-            }
+            if (AutoCompleteOnClose) AutoCompleteAll();
         }
 
         /// <summary>
-        /// Writes the beginning of a JSON object.
+        ///     Writes the beginning of a JSON object.
         /// </summary>
         public virtual void WriteStartObject()
         {
@@ -425,7 +435,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the end of a JSON object.
+        ///     Writes the end of a JSON object.
         /// </summary>
         public virtual void WriteEndObject()
         {
@@ -433,7 +443,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the beginning of a JSON array.
+        ///     Writes the beginning of a JSON array.
         /// </summary>
         public virtual void WriteStartArray()
         {
@@ -441,7 +451,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the end of an array.
+        ///     Writes the end of an array.
         /// </summary>
         public virtual void WriteEndArray()
         {
@@ -449,7 +459,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the start of a constructor with the given name.
+        ///     Writes the start of a constructor with the given name.
         /// </summary>
         /// <param name="name">The name of the constructor.</param>
         public virtual void WriteStartConstructor(string name)
@@ -458,7 +468,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the end constructor.
+        ///     Writes the end constructor.
         /// </summary>
         public virtual void WriteEndConstructor()
         {
@@ -466,7 +476,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the property name of a name/value pair of a JSON object.
+        ///     Writes the property name of a name/value pair of a JSON object.
         /// </summary>
         /// <param name="name">The name of the property.</param>
         public virtual void WritePropertyName(string name)
@@ -475,7 +485,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the property name of a name/value pair of a JSON object.
+        ///     Writes the property name of a name/value pair of a JSON object.
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="escape">A flag to indicate whether the text should be escaped when it is written as a JSON property name.</param>
@@ -485,7 +495,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the end of the current JSON object or array.
+        ///     Writes the end of the current JSON object or array.
         /// </summary>
         public virtual void WriteEnd()
         {
@@ -493,18 +503,18 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the current <see cref="JsonReader"/> token and its children.
+        ///     Writes the current <see cref="JsonReader" /> token and its children.
         /// </summary>
-        /// <param name="reader">The <see cref="JsonReader"/> to read the token from.</param>
+        /// <param name="reader">The <see cref="JsonReader" /> to read the token from.</param>
         public void WriteToken(JsonReader reader)
         {
             WriteToken(reader, true);
         }
 
         /// <summary>
-        /// Writes the current <see cref="JsonReader"/> token.
+        ///     Writes the current <see cref="JsonReader" /> token.
         /// </summary>
-        /// <param name="reader">The <see cref="JsonReader"/> to read the token from.</param>
+        /// <param name="reader">The <see cref="JsonReader" /> to read the token from.</param>
         /// <param name="writeChildren">A flag indicating whether the current token's children should be written.</param>
         public void WriteToken(JsonReader reader, bool writeChildren)
         {
@@ -514,13 +524,15 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the <see cref="JsonToken"/> token and its value.
+        ///     Writes the <see cref="JsonToken" /> token and its value.
         /// </summary>
-        /// <param name="token">The <see cref="JsonToken"/> to write.</param>
+        /// <param name="token">The <see cref="JsonToken" /> to write.</param>
         /// <param name="value">
-        /// The value to write.
-        /// A value is only required for tokens that have an associated value, e.g. the <see cref="String"/> property name for <see cref="JsonToken.PropertyName"/>.
-        /// <c>null</c> can be passed to the method for tokens that don't have a value, e.g. <see cref="JsonToken.StartObject"/>.
+        ///     The value to write.
+        ///     A value is only required for tokens that have an associated value, e.g. the <see cref="String" /> property name for
+        ///     <see cref="JsonToken.PropertyName" />.
+        ///     <c>null</c> can be passed to the method for tokens that don't have a value, e.g.
+        ///     <see cref="JsonToken.StartObject" />.
         /// </param>
         public void WriteToken(JsonToken token, object? value)
         {
@@ -555,28 +567,20 @@ namespace Newtonsoft.Json
                     }
                     else
 #endif
-                    {
-                        WriteValue(Convert.ToInt64(value, CultureInfo.InvariantCulture));
-                    }
+                {
+                    WriteValue(Convert.ToInt64(value, CultureInfo.InvariantCulture));
+                }
                     break;
                 case JsonToken.Float:
                     ValidationUtils.ArgumentNotNull(value, nameof(value));
                     if (value is decimal decimalValue)
-                    {
                         WriteValue(decimalValue);
-                    }
                     else if (value is double doubleValue)
-                    {
                         WriteValue(doubleValue);
-                    }
                     else if (value is float floatValue)
-                    {
                         WriteValue(floatValue);
-                    }
                     else
-                    {
                         WriteValue(Convert.ToDouble(value, CultureInfo.InvariantCulture));
-                    }
                     break;
                 case JsonToken.String:
                     ValidationUtils.ArgumentNotNull(value, nameof(value));
@@ -610,9 +614,9 @@ namespace Newtonsoft.Json
                     }
                     else
 #endif
-                    {
-                        WriteValue(Convert.ToDateTime(value, CultureInfo.InvariantCulture));
-                    }
+                {
+                    WriteValue(Convert.ToDateTime(value, CultureInfo.InvariantCulture));
+                }
                     break;
                 case JsonToken.Raw:
                     WriteRawValue(value?.ToString());
@@ -620,45 +624,42 @@ namespace Newtonsoft.Json
                 case JsonToken.Bytes:
                     ValidationUtils.ArgumentNotNull(value, nameof(value));
                     if (value is Guid guid)
-                    {
                         WriteValue(guid);
-                    }
                     else
-                    {
                         WriteValue((byte[])value!);
-                    }
                     break;
                 default:
-                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(token), token, "Unexpected token type.");
+                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(token), token,
+                        "Unexpected token type.");
             }
         }
 
         /// <summary>
-        /// Writes the <see cref="JsonToken"/> token.
+        ///     Writes the <see cref="JsonToken" /> token.
         /// </summary>
-        /// <param name="token">The <see cref="JsonToken"/> to write.</param>
+        /// <param name="token">The <see cref="JsonToken" /> to write.</param>
         public void WriteToken(JsonToken token)
         {
             WriteToken(token, null);
         }
 
-        internal virtual void WriteToken(JsonReader reader, bool writeChildren, bool writeDateConstructorAsDate, bool writeComments)
+        internal virtual void WriteToken(JsonReader reader, bool writeChildren, bool writeDateConstructorAsDate,
+            bool writeComments)
         {
-            int initialDepth = CalculateWriteTokenInitialDepth(reader);
+            var initialDepth = CalculateWriteTokenInitialDepth(reader);
 
             do
             {
                 // write a JValue date when the constructor is for a date
-                if (writeDateConstructorAsDate && reader.TokenType == JsonToken.StartConstructor && string.Equals(reader.Value?.ToString(), "Date", StringComparison.Ordinal))
+                if (writeDateConstructorAsDate && reader.TokenType == JsonToken.StartConstructor &&
+                    string.Equals(reader.Value?.ToString(), "Date", StringComparison.Ordinal))
                 {
                     WriteConstructorDate(reader);
                 }
                 else
                 {
                     if (writeComments || reader.TokenType != JsonToken.Comment)
-                    {
                         WriteToken(reader.TokenType, reader.Value);
-                    }
                 }
             } while (
                 // stop if we have reached the end of the token being read
@@ -667,46 +668,36 @@ namespace Newtonsoft.Json
                 && reader.Read());
 
             if (IsWriteTokenIncomplete(reader, writeChildren, initialDepth))
-            {
                 throw JsonWriterException.Create(this, "Unexpected end when reading token.", null);
-            }
         }
 
         private bool IsWriteTokenIncomplete(JsonReader reader, bool writeChildren, int initialDepth)
         {
-            int finalDepth = CalculateWriteTokenFinalDepth(reader);
+            var finalDepth = CalculateWriteTokenFinalDepth(reader);
             return initialDepth < finalDepth ||
-                (writeChildren && initialDepth == finalDepth && JsonTokenUtils.IsStartToken(reader.TokenType));
+                   (writeChildren && initialDepth == finalDepth && JsonTokenUtils.IsStartToken(reader.TokenType));
         }
 
         private int CalculateWriteTokenInitialDepth(JsonReader reader)
         {
-            JsonToken type = reader.TokenType;
-            if (type == JsonToken.None)
-            {
-                return -1;
-            }
+            var type = reader.TokenType;
+            if (type == JsonToken.None) return -1;
 
             return JsonTokenUtils.IsStartToken(type) ? reader.Depth : reader.Depth + 1;
         }
 
         private int CalculateWriteTokenFinalDepth(JsonReader reader)
         {
-            JsonToken type = reader.TokenType;
-            if (type == JsonToken.None)
-            {
-                return -1;
-            }
+            var type = reader.TokenType;
+            if (type == JsonToken.None) return -1;
 
             return JsonTokenUtils.IsEndToken(type) ? reader.Depth - 1 : reader.Depth;
         }
 
         private void WriteConstructorDate(JsonReader reader)
         {
-            if (!JavaScriptUtils.TryGetDateFromConstructorJson(reader, out DateTime dateTime, out string? errorMessage))
-            {
+            if (!JavaScriptUtils.TryGetDateFromConstructorJson(reader, out var dateTime, out var errorMessage))
                 throw JsonWriterException.Create(this, errorMessage, null);
-            }
 
             WriteValue(dateTime);
         }
@@ -731,10 +722,7 @@ namespace Newtonsoft.Json
 
         private void AutoCompleteAll()
         {
-            while (Top > 0)
-            {
-                WriteEnd();
-            }
+            while (Top > 0) WriteEnd();
         }
 
         private JsonToken GetCloseTokenForType(JsonContainerType type)
@@ -754,24 +742,17 @@ namespace Newtonsoft.Json
 
         private void AutoCompleteClose(JsonContainerType type)
         {
-            int levelsToComplete = CalculateLevelsToComplete(type);
+            var levelsToComplete = CalculateLevelsToComplete(type);
 
-            for (int i = 0; i < levelsToComplete; i++)
+            for (var i = 0; i < levelsToComplete; i++)
             {
-                JsonToken token = GetCloseTokenForType(Pop());
+                var token = GetCloseTokenForType(Pop());
 
-                if (_currentState == State.Property)
-                {
-                    WriteNull();
-                }
+                if (_currentState == State.Property) WriteNull();
 
                 if (_formatting == Formatting.Indented)
-                {
                     if (_currentState != State.ObjectStart && _currentState != State.ArrayStart)
-                    {
                         WriteIndent();
-                    }
-                }
 
                 WriteEnd(token);
 
@@ -781,7 +762,7 @@ namespace Newtonsoft.Json
 
         private int CalculateLevelsToComplete(JsonContainerType type)
         {
-            int levelsToComplete = 0;
+            var levelsToComplete = 0;
 
             if (_currentPosition.Type == type)
             {
@@ -789,10 +770,10 @@ namespace Newtonsoft.Json
             }
             else
             {
-                int top = Top - 2;
-                for (int i = top; i >= 0; i--)
+                var top = Top - 2;
+                for (var i = top; i >= 0; i--)
                 {
-                    int currentLevel = top - i;
+                    var currentLevel = top - i;
 
                     if (_stack![currentLevel].Type == type)
                     {
@@ -802,17 +783,14 @@ namespace Newtonsoft.Json
                 }
             }
 
-            if (levelsToComplete == 0)
-            {
-                throw JsonWriterException.Create(this, "No token to close.", null);
-            }
+            if (levelsToComplete == 0) throw JsonWriterException.Create(this, "No token to close.", null);
 
             return levelsToComplete;
         }
 
         private void UpdateCurrentState()
         {
-            JsonContainerType currentLevelType = Peek();
+            var currentLevelType = Peek();
 
             switch (currentLevelType)
             {
@@ -834,7 +812,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the specified end token.
+        ///     Writes the specified end token.
         /// </summary>
         /// <param name="token">The end token to write.</param>
         protected virtual void WriteEnd(JsonToken token)
@@ -842,21 +820,21 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes indent characters.
+        ///     Writes indent characters.
         /// </summary>
         protected virtual void WriteIndent()
         {
         }
 
         /// <summary>
-        /// Writes the JSON value delimiter.
+        ///     Writes the JSON value delimiter.
         /// </summary>
         protected virtual void WriteValueDelimiter()
         {
         }
 
         /// <summary>
-        /// Writes an indent space.
+        ///     Writes an indent space.
         /// </summary>
         protected virtual void WriteIndentSpace()
         {
@@ -865,39 +843,34 @@ namespace Newtonsoft.Json
         internal void AutoComplete(JsonToken tokenBeingWritten)
         {
             // gets new state based on the current state and what is being written
-            State newState = StateArray[(int)tokenBeingWritten][(int)_currentState];
+            var newState = StateArray[(int)tokenBeingWritten][(int)_currentState];
 
             if (newState == State.Error)
-            {
-                throw JsonWriterException.Create(this, "Token {0} in state {1} would result in an invalid JSON object.".FormatWith(CultureInfo.InvariantCulture, tokenBeingWritten.ToString(), _currentState.ToString()), null);
-            }
+                throw JsonWriterException.Create(this,
+                    "Token {0} in state {1} would result in an invalid JSON object.".FormatWith(
+                        CultureInfo.InvariantCulture, tokenBeingWritten.ToString(), _currentState.ToString()), null);
 
-            if ((_currentState == State.Object || _currentState == State.Array || _currentState == State.Constructor) && tokenBeingWritten != JsonToken.Comment)
-            {
-                WriteValueDelimiter();
-            }
+            if ((_currentState == State.Object || _currentState == State.Array || _currentState == State.Constructor) &&
+                tokenBeingWritten != JsonToken.Comment) WriteValueDelimiter();
 
             if (_formatting == Formatting.Indented)
             {
-                if (_currentState == State.Property)
-                {
-                    WriteIndentSpace();
-                }
+                if (_currentState == State.Property) WriteIndentSpace();
 
                 // don't indent a property when it is the first token to be written (i.e. at the start)
-                if ((_currentState == State.Array || _currentState == State.ArrayStart || _currentState == State.Constructor || _currentState == State.ConstructorStart)
+                if (_currentState == State.Array || _currentState == State.ArrayStart ||
+                    _currentState == State.Constructor || _currentState == State.ConstructorStart
                     || (tokenBeingWritten == JsonToken.PropertyName && _currentState != State.Start))
-                {
                     WriteIndent();
-                }
             }
 
             _currentState = newState;
         }
 
         #region WriteValue methods
+
         /// <summary>
-        /// Writes a null value.
+        ///     Writes a null value.
         /// </summary>
         public virtual void WriteNull()
         {
@@ -905,7 +878,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes an undefined value.
+        ///     Writes an undefined value.
         /// </summary>
         public virtual void WriteUndefined()
         {
@@ -913,7 +886,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes raw JSON without changing the writer's state.
+        ///     Writes raw JSON without changing the writer's state.
         /// </summary>
         /// <param name="json">The raw JSON to write.</param>
         public virtual void WriteRaw(string? json)
@@ -922,7 +895,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes raw JSON where a value is expected and updates the writer's state.
+        ///     Writes raw JSON where a value is expected and updates the writer's state.
         /// </summary>
         /// <param name="json">The raw JSON to write.</param>
         public virtual void WriteRawValue(string? json)
@@ -934,27 +907,27 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="String"/> value.
+        ///     Writes a <see cref="String" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="String"/> value to write.</param>
+        /// <param name="value">The <see cref="String" /> value to write.</param>
         public virtual void WriteValue(string? value)
         {
             InternalWriteValue(JsonToken.String);
         }
 
         /// <summary>
-        /// Writes a <see cref="Int32"/> value.
+        ///     Writes a <see cref="Int32" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Int32"/> value to write.</param>
+        /// <param name="value">The <see cref="Int32" /> value to write.</param>
         public virtual void WriteValue(int value)
         {
             InternalWriteValue(JsonToken.Integer);
         }
 
         /// <summary>
-        /// Writes a <see cref="UInt32"/> value.
+        ///     Writes a <see cref="UInt32" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="UInt32"/> value to write.</param>
+        /// <param name="value">The <see cref="UInt32" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(uint value)
         {
@@ -962,18 +935,18 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Int64"/> value.
+        ///     Writes a <see cref="Int64" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Int64"/> value to write.</param>
+        /// <param name="value">The <see cref="Int64" /> value to write.</param>
         public virtual void WriteValue(long value)
         {
             InternalWriteValue(JsonToken.Integer);
         }
 
         /// <summary>
-        /// Writes a <see cref="UInt64"/> value.
+        ///     Writes a <see cref="UInt64" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="UInt64"/> value to write.</param>
+        /// <param name="value">The <see cref="UInt64" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(ulong value)
         {
@@ -981,45 +954,45 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Single"/> value.
+        ///     Writes a <see cref="Single" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Single"/> value to write.</param>
+        /// <param name="value">The <see cref="Single" /> value to write.</param>
         public virtual void WriteValue(float value)
         {
             InternalWriteValue(JsonToken.Float);
         }
 
         /// <summary>
-        /// Writes a <see cref="Double"/> value.
+        ///     Writes a <see cref="Double" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Double"/> value to write.</param>
+        /// <param name="value">The <see cref="Double" /> value to write.</param>
         public virtual void WriteValue(double value)
         {
             InternalWriteValue(JsonToken.Float);
         }
 
         /// <summary>
-        /// Writes a <see cref="Boolean"/> value.
+        ///     Writes a <see cref="Boolean" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Boolean"/> value to write.</param>
+        /// <param name="value">The <see cref="Boolean" /> value to write.</param>
         public virtual void WriteValue(bool value)
         {
             InternalWriteValue(JsonToken.Boolean);
         }
 
         /// <summary>
-        /// Writes a <see cref="Int16"/> value.
+        ///     Writes a <see cref="Int16" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Int16"/> value to write.</param>
+        /// <param name="value">The <see cref="Int16" /> value to write.</param>
         public virtual void WriteValue(short value)
         {
             InternalWriteValue(JsonToken.Integer);
         }
 
         /// <summary>
-        /// Writes a <see cref="UInt16"/> value.
+        ///     Writes a <see cref="UInt16" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="UInt16"/> value to write.</param>
+        /// <param name="value">The <see cref="UInt16" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(ushort value)
         {
@@ -1027,27 +1000,27 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Char"/> value.
+        ///     Writes a <see cref="Char" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Char"/> value to write.</param>
+        /// <param name="value">The <see cref="Char" /> value to write.</param>
         public virtual void WriteValue(char value)
         {
             InternalWriteValue(JsonToken.String);
         }
 
         /// <summary>
-        /// Writes a <see cref="Byte"/> value.
+        ///     Writes a <see cref="Byte" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Byte"/> value to write.</param>
+        /// <param name="value">The <see cref="Byte" /> value to write.</param>
         public virtual void WriteValue(byte value)
         {
             InternalWriteValue(JsonToken.Integer);
         }
 
         /// <summary>
-        /// Writes a <see cref="SByte"/> value.
+        ///     Writes a <see cref="SByte" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="SByte"/> value to write.</param>
+        /// <param name="value">The <see cref="SByte" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(sbyte value)
         {
@@ -1055,18 +1028,18 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes a <see cref="Decimal"/> value.
+        ///     Writes a <see cref="Decimal" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Decimal"/> value to write.</param>
+        /// <param name="value">The <see cref="Decimal" /> value to write.</param>
         public virtual void WriteValue(decimal value)
         {
             InternalWriteValue(JsonToken.Float);
         }
 
         /// <summary>
-        /// Writes a <see cref="DateTime"/> value.
+        ///     Writes a <see cref="DateTime" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="DateTime"/> value to write.</param>
+        /// <param name="value">The <see cref="DateTime" /> value to write.</param>
         public virtual void WriteValue(DateTime value)
         {
             InternalWriteValue(JsonToken.Date);
@@ -1084,249 +1057,193 @@ namespace Newtonsoft.Json
 #endif
 
         /// <summary>
-        /// Writes a <see cref="Guid"/> value.
+        ///     Writes a <see cref="Guid" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Guid"/> value to write.</param>
+        /// <param name="value">The <see cref="Guid" /> value to write.</param>
         public virtual void WriteValue(Guid value)
         {
             InternalWriteValue(JsonToken.String);
         }
 
         /// <summary>
-        /// Writes a <see cref="TimeSpan"/> value.
+        ///     Writes a <see cref="TimeSpan" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="TimeSpan"/> value to write.</param>
+        /// <param name="value">The <see cref="TimeSpan" /> value to write.</param>
         public virtual void WriteValue(TimeSpan value)
         {
             InternalWriteValue(JsonToken.String);
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Int32"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Int32" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Int32"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Int32" /> value to write.</param>
         public virtual void WriteValue(int? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="UInt32"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="UInt32" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="UInt32"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="UInt32" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(uint? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Int64"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Int64" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Int64"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Int64" /> value to write.</param>
         public virtual void WriteValue(long? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="UInt64"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="UInt64" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="UInt64"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="UInt64" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(ulong? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Single"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Single" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Single"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Single" /> value to write.</param>
         public virtual void WriteValue(float? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Double"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Double" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Double"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Double" /> value to write.</param>
         public virtual void WriteValue(double? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Boolean"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Boolean" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Boolean"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Boolean" /> value to write.</param>
         public virtual void WriteValue(bool? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Int16"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Int16" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Int16"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Int16" /> value to write.</param>
         public virtual void WriteValue(short? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="UInt16"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="UInt16" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="UInt16"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="UInt16" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(ushort? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Char"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Char" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Char"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Char" /> value to write.</param>
         public virtual void WriteValue(char? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Byte"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Byte" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Byte"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Byte" /> value to write.</param>
         public virtual void WriteValue(byte? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="SByte"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="SByte" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="SByte"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="SByte" /> value to write.</param>
         [CLSCompliant(false)]
         public virtual void WriteValue(sbyte? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Decimal"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Decimal" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Decimal"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Decimal" /> value to write.</param>
         public virtual void WriteValue(decimal? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="DateTime"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="DateTime" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="DateTime"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="DateTime" /> value to write.</param>
         public virtual void WriteValue(DateTime? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
 #if HAVE_DATE_TIME_OFFSET
@@ -1348,74 +1265,58 @@ namespace Newtonsoft.Json
 #endif
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="Guid"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="Guid" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="Guid"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="Guid" /> value to write.</param>
         public virtual void WriteValue(Guid? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Nullable{T}"/> of <see cref="TimeSpan"/> value.
+        ///     Writes a <see cref="Nullable{T}" /> of <see cref="TimeSpan" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Nullable{T}"/> of <see cref="TimeSpan"/> value to write.</param>
+        /// <param name="value">The <see cref="Nullable{T}" /> of <see cref="TimeSpan" /> value to write.</param>
         public virtual void WriteValue(TimeSpan? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 WriteValue(value.GetValueOrDefault());
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Byte"/>[] value.
+        ///     Writes a <see cref="Byte" />[] value.
         /// </summary>
-        /// <param name="value">The <see cref="Byte"/>[] value to write.</param>
+        /// <param name="value">The <see cref="Byte" />[] value to write.</param>
         public virtual void WriteValue(byte[]? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 InternalWriteValue(JsonToken.Bytes);
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Uri"/> value.
+        ///     Writes a <see cref="Uri" /> value.
         /// </summary>
-        /// <param name="value">The <see cref="Uri"/> value to write.</param>
+        /// <param name="value">The <see cref="Uri" /> value to write.</param>
         public virtual void WriteValue(Uri? value)
         {
             if (value == null)
-            {
                 WriteNull();
-            }
             else
-            {
                 InternalWriteValue(JsonToken.String);
-            }
         }
 
         /// <summary>
-        /// Writes a <see cref="Object"/> value.
-        /// An error will raised if the value cannot be written as a single JSON token.
+        ///     Writes a <see cref="Object" /> value.
+        ///     An error will raised if the value cannot be written as a single JSON token.
         /// </summary>
-        /// <param name="value">The <see cref="Object"/> value to write.</param>
+        /// <param name="value">The <see cref="Object" /> value to write.</param>
         public virtual void WriteValue(object? value)
         {
             if (value == null)
@@ -1436,10 +1337,11 @@ namespace Newtonsoft.Json
                 WriteValue(this, ConvertUtils.GetTypeCode(value.GetType()), value);
             }
         }
+
         #endregion
 
         /// <summary>
-        /// Writes a comment <c>/*...*/</c> containing the specified text.
+        ///     Writes a comment <c>/*...*/</c> containing the specified text.
         /// </summary>
         /// <param name="text">Text to place inside the comment.</param>
         public virtual void WriteComment(string? text)
@@ -1448,7 +1350,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Writes the given white space.
+        ///     Writes the given white space.
         /// </summary>
         /// <param name="ws">The string of white space characters.</param>
         public virtual void WriteWhitespace(string ws)
@@ -1463,21 +1365,20 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        ///     Releases unmanaged and - optionally - managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        ///     <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
+        ///     unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (_currentState != State.Closed && disposing)
-            {
-                Close();
-            }
+            if (_currentState != State.Closed && disposing) Close();
         }
 
         internal static void WriteValue(JsonWriter writer, PrimitiveTypeCode typeCode, object value)
         {
             while (true)
-            {
                 switch (typeCode)
                 {
                     case PrimitiveTypeCode.Char:
@@ -1485,7 +1386,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.CharNullable:
-                        writer.WriteValue((value == null) ? (char?)null : (char)value);
+                        writer.WriteValue(value == null ? (char?)null : (char)value);
                         return;
 
                     case PrimitiveTypeCode.Boolean:
@@ -1493,7 +1394,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.BooleanNullable:
-                        writer.WriteValue((value == null) ? (bool?)null : (bool)value);
+                        writer.WriteValue(value == null ? (bool?)null : (bool)value);
                         return;
 
                     case PrimitiveTypeCode.SByte:
@@ -1501,7 +1402,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.SByteNullable:
-                        writer.WriteValue((value == null) ? (sbyte?)null : (sbyte)value);
+                        writer.WriteValue(value == null ? (sbyte?)null : (sbyte)value);
                         return;
 
                     case PrimitiveTypeCode.Int16:
@@ -1509,7 +1410,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.Int16Nullable:
-                        writer.WriteValue((value == null) ? (short?)null : (short)value);
+                        writer.WriteValue(value == null ? (short?)null : (short)value);
                         return;
 
                     case PrimitiveTypeCode.UInt16:
@@ -1517,7 +1418,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.UInt16Nullable:
-                        writer.WriteValue((value == null) ? (ushort?)null : (ushort)value);
+                        writer.WriteValue(value == null ? (ushort?)null : (ushort)value);
                         return;
 
                     case PrimitiveTypeCode.Int32:
@@ -1525,7 +1426,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.Int32Nullable:
-                        writer.WriteValue((value == null) ? (int?)null : (int)value);
+                        writer.WriteValue(value == null ? (int?)null : (int)value);
                         return;
 
                     case PrimitiveTypeCode.Byte:
@@ -1533,7 +1434,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.ByteNullable:
-                        writer.WriteValue((value == null) ? (byte?)null : (byte)value);
+                        writer.WriteValue(value == null ? (byte?)null : (byte)value);
                         return;
 
                     case PrimitiveTypeCode.UInt32:
@@ -1541,7 +1442,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.UInt32Nullable:
-                        writer.WriteValue((value == null) ? (uint?)null : (uint)value);
+                        writer.WriteValue(value == null ? (uint?)null : (uint)value);
                         return;
 
                     case PrimitiveTypeCode.Int64:
@@ -1549,7 +1450,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.Int64Nullable:
-                        writer.WriteValue((value == null) ? (long?)null : (long)value);
+                        writer.WriteValue(value == null ? (long?)null : (long)value);
                         return;
 
                     case PrimitiveTypeCode.UInt64:
@@ -1557,7 +1458,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.UInt64Nullable:
-                        writer.WriteValue((value == null) ? (ulong?)null : (ulong)value);
+                        writer.WriteValue(value == null ? (ulong?)null : (ulong)value);
                         return;
 
                     case PrimitiveTypeCode.Single:
@@ -1565,7 +1466,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.SingleNullable:
-                        writer.WriteValue((value == null) ? (float?)null : (float)value);
+                        writer.WriteValue(value == null ? (float?)null : (float)value);
                         return;
 
                     case PrimitiveTypeCode.Double:
@@ -1573,7 +1474,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.DoubleNullable:
-                        writer.WriteValue((value == null) ? (double?)null : (double)value);
+                        writer.WriteValue(value == null ? (double?)null : (double)value);
                         return;
 
                     case PrimitiveTypeCode.DateTime:
@@ -1581,7 +1482,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.DateTimeNullable:
-                        writer.WriteValue((value == null) ? (DateTime?)null : (DateTime)value);
+                        writer.WriteValue(value == null ? (DateTime?)null : (DateTime)value);
                         return;
 
 #if HAVE_DATE_TIME_OFFSET
@@ -1598,7 +1499,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.DecimalNullable:
-                        writer.WriteValue((value == null) ? (decimal?)null : (decimal)value);
+                        writer.WriteValue(value == null ? (decimal?)null : (decimal)value);
                         return;
 
                     case PrimitiveTypeCode.Guid:
@@ -1606,7 +1507,7 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.GuidNullable:
-                        writer.WriteValue((value == null) ? (Guid?)null : (Guid)value);
+                        writer.WriteValue(value == null ? (Guid?)null : (Guid)value);
                         return;
 
                     case PrimitiveTypeCode.TimeSpan:
@@ -1614,17 +1515,17 @@ namespace Newtonsoft.Json
                         return;
 
                     case PrimitiveTypeCode.TimeSpanNullable:
-                        writer.WriteValue((value == null) ? (TimeSpan?)null : (TimeSpan)value);
+                        writer.WriteValue(value == null ? (TimeSpan?)null : (TimeSpan)value);
                         return;
 
 #if HAVE_BIG_INTEGER
                     case PrimitiveTypeCode.BigInteger:
-                        // this will call to WriteValue(object)
+ // this will call to WriteValue(object)
                         writer.WriteValue((BigInteger)value);
                         return;
 
                     case PrimitiveTypeCode.BigIntegerNullable:
-                        // this will call to WriteValue(object)
+ // this will call to WriteValue(object)
                         writer.WriteValue((value == null) ? (BigInteger?)null : (BigInteger)value);
                         return;
 #endif
@@ -1663,7 +1564,6 @@ namespace Newtonsoft.Json
 
                         throw CreateUnsupportedTypeException(writer, value);
                 }
-            }
         }
 
 #if HAVE_ICONVERTIBLE
@@ -1674,21 +1574,25 @@ namespace Newtonsoft.Json
             TypeInformation typeInformation = ConvertUtils.GetTypeInformation(convertible);
 
             // if convertible has an underlying typecode of Object then attempt to convert it to a string
-            typeCode = typeInformation.TypeCode == PrimitiveTypeCode.Object ? PrimitiveTypeCode.String : typeInformation.TypeCode;
-            Type resolvedType = typeInformation.TypeCode == PrimitiveTypeCode.Object ? typeof(string) : typeInformation.Type;
+            typeCode =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             typeInformation.TypeCode == PrimitiveTypeCode.Object ? PrimitiveTypeCode.String : typeInformation.TypeCode;
+            Type resolvedType =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         typeInformation.TypeCode == PrimitiveTypeCode.Object ? typeof(string) : typeInformation.Type;
             value = convertible.ToType(resolvedType, CultureInfo.InvariantCulture);
         }
 #endif
 
         private static JsonWriterException CreateUnsupportedTypeException(JsonWriter writer, object value)
         {
-            return JsonWriterException.Create(writer, "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".FormatWith(CultureInfo.InvariantCulture, value.GetType()), null);
+            return JsonWriterException.Create(writer,
+                "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation."
+                    .FormatWith(CultureInfo.InvariantCulture, value.GetType()), null);
         }
 
         /// <summary>
-        /// Sets the state of the <see cref="JsonWriter"/>.
+        ///     Sets the state of the <see cref="JsonWriter" />.
         /// </summary>
-        /// <param name="token">The <see cref="JsonToken"/> being written.</param>
+        /// <param name="token">The <see cref="JsonToken" /> being written.</param>
         /// <param name="value">The value being written.</param>
         protected void SetWriteState(JsonToken token, object value)
         {
@@ -1705,9 +1609,8 @@ namespace Newtonsoft.Json
                     break;
                 case JsonToken.PropertyName:
                     if (!(value is string s))
-                    {
-                        throw new ArgumentException("A name is required when setting property name state.", nameof(value));
-                    }
+                        throw new ArgumentException("A name is required when setting property name state.",
+                            nameof(value));
 
                     InternalWritePropertyName(s);
                     break;
@@ -1772,12 +1675,8 @@ namespace Newtonsoft.Json
         internal void InternalWriteWhitespace(string ws)
         {
             if (ws != null)
-            {
                 if (!StringUtils.IsWhiteSpace(ws))
-                {
                     throw JsonWriterException.Create(this, "Only white space characters should be used.", null);
-                }
-            }
         }
 
         internal void InternalWriteComment()

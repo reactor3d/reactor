@@ -8,37 +8,29 @@ namespace Newtonsoft.Json.Linq.JsonPath
     {
         public int? Index { get; set; }
 
-        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current, bool errorWhenNoMatch)
+        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current,
+            bool errorWhenNoMatch)
         {
-            foreach (JToken t in current)
-            {
+            foreach (var t in current)
                 if (Index != null)
                 {
-                    JToken? v = GetTokenIndex(t, errorWhenNoMatch, Index.GetValueOrDefault());
+                    var v = GetTokenIndex(t, errorWhenNoMatch, Index.GetValueOrDefault());
 
-                    if (v != null)
-                    {
-                        yield return v;
-                    }
+                    if (v != null) yield return v;
                 }
                 else
                 {
                     if (t is JArray || t is JConstructor)
                     {
-                        foreach (JToken v in t)
-                        {
-                            yield return v;
-                        }
+                        foreach (var v in t) yield return v;
                     }
                     else
                     {
                         if (errorWhenNoMatch)
-                        {
-                            throw new JsonException("Index * not valid on {0}.".FormatWith(CultureInfo.InvariantCulture, t.GetType().Name));
-                        }
+                            throw new JsonException("Index * not valid on {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                t.GetType().Name));
                     }
                 }
-            }
         }
     }
 }

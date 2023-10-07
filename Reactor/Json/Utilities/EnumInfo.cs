@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,12 +22,18 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 namespace Newtonsoft.Json.Utilities
 {
     internal class EnumInfo
     {
+        public readonly bool IsFlags;
+        public readonly string[] Names;
+        public readonly string[] ResolvedNames;
+        public readonly ulong[] Values;
+
         public EnumInfo(bool isFlags, ulong[] values, string[] names, string[] resolvedNames)
         {
             IsFlags = isFlags;
@@ -34,10 +41,5 @@ namespace Newtonsoft.Json.Utilities
             Names = names;
             ResolvedNames = resolvedNames;
         }
-
-        public readonly bool IsFlags;
-        public readonly ulong[] Values;
-        public readonly string[] Names;
-        public readonly string[] ResolvedNames;
     }
 }

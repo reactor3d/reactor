@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -51,25 +53,13 @@ namespace Newtonsoft.Json.Utilities
 
         private void ValidateEncode(byte[] buffer, int index, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
 
-            if (index < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            if (index < 0) throw new ArgumentOutOfRangeException(nameof(index));
 
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-            if (count > (buffer.Length - index))
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            if (count > buffer.Length - index) throw new ArgumentOutOfRangeException(nameof(count));
         }
 
         public void Encode(byte[] buffer, int index, int count)
@@ -78,26 +68,20 @@ namespace Newtonsoft.Json.Utilities
 
             if (_leftOverBytesCount > 0)
             {
-                if(FulfillFromLeftover(buffer, index, ref count))
-                {
-                    return;
-                }
+                if (FulfillFromLeftover(buffer, index, ref count)) return;
 
-                int num2 = Convert.ToBase64CharArray(_leftOverBytes, 0, 3, _charsLine, 0);
+                var num2 = Convert.ToBase64CharArray(_leftOverBytes, 0, 3, _charsLine, 0);
                 WriteChars(_charsLine, 0, num2);
             }
 
             StoreLeftOverBytes(buffer, index, ref count);
 
-            int num4 = index + count;
-            int length = LineSizeInBytes;
+            var num4 = index + count;
+            var length = LineSizeInBytes;
             while (index < num4)
             {
-                if ((index + length) > num4)
-                {
-                    length = num4 - index;
-                }
-                int num6 = Convert.ToBase64CharArray(buffer, index, length, _charsLine, 0);
+                if (index + length > num4) length = num4 - index;
+                var num6 = Convert.ToBase64CharArray(buffer, index, length, _charsLine, 0);
                 WriteChars(_charsLine, 0, num6);
                 index += length;
             }
@@ -105,19 +89,13 @@ namespace Newtonsoft.Json.Utilities
 
         private void StoreLeftOverBytes(byte[] buffer, int index, ref int count)
         {
-            int leftOverBytesCount = count % 3;
+            var leftOverBytesCount = count % 3;
             if (leftOverBytesCount > 0)
             {
                 count -= leftOverBytesCount;
-                if (_leftOverBytes == null)
-                {
-                    _leftOverBytes = new byte[3];
-                }
+                if (_leftOverBytes == null) _leftOverBytes = new byte[3];
 
-                for (int i = 0; i < leftOverBytesCount; i++)
-                {
-                    _leftOverBytes[i] = buffer[index + count + i];
-                }
+                for (var i = 0; i < leftOverBytesCount; i++) _leftOverBytes[i] = buffer[index + count + i];
             }
 
             _leftOverBytesCount = leftOverBytesCount;
@@ -125,7 +103,7 @@ namespace Newtonsoft.Json.Utilities
 
         private bool FulfillFromLeftover(byte[] buffer, int index, ref int count)
         {
-            int leftOverBytesCount = _leftOverBytesCount;
+            var leftOverBytesCount = _leftOverBytesCount;
             while (leftOverBytesCount < 3 && count > 0)
             {
                 _leftOverBytes![leftOverBytesCount++] = buffer[index++];
@@ -145,7 +123,7 @@ namespace Newtonsoft.Json.Utilities
         {
             if (_leftOverBytesCount > 0)
             {
-                int count = Convert.ToBase64CharArray(_leftOverBytes, 0, _leftOverBytesCount, _charsLine, 0);
+                var count = Convert.ToBase64CharArray(_leftOverBytes, 0, _leftOverBytesCount, _charsLine, 0);
                 WriteChars(_charsLine, 0, count);
                 _leftOverBytesCount = 0;
             }
@@ -157,7 +135,6 @@ namespace Newtonsoft.Json.Utilities
         }
 
 #if HAVE_ASYNC
-
         public async Task EncodeAsync(byte[] buffer, int index, int count, CancellationToken cancellationToken)
         {
             ValidateEncode(buffer, index, count);
@@ -212,6 +189,5 @@ namespace Newtonsoft.Json.Utilities
         }
 
 #endif
-
     }
 }

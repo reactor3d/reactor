@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -93,31 +95,29 @@ namespace Newtonsoft.Json.Utilities
             _text = text;
             _end = startIndex + length;
 
-            if (ParseDate(startIndex) && ParseChar(Lzyyyy_MM_dd + startIndex, 'T') && ParseTimeAndZoneAndWhitespace(Lzyyyy_MM_ddT + startIndex))
-            {
-                return true;
-            }
+            if (ParseDate(startIndex) && ParseChar(Lzyyyy_MM_dd + startIndex, 'T') &&
+                ParseTimeAndZoneAndWhitespace(Lzyyyy_MM_ddT + startIndex)) return true;
 
             return false;
         }
 
         private bool ParseDate(int start)
         {
-            return (Parse4Digit(start, out Year)
-                    && 1 <= Year
-                    && ParseChar(start + Lzyyyy, '-')
-                    && Parse2Digit(start + Lzyyyy_, out Month)
-                    && 1 <= Month
-                    && Month <= 12
-                    && ParseChar(start + Lzyyyy_MM, '-')
-                    && Parse2Digit(start + Lzyyyy_MM_, out Day)
-                    && 1 <= Day
-                    && Day <= DateTime.DaysInMonth(Year, Month));
+            return Parse4Digit(start, out Year)
+                   && 1 <= Year
+                   && ParseChar(start + Lzyyyy, '-')
+                   && Parse2Digit(start + Lzyyyy_, out Month)
+                   && 1 <= Month
+                   && Month <= 12
+                   && ParseChar(start + Lzyyyy_MM, '-')
+                   && Parse2Digit(start + Lzyyyy_MM_, out Day)
+                   && 1 <= Day
+                   && Day <= DateTime.DaysInMonth(Year, Month);
         }
 
         private bool ParseTimeAndZoneAndWhitespace(int start)
         {
-            return (ParseTime(ref start) && ParseZone(start));
+            return ParseTime(ref start) && ParseZone(start);
         }
 
         private bool ParseTime(ref int start)
@@ -131,44 +131,34 @@ namespace Newtonsoft.Json.Utilities
                   && Parse2Digit(start + LzHH_mm_, out Second)
                   && Second < 60
                   && (Hour != 24 || (Minute == 0 && Second == 0)))) // hour can be 24 if minute/second is zero)
-            {
                 return false;
-            }
 
             start += LzHH_mm_ss;
             if (ParseChar(start, '.'))
             {
                 Fraction = 0;
-                int numberOfDigits = 0;
+                var numberOfDigits = 0;
 
                 while (++start < _end && numberOfDigits < MaxFractionDigits)
                 {
-                    int digit = _text[start] - '0';
-                    if (digit < 0 || digit > 9)
-                    {
-                        break;
-                    }
+                    var digit = _text[start] - '0';
+                    if (digit < 0 || digit > 9) break;
 
-                    Fraction = (Fraction * 10) + digit;
+                    Fraction = Fraction * 10 + digit;
 
                     numberOfDigits++;
                 }
 
                 if (numberOfDigits < MaxFractionDigits)
                 {
-                    if (numberOfDigits == 0)
-                    {
-                        return false;
-                    }
+                    if (numberOfDigits == 0) return false;
 
                     Fraction *= Power10[MaxFractionDigits - numberOfDigits];
                 }
 
-                if (Hour == 24 && Fraction != 0)
-                {
-                    return false;
-                }
+                if (Hour == 24 && Fraction != 0) return false;
             }
+
             return true;
         }
 
@@ -176,7 +166,7 @@ namespace Newtonsoft.Json.Utilities
         {
             if (start < _end)
             {
-                char ch = _text[start];
+                var ch = _text[start];
                 if (ch == 'Z' || ch == 'z')
                 {
                     Zone = ParserTimeZone.Utc;
@@ -187,7 +177,6 @@ namespace Newtonsoft.Json.Utilities
                     if (start + 2 < _end
                         && Parse2Digit(start + Lz_, out ZoneHour)
                         && ZoneHour <= 99)
-                    {
                         switch (ch)
                         {
                             case '-':
@@ -200,7 +189,6 @@ namespace Newtonsoft.Json.Utilities
                                 start += Lz_zz;
                                 break;
                         }
-                    }
 
                     if (start < _end)
                     {
@@ -211,43 +199,40 @@ namespace Newtonsoft.Json.Utilities
                             if (start + 1 < _end
                                 && Parse2Digit(start, out ZoneMinute)
                                 && ZoneMinute <= 99)
-                            {
                                 start += 2;
-                            }
                         }
                         else
                         {
                             if (start + 1 < _end
                                 && Parse2Digit(start, out ZoneMinute)
                                 && ZoneMinute <= 99)
-                            {
                                 start += 2;
-                            }
                         }
                     }
                 }
             }
 
-            return (start == _end);
+            return start == _end;
         }
 
         private bool Parse4Digit(int start, out int num)
         {
             if (start + 3 < _end)
             {
-                int digit1 = _text[start] - '0';
-                int digit2 = _text[start + 1] - '0';
-                int digit3 = _text[start + 2] - '0';
-                int digit4 = _text[start + 3] - '0';
+                var digit1 = _text[start] - '0';
+                var digit2 = _text[start + 1] - '0';
+                var digit3 = _text[start + 2] - '0';
+                var digit4 = _text[start + 3] - '0';
                 if (0 <= digit1 && digit1 < 10
-                    && 0 <= digit2 && digit2 < 10
-                    && 0 <= digit3 && digit3 < 10
-                    && 0 <= digit4 && digit4 < 10)
+                                && 0 <= digit2 && digit2 < 10
+                                && 0 <= digit3 && digit3 < 10
+                                && 0 <= digit4 && digit4 < 10)
                 {
-                    num = (((((digit1 * 10) + digit2) * 10) + digit3) * 10) + digit4;
+                    num = ((digit1 * 10 + digit2) * 10 + digit3) * 10 + digit4;
                     return true;
                 }
             }
+
             num = 0;
             return false;
         }
@@ -256,22 +241,23 @@ namespace Newtonsoft.Json.Utilities
         {
             if (start + 1 < _end)
             {
-                int digit1 = _text[start] - '0';
-                int digit2 = _text[start + 1] - '0';
+                var digit1 = _text[start] - '0';
+                var digit2 = _text[start + 1] - '0';
                 if (0 <= digit1 && digit1 < 10
-                    && 0 <= digit2 && digit2 < 10)
+                                && 0 <= digit2 && digit2 < 10)
                 {
-                    num = (digit1 * 10) + digit2;
+                    num = digit1 * 10 + digit2;
                     return true;
                 }
             }
+
             num = 0;
             return false;
         }
 
         private bool ParseChar(int start, char ch)
         {
-            return (start < _end && _text[start] == ch);
+            return start < _end && _text[start] == ch;
         }
     }
 }

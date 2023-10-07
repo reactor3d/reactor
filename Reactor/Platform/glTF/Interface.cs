@@ -2,32 +2,32 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using System.Text;
-using Reactor.Platform.glTF.Schema;
 using Newtonsoft.Json;
+using Reactor.Platform.glTF.Schema;
+using Buffer = Reactor.Platform.glTF.Schema.Buffer;
 
 namespace Reactor.Platform.glTF
 {
     public static class Interface
     {
-        const uint GLTFHEADER = 0x46546C67;
-        const uint GLTFVERSION2 = 2;
-        const uint CHUNKJSON = 0x4E4F534A;
-        const uint CHUNKBIN = 0x004E4942;
+        private const uint GLTFHEADER = 0x46546C67;
+        private const uint GLTFVERSION2 = 2;
+        private const uint CHUNKJSON = 0x4E4F534A;
+        private const uint CHUNKBIN = 0x004E4942;
 
-        const string EMBEDDEDOCTETSTREAM = "data:application/octet-stream;base64,";
-        const string EMBEDDEDGLTFBUFFER = "data:application/gltf-buffer;base64,";
+        private const string EMBEDDEDOCTETSTREAM = "data:application/octet-stream;base64,";
+        private const string EMBEDDEDGLTFBUFFER = "data:application/gltf-buffer;base64,";
 
-        const string EMBEDDEDPNG = "data:image/png;base64,";
-        const string EMBEDDEDJPEG = "data:image/jpeg;base64,";
-
-        private static readonly Encoding DefaultStreamWriterEncoding = new UTF8Encoding(
-            encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+        private const string EMBEDDEDPNG = "data:image/png;base64,";
+        private const string EMBEDDEDJPEG = "data:image/jpeg;base64,";
         private const int DefaultStreamWriterBufferSize = 1024;
 
+        private static readonly Encoding DefaultStreamWriterEncoding = new UTF8Encoding(
+            false, true);
+
         /// <summary>
-        /// Loads a <code>Schema.Gltf</code> model from a file
+        ///     Loads a <code>Schema.Gltf</code> model from a file
         /// </summary>
         /// <param name="filePath">Source file path to a gltf/glb model</param>
         /// <returns><code>Schema.Gltf</code> model</returns>
@@ -42,13 +42,13 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Reads a <code>Schema.Gltf</code> model from a stream
+        ///     Reads a <code>Schema.Gltf</code> model from a stream
         /// </summary>
         /// <param name="stream">Readable stream to a gltf/glb model</param>
         /// <returns><code>Schema.Gltf</code> model</returns>
         public static Gltf LoadModel(Stream stream)
         {
-            bool binaryFile = false;
+            var binaryFile = false;
 
             uint magic = 0;
             magic |= (uint)stream.ReadByte();
@@ -62,20 +62,16 @@ namespace Reactor.Platform.glTF
 
             string fileData;
             if (binaryFile)
-            {
                 fileData = ParseBinary(stream);
-            }
             else
-            {
                 fileData = ParseText(stream);
-            }
 
             return JsonConvert.DeserializeObject<Gltf>(fileData);
         }
 
         private static string ParseText(Stream stream)
         {
-            using (StreamReader streamReader = new StreamReader(stream))
+            using (var streamReader = new StreamReader(stream))
             {
                 return streamReader.ReadToEnd();
             }
@@ -83,7 +79,7 @@ namespace Reactor.Platform.glTF
 
         private static string ParseBinary(Stream stream)
         {
-            using (BinaryReader binaryReader = new BinaryReader(stream))
+            using (var binaryReader = new BinaryReader(stream))
             {
                 ReadBinaryHeader(binaryReader);
 
@@ -97,13 +93,11 @@ namespace Reactor.Platform.glTF
         {
             while (true) // keep reading until EndOfFile exception
             {
-                uint chunkLength = binaryReader.ReadUInt32();
+                var chunkLength = binaryReader.ReadUInt32();
                 if ((chunkLength & 3) != 0)
-                {
                     throw new InvalidDataException($"The chunk must be padded to 4 bytes: {chunkLength}");
-                }
 
-                uint chunkFormat = binaryReader.ReadUInt32();
+                var chunkFormat = binaryReader.ReadUInt32();
 
                 var data = binaryReader.ReadBytes((int)chunkLength);
 
@@ -112,11 +106,11 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Loads the binary buffer chunk of a glb file
+        ///     Loads the binary buffer chunk of a glb file
         /// </summary>
         /// <param name="filePath">Source file path to a glb model</param>
         /// <returns>Byte array of the buffer</returns>
-        public static Byte[] LoadBinaryBuffer(string filePath)
+        public static byte[] LoadBinaryBuffer(string filePath)
         {
             using (Stream stream = File.OpenRead(filePath))
             {
@@ -125,13 +119,13 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Reads the binary buffer chunk of a glb stream
+        ///     Reads the binary buffer chunk of a glb stream
         /// </summary>
         /// <param name="stream">Readable stream to a glb model</param>
         /// <returns>Byte array of the buffer</returns>
-        public static Byte[] LoadBinaryBuffer(Stream stream)
+        public static byte[] LoadBinaryBuffer(Stream stream)
         {
-            using (BinaryReader binaryReader = new BinaryReader(stream))
+            using (var binaryReader = new BinaryReader(stream))
             {
                 ReadBinaryHeader(binaryReader);
 
@@ -141,55 +135,48 @@ namespace Reactor.Platform.glTF
 
         private static void ReadBinaryHeader(BinaryReader binaryReader)
         {
-            uint magic = binaryReader.ReadUInt32();
-            if (magic != GLTFHEADER)
-            {
-                throw new InvalidDataException($"Unexpected magic number: {magic}");
-            }
+            var magic = binaryReader.ReadUInt32();
+            if (magic != GLTFHEADER) throw new InvalidDataException($"Unexpected magic number: {magic}");
 
-            uint version = binaryReader.ReadUInt32();
-            if (version != GLTFVERSION2)
-            {
-                throw new InvalidDataException($"Unknown version number: {version}");
-            }
+            var version = binaryReader.ReadUInt32();
+            if (version != GLTFVERSION2) throw new InvalidDataException($"Unknown version number: {version}");
 
-            uint length = binaryReader.ReadUInt32();
-            long fileLength = binaryReader.BaseStream.Length;
+            var length = binaryReader.ReadUInt32();
+            var fileLength = binaryReader.BaseStream.Length;
             if (length != fileLength)
-            {
-                throw new InvalidDataException($"The specified length of the file ({length}) is not equal to the actual length of the file ({fileLength}).");
-            }
+                throw new InvalidDataException(
+                    $"The specified length of the file ({length}) is not equal to the actual length of the file ({fileLength}).");
         }
 
         /// <summary>
-        /// Creates an External File Solver for a given gltf file path, so we can resolve references to associated files
+        ///     Creates an External File Solver for a given gltf file path, so we can resolve references to associated files
         /// </summary>
         /// <param name="gltfFilePath">ource file path to a gltf/glb model</param>
         /// <returns>Lambda funcion to resolve dependencies</returns>
-        private static Func<string, Byte[]> GetExternalFileSolver(string gltfFilePath)
+        private static Func<string, Stream> GetExternalFileSolver(string gltfFilePath)
         {
             return uri =>
             {
-                if (string.IsNullOrEmpty(uri)) return LoadBinaryBuffer(gltfFilePath);
+                if (string.IsNullOrEmpty(uri)) return new MemoryStream(LoadBinaryBuffer(gltfFilePath));
                 var bufferFilePath = Path.Combine(Path.GetDirectoryName(gltfFilePath), Uri.UnescapeDataString(uri));
-                return File.ReadAllBytes(bufferFilePath);
+                return new MemoryStream(File.ReadAllBytes(bufferFilePath));
             };
         }
 
         /// <summary>
-        /// Gets a binary buffer referenced by a specific <code>Schema.Buffer</code>
+        ///     Gets a binary buffer referenced by a specific <code>Schema.Buffer</code>
         /// </summary>
         /// <param name="model">The <code>Schema.Gltf</code> model containing the <code>Schema.Buffer</code></param>
         /// <param name="bufferIndex">The index of the buffer</param>
         /// <param name="gltfFilePath">Source file path used to load the model</param>
         /// <returns>Byte array of the buffer</returns>
-        public static Byte[] LoadBinaryBuffer(this Gltf model, int bufferIndex, string gltfFilePath)
+        public static Stream LoadBinaryBuffer(this Gltf model, int bufferIndex, string gltfFilePath)
         {
             return LoadBinaryBuffer(model, bufferIndex, GetExternalFileSolver(gltfFilePath));
         }
 
         /// <summary>
-        /// Opens a stream to the image referenced by a specific <code>Schema.Image</code>
+        ///     Opens a stream to the image referenced by a specific <code>Schema.Image</code>
         /// </summary>
         /// <param name="model">The <code>Schema.Gltf</code> model containing the <code>Schema.Buffer</code></param>
         /// <param name="imageIndex">The index of the image</param>
@@ -201,24 +188,23 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Gets a binary buffer referenced by a specific <code>Schema.Buffer</code>
+        ///     Gets a binary buffer referenced by a specific <code>Schema.Buffer</code>
         /// </summary>
         /// <param name="model">The <code>Schema.Gltf</code> model containing the <code>Schema.Buffer</code></param>
         /// <param name="bufferIndex">The index of the buffer</param>
         /// <param name="externalReferenceSolver">An user provided lambda function to resolve external assets</param>
         /// <returns>Byte array of the buffer</returns>
         /// <remarks>
-        /// Binary buffers can be stored in three different ways:
-        /// - As stand alone files.
-        /// - As a binary chunk within a glb file.
-        /// - Encoded to Base64 within the JSON.
-        ///
-        /// The external reference solver funcion is called when the buffer is stored in an external file,
-        /// or when the buffer is in the glb binary chunk, in which case, the Argument of the function will be Null.
-        ///
-        /// The Lambda function must return the byte array of the requested file or buffer.
+        ///     Binary buffers can be stored in three different ways:
+        ///     - As stand alone files.
+        ///     - As a binary chunk within a glb file.
+        ///     - Encoded to Base64 within the JSON.
+        ///     The external reference solver funcion is called when the buffer is stored in an external file,
+        ///     or when the buffer is in the glb binary chunk, in which case, the Argument of the function will be Null.
+        ///     The Lambda function must return the byte array of the requested file or buffer.
         /// </remarks>
-        public static Byte[] LoadBinaryBuffer(this Gltf model, int bufferIndex, Func<string, Byte[]> externalReferenceSolver)
+        public static Stream LoadBinaryBuffer(this Gltf model, int bufferIndex,
+            Func<string, Stream> externalReferenceSolver)
         {
             var buffer = model.Buffers[bufferIndex];
 
@@ -226,67 +212,66 @@ namespace Reactor.Platform.glTF
 
             // As per https://github.com/KhronosGroup/glTF/issues/1026
             // Due to buffer padding, buffer length can be equal or larger than expected length by only 3 bytes
-            if (bufferData.Length < buffer.ByteLength || (bufferData.Length - buffer.ByteLength) > 3)
-            {
-                throw new InvalidDataException($"The buffer length is {bufferData.Length}, expected {buffer.ByteLength}");
-            }
+            if (bufferData.Length < buffer.ByteLength || bufferData.Length - buffer.ByteLength > 3)
+                throw new InvalidDataException(
+                    $"The buffer length is {bufferData.Length}, expected {buffer.ByteLength}");
 
             return bufferData;
         }
 
-        private static Byte[] TryLoadBase64BinaryBufferUnchecked(Schema.Buffer buffer, string prefix)
+        private static Stream TryLoadBase64BinaryBufferUnchecked(Buffer buffer, string prefix)
         {
             if (buffer.Uri == null || !buffer.Uri.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 return null;
 
             var content = buffer.Uri.Substring(prefix.Length);
-            return Convert.FromBase64String(content);
+            return new MemoryStream(Convert.FromBase64String(content));
         }
 
-        private static Byte[] LoadBinaryBufferUnchecked(Schema.Buffer buffer, Func<string, Byte[]> externalReferenceSolver)
+        private static Stream LoadBinaryBufferUnchecked(Buffer buffer, Func<string, Stream> externalReferenceSolver)
         {
             return TryLoadBase64BinaryBufferUnchecked(buffer, EMBEDDEDGLTFBUFFER)
-                ?? TryLoadBase64BinaryBufferUnchecked(buffer, EMBEDDEDOCTETSTREAM)
-                ?? externalReferenceSolver(buffer?.Uri);
+                   ?? TryLoadBase64BinaryBufferUnchecked(buffer, EMBEDDEDOCTETSTREAM)
+                   ?? externalReferenceSolver(buffer?.Uri);
         }
 
         /// <summary>
-        /// Opens a stream to the image referenced by a specific <code>Schema.Image</code>
+        ///     Opens a stream to the image referenced by a specific <code>Schema.Image</code>
         /// </summary>
         /// <param name="model">The <code>Schema.Gltf</code> model containing the <code>Schema.Image</code></param>
         /// <param name="imageIndex">The index of the image</param>
         /// <param name="externalReferenceSolver">An user provided lambda function to resolve external assets</param>
         /// <returns>An open stream to the image</returns>
         /// <remarks>
-        /// Images can be stored in three different ways:
-        /// - As stand alone files.
-        /// - As a part of binary buffer accessed via bufferView.
-        /// - Encoded to Base64 within the JSON.
-        ///
-        /// The external reference solver funcion is called when the image is stored in an external file,
-        /// or when the image is in the glb binary chunk, in which case, the Argument of the function will be Null.
-        ///
-        /// The Lambda function must return the byte array of the requested file or buffer.
+        ///     Images can be stored in three different ways:
+        ///     - As stand alone files.
+        ///     - As a part of binary buffer accessed via bufferView.
+        ///     - Encoded to Base64 within the JSON.
+        ///     The external reference solver funcion is called when the image is stored in an external file,
+        ///     or when the image is in the glb binary chunk, in which case, the Argument of the function will be Null.
+        ///     The Lambda function must return the byte array of the requested file or buffer.
         /// </remarks>
-        public static Stream OpenImageFile(this Gltf model, int imageIndex, Func<string, Byte[]> externalReferenceSolver)
+        public static Stream OpenImageFile(this Gltf model, int imageIndex,
+            Func<string, Stream> externalReferenceSolver)
         {
             var image = model.Images[imageIndex];
 
             if (image.BufferView.HasValue)
             {
                 var bufferView = model.BufferViews[image.BufferView.Value];
-
-                var bufferBytes = model.LoadBinaryBuffer(bufferView.Buffer, externalReferenceSolver);
-
-                return new MemoryStream(bufferBytes, bufferView.ByteOffset, bufferView.ByteLength);
+                var bufferStream = model.LoadBinaryBuffer(bufferView.Buffer, externalReferenceSolver);
+                var buffer = new BinaryReader(bufferStream);
+                
+                return new MemoryStream(buffer.ReadBytes((int)bufferStream.Length), bufferView.ByteOffset, bufferView.ByteLength);
             }
 
             if (image.Uri.StartsWith("data:image/")) return OpenEmbeddedImage(image);
 
             var imageData = externalReferenceSolver(image.Uri);
 
-            return new MemoryStream(imageData);
+            return imageData;
         }
+        
 
         private static Stream OpenEmbeddedImage(Image image)
         {
@@ -300,7 +285,7 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Parses a JSON formatted text content
+        ///     Parses a JSON formatted text content
         /// </summary>
         /// <param name="fileData">JSON text content</param>
         /// <returns><code>Schema.Gltf</code> model</returns>
@@ -310,7 +295,7 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Serializes a <code>Schema.Gltf</code> model to text
+        ///     Serializes a <code>Schema.Gltf</code> model to text
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <returns>JSON formatted text</returns>
@@ -320,7 +305,7 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Saves a <code>Schema.Gltf</code> model to a gltf file
+        ///     Saves a <code>Schema.Gltf</code> model to a gltf file
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="path">Destination file path</param>
@@ -333,22 +318,22 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Writes a <code>Schema.Gltf</code> model to a writable stream
+        ///     Writes a <code>Schema.Gltf</code> model to a writable stream
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="stream">Writable stream</param>
         public static void SaveModel(this Gltf model, Stream stream)
         {
-            string fileData = SerializeModel(model);
+            var fileData = SerializeModel(model);
 
-            using (var ts = new StreamWriter(stream, DefaultStreamWriterEncoding, DefaultStreamWriterBufferSize, leaveOpen: true))
+            using (var ts = new StreamWriter(stream, DefaultStreamWriterEncoding, DefaultStreamWriterBufferSize, true))
             {
                 ts.Write(fileData);
             }
         }
 
         /// <summary>
-        /// Saves a <code>Schema.Gltf</code> model to a glb file
+        ///     Saves a <code>Schema.Gltf</code> model to a glb file
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="buffer">Binary buffer to embed in the file, or null</param>
@@ -362,7 +347,7 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Writes a <code>Schema.Gltf</code> model to a writable stream
+        ///     Writes a <code>Schema.Gltf</code> model to a writable stream
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="buffer">Binary buffer to embed in the file, or null</param>
@@ -376,7 +361,7 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Writes a <code>Schema.Gltf</code> model to a writable binary writer
+        ///     Writes a <code>Schema.Gltf</code> model to a writable binary writer
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="buffer">Binary buffer to embed in the file, or null</param>
@@ -396,8 +381,10 @@ namespace Reactor.Platform.glTF
 
                 var b = model.Buffers[0];
 
-                if (b.ByteLength > buffer.Length) throw new ArgumentException($"{nameof(buffer)} byte size is smaller than declared");
-                if ((buffer.Length - b.ByteLength) > 3) throw new ArgumentException($"{nameof(buffer)} byte size is larger than declared");
+                if (b.ByteLength > buffer.Length)
+                    throw new ArgumentException($"{nameof(buffer)} byte size is smaller than declared");
+                if (buffer.Length - b.ByteLength > 3)
+                    throw new ArgumentException($"{nameof(buffer)} byte size is larger than declared");
             }
 
             if (brefcount == 0 && buffer != null)
@@ -406,12 +393,14 @@ namespace Reactor.Platform.glTF
 
             var jsonText = JsonConvert.SerializeObject(model, Formatting.None);
             var jsonChunk = Encoding.UTF8.GetBytes(jsonText);
-            var jsonPadding = jsonChunk.Length & 3; if (jsonPadding != 0) jsonPadding = 4 - jsonPadding;
+            var jsonPadding = jsonChunk.Length & 3;
+            if (jsonPadding != 0) jsonPadding = 4 - jsonPadding;
 
             if (buffer != null && buffer.Length == 0) buffer = null;
-            var binPadding = buffer == null ? 0 : buffer.Length & 3; if (binPadding != 0) binPadding = 4 - binPadding;
+            var binPadding = buffer == null ? 0 : buffer.Length & 3;
+            if (binPadding != 0) binPadding = 4 - binPadding;
 
-            int fullLength = 4 + 4 + 4;
+            var fullLength = 4 + 4 + 4;
 
             fullLength += 8 + jsonChunk.Length + jsonPadding;
             if (buffer != null) fullLength += 8 + buffer.Length + binPadding;
@@ -423,26 +412,30 @@ namespace Reactor.Platform.glTF
             binaryWriter.Write(jsonChunk.Length + jsonPadding);
             binaryWriter.Write(CHUNKJSON);
             binaryWriter.Write(jsonChunk);
-            for (int i = 0; i < jsonPadding; ++i) binaryWriter.Write((Byte)0x20);
+            for (var i = 0; i < jsonPadding; ++i) binaryWriter.Write((byte)0x20);
 
             if (buffer != null)
             {
                 binaryWriter.Write(buffer.Length + binPadding);
                 binaryWriter.Write(CHUNKBIN);
                 binaryWriter.Write(buffer);
-                for (int i = 0; i < binPadding; ++i) binaryWriter.Write((Byte)0);
+                for (var i = 0; i < binPadding; ++i) binaryWriter.Write((byte)0);
             }
         }
 
 
         /// <summary>
-        /// Writes a <code>Schema.Gltf</code> model to a writable binary writer and pack all data into the model
+        ///     Writes a <code>Schema.Gltf</code> model to a writable binary writer and pack all data into the model
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="outputFile">GLB output file path</param>
         /// <param name="gltfFilePath">Source file path used to load the model</param>
-        /// <param name="glbBinChunck">optional GLB-stored Buffer (BIN data file). If null, then the first buffer Uri must point to a BIN file.</param>
-        public static void SaveBinaryModelPacked(this Gltf model, string outputFile, string gltfFilePath, byte[] glbBinChunck = null)
+        /// <param name="glbBinChunck">
+        ///     optional GLB-stored Buffer (BIN data file). If null, then the first buffer Uri must point to
+        ///     a BIN file.
+        /// </param>
+        public static void SaveBinaryModelPacked(this Gltf model, string outputFile, string gltfFilePath,
+            Stream glbBinChunck = null)
         {
             using (Stream stream = File.Create(outputFile))
             using (var wb = new BinaryWriter(stream))
@@ -452,54 +445,59 @@ namespace Reactor.Platform.glTF
         }
 
         /// <summary>
-        /// Writes a <code>Schema.Gltf</code> model to a writable binary writer and pack all data into the model
+        ///     Writes a <code>Schema.Gltf</code> model to a writable binary writer and pack all data into the model
         /// </summary>
         /// <param name="model"><code>Schema.Gltf</code> model</param>
         /// <param name="binaryWriter">Binary Writer</param>
         /// <param name="gltfFilePath">Source file path used to load the model</param>
-        /// <param name="glbBinChunck">optional GLB-stored Buffer (BIN data file). If null, then the first buffer Uri must point to a BIN file.</param>
-        public static void SaveBinaryModelPacked(this Gltf model, BinaryWriter binaryWriter, string gltfFilePath, byte[] glbBinChunck = null)
+        /// <param name="glbBinChunck">
+        ///     optional GLB-stored Buffer (BIN data file). If null, then the first buffer Uri must point to
+        ///     a BIN file.
+        /// </param>
+        public static void SaveBinaryModelPacked(this Gltf model, BinaryWriter binaryWriter, string gltfFilePath,
+            Stream glbBinChunck = null)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
-            byte[] binBufferData = null;
+            Stream binBufferData = null;
 
             using (var memoryStream = new MemoryStream())
             {
                 var bufferViews = new List<BufferView>();
-                var bufferData = new Dictionary<int, byte[]>();
+                var bufferData = new Dictionary<int, Stream>();
 
                 if (model.BufferViews != null)
-                {
                     foreach (var bufferView in model.BufferViews)
                     {
                         memoryStream.Align(4);
 
                         var byteOffset = memoryStream.Position;
 
-                        byte[] data;
+                        Stream data;
                         if (!bufferData.TryGetValue(bufferView.Buffer, out data))
                         {
                             // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-stored-buffer
                             /// "glTF Buffer referring to GLB-stored BIN chunk, must have buffer.uri
                             /// property undefined, and it must be the first element of buffers array"
                             data = bufferView.Buffer == 0 && glbBinChunck != null
-                                        ? glbBinChunck
-                                        : model.LoadBinaryBuffer(bufferView.Buffer, gltfFilePath);
+                                ? glbBinChunck
+                                : model.LoadBinaryBuffer(bufferView.Buffer, gltfFilePath);
 
                             bufferData.Add(bufferView.Buffer, data);
                         }
 
-                        memoryStream.Write(data, bufferView.ByteOffset, bufferView.ByteLength);
+                        using (var reader = new BinaryReader(data))
+                        {
+                            memoryStream.Write(reader.ReadBytes((int)data.Length), bufferView.ByteOffset, bufferView.ByteLength);
+                        }
+                        
 
                         bufferView.Buffer = 0;
                         bufferView.ByteOffset = (int)byteOffset;
                         bufferViews.Add(bufferView);
                     }
-                }
 
                 if (model.Images != null)
-                {
                     for (var index = 0; index < model.Images.Length; index++)
                     {
                         var byteOffset = memoryStream.Position;
@@ -516,10 +514,9 @@ namespace Reactor.Platform.glTF
                         {
                             Buffer = 0,
                             ByteOffset = (int)byteOffset,
-                            ByteLength = (int)data.Length,
+                            ByteLength = (int)data.Length
                         });
                     }
-                }
 
                 if (bufferViews.Any())
                 {
@@ -527,22 +524,25 @@ namespace Reactor.Platform.glTF
 
                     model.Buffers = new[]
                     {
-                        new Reactor.Platform.glTF.Schema.Buffer
+                        new Buffer
                         {
                             ByteLength = (int)memoryStream.Length
                         }
                     };
 
-                    binBufferData = memoryStream.ToArray();
+                    binBufferData = memoryStream;
                 }
             }
 
-            Interface.SaveBinaryModel(model, binBufferData, binaryWriter);
-
+            using (var reader = new BinaryReader(binBufferData))
+            {
+                model.SaveBinaryModel(reader.ReadBytes((int)binBufferData.Length), binaryWriter);
+            }
+            
         }
 
         /// <summary>
-        /// Converts self contained GLB to glTF file and associated textures and data
+        ///     Converts self contained GLB to glTF file and associated textures and data
         /// </summary>
         /// <param name="inputFilePath">glTF binary file (.glb) to unpack</param>
         /// <param name="outputDirectoryPath">Directory where the files will be extracted</param>
@@ -553,12 +553,12 @@ namespace Reactor.Platform.glTF
             if (!Directory.Exists(outputDirectoryPath))
                 throw new ArgumentException("Ouput directory does not exists");
 
-            string inputFileName = Path.GetFileNameWithoutExtension(inputFilePath);
-            string inputDirectoryPath = Path.GetDirectoryName(inputFilePath);
+            var inputFileName = Path.GetFileNameWithoutExtension(inputFilePath);
+            var inputDirectoryPath = Path.GetDirectoryName(inputFilePath);
 
-            var model = Interface.LoadModel(inputFilePath);
-            Schema.Buffer binBuffer = null;
-            byte[] binBufferData = null;
+            var model = LoadModel(inputFilePath);
+            Buffer binBuffer = null;
+            Stream binBufferData = null;
             if (model.Buffers != null && string.IsNullOrEmpty(model.Buffers[0].Uri))
             {
                 binBuffer = model.Buffers[0];
@@ -568,7 +568,6 @@ namespace Reactor.Platform.glTF
             var imageBufferViewIndices = new List<int>();
 
             if (model.Images != null)
-            {
                 for (var index = 0; index < model.Images.Length; index++)
                 {
                     var image = model.Images[index];
@@ -601,7 +600,11 @@ namespace Reactor.Platform.glTF
 
                             using (var fileStream = File.Create(Path.Combine(outputDirectoryPath, fileName)))
                             {
-                                fileStream.Write(binBufferData, bufferView.ByteOffset, bufferView.ByteLength);
+                                using (var reader = new BinaryReader(binBufferData))
+                                {
+                                    fileStream.Write(reader.ReadBytes((int)binBufferData.Length), bufferView.ByteOffset, bufferView.ByteLength);
+                                }
+                                
                             }
 
                             image.BufferView = null;
@@ -610,7 +613,6 @@ namespace Reactor.Platform.glTF
                         }
                     }
                 }
-            }
 
             if (model.BufferViews != null)
             {
@@ -623,7 +625,6 @@ namespace Reactor.Platform.glTF
                 using (var fileStream = File.Create(binFilePath))
                 {
                     for (var index = 0; index < model.BufferViews.Length; index++)
-                    {
                         if (!imageBufferViewIndices.Any(imageIndex => imageIndex == index))
                         {
                             var bufferView = model.BufferViews[index];
@@ -631,19 +632,19 @@ namespace Reactor.Platform.glTF
                             {
                                 fileStream.Align(4);
                                 var fileStreamPosition = fileStream.Position;
-                                fileStream.Write(binBufferData, bufferView.ByteOffset, bufferView.ByteLength);
+                                using (var reader = new BinaryReader(binBufferData))
+                                {
+                                    fileStream.Write(reader.ReadBytes((int)binBufferData.Length), bufferView.ByteOffset, bufferView.ByteLength);
+                                }
+                                
                                 bufferView.ByteOffset = (int)fileStreamPosition;
                             }
 
                             var newIndex = bufferViews.Count;
-                            if (index != newIndex)
-                            {
-                                indexMap.Add(index, newIndex);
-                            }
+                            if (index != newIndex) indexMap.Add(index, newIndex);
 
                             bufferViews.Add(bufferView);
                         }
-                    }
 
                     binByteLength = (int)fileStream.Length;
                 }
@@ -656,10 +657,7 @@ namespace Reactor.Platform.glTF
                     if (binBuffer != null)
                     {
                         model.Buffers = model.Buffers.Skip(1).ToArray();
-                        foreach (var bufferView in model.BufferViews)
-                        {
-                            bufferView.Buffer--;
-                        }
+                        foreach (var bufferView in model.BufferViews) bufferView.Buffer--;
                     }
                 }
                 else
@@ -669,22 +667,13 @@ namespace Reactor.Platform.glTF
                 }
 
                 if (model.Accessors != null)
-                {
                     foreach (var accessor in model.Accessors)
-                    {
                         if (accessor.BufferView.HasValue)
-                        {
-                            if (indexMap.TryGetValue(accessor.BufferView.Value, out int newIndex))
-                            {
+                            if (indexMap.TryGetValue(accessor.BufferView.Value, out var newIndex))
                                 accessor.BufferView = newIndex;
-                            }
-                        }
-                    }
-                }
             }
 
             if (model.Buffers != null)
-            {
                 for (var index = 1; index < model.Buffers.Length; index++)
                 {
                     var buffer = model.Buffers[index];
@@ -702,13 +691,12 @@ namespace Reactor.Platform.glTF
                         buffer.Uri = fileName;
                     }
                 }
-            }
 
-            Interface.SaveModel(model, Path.Combine(outputDirectoryPath, $"{inputFileName}.gltf"));
+            model.SaveModel(Path.Combine(outputDirectoryPath, $"{inputFileName}.gltf"));
         }
 
         /// <summary>
-        /// Converts a glTF file and its associated resources to a packed GLB binary file
+        ///     Converts a glTF file and its associated resources to a packed GLB binary file
         /// </summary>
         /// <param name="inputGltfFilePath">glTF file (.gltf) to pack</param>
         /// <param name="outputGlbFile">Path where the GLB file should be generated</param>
@@ -717,27 +705,20 @@ namespace Reactor.Platform.glTF
             if (!File.Exists(inputGltfFilePath))
                 throw new ArgumentException("glTF file does not exists.", nameof(inputGltfFilePath));
 
-            Gltf model = Interface.LoadModel(inputGltfFilePath);
+            var model = LoadModel(inputGltfFilePath);
 
             SaveBinaryModelPacked(model, outputGlbFile, inputGltfFilePath);
         }
 
         private static Image.MimeTypeEnum? GetMimeType(string uri)
         {
-            if (String.IsNullOrEmpty(uri))
-            {
-                return null;
-            }
+            if (string.IsNullOrEmpty(uri)) return null;
 
             if (uri.StartsWith("data:image/png;base64,") || uri.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-            {
                 return Image.MimeTypeEnum.image_png;
-            }
 
-            if (uri.StartsWith("data:image/jpeg;base64,") || uri.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || uri.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase))
-            {
-                return Image.MimeTypeEnum.image_jpeg;
-            }
+            if (uri.StartsWith("data:image/jpeg;base64,") || uri.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                uri.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)) return Image.MimeTypeEnum.image_jpeg;
 
             throw new InvalidOperationException("Unable to determine mime type from uri");
         }

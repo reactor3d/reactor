@@ -20,21 +20,16 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+using System.Collections.Generic;
+
 namespace Reactor.Types
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-
     public class RSceneNode : RNode
     {
-        public List<RSceneNode> Children { get; internal set; }
-
-        public RSceneNode Parent { get; internal set; }
-
-        public string Name { get; set; }
-
-        internal RSceneNode() { }
+        internal RSceneNode()
+        {
+        }
 
 
         public RSceneNode(RSceneNode parent)
@@ -42,7 +37,10 @@ namespace Reactor.Types
             Parent = parent;
         }
 
+        public List<RSceneNode> Children { get; internal set; }
 
+        public RSceneNode Parent { get; internal set; }
 
+        public string Name { get; set; }
     }
 }

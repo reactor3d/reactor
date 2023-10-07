@@ -20,13 +20,11 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Platform.OpenGL;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Reactor.Utilities;
 using System.IO;
+using Reactor.Platform.OpenGL;
+using Reactor.Utilities;
 
 namespace Reactor.Geometry
 {
@@ -38,75 +36,51 @@ namespace Reactor.Geometry
 
         public int Offset
         {
-            get
-            {
-                return this._offset;
-            }
-            set
-            {
-                this._offset = value;
-            }
+            get => _offset;
+            set => _offset = value;
         }
 
         public RVertexElementFormat VertexElementFormat
         {
-            get
-            {
-                return this._format;
-            }
-            set
-            {
-                this._format = value;
-            }
+            get => _format;
+            set => _format = value;
         }
 
         public RVertexElementUsage VertexElementUsage
         {
-            get
-            {
-                return this._usage;
-            }
-            set
-            {
-                this._usage = value;
-            }
+            get => _usage;
+            set => _usage = value;
         }
 
         public RVertexElement(int offset, RVertexElementFormat elementFormat, RVertexElementUsage elementUsage)
         {
-            this._offset = offset;
-            this._format = elementFormat;
-            this._usage = elementUsage;
+            _offset = offset;
+            _format = elementFormat;
+            _usage = elementUsage;
         }
 
         public override int GetHashCode()
         {
             Stream stream = new MemoryStream();
-            Serialization.WriteStruct<RVertexElement>(ref stream, (RVertexElement)this);
+            Serialization.WriteStruct(ref stream, this);
             return Hash.ComputeHash(ref stream);
         }
 
         public override string ToString()
         {
-            return "{{Offset:" + this.Offset + " Format:" + this.VertexElementFormat + " Usage:" + this.VertexElementUsage + "}}";
+            return "{{Offset:" + Offset + " Format:" + VertexElementFormat + " Usage:" + VertexElementUsage + "}}";
         }
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            if (obj.GetType() != base.GetType())
-            {
-                return false;
-            }
-            return (this == ((RVertexElement)obj));
+            if (obj == null) return false;
+            if (obj.GetType() != GetType()) return false;
+            return this == (RVertexElement)obj;
         }
 
         public static bool operator ==(RVertexElement left, RVertexElement right)
         {
-            return ((((left._offset == right._offset)) && (left._usage == right._usage)) && (left._format == right._format));
+            return left._offset == right._offset && left._usage == right._usage && left._format == right._format;
         }
 
         public static bool operator !=(RVertexElement left, RVertexElement right)
@@ -157,7 +131,7 @@ namespace Reactor.Geometry
 
             throw new ArgumentException();
         }
-        
+
 
         internal static VertexAttribPointerType OpenGLVertexAttribPointerType(RVertexElementFormat elementFormat)
         {
@@ -198,7 +172,6 @@ namespace Reactor.Geometry
 
                 case RVertexElementFormat.HalfVector4:
                     return VertexAttribPointerType.HalfFloat;
-
             }
 
             throw new ArgumentException();
@@ -268,8 +241,8 @@ namespace Reactor.Geometry
                 case RVertexElementFormat.HalfVector4:
                     return 8;
             }
+
             return 0;
         }
-        
     }
 }

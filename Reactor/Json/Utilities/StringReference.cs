@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -29,28 +31,24 @@ namespace Newtonsoft.Json.Utilities
 {
     internal readonly struct StringReference
     {
-        private readonly char[] _chars;
-        private readonly int _startIndex;
-        private readonly int _length;
+        public char this[int i] => Chars[i];
 
-        public char this[int i] => _chars[i];
+        public char[] Chars { get; }
 
-        public char[] Chars => _chars;
+        public int StartIndex { get; }
 
-        public int StartIndex => _startIndex;
-
-        public int Length => _length;
+        public int Length { get; }
 
         public StringReference(char[] chars, int startIndex, int length)
         {
-            _chars = chars;
-            _startIndex = startIndex;
-            _length = length;
+            Chars = chars;
+            StartIndex = startIndex;
+            Length = length;
         }
 
         public override string ToString()
         {
-            return new string(_chars, _startIndex, _length);
+            return new string(Chars, StartIndex, Length);
         }
     }
 
@@ -58,52 +56,35 @@ namespace Newtonsoft.Json.Utilities
     {
         public static int IndexOf(this StringReference s, char c, int startIndex, int length)
         {
-            int index = Array.IndexOf(s.Chars, c, s.StartIndex + startIndex, length);
-            if (index == -1)
-            {
-                return -1;
-            }
+            var index = Array.IndexOf(s.Chars, c, s.StartIndex + startIndex, length);
+            if (index == -1) return -1;
 
             return index - s.StartIndex;
         }
 
         public static bool StartsWith(this StringReference s, string text)
         {
-            if (text.Length > s.Length)
-            {
-                return false;
-            }
+            if (text.Length > s.Length) return false;
 
-            char[] chars = s.Chars;
+            var chars = s.Chars;
 
-            for (int i = 0; i < text.Length; i++)
-            {
+            for (var i = 0; i < text.Length; i++)
                 if (text[i] != chars[i + s.StartIndex])
-                {
                     return false;
-                }
-            }
 
             return true;
         }
 
         public static bool EndsWith(this StringReference s, string text)
         {
-            if (text.Length > s.Length)
-            {
-                return false;
-            }
+            if (text.Length > s.Length) return false;
 
-            char[] chars = s.Chars;
+            var chars = s.Chars;
 
-            int start = s.StartIndex + s.Length - text.Length;
-            for (int i = 0; i < text.Length; i++)
-            {
+            var start = s.StartIndex + s.Length - text.Length;
+            for (var i = 0; i < text.Length; i++)
                 if (text[i] != chars[i + start])
-                {
                     return false;
-                }
-            }
 
             return true;
         }

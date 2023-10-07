@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,20 +22,20 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-using System;
-using System.IO;
 #if HAVE_ASYNC
 using System.Threading;
 using System.Threading.Tasks;
 #endif
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 #endif
@@ -45,12 +46,9 @@ namespace Newtonsoft.Json.Utilities
     {
         public static char[] RentBuffer(IArrayPool<char>? bufferPool, int minSize)
         {
-            if (bufferPool == null)
-            {
-                return new char[minSize];
-            }
+            if (bufferPool == null) return new char[minSize];
 
-            char[] buffer = bufferPool.Rent(minSize);
+            var buffer = bufferPool.Rent(minSize);
             return buffer;
         }
 
@@ -61,15 +59,9 @@ namespace Newtonsoft.Json.Utilities
 
         public static char[] EnsureBufferSize(IArrayPool<char>? bufferPool, int size, char[]? buffer)
         {
-            if (bufferPool == null)
-            {
-                return new char[size];
-            }
+            if (bufferPool == null) return new char[size];
 
-            if (buffer != null)
-            {
-                bufferPool.Return(buffer);
-            }
+            if (buffer != null) bufferPool.Return(buffer);
 
             return bufferPool.Rent(size);
         }
@@ -87,75 +79,51 @@ namespace Newtonsoft.Json.Utilities
         {
             IList<char> escapeChars = new List<char>
             {
-                '\n', '\r', '\t', '\\', '\f', '\b',
+                '\n', '\r', '\t', '\\', '\f', '\b'
             };
-            for (int i = 0; i < ' '; i++)
-            {
-                escapeChars.Add((char)i);
-            }
+            for (var i = 0; i < ' '; i++) escapeChars.Add((char)i);
 
-            foreach (char escapeChar in escapeChars.Union(new[] { '\'' }))
-            {
-                SingleQuoteCharEscapeFlags[escapeChar] = true;
-            }
-            foreach (char escapeChar in escapeChars.Union(new[] { '"' }))
-            {
-                DoubleQuoteCharEscapeFlags[escapeChar] = true;
-            }
-            foreach (char escapeChar in escapeChars.Union(new[] { '"', '\'', '<', '>', '&' }))
-            {
+            foreach (var escapeChar in escapeChars.Union(new[] { '\'' })) SingleQuoteCharEscapeFlags[escapeChar] = true;
+            foreach (var escapeChar in escapeChars.Union(new[] { '"' })) DoubleQuoteCharEscapeFlags[escapeChar] = true;
+            foreach (var escapeChar in escapeChars.Union(new[] { '"', '\'', '<', '>', '&' }))
                 HtmlCharEscapeFlags[escapeChar] = true;
-            }
         }
 
         private const string EscapedUnicodeText = "!";
 
         public static bool[] GetCharEscapeFlags(StringEscapeHandling stringEscapeHandling, char quoteChar)
         {
-            if (stringEscapeHandling == StringEscapeHandling.EscapeHtml)
-            {
-                return HtmlCharEscapeFlags;
-            }
+            if (stringEscapeHandling == StringEscapeHandling.EscapeHtml) return HtmlCharEscapeFlags;
 
-            if (quoteChar == '"')
-            {
-                return DoubleQuoteCharEscapeFlags;
-            }
+            if (quoteChar == '"') return DoubleQuoteCharEscapeFlags;
 
             return SingleQuoteCharEscapeFlags;
         }
 
         public static bool ShouldEscapeJavaScriptString(string? s, bool[] charEscapeFlags)
         {
-            if (s == null)
-            {
-                return false;
-            }
+            if (s == null) return false;
 
-            for (int i = 0; i < s.Length; i++)
+            for (var i = 0; i < s.Length; i++)
             {
-                char c = s[i];
-                if (c >= charEscapeFlags.Length || charEscapeFlags[c])
-                {
-                    return true;
-                }
+                var c = s[i];
+                if (c >= charEscapeFlags.Length || charEscapeFlags[c]) return true;
             }
 
             return false;
         }
 
-        public static void WriteEscapedJavaScriptString(TextWriter writer, string? s, char delimiter, bool appendDelimiters,
-            bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling, IArrayPool<char>? bufferPool, ref char[]? writeBuffer)
+        public static void WriteEscapedJavaScriptString(TextWriter writer, string? s, char delimiter,
+            bool appendDelimiters,
+            bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling, IArrayPool<char>? bufferPool,
+            ref char[]? writeBuffer)
         {
             // leading delimiter
-            if (appendDelimiters)
-            {
-                writer.Write(delimiter);
-            }
+            if (appendDelimiters) writer.Write(delimiter);
 
             if (!StringUtils.IsNullOrEmpty(s))
             {
-                int lastWritePosition = FirstCharToEscape(s, charEscapeFlags, stringEscapeHandling);
+                var lastWritePosition = FirstCharToEscape(s, charEscapeFlags, stringEscapeHandling);
                 if (lastWritePosition == -1)
                 {
                     writer.Write(s);
@@ -165,9 +133,7 @@ namespace Newtonsoft.Json.Utilities
                     if (lastWritePosition != 0)
                     {
                         if (writeBuffer == null || writeBuffer.Length < lastWritePosition)
-                        {
                             writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, lastWritePosition, writeBuffer);
-                        }
 
                         // write unchanged chars at start of text.
                         s.CopyTo(0, writeBuffer, 0, lastWritePosition);
@@ -175,14 +141,11 @@ namespace Newtonsoft.Json.Utilities
                     }
 
                     int length;
-                    for (int i = lastWritePosition; i < s.Length; i++)
+                    for (var i = lastWritePosition; i < s.Length; i++)
                     {
-                        char c = s[i];
+                        var c = s[i];
 
-                        if (c < charEscapeFlags.Length && !charEscapeFlags[c])
-                        {
-                            continue;
-                        }
+                        if (c < charEscapeFlags.Length && !charEscapeFlags[c]) continue;
 
                         string? escapedValue;
 
@@ -216,7 +179,8 @@ namespace Newtonsoft.Json.Utilities
                                 escapedValue = @"\u2029";
                                 break;
                             default:
-                                if (c < charEscapeFlags.Length || stringEscapeHandling == StringEscapeHandling.EscapeNonAscii)
+                                if (c < charEscapeFlags.Length ||
+                                    stringEscapeHandling == StringEscapeHandling.EscapeNonAscii)
                                 {
                                     if (c == '\'' && stringEscapeHandling != StringEscapeHandling.EscapeHtml)
                                     {
@@ -229,9 +193,8 @@ namespace Newtonsoft.Json.Utilities
                                     else
                                     {
                                         if (writeBuffer == null || writeBuffer.Length < UnicodeTextLength)
-                                        {
-                                            writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, UnicodeTextLength, writeBuffer);
-                                        }
+                                            writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, UnicodeTextLength,
+                                                writeBuffer);
 
                                         StringUtils.ToCharAsUnicode(c, writeBuffer!);
 
@@ -243,30 +206,30 @@ namespace Newtonsoft.Json.Utilities
                                 {
                                     escapedValue = null;
                                 }
+
                                 break;
                         }
 
-                        if (escapedValue == null)
-                        {
-                            continue;
-                        }
+                        if (escapedValue == null) continue;
 
-                        bool isEscapedUnicodeText = string.Equals(escapedValue, EscapedUnicodeText, StringComparison.Ordinal);
+                        var isEscapedUnicodeText =
+                            string.Equals(escapedValue, EscapedUnicodeText, StringComparison.Ordinal);
 
                         if (i > lastWritePosition)
                         {
-                            length = i - lastWritePosition + ((isEscapedUnicodeText) ? UnicodeTextLength : 0);
-                            int start = (isEscapedUnicodeText) ? UnicodeTextLength : 0;
+                            length = i - lastWritePosition + (isEscapedUnicodeText ? UnicodeTextLength : 0);
+                            var start = isEscapedUnicodeText ? UnicodeTextLength : 0;
 
                             if (writeBuffer == null || writeBuffer.Length < length)
                             {
-                                char[] newBuffer = BufferUtils.RentBuffer(bufferPool, length);
+                                var newBuffer = BufferUtils.RentBuffer(bufferPool, length);
 
                                 // the unicode text is already in the buffer
                                 // copy it over when creating new buffer
                                 if (isEscapedUnicodeText)
                                 {
-                                    MiscellaneousUtils.Assert(writeBuffer != null, "Write buffer should never be null because it is set when the escaped unicode text is encountered.");
+                                    MiscellaneousUtils.Assert(writeBuffer != null,
+                                        "Write buffer should never be null because it is set when the escaped unicode text is encountered.");
 
                                     Array.Copy(writeBuffer, newBuffer, UnicodeTextLength);
                                 }
@@ -284,13 +247,9 @@ namespace Newtonsoft.Json.Utilities
 
                         lastWritePosition = i + 1;
                         if (!isEscapedUnicodeText)
-                        {
                             writer.Write(escapedValue);
-                        }
                         else
-                        {
                             writer.Write(writeBuffer, 0, UnicodeTextLength);
-                        }
                     }
 
                     MiscellaneousUtils.Assert(lastWritePosition != 0);
@@ -298,9 +257,7 @@ namespace Newtonsoft.Json.Utilities
                     if (length > 0)
                     {
                         if (writeBuffer == null || writeBuffer.Length < length)
-                        {
                             writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, length, writeBuffer);
-                        }
 
                         s.CopyTo(lastWritePosition, writeBuffer, 0, length);
 
@@ -311,36 +268,33 @@ namespace Newtonsoft.Json.Utilities
             }
 
             // trailing delimiter
-            if (appendDelimiters)
-            {
-                writer.Write(delimiter);
-            }
+            if (appendDelimiters) writer.Write(delimiter);
         }
 
-        public static string ToEscapedJavaScriptString(string? value, char delimiter, bool appendDelimiters, StringEscapeHandling stringEscapeHandling)
+        public static string ToEscapedJavaScriptString(string? value, char delimiter, bool appendDelimiters,
+            StringEscapeHandling stringEscapeHandling)
         {
-            bool[] charEscapeFlags = GetCharEscapeFlags(stringEscapeHandling, delimiter);
+            var charEscapeFlags = GetCharEscapeFlags(stringEscapeHandling, delimiter);
 
-            using (StringWriter w = StringUtils.CreateStringWriter(value?.Length ?? 16))
+            using (var w = StringUtils.CreateStringWriter(value?.Length ?? 16))
             {
                 char[]? buffer = null;
-                WriteEscapedJavaScriptString(w, value, delimiter, appendDelimiters, charEscapeFlags, stringEscapeHandling, null, ref buffer);
+                WriteEscapedJavaScriptString(w, value, delimiter, appendDelimiters, charEscapeFlags,
+                    stringEscapeHandling, null, ref buffer);
                 return w.ToString();
             }
         }
-        
-        private static int FirstCharToEscape(string s, bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling)
+
+        private static int FirstCharToEscape(string s, bool[] charEscapeFlags,
+            StringEscapeHandling stringEscapeHandling)
         {
-            for (int i = 0; i != s.Length; i++)
+            for (var i = 0; i != s.Length; i++)
             {
-                char c = s[i];
+                var c = s[i];
 
                 if (c < charEscapeFlags.Length)
                 {
-                    if (charEscapeFlags[c])
-                    {
-                        return i;
-                    }
+                    if (charEscapeFlags[c]) return i;
                 }
                 else if (stringEscapeHandling == StringEscapeHandling.EscapeNonAscii)
                 {
@@ -362,7 +316,8 @@ namespace Newtonsoft.Json.Utilities
         }
 
 #if HAVE_ASYNC
-        public static Task WriteEscapedJavaScriptStringAsync(TextWriter writer, string s, char delimiter, bool appendDelimiters, bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling, JsonTextWriter client, char[] writeBuffer, CancellationToken cancellationToken = default)
+        public static Task WriteEscapedJavaScriptStringAsync(TextWriter writer, string s, char delimiter, bool appendDelimiters, bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling, JsonTextWriter client, char[] writeBuffer, CancellationToken cancellationToken
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   = default)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -393,7 +348,8 @@ namespace Newtonsoft.Json.Utilities
 
             if (!StringUtils.IsNullOrEmpty(s))
             {
-                task = WriteEscapedJavaScriptStringWithoutDelimitersAsync(writer, s, charEscapeFlags, stringEscapeHandling, client, writeBuffer, cancellationToken);
+                task =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          WriteEscapedJavaScriptStringWithoutDelimitersAsync(writer, s, charEscapeFlags, stringEscapeHandling, client, writeBuffer, cancellationToken);
                 if (task.IsCompletedSucessfully())
                 {
                     return writer.WriteAsync(delimiter, cancellationToken);
@@ -568,43 +524,35 @@ namespace Newtonsoft.Json.Utilities
         }
 #endif
 
-        public static bool TryGetDateFromConstructorJson(JsonReader reader, out DateTime dateTime, [NotNullWhen(false)]out string? errorMessage)
+        public static bool TryGetDateFromConstructorJson(JsonReader reader, out DateTime dateTime,
+            [NotNullWhen(false)] out string? errorMessage)
         {
             dateTime = default;
             errorMessage = null;
 
-            if (!TryGetDateConstructorValue(reader, out long? t1, out errorMessage) || t1 == null)
+            if (!TryGetDateConstructorValue(reader, out var t1, out errorMessage) || t1 == null)
             {
                 errorMessage = errorMessage ?? "Date constructor has no arguments.";
                 return false;
             }
-            if (!TryGetDateConstructorValue(reader, out long? t2, out errorMessage))
-            {
-                return false;
-            }
-            else if (t2 != null)
+
+            if (!TryGetDateConstructorValue(reader, out var t2, out errorMessage)) return false;
+
+            if (t2 != null)
             {
                 // Only create a list when there is more than one argument
-                List<long> dateArgs = new List<long>
+                var dateArgs = new List<long>
                 {
                     t1.Value,
                     t2.Value
                 };
                 while (true)
-                {
-                    if (!TryGetDateConstructorValue(reader, out long? integer, out errorMessage))
-                    {
+                    if (!TryGetDateConstructorValue(reader, out var integer, out errorMessage))
                         return false;
-                    }
                     else if (integer != null)
-                    {
                         dateArgs.Add(integer.Value);
-                    }
                     else
-                    {
                         break;
-                    }
-                }
 
                 if (dateArgs.Count > 7)
                 {
@@ -613,10 +561,7 @@ namespace Newtonsoft.Json.Utilities
                 }
 
                 // Pad args out to the number used by the ctor
-                while (dateArgs.Count < 7)
-                {
-                    dateArgs.Add(0);
-                }
+                while (dateArgs.Count < 7) dateArgs.Add(0);
 
                 dateTime = new DateTime((int)dateArgs[0], (int)dateArgs[1] + 1, dateArgs[2] == 0 ? 1 : (int)dateArgs[2],
                     (int)dateArgs[3], (int)dateArgs[4], (int)dateArgs[5], (int)dateArgs[6]);
@@ -639,13 +584,12 @@ namespace Newtonsoft.Json.Utilities
                 errorMessage = "Unexpected end when reading date constructor.";
                 return false;
             }
-            if (reader.TokenType == JsonToken.EndConstructor)
-            {
-                return true;
-            }
+
+            if (reader.TokenType == JsonToken.EndConstructor) return true;
             if (reader.TokenType != JsonToken.Integer)
             {
-                errorMessage = "Unexpected token when reading date constructor. Expected Integer, got " + reader.TokenType;
+                errorMessage = "Unexpected token when reading date constructor. Expected Integer, got " +
+                               reader.TokenType;
                 return false;
             }
 

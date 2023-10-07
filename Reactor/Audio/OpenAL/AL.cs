@@ -9,15 +9,13 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
-using Reactor.Audio.OpenAL;
 using Reactor.Audio.OpenAL.Native;
 using Reactor.Math;
 
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// Provides access to the OpenAL 1.1 flat API.
+    ///     Provides access to the OpenAL 1.1 flat API.
     /// </summary>
     public partial class AL : ALBase
     {
@@ -27,14 +25,17 @@ namespace Reactor.Audio.OpenAL
         static AL()
         {
             // We need to register the resolver for OpenAL before we can DllImport functions.
-            ALBase.RegisterOpenALResolver();
+            RegisterOpenALResolver();
         }
 
         private AL()
         {
         }
 
-        /// <summary>This function enables a feature of the OpenAL driver. There are no capabilities defined in OpenAL 1.1 to be used with this function, but it may be used by an extension.</summary>
+        /// <summary>
+        ///     This function enables a feature of the OpenAL driver. There are no capabilities defined in OpenAL 1.1 to be
+        ///     used with this function, but it may be used by an extension.
+        /// </summary>
         /// <param name="capability">The name of a capability to enable.</param>
         [DllImport(Lib, EntryPoint = "alEnable", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void Enable(ALCapability capability);
@@ -56,14 +57,18 @@ namespace Reactor.Audio.OpenAL
         /// <summary>This function retrieves an OpenAL string property.</summary>
         /// <param name="param">The property to be returned: Vendor, Version, Renderer and Extensions.</param>
         /// <returns>Returns a pointer to a null-terminated string.</returns>
-        [DllImport(Lib, EntryPoint = "alGetString", ExactSpelling = true, CallingConvention = ALCallingConvention, CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alGetString", ExactSpelling = true, CallingConvention = ALCallingConvention,
+            CharSet = CharSet.Ansi)]
         [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
         public static extern string Get(ALGetString param);
 
         /// <summary>This function retrieves an OpenAL string property.</summary>
         /// <param name="param">The human-readable errorstring to be returned.</param>
         /// <returns>Returns a pointer to a null-terminated string.</returns>
-        public static string GetErrorString(ALError param) => Get((ALGetString)param);
+        public static string GetErrorString(ALError param)
+        {
+            return Get((ALGetString)param);
+        }
 
         /* no functions return more than 1 result ..
         // AL_API void AL_APIENTRY alGetBooleanv( ALenum param, ALboolean* buffer );
@@ -104,8 +109,19 @@ namespace Reactor.Audio.OpenAL
         // AL_API ALdouble AL_APIENTRY alGetDouble( ALenum param );
         */
 
-        /// <summary>Error support. Obtain the most recent error generated in the AL state machine. When an error is detected by AL, a flag is set and the error code is recorded. Further errors, if they occur, do not affect this recorded code. When alGetError is called, the code is returned and the flag is cleared, so that a further error will again record its code.</summary>
-        /// <returns>The first error that occured. can be used with AL.GetString. Returns an Alenum representing the error state. When an OpenAL error occurs, the error state is set and will not be changed until the error state is retrieved using alGetError. Whenever alGetError is called, the error state is cleared and the last state (the current state when the call was made) is returned. To isolate error detection to a specific portion of code, alGetError should be called before the isolated section to clear the current error state.</returns>
+        /// <summary>
+        ///     Error support. Obtain the most recent error generated in the AL state machine. When an error is detected by
+        ///     AL, a flag is set and the error code is recorded. Further errors, if they occur, do not affect this recorded code.
+        ///     When alGetError is called, the code is returned and the flag is cleared, so that a further error will again record
+        ///     its code.
+        /// </summary>
+        /// <returns>
+        ///     The first error that occured. can be used with AL.GetString. Returns an Alenum representing the error state.
+        ///     When an OpenAL error occurs, the error state is set and will not be changed until the error state is retrieved
+        ///     using alGetError. Whenever alGetError is called, the error state is cleared and the last state (the current state
+        ///     when the call was made) is returned. To isolate error detection to a specific portion of code, alGetError should be
+        ///     called before the isolated section to clear the current error state.
+        /// </returns>
         [DllImport(Lib, EntryPoint = "alGetError", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern ALError GetError();
         // AL_API ALenum AL_APIENTRY alGetError( void );
@@ -113,21 +129,30 @@ namespace Reactor.Audio.OpenAL
         /// <summary>This function tests if a specific Extension is available for the OpenAL driver.</summary>
         /// <param name="extname">A string naming the desired extension. Example: "EAX-RAM".</param>
         /// <returns>Returns True if the Extension is available or False if not available.</returns>
-        [DllImport(Lib, EntryPoint = "alIsExtensionPresent", ExactSpelling = true, CallingConvention = ALCallingConvention, CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alIsExtensionPresent", ExactSpelling = true,
+            CallingConvention = ALCallingConvention, CharSet = CharSet.Ansi)]
         public static extern bool IsExtensionPresent([In] string extname);
         // AL_API ALboolean AL_APIENTRY alIsExtensionPresent( const ALchar* extname );
 
         /// <summary>This function returns the address of an OpenAL extension function. Handle with care.</summary>
         /// <param name="fname">A string containing the function name.</param>
-        /// <returns>The return value is a pointer to the specified function. The return value will be IntPtr.Zero if the function is not found.</returns>
-        [DllImport(Lib, EntryPoint = "alGetProcAddress", ExactSpelling = true, CallingConvention = ALCallingConvention, CharSet = CharSet.Ansi)]
+        /// <returns>
+        ///     The return value is a pointer to the specified function. The return value will be IntPtr.Zero if the function
+        ///     is not found.
+        /// </returns>
+        [DllImport(Lib, EntryPoint = "alGetProcAddress", ExactSpelling = true, CallingConvention = ALCallingConvention,
+            CharSet = CharSet.Ansi)]
         public static extern IntPtr GetProcAddress([In] string fname);
         // AL_API void* AL_APIENTRY alGetProcAddress( const ALchar* fname );
 
         /// <summary>This function returns the enumeration value of an OpenAL token, described by a string.</summary>
         /// <param name="ename">A string describing an OpenAL token. Example "AL_DISTANCE_MODEL".</param>
-        /// <returns>Returns the actual ALenum described by a string. Returns 0 if the string doesn’t describe a valid OpenAL token.</returns>
-        [DllImport(Lib, EntryPoint = "alGetEnumValue", ExactSpelling = true, CallingConvention = ALCallingConvention, CharSet = CharSet.Ansi)]
+        /// <returns>
+        ///     Returns the actual ALenum described by a string. Returns 0 if the string doesn’t describe a valid OpenAL
+        ///     token.
+        /// </returns>
+        [DllImport(Lib, EntryPoint = "alGetEnumValue", ExactSpelling = true, CallingConvention = ALCallingConvention,
+            CharSet = CharSet.Ansi)]
         public static extern int GetEnumValue([In] string ename);
         // AL_API ALenum AL_APIENTRY alGetEnumValue( const ALchar* ename );
 
@@ -159,9 +184,9 @@ namespace Reactor.Audio.OpenAL
         public static extern void Listener(ALListener3f param, float value1, float value2, float value3);
         // AL_API void AL_APIENTRY alListener3f( ALenum param, ALfloat value1, ALfloat value2, ALfloat value3 );
 
-        /// <summary>This function sets a <see cref="Vector3"/> property for the listener.</summary>
+        /// <summary>This function sets a <see cref="Vector3" /> property for the listener.</summary>
         /// <param name="param">The name of the attribute to set.</param>
-        /// <param name="values">The <see cref="Vector3"/> to set the attribute to.</param>
+        /// <param name="values">The <see cref="Vector3" /> to set the attribute to.</param>
         public static void Listener(ALListener3f param, ref Vector3 values)
         {
             Listener(param, values.X, values.Y, values.Z);
@@ -171,7 +196,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="param">The name of the attribute to be set.</param>
         /// <param name="values">Pointer to floating-point vector values.</param>
         [DllImport(Lib, EntryPoint = "alListenerfv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void Listener(ALListenerfv param, float* values);
+        public static extern unsafe void Listener(ALListenerfv param, float* values);
         // AL_API void AL_APIENTRY alListenerfv( ALenum param, const ALfloat* values );
 
         /// <summary>This function sets a floating-point vector property of the listener.</summary>
@@ -188,10 +213,10 @@ namespace Reactor.Audio.OpenAL
         public static extern void Listener(ALListenerfv param, float[] values);
         // AL_API void AL_APIENTRY alListenerfv( ALenum param, const ALfloat* values );
 
-        /// <summary>This function sets two <see cref="Vector3"/> properties of the listener.</summary>
+        /// <summary>This function sets two <see cref="Vector3" /> properties of the listener.</summary>
         /// <param name="param">The name of the attribute to be set.</param>
-        /// <param name="at">A <see cref="Vector3"/> for the At-Vector.</param>
-        /// <param name="up">A <see cref="Vector3"/> for the Up-Vector.</param>
+        /// <param name="at">A <see cref="Vector3" /> for the At-Vector.</param>
+        /// <param name="up">A <see cref="Vector3" /> for the Up-Vector.</param>
         public static void Listener(ALListenerfv param, ref Vector3 at, ref Vector3 up)
         {
             Span<float> data = stackalloc float[6];
@@ -224,7 +249,7 @@ namespace Reactor.Audio.OpenAL
         /// <returns>The floating-point value being retrieved.</returns>
         public static float GetListener(ALListenerf param)
         {
-            GetListener(param, out float value);
+            GetListener(param, out var value);
             return value;
         }
 
@@ -234,51 +259,61 @@ namespace Reactor.Audio.OpenAL
         /// <param name="value2">The second floating-point value  being retrieved.</param>
         /// <param name="value3">The third floating-point value  being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetListener3f", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static extern void GetListener(ALListener3f param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
+        public static extern void GetListener(ALListener3f param, [Out] out float value1, [Out] out float value2,
+            [Out] out float value3);
         // AL_API void AL_APIENTRY alGetListener3f( ALenum param, ALfloat *value1, ALfloat *value2, ALfloat *value3 );
 
-        /// <summary>This function retrieves a <see cref="Vector3"/> from a property of the listener.</summary>
+        /// <summary>This function retrieves a <see cref="Vector3" /> from a property of the listener.</summary>
         /// <param name="param">The name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity.</param>
-        /// <param name="values">A <see cref="Vector3"/> to hold the three floats being retrieved.</param>
+        /// <param name="values">A <see cref="Vector3" /> to hold the three floats being retrieved.</param>
         public static void GetListener(ALListener3f param, out Vector3 values)
         {
             GetListener(param, out values.X, out values.Y, out values.Z);
         }
 
-        /// <summary>This function retrieves a <see cref="Vector3"/> from a property of the listener.</summary>
+        /// <summary>This function retrieves a <see cref="Vector3" /> from a property of the listener.</summary>
         /// <param name="param">The name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity.</param>
-        /// <returns>A <see cref="Vector3"/> to hold the three floats being retrieved.</returns>
+        /// <returns>A <see cref="Vector3" /> to hold the three floats being retrieved.</returns>
         public static Vector3 GetListener(ALListener3f param)
         {
-            GetListener(param, out Vector3 values);
+            GetListener(param, out var values);
             return values;
         }
 
         /// <summary>This function retrieves a floating-point vector property of the listener. You must pin it manually.</summary>
-        /// <param name="param">the name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity, ALListenerfv.Orientation.</param>
+        /// <param name="param">
+        ///     the name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity,
+        ///     ALListenerfv.Orientation.
+        /// </param>
         /// <param name="values">A pointer to the floating-point vector value being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetListenerfv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void GetListener(ALListenerfv param, float* values);
+        public static extern unsafe void GetListener(ALListenerfv param, float* values);
         // AL_API void AL_APIENTRY alGetListenerfv( ALenum param, ALfloat* values );
 
         /// <summary>This function retrieves a floating-point vector property of the listener. You must pin it manually.</summary>
-        /// <param name="param">the name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity, ALListenerfv.Orientation.</param>
+        /// <param name="param">
+        ///     the name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity,
+        ///     ALListenerfv.Orientation.
+        /// </param>
         /// <param name="values">A pointer to the floating-point vector value being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetListenerfv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void GetListener(ALListenerfv param, ref float values);
+        public static extern void GetListener(ALListenerfv param, ref float values);
         // AL_API void AL_APIENTRY alGetListenerfv( ALenum param, ALfloat* values );
 
         /// <summary>This function retrieves a floating-point vector property of the listener. You must pin it manually.</summary>
-        /// <param name="param">the name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity, ALListenerfv.Orientation.</param>
+        /// <param name="param">
+        ///     the name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity,
+        ///     ALListenerfv.Orientation.
+        /// </param>
         /// <param name="values">A pointer to the floating-point vector value being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetListenerfv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetListener(ALListenerfv param, [In] float[] values);
         // AL_API void AL_APIENTRY alGetListenerfv( ALenum param, ALfloat* values );
 
-        /// <summary>This function retrieves two <see cref="Vector3"/> properties of the listener.</summary>
+        /// <summary>This function retrieves two <see cref="Vector3" /> properties of the listener.</summary>
         /// <param name="param">the name of the attribute to be retrieved: ALListenerfv.Orientation.</param>
-        /// <param name="at">A <see cref="Vector3"/> for the At-Vector.</param>
-        /// <param name="up">A <see cref="Vector3"/> for the Up-Vector.</param>
+        /// <param name="at">A <see cref="Vector3" /> for the At-Vector.</param>
+        /// <param name="up">A <see cref="Vector3" /> for the Up-Vector.</param>
         public static void GetListener(ALListenerfv param, out Vector3 at, out Vector3 up)
         {
             Span<float> values = stackalloc float[6];
@@ -339,7 +374,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
         [DllImport(Lib, EntryPoint = "alGenSources", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void GenSources(int n, [In] int* sources);
+        public static extern unsafe void GenSources(int n, [In] int* sources);
         // AL_API void AL_APIENTRY alGenSources( ALsizei n, ALuint* Sources );
 
         /// <summary>This function generates one or more sources.</summary>
@@ -360,10 +395,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
         public static void GenSources(int[] sources)
         {
-            if (sources == null)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
+            if (sources == null) throw new ArgumentNullException(nameof(sources));
             GenSources(sources.Length, sources);
         }
 
@@ -379,7 +411,7 @@ namespace Reactor.Audio.OpenAL
         /// <returns>Pointer to an array of int values which will store the names of the new sources.</returns>
         public static int[] GenSources(int n)
         {
-            int[] sources = new int[n];
+            var sources = new int[n];
             GenSources(n, sources);
             return sources;
         }
@@ -388,7 +420,7 @@ namespace Reactor.Audio.OpenAL
         /// <returns>Pointer to an int value which will store the name of the new source.</returns>
         public static int GenSource()
         {
-            int source = 0;
+            var source = 0;
             GenSources(1, ref source);
             return source;
         }
@@ -397,7 +429,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="source">Pointer to an int value which will store the name of the new source.</param>
         public static void GenSource(out int source)
         {
-            int newSource = 0;
+            var newSource = 0;
             GenSources(1, ref newSource);
             source = newSource;
         }
@@ -406,7 +438,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="n">The number of sources to be deleted.</param>
         /// <param name="sources">Pointer to an array of source names identifying the sources to be deleted.</param>
         [DllImport(Lib, EntryPoint = "alDeleteSources", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void DeleteSources(int n, [In] int* sources);
+        public static extern unsafe void DeleteSources(int n, [In] int* sources);
         // AL_API void AL_APIENTRY alDeleteSources( ALsizei n, const ALuint* Sources );
 
         /// <summary>This function deletes one or more sources.</summary>
@@ -419,10 +451,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="sources">An array of source names identifying the sources to be deleted.</param>
         public static void DeleteSources(int[] sources)
         {
-            if (sources == null)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
+            if (sources == null) throw new ArgumentNullException(nameof(sources));
             DeleteSources(sources.Length, ref sources[0]);
         }
 
@@ -449,7 +478,11 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function sets a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
+        /// <param name="param">
+        ///     The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance,
+        ///     RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor,
+        ///     EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
+        /// </param>
         /// <param name="value">The value to set the attribute to.</param>
         [DllImport(Lib, EntryPoint = "alSourcef", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void Source(int sid, ALSourcef param, float value);
@@ -468,7 +501,7 @@ namespace Reactor.Audio.OpenAL
         /// <summary>This function sets a source property requiring three floating-point values.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: ALSource3f.Position, Velocity, Direction.</param>
-        /// <param name="values">A <see cref="Vector3"/> which the attribute will be set to.</param>
+        /// <param name="values">A <see cref="Vector3" /> which the attribute will be set to.</param>
         public static void Source(int sid, ALSource3f param, ref Vector3 values)
         {
             Source(sid, param, values.X, values.Y, values.Z);
@@ -476,7 +509,10 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function sets an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: ALSourcei.SourceRelative, ConeInnerAngle, ConeOuterAngle, Looping, Buffer, SourceState.</param>
+        /// <param name="param">
+        ///     The name of the attribute to set: ALSourcei.SourceRelative, ConeInnerAngle, ConeOuterAngle,
+        ///     Looping, Buffer, SourceState.
+        /// </param>
         /// <param name="value">The value to set the attribute to.</param>
         [DllImport(Lib, EntryPoint = "alSourcei", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void Source(int sid, ALSourcei param, int value);
@@ -506,18 +542,26 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function retrieves a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
+        /// <param name="param">
+        ///     The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance,
+        ///     RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor,
+        ///     EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
+        /// </param>
         /// <param name="value">A pointer to the floating-point value being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetSourcef", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetSource(int sid, ALSourcef param, out float value);
 
         /// <summary>This function retrieves a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
+        /// <param name="param">
+        ///     The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance,
+        ///     RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor,
+        ///     EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
+        /// </param>
         /// <returns>The floating-point value being retrieved.</returns>
         public static float GetSource(int sid, ALSourcef param)
         {
-            GetSource(sid, param, out float value);
+            GetSource(sid, param, out var value);
             return value;
         }
 
@@ -528,13 +572,14 @@ namespace Reactor.Audio.OpenAL
         /// <param name="value2">Pointer to the second value to retrieve.</param>
         /// <param name="value3">Pointer to the third value to retrieve.</param>
         [DllImport(Lib, EntryPoint = "alGetSource3f", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static extern void GetSource(int sid, ALSource3f param, out float value1, out float value2, out float value3);
+        public static extern void GetSource(int sid, ALSource3f param, out float value1, out float value2,
+            out float value3);
         // AL_API void AL_APIENTRY alGetSource3f( ALuint sid, ALenum param, ALfloat* value1, ALfloat* value2, ALfloat* value3);
 
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
-        /// <param name="values">A <see cref="Vector3"/> to retrieve the values to.</param>
+        /// <param name="values">A <see cref="Vector3" /> to retrieve the values to.</param>
         public static void GetSource(int sid, ALSource3f param, out Vector3 values)
         {
             GetSource(sid, param, out values.X, out values.Y, out values.Z);
@@ -543,7 +588,7 @@ namespace Reactor.Audio.OpenAL
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
-        /// <returns>A <see cref="Vector3"/> to with the received values.</returns>
+        /// <returns>A <see cref="Vector3" /> to with the received values.</returns>
         public static Vector3 GetSource(int sid, ALSource3f param)
         {
             Vector3 values;
@@ -564,7 +609,7 @@ namespace Reactor.Audio.OpenAL
         /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
-        /// <param name="values">A <see cref="Vector3"/>i to retrieve the values to.</param>
+        /// <param name="values">A <see cref="Vector3" />i to retrieve the values to.</param>
         public static void GetSource(int sid, ALSource3i param, out Vector3i values)
         {
             GetSource(sid, param, out values.X, out values.Y, out values.Z);
@@ -573,7 +618,7 @@ namespace Reactor.Audio.OpenAL
         /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
-        /// <returns>A <see cref="Vector3i"/> to retrieve the values to.</returns>
+        /// <returns>A <see cref="Vector3i" /> to retrieve the values to.</returns>
         public static Vector3i GetSource(int sid, ALSource3i param)
         {
             Vector3i values;
@@ -583,7 +628,10 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function retrieves an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to retrieve: ALSourcei.SourceRelative, Buffer, SourceState, BuffersQueued, BuffersProcessed.</param>
+        /// <param name="param">
+        ///     The name of the attribute to retrieve: ALSourcei.SourceRelative, Buffer, SourceState,
+        ///     BuffersQueued, BuffersProcessed.
+        /// </param>
         /// <param name="value">A pointer to the integer value being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetSourcei", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetSource(int sid, ALGetSourcei param, [Out] out int value);
@@ -591,11 +639,14 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function retrieves an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to retrieve: ALSourcei.SourceRelative, Buffer, SourceState, BuffersQueued, BuffersProcessed.</param>
+        /// <param name="param">
+        ///     The name of the attribute to retrieve: ALSourcei.SourceRelative, Buffer, SourceState,
+        ///     BuffersQueued, BuffersProcessed.
+        /// </param>
         /// <returns>The integer value being retrieved.</returns>
         public static int GetSource(int sid, ALGetSourcei param)
         {
-            GetSource(sid, param, out int value);
+            GetSource(sid, param, out var value);
             return value;
         }
 
@@ -605,7 +656,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="value">A pointer to the bool value being retrieved.</param>
         public static void GetSource(int sid, ALSourceb param, out bool value)
         {
-            GetSource(sid, (ALGetSourcei)param, out int result);
+            GetSource(sid, (ALGetSourcei)param, out var result);
             value = result != 0;
         }
 
@@ -615,7 +666,7 @@ namespace Reactor.Audio.OpenAL
         /// <returns>A the bool value being retrieved.</returns>
         public static bool GetSource(int sid, ALSourceb param)
         {
-            GetSource(sid, (ALGetSourcei)param, out int result);
+            GetSource(sid, (ALGetSourcei)param, out var result);
             return result != 0;
         }
 
@@ -624,56 +675,84 @@ namespace Reactor.Audio.OpenAL
         // AL_API void AL_APIENTRY alGetSourcefv( ALuint sid, ALenum param, ALfloat* values );
         // AL_API void AL_APIENTRY alGetSourceiv( ALuint sid,  ALenum param, ALint* values );
 
-        /// <summary>This function plays a set of sources. The playing sources will have their state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
+        /// <summary>
+        ///     This function plays a set of sources. The playing sources will have their state changed to
+        ///     ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning.
+        ///     When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.
+        /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
         [DllImport(Lib, EntryPoint = "alSourcePlayv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void SourcePlay(int ns, [In] int* sids);
+        public static extern unsafe void SourcePlay(int ns, [In] int* sids);
         // AL_API void AL_APIENTRY alSourcePlayv( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function plays a set of sources. The playing sources will have their state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
+        /// <summary>
+        ///     This function plays a set of sources. The playing sources will have their state changed to
+        ///     ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning.
+        ///     When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.
+        /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
         [DllImport(Lib, EntryPoint = "alSourcePlayv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourcePlay(int ns, [In] ref int sids);
         // AL_API void AL_APIENTRY alSourcePlayv( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function plays a set of sources. The playing sources will have their state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
+        /// <summary>
+        ///     This function plays a set of sources. The playing sources will have their state changed to
+        ///     ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning.
+        ///     When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.
+        /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
         [DllImport(Lib, EntryPoint = "alSourcePlayv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourcePlay(int ns, [In] int[] sids);
         // AL_API void AL_APIENTRY alSourcePlayv( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function plays a set of sources. The playing sources will have their state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
+        /// <summary>
+        ///     This function plays a set of sources. The playing sources will have their state changed to
+        ///     ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning.
+        ///     When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.
+        /// </summary>
         /// <param name="sources">The sources to be played.</param>
         public static void SourcePlay(ReadOnlySpan<int> sources)
         {
             SourcePlay(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
-        /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
+        /// <summary>
+        ///     This function stops a set of sources. The stopped sources will have their state changed to
+        ///     ALSourceState.Stopped.
+        /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
         [DllImport(Lib, EntryPoint = "alSourceStopv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void SourceStop(int ns, [In] int* sids);
+        public static extern unsafe void SourceStop(int ns, [In] int* sids);
         // AL_API void AL_APIENTRY alSourceStopv( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
+        /// <summary>
+        ///     This function stops a set of sources. The stopped sources will have their state changed to
+        ///     ALSourceState.Stopped.
+        /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
         [DllImport(Lib, EntryPoint = "alSourceStopv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourceStop(int ns, ref int sids);
         // AL_API void AL_APIENTRY alSourceStopv( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
+        /// <summary>
+        ///     This function stops a set of sources. The stopped sources will have their state changed to
+        ///     ALSourceState.Stopped.
+        /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
         [DllImport(Lib, EntryPoint = "alSourceStopv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourceStop(int ns, int[] sids);
         // AL_API void AL_APIENTRY alSourceStopv( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
+        /// <summary>
+        ///     This function stops a set of sources. The stopped sources will have their state changed to
+        ///     ALSourceState.Stopped.
+        /// </summary>
         /// <param name="sources">The sources to be stopped.</param>
         public static void SourceStop(ReadOnlySpan<int> sources)
         {
@@ -684,7 +763,7 @@ namespace Reactor.Audio.OpenAL
         /// <param name="ns">The number of sources to be rewound.</param>
         /// <param name="sids">A pointer to an array of sources to be rewound.</param>
         [DllImport(Lib, EntryPoint = "alSourceRewindv", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void SourceRewind(int ns, [In] int* sids);
+        public static extern unsafe void SourceRewind(int ns, [In] int* sids);
         // AL_API void AL_APIENTRY alSourceRewindv( ALsizei ns, const ALuint *sids );
 
         /// <summary>This function stops a set of sources and sets all their states to ALSourceState.Initial.</summary>
@@ -708,35 +787,51 @@ namespace Reactor.Audio.OpenAL
             SourceRewind(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
-        /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
+        /// <summary>
+        ///     This function pauses a set of sources. The paused sources will have their state changed to
+        ///     ALSourceState.Paused.
+        /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
         [DllImport(Lib, EntryPoint = "alSourcePausev", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void SourcePause(int ns, [In] int* sids);
+        public static extern unsafe void SourcePause(int ns, [In] int* sids);
         // AL_API void AL_APIENTRY alSourcePausev( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
+        /// <summary>
+        ///     This function pauses a set of sources. The paused sources will have their state changed to
+        ///     ALSourceState.Paused.
+        /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
         [DllImport(Lib, EntryPoint = "alSourcePausev", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourcePause(int ns, ref int sids);
         // AL_API void AL_APIENTRY alSourcePausev( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
+        /// <summary>
+        ///     This function pauses a set of sources. The paused sources will have their state changed to
+        ///     ALSourceState.Paused.
+        /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
         [DllImport(Lib, EntryPoint = "alSourcePausev", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourcePause(int ns, int[] sids);
         // AL_API void AL_APIENTRY alSourcePausev( ALsizei ns, const ALuint *sids );
 
-        /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
+        /// <summary>
+        ///     This function pauses a set of sources. The paused sources will have their state changed to
+        ///     ALSourceState.Paused.
+        /// </summary>
         /// <param name="sources">The sources to be paused.</param>
         public static void SourcePause(ReadOnlySpan<int> sources)
         {
             SourcePause(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
-        /// <summary>This function plays, replays or resumes a source. The playing source will have it's state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
+        /// <summary>
+        ///     This function plays, replays or resumes a source. The playing source will have it's state changed to
+        ///     ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning.
+        ///     When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.
+        /// </summary>
         /// <param name="sid">The name of the source to be played.</param>
         [DllImport(Lib, EntryPoint = "alSourcePlay", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourcePlay(int sid);
@@ -760,31 +855,54 @@ namespace Reactor.Audio.OpenAL
         public static extern void SourcePause(int sid);
         // AL_API void AL_APIENTRY alSourcePause( ALuint sid );
 
-        /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
+        /// <summary>
+        ///     This function queues a set of buffers on a source. All buffers attached to a source will be played in
+        ///     sequence, and the number of processed buffers can be detected using AL.GetSource with parameter
+        ///     ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful
+        ///     AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.
+        /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
         /// <param name="bids">A pointer to an array of buffer names to be queued.</param>
-        [DllImport(Lib, EntryPoint = "alSourceQueueBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void SourceQueueBuffers(int sid, int numEntries, [In] int* bids);
+        [DllImport(Lib, EntryPoint = "alSourceQueueBuffers", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
+        public static extern unsafe void SourceQueueBuffers(int sid, int numEntries, [In] int* bids);
         // AL_API void AL_APIENTRY alSourceQueueBuffers( ALuint sid, ALsizei numEntries, const ALuint *bids );
 
-        /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
+        /// <summary>
+        ///     This function queues a set of buffers on a source. All buffers attached to a source will be played in
+        ///     sequence, and the number of processed buffers can be detected using AL.GetSource with parameter
+        ///     ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful
+        ///     AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.
+        /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
         /// <param name="bids">A pointer to an array of buffer names to be queued.</param>
-        [DllImport(Lib, EntryPoint = "alSourceQueueBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        [DllImport(Lib, EntryPoint = "alSourceQueueBuffers", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
         public static extern void SourceQueueBuffers(int sid, int numEntries, int[] bids);
         // AL_API void AL_APIENTRY alSourceQueueBuffers( ALuint sid, ALsizei numEntries, const ALuint *bids );
 
-        /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
+        /// <summary>
+        ///     This function queues a set of buffers on a source. All buffers attached to a source will be played in
+        ///     sequence, and the number of processed buffers can be detected using AL.GetSource with parameter
+        ///     ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful
+        ///     AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.
+        /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
         /// <param name="bids">A pointer to an array of buffer names to be queued.</param>
-        [DllImport(Lib, EntryPoint = "alSourceQueueBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        [DllImport(Lib, EntryPoint = "alSourceQueueBuffers", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
         public static extern void SourceQueueBuffers(int sid, int numEntries, ref int bids);
         // AL_API void AL_APIENTRY alSourceQueueBuffers( ALuint sid, ALsizei numEntries, const ALuint *bids );
 
-        /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
+        /// <summary>
+        ///     This function queues a set of buffers on a source. All buffers attached to a source will be played in
+        ///     sequence, and the number of processed buffers can be detected using AL.GetSource with parameter
+        ///     ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful
+        ///     AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.
+        /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="buffers">A pointer to an array of buffer names to be queued.</param>
         public static void SourceQueueBuffers(int sid, ReadOnlySpan<int> buffers)
@@ -792,7 +910,12 @@ namespace Reactor.Audio.OpenAL
             SourceQueueBuffers(sid, buffers.Length, ref MemoryMarshal.GetReference(buffers));
         }
 
-        /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
+        /// <summary>
+        ///     This function queues a set of buffers on a source. All buffers attached to a source will be played in
+        ///     sequence, and the number of processed buffers can be detected using AL.GetSource with parameter
+        ///     ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful
+        ///     AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.
+        /// </summary>
         /// <param name="source">The name of the source to queue buffers onto.</param>
         /// <param name="buffer">The name of the buffer to be queued.</param>
         public static void SourceQueueBuffer(int source, int buffer)
@@ -800,29 +923,52 @@ namespace Reactor.Audio.OpenAL
             SourceQueueBuffers(source, 1, ref buffer);
         }
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
         /// <param name="bids">A pointer to an array of buffer names that were removed.</param>
-        [DllImport(Lib, EntryPoint = "alSourceUnqueueBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void SourceUnqueueBuffers(int sid, int numEntries, int* bids);
+        [DllImport(Lib, EntryPoint = "alSourceUnqueueBuffers", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
+        public static extern unsafe void SourceUnqueueBuffers(int sid, int numEntries, int* bids);
         // AL_API void AL_APIENTRY alSourceUnqueueBuffers( ALuint sid, ALsizei numEntries, ALuint *bids );
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
         /// <param name="bids">A pointer to an array of buffer names that were removed.</param>
-        [DllImport(Lib, EntryPoint = "alSourceUnqueueBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        [DllImport(Lib, EntryPoint = "alSourceUnqueueBuffers", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
         public static extern void SourceUnqueueBuffers(int sid, int numEntries, int[] bids);
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
         /// <param name="bids">A pointer to an array of buffer names that were removed.</param>
-        [DllImport(Lib, EntryPoint = "alSourceUnqueueBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        [DllImport(Lib, EntryPoint = "alSourceUnqueueBuffers", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
         public static extern void SourceUnqueueBuffers(int sid, int numEntries, ref int bids);
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="bids">Array to fill with buffer names that were removed.</param>
         public static void SourceUnqueueBuffers(int sid, int[] bids)
@@ -830,7 +976,12 @@ namespace Reactor.Audio.OpenAL
             SourceUnqueueBuffers(sid, bids.Length, bids);
         }
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="bids">Span to fill with buffer names that were removed.</param>
         public static void SourceUnqueueBuffers(int sid, Span<int> bids)
@@ -838,27 +989,35 @@ namespace Reactor.Audio.OpenAL
             SourceUnqueueBuffers(sid, bids.Length, ref bids[0]);
         }
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <returns>The unqueued buffer.</returns>
         public static int SourceUnqueueBuffer(int sid)
         {
-            int buffer = 0;
+            var buffer = 0;
             SourceUnqueueBuffers(sid, 1, ref buffer);
             return buffer;
         }
 
-        /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
+        /// <summary>
+        ///     This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
+        ///     using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be
+        ///     unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
+        ///     queue.
+        /// </summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
         /// <returns>The unqueued buffers.</returns>
         public static int[] SourceUnqueueBuffers(int sid, int numEntries)
         {
             if (numEntries <= 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(numEntries), "Must be greater than zero.");
-            }
-            int[] buf = new int[numEntries];
+            var buf = new int[numEntries];
             SourceUnqueueBuffers(sid, numEntries, buf);
             return buf;
         }
@@ -877,11 +1036,15 @@ namespace Reactor.Audio.OpenAL
          * Channels (Query only)     AL_CHANNELS       ALint
          */
 
-        /// <summary>This function generates one or more buffers, which contain audio buffer (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <summary>
+        ///     This function generates one or more buffers, which contain audio buffer (see AL.BufferData). References to
+        ///     buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers,
+        ///     AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).
+        /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
         [DllImport(Lib, EntryPoint = "alGenBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void GenBuffers(int n, [Out] int* buffers);
+        public static extern unsafe void GenBuffers(int n, [Out] int* buffers);
         // AL_API void AL_APIENTRY alGenBuffers( ALsizei n, ALuint* Buffers );
 
         /// <summary>This function generates one or more buffers, which contain audio buffer (see AL.BufferData).</summary>
@@ -905,74 +1068,107 @@ namespace Reactor.Audio.OpenAL
             GenBuffers(buffers.Length, ref buffers[0]);
         }
 
-        /// <summary>This function generates one or more buffers, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <summary>
+        ///     This function generates one or more buffers, which contain audio data (see AL.BufferData). References to
+        ///     buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers,
+        ///     AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).
+        /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <returns>Pointer to an array of uint values which will store the names of the new buffers.</returns>
         public static int[] GenBuffers(int n)
         {
-            int[] buffers = new int[n];
+            var buffers = new int[n];
             GenBuffers(buffers.Length, buffers);
             return buffers;
         }
 
-        /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <summary>
+        ///     This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers
+        ///     are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source
+        ///     with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).
+        /// </summary>
         /// <returns>Pointer to an uint value which will store the name of the new buffer.</returns>
         public static int GenBuffer()
         {
-            int buffer = 0;
+            var buffer = 0;
             GenBuffers(1, ref buffer);
             return buffer;
         }
 
-        /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <summary>
+        ///     This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers
+        ///     are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source
+        ///     with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).
+        /// </summary>
         /// <param name="buffer">Pointer to an uint value which will store the names of the new buffer.</param>
         public static void GenBuffer(out int buffer)
         {
-            int newBuffer = 0;
+            var newBuffer = 0;
             GenBuffers(1, ref newBuffer);
             buffer = newBuffer;
         }
 
-        /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <summary>
+        ///     This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
+        ///     attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on
+        ///     how to detach a buffer from a source.
+        /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
         [DllImport(Lib, EntryPoint = "alDeleteBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void DeleteBuffers(int n, [In] int* buffers);
+        public static extern unsafe void DeleteBuffers(int n, [In] int* buffers);
         // AL_API void AL_APIENTRY alDeleteBuffers( ALsizei n, const ALuint* Buffers );
 
-        /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <summary>
+        ///     This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
+        ///     attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on
+        ///     how to detach a buffer from a source.
+        /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
         [DllImport(Lib, EntryPoint = "alDeleteBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void DeleteBuffers(int n, [In] ref int buffers);
         // AL_API void AL_APIENTRY alDeleteBuffers( ALsizei n, const ALuint* Buffers );
 
-        /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <summary>
+        ///     This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
+        ///     attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on
+        ///     how to detach a buffer from a source.
+        /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
         [DllImport(Lib, EntryPoint = "alDeleteBuffers", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void DeleteBuffers(int n, [In] int[] buffers);
         // AL_API void AL_APIENTRY alDeleteBuffers( ALsizei n, const ALuint* Buffers );
 
-        /// <summary>This function deletes an array of buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <summary>
+        ///     This function deletes an array of buffers, freeing the resources used by the buffer. Buffers which are
+        ///     attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on
+        ///     how to detach a buffer from a source.
+        /// </summary>
         /// <param name="buffers">An array of buffer names to delete.</param>
         public static void DeleteBuffers(int[] buffers)
         {
-            if (buffers == null)
-            {
-                throw new ArgumentNullException(nameof(buffers));
-            }
+            if (buffers == null) throw new ArgumentNullException(nameof(buffers));
             DeleteBuffers(buffers.Length, buffers);
         }
 
-        /// <summary>This function deletes a span of buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <summary>
+        ///     This function deletes a span of buffers, freeing the resources used by the buffer. Buffers which are attached
+        ///     to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to
+        ///     detach a buffer from a source.
+        /// </summary>
         /// <param name="buffers">Span of buffer names to delete.</param>
         public static void DeleteBuffers(ReadOnlySpan<int> buffers)
         {
             DeleteBuffers(buffers.Length, ref MemoryMarshal.GetReference(buffers));
         }
 
-        /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <summary>
+        ///     This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
+        ///     a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach
+        ///     a buffer from a source.
+        /// </summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
         public static void DeleteBuffer(int buffer)
         {
@@ -980,15 +1176,21 @@ namespace Reactor.Audio.OpenAL
         }
 
         /// <summary>This function tests if a buffer name is valid, returning True if valid, False if not.</summary>
-        /// <param name="bid">A buffer Handle previously allocated with <see cref="GenBuffers(int)"/>.</param>
+        /// <param name="bid">A buffer Handle previously allocated with <see cref="GenBuffers(int)" />.</param>
         /// <returns>Success.</returns>
         [DllImport(Lib, EntryPoint = "alIsBuffer", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern bool IsBuffer(int bid);
         // AL_API ALboolean AL_APIENTRY alIsBuffer( ALuint bid );
 
-        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <summary>
+        ///     This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
+        ///     may be used by extensions to load other buffer types as well.
+        /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
-        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="format">
+        ///     Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8,
+        ///     ALFormat.Stereo16.
+        /// </param>
         /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
@@ -996,19 +1198,31 @@ namespace Reactor.Audio.OpenAL
         public static extern void BufferData(int bid, ALFormat format, IntPtr buffer, int size, int freq);
         // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
-        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <summary>
+        ///     This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
+        ///     may be used by extensions to load other buffer types as well.
+        /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
-        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="format">
+        ///     Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8,
+        ///     ALFormat.Stereo16.
+        /// </param>
         /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         [DllImport(Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = ALCallingConvention)]
-        public static unsafe extern void BufferData(int bid, ALFormat format, void* buffer, int size, int freq);
+        public static extern unsafe void BufferData(int bid, ALFormat format, void* buffer, int size, int freq);
         // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
-        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <summary>
+        ///     This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
+        ///     may be used by extensions to load other buffer types as well.
+        /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
-        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="format">
+        ///     Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8,
+        ///     ALFormat.Stereo16.
+        /// </param>
         /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
@@ -1016,9 +1230,15 @@ namespace Reactor.Audio.OpenAL
         public static extern void BufferData(int bid, ALFormat format, ref byte buffer, int size, int freq);
         // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
-        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <summary>
+        ///     This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
+        ///     may be used by extensions to load other buffer types as well.
+        /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
-        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="format">
+        ///     Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8,
+        ///     ALFormat.Stereo16.
+        /// </param>
         /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="bytes">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
@@ -1026,10 +1246,16 @@ namespace Reactor.Audio.OpenAL
         public static extern void BufferData(int bid, ALFormat format, ref short buffer, int bytes, int freq);
         // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
-        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <summary>
+        ///     This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
+        ///     may be used by extensions to load other buffer types as well.
+        /// </summary>
         /// <typeparam name="TBuffer">The type of the data buffer.</typeparam>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
-        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="format">
+        ///     Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8,
+        ///     ALFormat.Stereo16.
+        /// </param>
         /// <param name="buffer">The audio buffer.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int freq)
@@ -1041,10 +1267,16 @@ namespace Reactor.Audio.OpenAL
             }
         }
 
-        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <summary>
+        ///     This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
+        ///     may be used by extensions to load other buffer types as well.
+        /// </summary>
         /// <typeparam name="TBuffer">The type of the buffer elements.</typeparam>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
-        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="format">
+        ///     Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8,
+        ///     ALFormat.Stereo16.
+        /// </param>
         /// <param name="buffer">Span representing the audio buffer.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, ReadOnlySpan<TBuffer> buffer, int freq)
@@ -1080,7 +1312,10 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function retrieves an integer property of a buffer.</summary>
         /// <param name="bid">Buffer name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to be retrieved: ALGetBufferi.Frequency, Bits, Channels, Size, and the currently hidden AL_DATA (dangerous).</param>
+        /// <param name="param">
+        ///     The name of the attribute to be retrieved: ALGetBufferi.Frequency, Bits, Channels, Size, and the
+        ///     currently hidden AL_DATA (dangerous).
+        /// </param>
         /// <param name="value">A pointer to an int to hold the retrieved buffer.</param>
         [DllImport(Lib, EntryPoint = "alGetBufferi", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetBuffer(int bid, ALGetBufferi param, [Out] out int value);
@@ -1088,11 +1323,14 @@ namespace Reactor.Audio.OpenAL
 
         /// <summary>This function retrieves an integer property of a buffer.</summary>
         /// <param name="bid">Buffer name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to be retrieved: ALGetBufferi.Frequency, Bits, Channels, Size, and the currently hidden AL_DATA (dangerous).</param>
+        /// <param name="param">
+        ///     The name of the attribute to be retrieved: ALGetBufferi.Frequency, Bits, Channels, Size, and the
+        ///     currently hidden AL_DATA (dangerous).
+        /// </param>
         /// <returns>An int to hold the retrieved buffer.</returns>
         public static int GetBuffer(int bid, ALGetBufferi param)
         {
-            GetBuffer(bid, param, out int value);
+            GetBuffer(bid, param, out var value);
             return value;
         }
 
@@ -1102,53 +1340,70 @@ namespace Reactor.Audio.OpenAL
         // AL_API void AL_APIENTRY alGetBuffer3i( ALuint bid, ALenum param, ALint* value1, ALint* value2, ALint* value3);
         // AL_API void AL_APIENTRY alGetBufferiv( ALuint bid, ALenum param, ALint* values );
 
-        /// <summary>AL.DopplerFactor is a simple scaling of source and listener velocities to exaggerate or deemphasize the Doppler (pitch) shift resulting from the calculation.</summary>
-        /// <param name="value">A negative value will result in an error, the command is then ignored. The default value is 1f. The current setting can be queried using AL.Get with parameter ALGetFloat.SpeedOfSound.</param>
+        /// <summary>
+        ///     AL.DopplerFactor is a simple scaling of source and listener velocities to exaggerate or deemphasize the
+        ///     Doppler (pitch) shift resulting from the calculation.
+        /// </summary>
+        /// <param name="value">
+        ///     A negative value will result in an error, the command is then ignored. The default value is 1f. The
+        ///     current setting can be queried using AL.Get with parameter ALGetFloat.SpeedOfSound.
+        /// </param>
         [DllImport(Lib, EntryPoint = "alDopplerFactor", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void DopplerFactor(float value);
         // AL_API void AL_APIENTRY alDopplerFactor( ALfloat value );
 
         /// <summary>This function is deprecated and should not be used.</summary>
         /// <param name="value">The default is 1.0f.</param>
-        [DllImport(Lib, EntryPoint = "alDopplerVelocity", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        [DllImport(Lib, EntryPoint = "alDopplerVelocity", ExactSpelling = true,
+            CallingConvention = ALCallingConvention)]
         public static extern void DopplerVelocity(float value);
         // AL_API void AL_APIENTRY alDopplerVelocity( ALfloat value );
 
-        /// <summary>AL.SpeedOfSound allows the application to change the reference (propagation) speed used in the Doppler calculation. The source and listener velocities should be expressed in the same units as the speed of sound.</summary>
-        /// <param name="value">A negative or zero value will result in an error, and the command is ignored. Default: 343.3f (appropriate for velocity units of meters and air as the propagation medium). The current setting can be queried using AL.Get with parameter ALGetFloat.SpeedOfSound.</param>
+        /// <summary>
+        ///     AL.SpeedOfSound allows the application to change the reference (propagation) speed used in the Doppler
+        ///     calculation. The source and listener velocities should be expressed in the same units as the speed of sound.
+        /// </summary>
+        /// <param name="value">
+        ///     A negative or zero value will result in an error, and the command is ignored. Default: 343.3f
+        ///     (appropriate for velocity units of meters and air as the propagation medium). The current setting can be queried
+        ///     using AL.Get with parameter ALGetFloat.SpeedOfSound.
+        /// </param>
         [DllImport(Lib, EntryPoint = "alSpeedOfSound", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SpeedOfSound(float value);
         // AL_API void AL_APIENTRY alSpeedOfSound( ALfloat value );
 
-        /// <summary>This function selects the OpenAL distance model – ALDistanceModel.InverseDistance, ALDistanceModel.InverseDistanceClamped, ALDistanceModel.LinearDistance, ALDistanceModel.LinearDistanceClamped, ALDistanceModel.ExponentDistance, ALDistanceModel.ExponentDistanceClamped, or ALDistanceModel.None. The default distance model in OpenAL is ALDistanceModel.InverseDistanceClamped.</summary>
+        /// <summary>
+        ///     This function selects the OpenAL distance model – ALDistanceModel.InverseDistance,
+        ///     ALDistanceModel.InverseDistanceClamped, ALDistanceModel.LinearDistance, ALDistanceModel.LinearDistanceClamped,
+        ///     ALDistanceModel.ExponentDistance, ALDistanceModel.ExponentDistanceClamped, or ALDistanceModel.None. The default
+        ///     distance model in OpenAL is ALDistanceModel.InverseDistanceClamped.
+        /// </summary>
         /// <remarks>
-        /// The ALDistanceModel .InverseDistance model works according to the following formula:
-        /// gain = ALSourcef.ReferenceDistance / (ALSourcef.ReferenceDistance + ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance));
-        ///
-        /// The ALDistanceModel .InverseDistanceClamped model works according to the following formula:
-        /// distance = max(distance,ALSourcef.ReferenceDistance);
-        /// distance = min(distance,ALSourcef.MaxDistance);
-        /// gain = ALSourcef.ReferenceDistance / (ALSourcef.ReferenceDistance + ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance));
-        ///
-        /// The ALDistanceModel.LinearDistance model works according to the following formula:
-        /// distance = min(distance, ALSourcef.MaxDistance) // avoid negative gain
-        /// gain = (1 – ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance) / (ALSourcef.MaxDistance – ALSourcef.ReferenceDistance))
-        ///
-        /// The ALDistanceModel.LinearDistanceClamped model works according to the following formula:
-        /// distance = max(distance, ALSourcef.ReferenceDistance)
-        /// distance = min(distance, ALSourcef.MaxDistance)
-        /// gain = (1 – ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance) / (ALSourcef.MaxDistance – ALSourcef.ReferenceDistance))
-        ///
-        /// The ALDistanceModel.ExponentDistance model works according to the following formula:
-        /// gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor)
-        ///
-        /// The ALDistanceModel.ExponentDistanceClamped model works according to the following formula:
-        /// distance = max(distance, ALSourcef.ReferenceDistance)
-        /// distance = min(distance, ALSourcef.MaxDistance)
-        /// gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor)
-        ///
-        /// The ALDistanceModel.None model works according to the following formula:
-        /// <code>gain = 1f;</code>.
+        ///     The ALDistanceModel .InverseDistance model works according to the following formula:
+        ///     gain = ALSourcef.ReferenceDistance / (ALSourcef.ReferenceDistance + ALSourcef.RolloffFactor * (distance –
+        ///     ALSourcef.ReferenceDistance));
+        ///     The ALDistanceModel .InverseDistanceClamped model works according to the following formula:
+        ///     distance = max(distance,ALSourcef.ReferenceDistance);
+        ///     distance = min(distance,ALSourcef.MaxDistance);
+        ///     gain = ALSourcef.ReferenceDistance / (ALSourcef.ReferenceDistance + ALSourcef.RolloffFactor * (distance –
+        ///     ALSourcef.ReferenceDistance));
+        ///     The ALDistanceModel.LinearDistance model works according to the following formula:
+        ///     distance = min(distance, ALSourcef.MaxDistance) // avoid negative gain
+        ///     gain = (1 – ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance) / (ALSourcef.MaxDistance –
+        ///     ALSourcef.ReferenceDistance))
+        ///     The ALDistanceModel.LinearDistanceClamped model works according to the following formula:
+        ///     distance = max(distance, ALSourcef.ReferenceDistance)
+        ///     distance = min(distance, ALSourcef.MaxDistance)
+        ///     gain = (1 – ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance) / (ALSourcef.MaxDistance –
+        ///     ALSourcef.ReferenceDistance))
+        ///     The ALDistanceModel.ExponentDistance model works according to the following formula:
+        ///     gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor)
+        ///     The ALDistanceModel.ExponentDistanceClamped model works according to the following formula:
+        ///     distance = max(distance, ALSourcef.ReferenceDistance)
+        ///     distance = min(distance, ALSourcef.MaxDistance)
+        ///     gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor)
+        ///     The ALDistanceModel.None model works according to the following formula:
+        ///     <code>gain = 1f;</code>.
         /// </remarks>
         /// <param name="distancemodel">The distance model to use.</param>
         [DllImport(Lib, EntryPoint = "alDistanceModel", ExactSpelling = true, CallingConvention = ALCallingConvention)]
@@ -1156,9 +1411,9 @@ namespace Reactor.Audio.OpenAL
         // AL_API void AL_APIENTRY alDistanceModel( ALenum distanceModel );
 
         /// <summary>
-        /// Returns the <see cref="ALDistanceModel"/> of the current context.
+        ///     Returns the <see cref="ALDistanceModel" /> of the current context.
         /// </summary>
-        /// <returns>The <see cref="ALDistanceModel"/> of the current context.</returns>
+        /// <returns>The <see cref="ALDistanceModel" /> of the current context.</returns>
         public static ALDistanceModel GetDistanceModel()
         {
             return (ALDistanceModel)Get(ALGetInteger.DistanceModel);

@@ -55,28 +55,28 @@ namespace Reactor.Audio
 {
     public class RAudioStream
     {
-        const int DefaultBufferCount = 3;
-
-        internal readonly object stopMutex = new object();
-        internal readonly object prepareMutex = new object();
-
-        internal readonly int alSourceId;
+        private const int DefaultBufferCount = 3;
         internal readonly int[] alBufferIds;
 
-        readonly int alFilterId;
-        readonly Stream underlyingStream;
+        private readonly int alFilterId;
 
-        internal VorbisReader Reader { get; private set; }
-        public bool Ready { get; private set; }
-        internal bool Preparing { get; private set; }
+        internal readonly int alSourceId;
+        internal readonly object prepareMutex = new object();
 
-        public int BufferCount { get; private set; }
-
-        public string Name { get; set; }
+        internal readonly object stopMutex = new object();
+        private readonly Stream underlyingStream;
 
         internal EventHandler Finished;
 
-        public RAudioStream(string filename, string name, int bufferCount = DefaultBufferCount) : this(File.OpenRead(filename), name, bufferCount) { }
+        private float lowPassHfGain;
+
+        private float volume;
+
+        public RAudioStream(string filename, string name, int bufferCount = DefaultBufferCount) : this(
+            File.OpenRead(filename), name, bufferCount)
+        {
+        }
+
         public RAudioStream(Stream stream, string name, int bufferCount = DefaultBufferCount)
         {
             Name = name;
@@ -87,16 +87,45 @@ namespace Reactor.Audio
             alSourceId = AL.GenSource();
 
             Volume = 1;
-            
+
             alFilterId = ALC.EFX.GenFilter();
             ALC.EFX.Filter(alFilterId, FilterInteger.FilterType, (int)FilterType.Lowpass);
             ALC.EFX.Filter(alFilterId, FilterFloat.LowpassGain, 1);
             LowPassHFGain = 1;
-            
-            underlyingStream = stream;
 
-            
+            underlyingStream = stream;
         }
+
+        internal VorbisReader Reader { get; private set; }
+        public bool Ready { get; private set; }
+        internal bool Preparing { get; private set; }
+
+        public int BufferCount { get; private set; }
+
+        public string Name { get; set; }
+
+        public float LowPassHFGain
+        {
+            get => lowPassHfGain;
+            set
+            {
+                ALC.EFX.Filter(alFilterId, FilterFloat.LowpassGainHF, lowPassHfGain = value);
+                ALC.EFX.Source(alSourceId, EFXSourceInteger.DirectFilter, alFilterId);
+                ALHelper.Check();
+            }
+        }
+
+        public float Volume
+        {
+            get => volume;
+            set
+            {
+                AL.Source(alSourceId, ALSourcef.Gain, volume = value);
+                ALHelper.Check();
+            }
+        }
+
+        public bool IsLooped { get; set; }
 
         public void Prepare()
         {
@@ -118,19 +147,18 @@ namespace Reactor.Audio
                             Ready = false;
                             Empty();
                         }
+
                         break;
                 }
 
                 if (!Ready)
-                {
                     lock (prepareMutex)
                     {
                         Preparing = true;
-                        RLog.Info("Preparing audio stream: "+this.Name);
-                        Open(precache: true);
-                        RLog.Info("Finished preparing audio stream: "+this.Name);
+                        RLog.Info("Preparing audio stream: " + Name);
+                        Open(true);
+                        RLog.Info("Finished preparing audio stream: " + Name);
                     }
-                }
             }
         }
 
@@ -148,7 +176,7 @@ namespace Reactor.Audio
 
             Prepare();
 
-            
+
             AL.SourcePlay(alSourceId);
             ALHelper.Check();
 
@@ -163,7 +191,7 @@ namespace Reactor.Audio
                 return;
 
             RAudioStreamer.Instance.RemoveStream(this);
-            
+
             AL.SourcePause(alSourceId);
             ALHelper.Check();
         }
@@ -174,7 +202,7 @@ namespace Reactor.Audio
                 return;
 
             RAudioStreamer.Instance.AddStream(this);
-            
+
             AL.SourcePlay(alSourceId);
             ALHelper.Check();
         }
@@ -182,41 +210,13 @@ namespace Reactor.Audio
         public void Stop()
         {
             var state = ALHelper.GetSourceState(alSourceId);
-            if (state == ALSourceState.Playing || state == ALSourceState.Paused)
-            {
-                StopPlayback();
-            }
+            if (state == ALSourceState.Playing || state == ALSourceState.Paused) StopPlayback();
 
             lock (stopMutex)
             {
                 RAudioStreamer.Instance.RemoveStream(this);
             }
         }
-
-        float lowPassHfGain;
-        public float LowPassHFGain
-        {
-            get { return lowPassHfGain; }
-            set
-            {
-                ALC.EFX.Filter(alFilterId, FilterFloat.LowpassGainHF, lowPassHfGain = value);
-                ALC.EFX.Source(alSourceId, EFXSourceInteger.DirectFilter, alFilterId);
-                ALHelper.Check();
-            }
-        }
-
-        float volume;
-        public float Volume
-        {
-            get { return volume; }
-            set
-            {
-                AL.Source(alSourceId, ALSourcef.Gain, volume = value);
-                ALHelper.Check();
-            }
-        }
-
-        public bool IsLooped { get; set; }
 
         public void Dispose()
         {
@@ -238,15 +238,13 @@ namespace Reactor.Audio
 
             AL.DeleteSource(alSourceId);
             AL.DeleteBuffers(alBufferIds);
-            
-            ALC.EFX.DeleteFilter(alFilterId);
-            
-            ALHelper.Check();
 
-            
+            ALC.EFX.DeleteFilter(alFilterId);
+
+            ALHelper.Check();
         }
 
-        void StopPlayback()
+        private void StopPlayback()
         {
             AL.SourceStop(alSourceId);
             ALHelper.Check();
@@ -258,16 +256,15 @@ namespace Reactor.Audio
             if (callback != null)
             {
                 callback(this, EventArgs.Empty);
-                Finished = null;  // This is not typical...  Usually we count on whatever code added the event handler to also remove it
+                Finished = null; // This is not typical...  Usually we count on whatever code added the event handler to also remove it
             }
         }
 
-        void Empty()
+        private void Empty()
         {
             int queued;
             AL.GetSource(alSourceId, ALGetSourcei.BuffersQueued, out queued);
             if (queued > 0)
-            {
                 try
                 {
                     AL.SourceUnqueueBuffers(alSourceId, queued);
@@ -292,9 +289,6 @@ namespace Reactor.Audio
 
                     Empty();
                 }
-            }
-
-            
         }
 
         internal void Open(bool precache = false)
@@ -323,6 +317,7 @@ namespace Reactor.Audio
                 Reader.Dispose();
                 Reader = null;
             }
+
             Ready = false;
         }
     }

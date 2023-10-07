@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System.Globalization;
@@ -29,21 +31,21 @@ using System.IO;
 namespace Newtonsoft.Json.Linq
 {
     /// <summary>
-    /// Represents a raw JSON string.
+    ///     Represents a raw JSON string.
     /// </summary>
-    public partial class JRaw : JValue
+    public class JRaw : JValue
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JRaw"/> class from another <see cref="JRaw"/> object.
+        ///     Initializes a new instance of the <see cref="JRaw" /> class from another <see cref="JRaw" /> object.
         /// </summary>
-        /// <param name="other">A <see cref="JRaw"/> object to copy from.</param>
+        /// <param name="other">A <see cref="JRaw" /> object to copy from.</param>
         public JRaw(JRaw other)
             : base(other)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JRaw"/> class.
+        ///     Initializes a new instance of the <see cref="JRaw" /> class.
         /// </summary>
         /// <param name="rawJson">The raw json.</param>
         public JRaw(object? rawJson)
@@ -52,14 +54,14 @@ namespace Newtonsoft.Json.Linq
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JRaw"/> with the content of the reader's current token.
+        ///     Creates an instance of <see cref="JRaw" /> with the content of the reader's current token.
         /// </summary>
         /// <param name="reader">The reader.</param>
-        /// <returns>An instance of <see cref="JRaw"/> with the content of the reader's current token.</returns>
+        /// <returns>An instance of <see cref="JRaw" /> with the content of the reader's current token.</returns>
         public static JRaw Create(JsonReader reader)
         {
-            using (StringWriter sw = new StringWriter(CultureInfo.InvariantCulture))
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(sw))
+            using (var sw = new StringWriter(CultureInfo.InvariantCulture))
+            using (var jsonWriter = new JsonTextWriter(sw))
             {
                 jsonWriter.WriteToken(reader);
 

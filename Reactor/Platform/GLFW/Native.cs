@@ -6,15 +6,15 @@ using JetBrains.Annotations;
 
 namespace Reactor.Platform.GLFW
 {
-	/// <summary>
-	///     Provides access to relevant native functions of the current operating system.
-	///     <para>
-	///         By using the native access functions you assert that you know what you're doing and how to fix problems
-	///         caused by using them.
-	///     </para>
-	///     <para>If you don't, you shouldn't be using them.</para>
-	/// </summary>
-	[SuppressUnmanagedCodeSecurity]
+    /// <summary>
+    ///     Provides access to relevant native functions of the current operating system.
+    ///     <para>
+    ///         By using the native access functions you assert that you know what you're doing and how to fix problems
+    ///         caused by using them.
+    ///     </para>
+    ///     <para>If you don't, you shouldn't be using them.</para>
+    /// </summary>
+    [SuppressUnmanagedCodeSecurity]
     public static class Native
     {
         #region External

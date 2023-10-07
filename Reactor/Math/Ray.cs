@@ -1,5 +1,4 @@
-﻿
-// Author:
+﻿// Author:
 //       Gabriel Reiser <gabe@reisergames.com>
 //
 // Copyright (c) 2010-2016 Reiser Games, LLC.
@@ -21,11 +20,11 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 
 namespace Reactor.Math
 {
@@ -36,42 +35,43 @@ namespace Reactor.Math
     {
         #region Public Fields
 
-        [FieldOffset(0)]
-        public Vector3 Direction;
+        [FieldOffset(0)] public Vector3 Direction;
 
-        [FieldOffset(12)]
-        public Vector3 Position;
+        [FieldOffset(12)] public Vector3 Position;
 
         #endregion
 
         /// <summary>
-        /// Casts a ray from position in direction (normalized).
-        /// Checking if it hits boundings boxes, spheres, planes, etc.
+        ///     Casts a ray from position in direction (normalized).
+        ///     Checking if it hits boundings boxes, spheres, planes, etc.
         /// </summary>
         /// <param name="position"></param>
         /// <param name="direction"></param>
+
         #region Public Constructors
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Ray(Vector3 position, Vector3 direction)
         {
-            this.Position = position;
-            this.Direction = direction;
+            Position = position;
+            Direction = direction;
         }
 
         #endregion
 
 
         #region Public Methods
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {
-            return (obj is Ray) ? this.Equals((Ray)obj) : false;
+            return obj is Ray ? Equals((Ray)obj) : false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Ray other)
         {
-            return this.Position.Equals(other.Position) && this.Direction.Equals(other.Direction);
+            return Position.Equals(other.Position) && Direction.Equals(other.Direction);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -156,7 +156,7 @@ namespace Reactor.Math
 
             // having a positive tMin and a negative tMax means the ray is inside the box
             // we expect the intesection distance to be 0 in that case
-            if ((tMin.HasValue && tMin < 0) && tMax > 0) return 0;
+            if (tMin.HasValue && tMin < 0 && tMax > 0) return 0;
 
             // a negative tMin means that the intersection point is behind the ray's origin
             // we discard these as not hitting the AABB
@@ -168,18 +168,18 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersects(ref BoundingBox box, out float? result)
         {
-			result = Intersects(box);
+            result = Intersects(box);
         }
 
         /*
         public float? Intersects(BoundingFrustum frustum)
         {
             if (frustum == null)
-			{
-				throw new ArgumentNullException("frustum");
-			}
-			
-			return frustum.Intersects(this);			
+            {
+                throw new ArgumentNullException("frustum");
+            }
+
+            return frustum.Intersects(this);
         }
         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -189,6 +189,7 @@ namespace Reactor.Math
             Intersects(ref sphere, out result);
             return result;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float? Intersects(Plane plane)
         {
@@ -196,6 +197,7 @@ namespace Reactor.Math
             Intersects(ref plane, out result);
             return result;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersects(ref Plane plane, out float? result)
         {
@@ -219,14 +221,15 @@ namespace Reactor.Math
                 result = 0.0f;
             }
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersects(ref BoundingSphere sphere, out float? result)
         {
             // Find the vector between where the ray starts the the sphere's centre
-            Vector3 difference = sphere.Center - this.Position;
+            var difference = sphere.Center - Position;
 
-            float differenceLengthSquared = difference.LengthSquared();
-            float sphereRadiusSquared = sphere.Radius * sphere.Radius;
+            var differenceLengthSquared = difference.LengthSquared();
+            var sphereRadiusSquared = sphere.Radius * sphere.Radius;
 
             float distanceAlongRay;
 
@@ -238,7 +241,7 @@ namespace Reactor.Math
                 return;
             }
 
-            Vector3.Dot(ref this.Direction, ref difference, out distanceAlongRay);
+            Vector3.Dot(ref Direction, ref difference, out distanceAlongRay);
             // If the ray is pointing away from the sphere then we don't ever intersect
             if (distanceAlongRay < 0)
             {
@@ -251,9 +254,9 @@ namespace Reactor.Math
             // if y = distance between ray position and sphere centre
             // if z = the distance we've travelled along the ray
             // if x^2 + z^2 - y^2 < 0, we do not intersect
-            float dist = sphereRadiusSquared + distanceAlongRay * distanceAlongRay - differenceLengthSquared;
+            var dist = sphereRadiusSquared + distanceAlongRay * distanceAlongRay - differenceLengthSquared;
 
-            result = (dist < 0) ? null : distanceAlongRay - (float?)System.Math.Sqrt(dist);
+            result = dist < 0 ? null : distanceAlongRay - (float?)System.Math.Sqrt(dist);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -272,10 +275,9 @@ namespace Reactor.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {
-            return "{{Position:" + Position.ToString() + " Direction:" + Direction.ToString() + "}}";
+            return "{{Position:" + Position + " Direction:" + Direction + "}}";
         }
 
-
-		#endregion
+        #endregion
     }
 }

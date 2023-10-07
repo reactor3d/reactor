@@ -20,39 +20,36 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using Reactor.Types;
+
 using Reactor.Math;
 using Reactor.Platform.OpenGL;
+using Reactor.Types;
 
 namespace Reactor
 {
     /// <summary>
-    /// RCamera provides the cameras in the game.  This is only a very matrix Quaternion based camera, much like <see ref="RUpdateNode"> which is the basis of all moving things in Reactor.
-    /// This class can be inherited to provide specific camera operation funtionality.
-    /// Simply listen to the <see ref="OnUpdate"> event handler.
+    ///     RCamera provides the cameras in the game.  This is only a very matrix Quaternion based camera, much like
+    ///     <see ref="RUpdateNode">
+    ///         which is the basis of all moving things in Reactor.
+    ///         This class can be inherited to provide specific camera operation funtionality.
+    ///         Simply listen to the <see ref="OnUpdate"> event handler.
     /// </summary>
     public class RCamera : RCameraNode
     {
-        public Vector3 ViewDirection { get; set; }
-        public Vector3 Up { get; set; }
-        public float FieldOfView { get; set; }
-        public float Zoom { get; set; }
-
-
         public RCamera()
         {
             Near = 1.0f;
             Far = 100.0f;
-            FieldOfView = 70f;
+            FieldOfView = 90f;
             Zoom = 1.0f;
             Up = Vector3.UnitY;
-            View = Matrix.CreateLookAt (Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
+
+            View = Matrix.CreateLookAt(Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
             ViewDirection = View.Forward;
-            Projection = Matrix.CreatePerspectiveFieldOfView (MathHelper.ToRadians (FieldOfView),
-                    REngine.Instance.GetViewport().AspectRatio, Near, Far);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView),
+                REngine.Instance.GetViewport().AspectRatio, Near, Far);
             Position = Vector3.Zero;
-            GL.DepthRange (Near, Far);
+            GL.DepthRange(Near, Far);
         }
 
         public RCamera(float AspectRatio)
@@ -62,27 +59,29 @@ namespace Reactor
             FieldOfView = 70f;
             Zoom = 1.0f;
             Up = Vector3.UnitY;
-            View = Matrix.CreateLookAt (Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
+            View = Matrix.CreateLookAt(Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
             ViewDirection = View.Forward;
-            Projection = Matrix.CreatePerspectiveFieldOfView (MathHelper.ToRadians (FieldOfView),
-                                AspectRatio, Near, Far);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView),
+                AspectRatio, Near, Far);
             Position = Vector3.Zero;
-            GL.DepthRange (Near, Far);
+            GL.DepthRange(Near, Far);
         }
+
+        public Vector3 ViewDirection { get; set; }
+        public Vector3 Up { get; set; }
+        public float FieldOfView { get; set; }
+        public float Zoom { get; set; }
 
         public override void Update()
         {
-            
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians (FieldOfView),
-                                REngine.Instance.GetViewport().AspectRatio, Near, Far);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView),
+                REngine.Instance.GetViewport().AspectRatio, Near, Far);
             View = Matrix.CreateLookAt(Position, Position + ViewDirection, Up);
-            
+
             Matrix = View;
 
-            GL.DepthRange (Near, Far);
+            GL.DepthRange(Near, Far);
+            base.Update();
         }
-        
-
     }
 }
-

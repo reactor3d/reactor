@@ -20,13 +20,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Reactor.Math;
-using Reactor.Types;
+using Reactor.Platform.OpenGL;
 
 namespace Reactor
 {
@@ -34,15 +30,24 @@ namespace Reactor
     {
         public RCamera2d()
         {
+            var viewport = REngine.Instance._viewport;
+            Near = 0.1f;
+            Far = 10.0f;
+            FieldOfView = 70f;
+            Zoom = 1.0f;
+            Up = Vector3.UnitY;
 
-            this.OnUpdate += RCamera2d_OnUpdate;
+            View = Matrix.CreateLookAt(Vector3.Zero, -Vector3.UnitZ, Vector3.UnitY);
+            ViewDirection = View.Forward;
+            Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, Near, Far);
+            Position = Vector3.Zero;
+            GL.DepthRange(Near, Far);
         }
 
-        void RCamera2d_OnUpdate()
+        public override void Update()
         {
-            RViewport viewport = REngine.Instance._viewport;
-            this.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height,0, Near, Far);
+            var viewport = REngine.Instance._viewport;
+            Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, Near, Far);
         }
-
     }
 }

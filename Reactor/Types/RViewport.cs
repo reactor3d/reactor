@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 using System.Runtime.InteropServices;
+using Reactor.Math;
 using Reactor.Platform.OpenGL;
 
 namespace Reactor
@@ -34,13 +35,14 @@ namespace Reactor
         public float Width;
         public float Height;
         public float AspectRatio;
+
         public RViewport(int width, int height)
         {
             X = 0;
             Y = 0;
             Width = width;
             Height = height;
-            AspectRatio = (float)Width / (float)Height;
+            AspectRatio = Width / Height;
         }
 
         public RViewport(int x, int y, int width, int height)
@@ -55,8 +57,12 @@ namespace Reactor
         internal void Bind()
         {
             AspectRatio = Width / Height;
-            GL.Viewport((int)0, (int)0, (int)Width, (int)Height);
+            GL.Viewport(0, 0, (int)Width, (int)Height);
         }
 
+        public Rectangle Bounds()
+        {
+            return new Rectangle((int)X, (int)Y, (int)Width, (int)Height);
+        }
     }
 }

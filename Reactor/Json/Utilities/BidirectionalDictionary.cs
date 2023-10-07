@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -31,17 +33,18 @@ namespace Newtonsoft.Json.Utilities
 {
     internal class BidirectionalDictionary<TFirst, TSecond>
     {
-        private readonly IDictionary<TFirst, TSecond> _firstToSecond;
-        private readonly IDictionary<TSecond, TFirst> _secondToFirst;
         private readonly string _duplicateFirstErrorMessage;
         private readonly string _duplicateSecondErrorMessage;
+        private readonly IDictionary<TFirst, TSecond> _firstToSecond;
+        private readonly IDictionary<TSecond, TFirst> _secondToFirst;
 
         public BidirectionalDictionary()
             : this(EqualityComparer<TFirst>.Default, EqualityComparer<TSecond>.Default)
         {
         }
 
-        public BidirectionalDictionary(IEqualityComparer<TFirst> firstEqualityComparer, IEqualityComparer<TSecond> secondEqualityComparer)
+        public BidirectionalDictionary(IEqualityComparer<TFirst> firstEqualityComparer,
+            IEqualityComparer<TSecond> secondEqualityComparer)
             : this(
                 firstEqualityComparer,
                 secondEqualityComparer,
@@ -50,7 +53,8 @@ namespace Newtonsoft.Json.Utilities
         {
         }
 
-        public BidirectionalDictionary(IEqualityComparer<TFirst> firstEqualityComparer, IEqualityComparer<TSecond> secondEqualityComparer,
+        public BidirectionalDictionary(IEqualityComparer<TFirst> firstEqualityComparer,
+            IEqualityComparer<TSecond> secondEqualityComparer,
             string duplicateFirstErrorMessage, string duplicateSecondErrorMessage)
         {
             _firstToSecond = new Dictionary<TFirst, TSecond>(firstEqualityComparer);
@@ -61,21 +65,15 @@ namespace Newtonsoft.Json.Utilities
 
         public void Set(TFirst first, TSecond second)
         {
-            if (_firstToSecond.TryGetValue(first, out TSecond existingSecond))
-            {
+            if (_firstToSecond.TryGetValue(first, out var existingSecond))
                 if (!existingSecond!.Equals(second))
-                {
-                    throw new ArgumentException(_duplicateFirstErrorMessage.FormatWith(CultureInfo.InvariantCulture, first));
-                }
-            }
+                    throw new ArgumentException(
+                        _duplicateFirstErrorMessage.FormatWith(CultureInfo.InvariantCulture, first));
 
-            if (_secondToFirst.TryGetValue(second, out TFirst existingFirst))
-            {
+            if (_secondToFirst.TryGetValue(second, out var existingFirst))
                 if (!existingFirst!.Equals(first))
-                {
-                    throw new ArgumentException(_duplicateSecondErrorMessage.FormatWith(CultureInfo.InvariantCulture, second));
-                }
-            }
+                    throw new ArgumentException(
+                        _duplicateSecondErrorMessage.FormatWith(CultureInfo.InvariantCulture, second));
 
             _firstToSecond.Add(first, second);
             _secondToFirst.Add(second, first);

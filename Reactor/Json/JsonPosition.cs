@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -42,7 +44,11 @@ namespace Newtonsoft.Json
 
     internal struct JsonPosition
     {
-        private static readonly char[] SpecialCharacters = { '.', ' ', '\'', '/', '"', '[', ']', '(', ')', '\t', '\n', '\r', '\f', '\b', '\\', '\u0085', '\u2028', '\u2029' };
+        private static readonly char[] SpecialCharacters =
+        {
+            '.', ' ', '\'', '/', '"', '[', ']', '(', ')', '\t', '\n', '\r', '\f', '\b', '\\', '\u0085', '\u2028',
+            '\u2029'
+        };
 
         internal JsonContainerType Type;
         internal int Position;
@@ -76,29 +82,25 @@ namespace Newtonsoft.Json
             switch (Type)
             {
                 case JsonContainerType.Object:
-                    string propertyName = PropertyName!;
+                    var propertyName = PropertyName!;
                     if (propertyName.IndexOfAny(SpecialCharacters) != -1)
                     {
                         sb.Append(@"['");
 
-                        if (writer == null)
-                        {
-                            writer = new StringWriter(sb);
-                        }
+                        if (writer == null) writer = new StringWriter(sb);
 
-                        JavaScriptUtils.WriteEscapedJavaScriptString(writer, propertyName, '\'', false, JavaScriptUtils.SingleQuoteCharEscapeFlags, StringEscapeHandling.Default, null, ref buffer);
+                        JavaScriptUtils.WriteEscapedJavaScriptString(writer, propertyName, '\'', false,
+                            JavaScriptUtils.SingleQuoteCharEscapeFlags, StringEscapeHandling.Default, null, ref buffer);
 
                         sb.Append(@"']");
                     }
                     else
                     {
-                        if (sb.Length > 0)
-                        {
-                            sb.Append('.');
-                        }
+                        if (sb.Length > 0) sb.Append('.');
 
                         sb.Append(propertyName);
                     }
+
                     break;
                 case JsonContainerType.Array:
                 case JsonContainerType.Constructor:
@@ -111,38 +113,24 @@ namespace Newtonsoft.Json
 
         internal static bool TypeHasIndex(JsonContainerType type)
         {
-            return (type == JsonContainerType.Array || type == JsonContainerType.Constructor);
+            return type == JsonContainerType.Array || type == JsonContainerType.Constructor;
         }
 
         internal static string BuildPath(List<JsonPosition> positions, JsonPosition? currentPosition)
         {
-            int capacity = 0;
+            var capacity = 0;
             if (positions != null)
-            {
-                for (int i = 0; i < positions.Count; i++)
-                {
+                for (var i = 0; i < positions.Count; i++)
                     capacity += positions[i].CalculateLength();
-                }
-            }
-            if (currentPosition != null)
-            {
-                capacity += currentPosition.GetValueOrDefault().CalculateLength();
-            }
+            if (currentPosition != null) capacity += currentPosition.GetValueOrDefault().CalculateLength();
 
-            StringBuilder sb = new StringBuilder(capacity);
+            var sb = new StringBuilder(capacity);
             StringWriter? writer = null;
             char[]? buffer = null;
             if (positions != null)
-            {
-                foreach (JsonPosition state in positions)
-                {
+                foreach (var state in positions)
                     state.WriteTo(sb, ref writer, ref buffer);
-                }
-            }
-            if (currentPosition != null)
-            {
-                currentPosition.GetValueOrDefault().WriteTo(sb, ref writer, ref buffer);
-            }
+            if (currentPosition != null) currentPosition.GetValueOrDefault().WriteTo(sb, ref writer, ref buffer);
 
             return sb.ToString();
         }
@@ -154,10 +142,7 @@ namespace Newtonsoft.Json
             {
                 message = message.Trim();
 
-                if (!message.EndsWith('.'))
-                {
-                    message += ".";
-                }
+                if (!message.EndsWith('.')) message += ".";
 
                 message += " ";
             }
@@ -165,9 +150,8 @@ namespace Newtonsoft.Json
             message += "Path '{0}'".FormatWith(CultureInfo.InvariantCulture, path);
 
             if (lineInfo != null && lineInfo.HasLineInfo())
-            {
-                message += ", line {0}, position {1}".FormatWith(CultureInfo.InvariantCulture, lineInfo.LineNumber, lineInfo.LinePosition);
-            }
+                message += ", line {0}, position {1}".FormatWith(CultureInfo.InvariantCulture, lineInfo.LineNumber,
+                    lineInfo.LinePosition);
 
             message += ".";
 

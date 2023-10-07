@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Text;
-using Reactor.Geometry;
-using Reactor.Math;
-using Reactor.Types;
+using Reactor.Utilities;
 #if USE_NUMERICS
 using System.Numerics;
 #endif
@@ -15,6 +12,7 @@ using System.Collections.Generic;
 namespace Reactor.Platform.OpenGL
 {
     #region Simple Memory Logging for Debugging
+
 #if MEMORY_LOGGER
     public static class MemoryLogger
     {
@@ -90,96 +88,98 @@ namespace Reactor.Platform.OpenGL
         }
     }
 #endif
+
     #endregion
 
     /// <summary>
-    /// Bindings to OpenGL 4.5 methods as well as some helper shortcuts.
+    ///     Bindings to OpenGL 4.5 methods as well as some helper shortcuts.
     /// </summary>
     partial class GL
     {
         #region Preallocated Memory
+
         // pre-allocate the float[] for matrix and array data
-        private static float[] float1 = new float[1];
-        private static double[] double1 = new double[1];
-        private static int[] int1 = new int[1];
-        private static bool[] bool1 = new bool[1];
+
         private static uint currentProgram;
+
         #endregion
+
         private static int version, versionMinor;
 
         /// <summary>
-        /// Returns the boolean value of a selected parameter.
+        ///     Returns the boolean value of a selected parameter.
         /// </summary>
         /// <param name="pname">A parameter that returns a single boolean.</param>
         public static bool GetBoolean(GetPName pname)
         {
-            GetBooleanv(pname, bool1);
-            return bool1[0];
+            GetBooleanv(pname, Allocator.Bool_1);
+            return Allocator.Bool_1[0];
         }
 
         /// <summary>
-        /// Returns the float value of a selected parameter.
+        ///     Returns the float value of a selected parameter.
         /// </summary>
         /// <param name="pname">A parameter that returns a single float.</param>
         public static float GetFloat(GetPName pname)
         {
-            GetFloatv(pname, float1);
-            return float1[0];
+            GetFloatv(pname, Allocator.Float_1);
+            return Allocator.Float_1[0];
         }
 
         /// <summary>
-        /// Returns the double value of a selected parameter.
+        ///     Returns the double value of a selected parameter.
         /// </summary>
         /// <param name="pname">A parameter that returns a single double.</param>
         public static double GetDouble(GetPName pname)
         {
-            GetDoublev(pname, double1);
-            return double1[0];
+            GetDoublev(pname, Allocator.Double_1);
+            return Allocator.Double_1[0];
         }
 
         /// <summary>
-        /// Returns the integer value of a selected parameter.
+        ///     Returns the integer value of a selected parameter.
         /// </summary>
         /// <param name="name">A parameter that returns a single integer.</param>
         public static int GetInteger(GetPName name)
         {
-            GetIntegerv(name, int1);
-            return int1[0];
+            GetIntegerv(name, Allocator.Int32_1);
+            return Allocator.Int32_1[0];
         }
-        
-        public static string GetProgramInfoLog(UInt32 program)
+
+        public static string GetProgramInfoLog(uint program)
         {
-            GL.GetProgramiv(program, ProgramParameter.InfoLogLength, int1);
-            if (int1[0] == 0) return String.Empty;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder(int1[0]);
-            GL.GetProgramInfoLog(program, sb.Capacity, int1, sb);
+            GetProgramiv(program, ProgramParameter.InfoLogLength, Allocator.Int32_1);
+            if (Allocator.Int32_1[0] == 0) return string.Empty;
+            var sb = new StringBuilder(Allocator.Int32_1[0]);
+            GetProgramInfoLog(program, sb.Capacity, Allocator.Int32_1, sb);
             return sb.ToString();
         }
 
         /// <summary>
-        /// Gets the program info from a shader program.
+        ///     Gets the program info from a shader program.
         /// </summary>
         /// <param name="shader">The ID of the shader program.</param>
-        public static string GetShaderInfoLog(UInt32 shader)
+        public static string GetShaderInfoLog(uint shader)
         {
-            GL.GetShaderiv(shader, ShaderParameter.InfoLogLength, int1);
-            if (int1[0] == 0) return String.Empty;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder(int1[0]);
-            GL.GetShaderInfoLog(shader, sb.Capacity, int1, sb);
+            GetShaderiv(shader, ShaderParameter.InfoLogLength, Allocator.Int32_1);
+            if (Allocator.Int32_1[0] == 0) return string.Empty;
+            var sb = new StringBuilder(Allocator.Int32_1[0]);
+            GetShaderInfoLog(shader, sb.Capacity, Allocator.Int32_1, sb);
             return sb.ToString();
         }
 
         public static string GetActiveAttrib(uint shader, int index)
         {
-            int[] l = new[] { 0 };
-            int[] s = new[] { 0 };
-            ActiveAttribType[] type = new []{ActiveAttribType.Float};
-            StringBuilder sb = new StringBuilder(64);
-            GL.GetActiveAttrib(shader, index, 64, l, s, type, sb);
+            int[] l = { 0 };
+            int[] s = { 0 };
+            ActiveAttribType[] type = { ActiveAttribType.Float };
+            var sb = new StringBuilder(64);
+            GetActiveAttrib(shader, index, 64, l, s, type, sb);
             return sb.ToString();
         }
+
         /// <summary>
-        /// Gets the current major OpenGL version (returns a cached result on subsequent calls).
+        ///     Gets the current major OpenGL version (returns a cached result on subsequent calls).
         /// </summary>
         /// <returns>The current major OpenGL version, or 0 on an error.</returns>
         public static int Version()
@@ -188,7 +188,7 @@ namespace Reactor.Platform.OpenGL
 
             try
             {
-                string versionString = GetString(StringName.Version);
+                var versionString = GetString(StringName.Version);
 
                 version = int.Parse(versionString.Substring(0, versionString.IndexOf('.')));
                 return version;
@@ -201,7 +201,7 @@ namespace Reactor.Platform.OpenGL
         }
 
         /// <summary>
-        /// Gets the current minor OpenGL version (returns a cached result on subsequent calls).
+        ///     Gets the current minor OpenGL version (returns a cached result on subsequent calls).
         /// </summary>
         /// <returns>The current minor OpenGL version, or -1 on an error.</returns>
         public static int VersionMinor()
@@ -210,7 +210,7 @@ namespace Reactor.Platform.OpenGL
 
             try
             {
-                string versionString = GetString(StringName.Version);
+                var versionString = GetString(StringName.Version);
 
                 versionMinor = int.Parse(versionString.Split('.')[1]);
                 return versionMinor;
@@ -221,8 +221,5 @@ namespace Reactor.Platform.OpenGL
                 return -1;
             }
         }
-        
-        
-
     }
 }

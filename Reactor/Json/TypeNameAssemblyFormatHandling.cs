@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,22 +22,26 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Indicates the method that will be used during deserialization for locating and loading assemblies.
+    ///     Indicates the method that will be used during deserialization for locating and loading assemblies.
     /// </summary>
     public enum TypeNameAssemblyFormatHandling
     {
         /// <summary>
-        /// In simple mode, the assembly used during deserialization need not match exactly the assembly used during serialization. Specifically, the version numbers need not match as the <c>LoadWithPartialName</c> method of the <see cref="System.Reflection.Assembly"/> class is used to load the assembly.
+        ///     In simple mode, the assembly used during deserialization need not match exactly the assembly used during
+        ///     serialization. Specifically, the version numbers need not match as the <c>LoadWithPartialName</c> method of the
+        ///     <see cref="System.Reflection.Assembly" /> class is used to load the assembly.
         /// </summary>
         Simple = 0,
 
         /// <summary>
-        /// In full mode, the assembly used during deserialization must match exactly the assembly used during serialization. The <c>Load</c> method of the <see cref="System.Reflection.Assembly"/> class is used to load the assembly.
+        ///     In full mode, the assembly used during deserialization must match exactly the assembly used during serialization.
+        ///     The <c>Load</c> method of the <see cref="System.Reflection.Assembly" /> class is used to load the assembly.
         /// </summary>
         Full = 1
     }

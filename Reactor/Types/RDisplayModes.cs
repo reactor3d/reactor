@@ -20,12 +20,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reactor.Types
 {
@@ -33,26 +30,23 @@ namespace Reactor.Types
     {
         private readonly List<RDisplayMode> modes;
 
+        public RDisplayModes(List<RDisplayMode> setmodes)
+        {
+            modes = setmodes;
+        }
+
         public IEnumerable<RDisplayMode> this[RSurfaceFormat format]
         {
             get
             {
-                List<RDisplayMode> list = new List<RDisplayMode>();
-                foreach (RDisplayMode mode in this.modes)
-                {
+                var list = new List<RDisplayMode>();
+                foreach (var mode in modes)
                     //if (mode.Format == format)
                     //{
-                        list.Add(mode);
-                    //}
-                }
+                    list.Add(mode);
+                //}
                 return list;
-
             }
-        }
-
-        public IEnumerator<RDisplayMode> GetEnumerator()
-        {
-            return modes.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -60,9 +54,9 @@ namespace Reactor.Types
             return modes.GetEnumerator();
         }
 
-        public RDisplayModes(List<RDisplayMode> setmodes)
+        public IEnumerator<RDisplayMode> GetEnumerator()
         {
-            modes = setmodes;
+            return modes.GetEnumerator();
         }
     }
 }

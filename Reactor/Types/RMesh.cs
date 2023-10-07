@@ -32,29 +32,29 @@ namespace Reactor.Types
 {
     public class RMesh : RRenderNode, IDisposable
     {
+        private RMesh()
+        {
+            Matrix = Matrix.Identity;
+            Position = Vector3.Zero;
+            Rotation = Quaternion.Identity;
+            Parts = new List<RMeshPart>();
+            CullEnable = true;
+            CullMode = RCullMode.CullClockwiseFace;
+            BlendEnable = true;
+            DepthWrite = true;
+            IsDrawable = true;
+        }
 
         internal List<RMeshPart> Parts { get; set; }
 
-        RMesh()
-        {
-            this.Matrix = Matrix.Identity;
-            this.Position = Vector3.Zero;
-            this.Rotation = Quaternion.Identity;
-            Parts = new List<RMeshPart>();
-            this.CullEnable = true;
-            this.CullMode = RCullMode.CullClockwiseFace;
-            this.BlendEnable = true;
-            this.DepthWrite= true;
-            this.IsDrawable = true;
-
-        }
-
         #region IDisposable implementation
+
         public void Dispose()
         {
             Parts.Clear();
             Parts = null;
         }
+
         #endregion
 
 
@@ -69,10 +69,7 @@ namespace Reactor.Types
             {
                 ApplyState();
                 base.Render();
-                foreach (RMeshPart part in Parts)
-                {
-                    part.Draw(BeginMode.Triangles, this.Matrix);
-                }
+                foreach (var part in Parts) part.Draw(BeginMode.Triangles, Matrix);
             }
         }
     }

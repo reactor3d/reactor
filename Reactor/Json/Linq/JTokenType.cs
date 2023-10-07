@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,102 +22,103 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 namespace Newtonsoft.Json.Linq
 {
     /// <summary>
-    /// Specifies the type of token.
+    ///     Specifies the type of token.
     /// </summary>
     public enum JTokenType
     {
         /// <summary>
-        /// No token type has been set.
+        ///     No token type has been set.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// A JSON object.
+        ///     A JSON object.
         /// </summary>
         Object = 1,
 
         /// <summary>
-        /// A JSON array.
+        ///     A JSON array.
         /// </summary>
         Array = 2,
 
         /// <summary>
-        /// A JSON constructor.
+        ///     A JSON constructor.
         /// </summary>
         Constructor = 3,
 
         /// <summary>
-        /// A JSON object property.
+        ///     A JSON object property.
         /// </summary>
         Property = 4,
 
         /// <summary>
-        /// A comment.
+        ///     A comment.
         /// </summary>
         Comment = 5,
 
         /// <summary>
-        /// An integer value.
+        ///     An integer value.
         /// </summary>
         Integer = 6,
 
         /// <summary>
-        /// A float value.
+        ///     A float value.
         /// </summary>
         Float = 7,
 
         /// <summary>
-        /// A string value.
+        ///     A string value.
         /// </summary>
         String = 8,
 
         /// <summary>
-        /// A boolean value.
+        ///     A boolean value.
         /// </summary>
         Boolean = 9,
 
         /// <summary>
-        /// A null value.
+        ///     A null value.
         /// </summary>
         Null = 10,
 
         /// <summary>
-        /// An undefined value.
+        ///     An undefined value.
         /// </summary>
         Undefined = 11,
 
         /// <summary>
-        /// A date value.
+        ///     A date value.
         /// </summary>
         Date = 12,
 
         /// <summary>
-        /// A raw JSON value.
+        ///     A raw JSON value.
         /// </summary>
         Raw = 13,
 
         /// <summary>
-        /// A collection of bytes value.
+        ///     A collection of bytes value.
         /// </summary>
         Bytes = 14,
 
         /// <summary>
-        /// A Guid value.
+        ///     A Guid value.
         /// </summary>
         Guid = 15,
 
         /// <summary>
-        /// A Uri value.
+        ///     A Uri value.
         /// </summary>
         Uri = 16,
 
         /// <summary>
-        /// A TimeSpan value.
+        ///     A TimeSpan value.
         /// </summary>
         TimeSpan = 17
     }

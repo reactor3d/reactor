@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,33 +22,33 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Newtonsoft.Json.Serialization
 {
     /// <summary>
-    /// Allows users to control class loading and mandate what class to load.
+    ///     Allows users to control class loading and mandate what class to load.
     /// </summary>
     public interface ISerializationBinder
     {
         /// <summary>
-        /// When implemented, controls the binding of a serialized object to a type.
+        ///     When implemented, controls the binding of a serialized object to a type.
         /// </summary>
-        /// <param name="assemblyName">Specifies the <see cref="Assembly"/> name of the serialized object.</param>
-        /// <param name="typeName">Specifies the <see cref="System.Type"/> name of the serialized object</param>
+        /// <param name="assemblyName">Specifies the <see cref="Assembly" /> name of the serialized object.</param>
+        /// <param name="typeName">Specifies the <see cref="System.Type" /> name of the serialized object</param>
         /// <returns>The type of the object the formatter creates a new instance of.</returns>
         Type BindToType(string? assemblyName, string typeName);
 
         /// <summary>
-        /// When implemented, controls the binding of a serialized object to a type.
+        ///     When implemented, controls the binding of a serialized object to a type.
         /// </summary>
         /// <param name="serializedType">The type of the object the formatter creates a new instance of.</param>
-        /// <param name="assemblyName">Specifies the <see cref="Assembly"/> name of the serialized object.</param>
-        /// <param name="typeName">Specifies the <see cref="System.Type"/> name of the serialized object.</param>
+        /// <param name="assemblyName">Specifies the <see cref="Assembly" /> name of the serialized object.</param>
+        /// <param name="typeName">Specifies the <see cref="System.Type" /> name of the serialized object.</param>
         void BindToName(Type serializedType, out string? assemblyName, out string? typeName);
     }
 }

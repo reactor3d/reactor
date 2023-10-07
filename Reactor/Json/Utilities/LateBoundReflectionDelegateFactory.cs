@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,13 +22,13 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Reflection;
-
+using Newtonsoft.Json.Serialization;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
 
 namespace Newtonsoft.Json.Utilities
@@ -38,16 +39,14 @@ namespace Newtonsoft.Json.Utilities
 
         internal static ReflectionDelegateFactory Instance => _instance;
 
-        public override Serialization.ObjectConstructor<object> CreateParameterizedConstructor(MethodBase method)
+        public override ObjectConstructor<object> CreateParameterizedConstructor(MethodBase method)
         {
             ValidationUtils.ArgumentNotNull(method, nameof(method));
 
             if (method is ConstructorInfo c)
-            {
                 // don't convert to method group to avoid medium trust issues
                 // https://github.com/JamesNK/Newtonsoft.Json/issues/476
                 return a => c.Invoke(a);
-            }
 
             return a => method.Invoke(null, a);
         }
@@ -56,10 +55,7 @@ namespace Newtonsoft.Json.Utilities
         {
             ValidationUtils.ArgumentNotNull(method, nameof(method));
 
-            if (method is ConstructorInfo c)
-            {
-                return (o, a) => c.Invoke(a);
-            }
+            if (method is ConstructorInfo c) return (o, a) => c.Invoke(a);
 
             return (o, a) => method.Invoke(o, a);
         }
@@ -68,12 +64,9 @@ namespace Newtonsoft.Json.Utilities
         {
             ValidationUtils.ArgumentNotNull(type, nameof(type));
 
-            if (type.IsValueType())
-            {
-                return () => (T)Activator.CreateInstance(type);
-            }
+            if (type.IsValueType()) return () => (T)Activator.CreateInstance(type);
 
-            ConstructorInfo constructorInfo = ReflectionUtils.GetDefaultConstructor(type, true);
+            var constructorInfo = ReflectionUtils.GetDefaultConstructor(type, true);
 
             return () => (T)constructorInfo.Invoke(null);
         }

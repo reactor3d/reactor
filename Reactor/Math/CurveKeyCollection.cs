@@ -29,29 +29,31 @@ namespace Reactor.Math
 {
     public class CurveKeyCollection : ICollection<CurveKey>, IEnumerable<CurveKey>, IEnumerable
     {
+        #region Constructors
+
+        public CurveKeyCollection()
+        {
+            innerlist = new List<CurveKey>();
+        }
+
+        #endregion Constructors
+
         #region Private Fields
 
-        private bool isReadOnly = false;
-        private List<CurveKey> innerlist;
+        private readonly List<CurveKey> innerlist;
 
         #endregion Private Fields
 
 
         #region Properties
 
-        public int Count
-        {
-            get { return innerlist.Count; }
-        }
+        public int Count => innerlist.Count;
 
-        public bool IsReadOnly
-        {
-            get { return this.isReadOnly; }
-        }
+        public bool IsReadOnly { get; } = false;
 
         public CurveKey this[int index]
         {
-            get { return innerlist[index]; }
+            get => innerlist[index];
             set
             {
                 if (value == null)
@@ -61,7 +63,9 @@ namespace Reactor.Math
                     throw new IndexOutOfRangeException();
 
                 if (innerlist[index].Position == value.Position)
+                {
                     innerlist[index] = value;
+                }
                 else
                 {
                     innerlist.RemoveAt(index);
@@ -73,16 +77,6 @@ namespace Reactor.Math
         #endregion Properties
 
 
-        #region Constructors
-
-        public CurveKeyCollection()
-        {
-            innerlist = new List<CurveKey>();
-        }
-
-        #endregion Constructors
-
-
         #region Public Methods
 
         public void Add(CurveKey item)
@@ -92,60 +86,58 @@ namespace Reactor.Math
 
             if (innerlist.Count == 0)
             {
-                this.innerlist.Add(item);
+                innerlist.Add(item);
                 return;
             }
 
-            for (int i = 0; i < this.innerlist.Count; i++)
-            {
-                if (item.Position < this.innerlist[i].Position)
+            for (var i = 0; i < innerlist.Count; i++)
+                if (item.Position < innerlist[i].Position)
                 {
-                    this.innerlist.Insert(i, item);
+                    innerlist.Insert(i, item);
                     return;
                 }
-            }
 
-            this.innerlist.Add(item);
+            innerlist.Add(item);
         }
 
         public void Clear()
         {
             innerlist.Clear();
         }
-        
+
         public CurveKeyCollection Clone()
         {
-            CurveKeyCollection ckc = new CurveKeyCollection();
-            foreach (CurveKey key in this.innerlist)
+            var ckc = new CurveKeyCollection();
+            foreach (var key in innerlist)
                 ckc.Add(key);
             return ckc;
         }
-        
+
         public bool Contains(CurveKey item)
         {
             return innerlist.Contains(item);
         }
-        
+
         public void CopyTo(CurveKey[] array, int arrayIndex)
         {
             innerlist.CopyTo(array, arrayIndex);
         }
-        
+
         public IEnumerator<CurveKey> GetEnumerator()
         {
             return innerlist.GetEnumerator();
         }
-        
+
         public int IndexOf(CurveKey item)
         {
             return innerlist.IndexOf(item);
         }
-        
+
         public bool Remove(CurveKey item)
         {
             return innerlist.Remove(item);
         }
-        
+
         public void RemoveAt(int index)
         {
             innerlist.RemoveAt(index);

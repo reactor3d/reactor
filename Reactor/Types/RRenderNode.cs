@@ -20,33 +20,87 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Math;
+
 using System;
-using System.Runtime.CompilerServices;
 using Reactor.Geometry;
-using Reactor.Types.States;
 using Reactor.Platform.OpenGL;
+using Reactor.Types.States;
 
 namespace Reactor.Types
 {
     public class RRenderNode : RUpdateNode
     {
         public RVertexBuffer VertexBuffer { get; set; }
-        private RBlendState blendState = RBlendState.Opaque;
-        public RBlendState BlendState { get { return blendState; } set { blendState = value; } }
+        public RBlendState BlendState { get; set; } = RBlendState.Opaque;
+
+        public bool IsDrawable { get; set; }
+
+        public RBlendFunc AlphaBlendMode
+        {
+            get => BlendState.AlphaBlendFunction;
+            set => BlendState.AlphaBlendFunction = value;
+        }
+
+        public RBlend AlphaDestinationBlend
+        {
+            get => BlendState.AlphaDestinationBlend;
+            set => BlendState.AlphaDestinationBlend = value;
+        }
+
+        public RBlend AlphaSourceBlend
+        {
+            get => BlendState.AlphaSourceBlend;
+            set => BlendState.AlphaSourceBlend = value;
+        }
+
+        public RColor BlendFactor
+        {
+            get => BlendState.BlendFactor;
+            set => BlendState.BlendFactor = value;
+        }
+
+        public RBlendFunc ColorBlendMode
+        {
+            get => BlendState.ColorBlendFunction;
+            set => BlendState.ColorBlendFunction = value;
+        }
+
+        public RBlend ColorDestinationBlend
+        {
+            get => BlendState.ColorDestinationBlend;
+            set => BlendState.ColorDestinationBlend = value;
+        }
+
+        public RBlend ColorSourceBlend
+        {
+            get => BlendState.ColorSourceBlend;
+            set => BlendState.ColorSourceBlend = value;
+        }
+
+        public int MultiSampleMask
+        {
+            get => BlendState.MultiSampleMask;
+            set => BlendState.MultiSampleMask = value;
+        }
+
+        public bool DepthWrite { get; set; }
+
+        public bool CullEnable { get; set; }
+
+        public bool BlendEnable { get; set; }
+
+        public RCullMode CullMode { get; set; }
+
         public virtual void Render()
         {
             if (IsDrawable)
-            {
                 if (OnRender != null)
                     OnRender(this, null);
-            }
-            
         }
 
         protected void ApplyState()
         {
-            if(DepthWrite)
+            if (DepthWrite)
             {
                 GL.Enable(EnableCap.DepthTest);
                 GL.DepthMask(true);
@@ -63,12 +117,12 @@ namespace Reactor.Types
 
             REngine.CheckGLError();
 
-            if(CullEnable)
+            if (CullEnable)
                 GL.Enable(EnableCap.CullFace);
             else
                 GL.Disable(EnableCap.CullFace);
 
-            switch(CullMode)
+            switch (CullMode)
             {
                 case RCullMode.None:
                     GL.Disable(EnableCap.CullFace);
@@ -84,81 +138,21 @@ namespace Reactor.Types
                     GL.CullFace(CullFaceMode.Back);
                     REngine.CheckGLError();
                     break;
-                default:
-                    break;
             }
-            if(BlendEnable)
+
+            if (BlendEnable)
             {
                 GL.Enable(EnableCap.Blend);
-                blendState.PlatformApplyState();
+                BlendState.PlatformApplyState();
             }
             else
             {
                 GL.Disable(EnableCap.Blend);
             }
+
             REngine.CheckGLError();
         }
+
         public event EventHandler OnRender;
-
-        public bool IsDrawable { get; set; }
-
-        public RBlendFunc AlphaBlendMode
-        {
-            get { return blendState.AlphaBlendFunction; }
-            set { blendState.AlphaBlendFunction = value; }
-        }
-
-        public RBlend AlphaDestinationBlend
-        {
-            get { return blendState.AlphaDestinationBlend;}
-            set { blendState.AlphaDestinationBlend = value; }
-        }
-        public RBlend AlphaSourceBlend
-        {
-            get { return blendState.AlphaSourceBlend;}
-            set { blendState.AlphaSourceBlend = value; }
-        }
-        public RColor BlendFactor
-        {
-            get { return blendState.BlendFactor; }
-            set { blendState.BlendFactor=value; }
-        }
-        public RBlendFunc ColorBlendMode
-        {
-            get { return blendState.ColorBlendFunction; }
-            set { blendState.ColorBlendFunction = value; }
-        }
-        public RBlend ColorDestinationBlend
-        {
-            get { return blendState.ColorDestinationBlend;}
-            set { blendState.ColorDestinationBlend = value; }
-        }
-        public RBlend ColorSourceBlend
-        {
-            get { return blendState.ColorSourceBlend;}
-            set { blendState.ColorSourceBlend = value; }
-        }
-        public int MultiSampleMask
-        {
-            get { return blendState.MultiSampleMask; }
-            set { blendState.MultiSampleMask = value; }
-        }
-
-        public bool DepthWrite
-        {
-            get; set;
-        }
-        public bool CullEnable
-        {
-            get; set;
-        }
-        public bool BlendEnable
-        {
-            get; set;
-        }
-        public RCullMode CullMode
-        {
-            get; set;
-        }
     }
 }

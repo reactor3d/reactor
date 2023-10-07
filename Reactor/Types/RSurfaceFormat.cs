@@ -20,11 +20,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reactor.Types
 {
@@ -50,10 +45,11 @@ namespace Reactor.Types
         HalfVector2 = 17,
         HalfVector4 = 18,
         HdrBlendable = 19,
+        HdrFull = 20,
 
         // BGRA formats are required for compatibility with WPF D3DImage.
-        Bgr32 = 20,     // B8G8R8X8
-        Bgra32 = 21,    // B8G8R8A8
+        Bgr32 = 21, // B8G8R8X8
+        Bgra32 = 22, // B8G8R8A8
 
         // Good explanation of compressed formats for mobile devices (aimed at Android, but describes PVRTC)
         // http://developer.motorola.com/docstools/library/understanding-texture-compression/
@@ -68,6 +64,6 @@ namespace Reactor.Types
         RgbEtc1 = 60,
 
         // DXT1 also has a 1-bit alpha form
-        Dxt1a = 70,
+        Dxt1a = 70
     }
 }

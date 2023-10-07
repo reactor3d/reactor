@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Diagnostics;
 using System.IO;
 
 namespace Reactor.Utilities
@@ -28,11 +29,11 @@ namespace Reactor.Utilities
     internal static class Hash
     {
         /// <summary>
-        /// Compute a hash from a byte array.
+        ///     Compute a hash from a byte array.
         /// </summary>
         /// <remarks>
-        /// Modified FNV Hash in C#
-        /// http://stackoverflow.com/a/468084
+        ///     Modified FNV Hash in C#
+        ///     http://stackoverflow.com/a/468084
         /// </remarks>
         internal static int ComputeHash(params byte[] data)
         {
@@ -54,15 +55,15 @@ namespace Reactor.Utilities
         }
 
         /// <summary>
-        /// Compute a hash from the content of a stream and restore the position.
+        ///     Compute a hash from the content of a stream and restore the position.
         /// </summary>
         /// <remarks>
-        /// Modified FNV Hash in C#
-        /// http://stackoverflow.com/a/468084
+        ///     Modified FNV Hash in C#
+        ///     http://stackoverflow.com/a/468084
         /// </remarks>
         internal static int ComputeHash(ref Stream stream)
         {
-            System.Diagnostics.Debug.Assert(stream.CanSeek);
+            Debug.Assert(stream.CanSeek);
 
             unchecked
             {
@@ -75,10 +76,8 @@ namespace Reactor.Utilities
                 var data = new byte[1024];
                 int length;
                 while ((length = stream.Read(data, 0, data.Length)) != 0)
-                {
                     for (var i = 0; i < length; i++)
                         hash = (hash ^ data[i]) * p;
-                }
 
                 // Restore stream position.
                 stream.Position = prevPosition;

@@ -31,15 +31,24 @@ namespace Reactor.Types
 {
     internal class RMeshPart : RNode, IDisposable
     {
+        internal RMeshPart()
+        {
+            Material = RMaterial.defaultMaterial;
+        }
+
         internal RVertexBuffer VertexBuffer { get; set; }
         internal RIndexBuffer IndexBuffer { get; set; }
         public BoundingSphere BoundingSphere { get; set; }
         public BoundingBox BoundingBox { get; set; }
 
         public RMaterial Material { get; set; }
-        internal RMeshPart()
+
+
+        public void Dispose()
         {
-            Material = RMaterial.defaultMaterial;
+            Material.Dispose();
+            VertexBuffer.Dispose();
+            IndexBuffer.Dispose();
         }
 
         internal void Draw(BeginMode primitiveType, Matrix world)
@@ -47,7 +56,7 @@ namespace Reactor.Types
             Threading.EnsureUIThread();
             GL.FrontFace(FrontFaceDirection.Ccw);
             GL.CullFace(CullFaceMode.Back);
-            
+
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
             GL.DepthFunc(DepthFunction.Less);
@@ -60,27 +69,17 @@ namespace Reactor.Types
             VertexBuffer.VertexDeclaration.Apply(Material.Shader, IntPtr.Zero);
 
             REngine.CheckGLError();
-            
+
             Material.Shader.BindSemantics(Matrix.Identity * world, REngine.camera.View, REngine.camera.Projection);
             REngine.CheckGLError();
 
-            
-            GL.DrawElements(primitiveType, IndexBuffer.IndexCount, DrawElementsType.UnsignedInt , IntPtr.Zero);
+
+            GL.DrawElements(primitiveType, IndexBuffer.IndexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             Material.Shader.Unbind();
             IndexBuffer.Unbind();
             VertexBuffer.Unbind();
             VertexBuffer.UnbindVertexArray();
-
-        }
-
-
-        public void Dispose()
-        {
-            Material.Dispose();
-            VertexBuffer.Dispose();
-            IndexBuffer.Dispose();
         }
     }
 }
-

@@ -10,8 +10,15 @@ using System.IO;
 
 namespace NVorbis
 {
-    abstract class VorbisTime
+    internal abstract class VorbisTime
     {
+        private VorbisStreamDecoder _vorbis;
+
+        protected VorbisTime(VorbisStreamDecoder vorbis)
+        {
+            _vorbis = vorbis;
+        }
+
         internal static VorbisTime Init(VorbisStreamDecoder vorbis, DataPacket packet)
         {
             var type = (int)packet.ReadBits(16);
@@ -19,30 +26,27 @@ namespace NVorbis
             VorbisTime time = null;
             switch (type)
             {
-                case 0: time = new Time0(vorbis); break;
+                case 0:
+                    time = new Time0(vorbis);
+                    break;
             }
+
             if (time == null) throw new InvalidDataException();
 
             time.Init(packet);
             return time;
         }
 
-        VorbisStreamDecoder _vorbis;
+        protected abstract void Init(DataPacket packet);
 
-        protected VorbisTime(VorbisStreamDecoder vorbis)
+        private class Time0 : VorbisTime
         {
-            _vorbis = vorbis;
-        }
-
-        abstract protected void Init(DataPacket packet);
-
-        class Time0 : VorbisTime
-        {
-            internal Time0(VorbisStreamDecoder vorbis) : base(vorbis) { }
+            internal Time0(VorbisStreamDecoder vorbis) : base(vorbis)
+            {
+            }
 
             protected override void Init(DataPacket packet)
             {
-                
             }
         }
     }

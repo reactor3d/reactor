@@ -15,12 +15,12 @@
 
 namespace Reactor.Platform.BGFX
 {
-public static partial class bgfx
-{
+    public static partial class bgfx
+    {
 #if DEBUG
-       const string DllName = "bgfx_debug.dll";
+        private const string DllName = "bgfx_debug.dll";
 #else
        const string DllName = "bgfx.dll";
 #endif
-}
+    }
 }

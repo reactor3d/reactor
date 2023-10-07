@@ -11,10 +11,25 @@ using System.IO;
 
 namespace NVorbis
 {
-    class VorbisMode
+    internal class VorbisMode
     {
-        const float M_PI = 3.1415926539f; //(float)Math.PI;
-        const float M_PI2 = M_PI / 2;
+        private const float M_PI = 3.1415926539f; //(float)Math.PI;
+        private const float M_PI2 = M_PI / 2;
+
+        private readonly VorbisStreamDecoder _vorbis;
+
+        private float[][] _windows;
+
+        internal bool BlockFlag;
+        internal int BlockSize;
+        internal VorbisMapping Mapping;
+        internal int TransformType;
+        internal int WindowType;
+
+        private VorbisMode(VorbisStreamDecoder vorbis)
+        {
+            _vorbis = vorbis;
+        }
 
         internal static VorbisMode Init(VorbisStreamDecoder vorbis, DataPacket packet)
         {
@@ -24,7 +39,8 @@ namespace NVorbis
             mode.TransformType = (int)packet.ReadBits(16);
             var mapping = (int)packet.ReadBits(8);
 
-            if (mode.WindowType != 0 || mode.TransformType != 0 || mapping >= vorbis.Maps.Length) throw new InvalidDataException();
+            if (mode.WindowType != 0 || mode.TransformType != 0 || mapping >= vorbis.Maps.Length)
+                throw new InvalidDataException();
 
             mode.Mapping = vorbis.Maps[mapping];
             mode.BlockSize = mode.BlockFlag ? vorbis.Block1Size : vorbis.Block0Size;
@@ -45,28 +61,20 @@ namespace NVorbis
                 mode._windows = new float[1][];
                 mode._windows[0] = new float[vorbis.Block0Size];
             }
+
             mode.CalcWindows();
 
             return mode;
         }
 
-        VorbisStreamDecoder _vorbis;
-
-        float[][] _windows;
-
-        private VorbisMode(VorbisStreamDecoder vorbis)
-        {
-            _vorbis = vorbis;
-        }
-
-        void CalcWindows()
+        private void CalcWindows()
         {
             // 0: prev = s, next = s || BlockFlag = false
             // 1: prev = l, next = s
             // 2: prev = s, next = l
             // 3: prev = l, next = l
 
-            for (int idx = 0; idx < _windows.Length; idx++)
+            for (var idx = 0; idx < _windows.Length; idx++)
             {
                 var array = _windows[idx];
 
@@ -77,19 +85,16 @@ namespace NVorbis
                 var leftbegin = wnd / 4 - left / 2;
                 var rightbegin = wnd - wnd / 4 - right / 2;
 
-                for (int i = 0; i < left; i++)
+                for (var i = 0; i < left; i++)
                 {
                     var x = (float)Math.Sin((i + .5) / left * M_PI2);
                     x *= x;
                     array[leftbegin + i] = (float)Math.Sin(x * M_PI2);
                 }
 
-                for (int i = leftbegin + left; i < rightbegin; i++)
-                {
-                    array[i] = 1.0f;
-                }
+                for (var i = leftbegin + left; i < rightbegin; i++) array[i] = 1.0f;
 
-                for (int i = 0; i < right; i++)
+                for (var i = 0; i < right; i++)
                 {
                     var x = (float)Math.Sin((right - i - .5) / right * M_PI2);
                     x *= x;
@@ -97,12 +102,6 @@ namespace NVorbis
                 }
             }
         }
-
-        internal bool BlockFlag;
-        internal int WindowType;
-        internal int TransformType;
-        internal VorbisMapping Mapping;
-        internal int BlockSize;
 
         internal float[] GetWindow(bool prev, bool next)
         {
@@ -113,7 +112,8 @@ namespace NVorbis
                     if (prev) return _windows[3];
                     return _windows[2];
                 }
-                else if (prev)
+
+                if (prev)
                 {
                     return _windows[1];
                 }

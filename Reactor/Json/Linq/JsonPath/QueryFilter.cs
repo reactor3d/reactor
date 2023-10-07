@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Newtonsoft.Json.Linq.JsonPath
@@ -12,18 +11,13 @@ namespace Newtonsoft.Json.Linq.JsonPath
             Expression = expression;
         }
 
-        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current, bool errorWhenNoMatch)
+        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current,
+            bool errorWhenNoMatch)
         {
-            foreach (JToken t in current)
-            {
-                foreach (JToken v in t)
-                {
-                    if (Expression.IsMatch(root, v))
-                    {
-                        yield return v;
-                    }
-                }
-            }
+            foreach (var t in current)
+            foreach (var v in t)
+                if (Expression.IsMatch(root, v))
+                    yield return v;
         }
     }
 }

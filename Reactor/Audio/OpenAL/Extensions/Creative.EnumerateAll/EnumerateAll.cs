@@ -15,19 +15,19 @@ namespace Reactor.Audio.OpenAL
     public partial class ALC
     {
         /// <summary>
-        /// Exposes the API in the EnumerateAll extension.
+        ///     Exposes the API in the EnumerateAll extension.
         /// </summary>
         public class EnumerateAll : ALBase
         {
             /// <summary>
-            /// The name of this AL extension.
+            ///     The name of this AL extension.
             /// </summary>
             public const string ExtensionName = "ALC_ENUMERATE_ALL_EXT";
 
             static EnumerateAll()
             {
                 // We need to register the resolver for OpenAL before we can DllImport functions.
-                ALBase.RegisterOpenALResolver();
+                RegisterOpenALResolver();
             }
 
             private EnumerateAll()
@@ -35,7 +35,7 @@ namespace Reactor.Audio.OpenAL
             }
 
             /// <summary>
-            /// Checks whether the extension is present.
+            ///     Checks whether the extension is present.
             /// </summary>
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent()
@@ -44,7 +44,7 @@ namespace Reactor.Audio.OpenAL
             }
 
             /// <summary>
-            /// Checks whether the extension is present.
+            ///     Checks whether the extension is present.
             /// </summary>
             /// <param name="device">The device to be queried.</param>
             /// <returns>Whether the extension was present or not.</returns>
@@ -54,28 +54,28 @@ namespace Reactor.Audio.OpenAL
             }
 
             /// <summary>
-            /// Gets a named property on the context.
+            ///     Gets a named property on the context.
             /// </summary>
             /// <param name="device">The device for the context.</param>
             /// <param name="param">The named property.</param>
             /// <returns>The value.</returns>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCallingConv)]
             public static extern string GetString(ALDevice device, GetEnumerateAllContextString param);
 
             /// <summary>
-            /// Gets a named property on the context.
+            ///     Gets a named property on the context.
             /// </summary>
             /// <param name="device">The device for the context.</param>
             /// <param name="param">The named property.</param>
             /// <returns>The value.</returns>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCallingConv)]
             public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerateAllContextStringList param);
 
-            /// <inheritdoc cref="GetStringList(ALDevice, GetEnumerateAllContextStringList)"/>
+            /// <inheritdoc cref="GetStringList(ALDevice, GetEnumerateAllContextStringList)" />
             public static unsafe IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)
             {
-                byte* result = GetStringList(ALDevice.Null, param);
-                return ALC.ALStringListToList(result);
+                var result = GetStringList(ALDevice.Null, param);
+                return ALStringListToList(result);
             }
         }
     }

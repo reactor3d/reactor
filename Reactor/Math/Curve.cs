@@ -20,87 +20,64 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
 
 namespace Reactor.Math
 {
-	// TODO [TypeConverter(ExpandableObjectConverter)]
+    // TODO [TypeConverter(ExpandableObjectConverter)]
 
     public class Curve
     {
-        #region Private Fields
+        #region Public Constructors
 
-        private CurveKeyCollection keys;
-        private CurveLoopType postLoop;
-        private CurveLoopType preLoop;
+        public Curve()
+        {
+            Keys = new CurveKeyCollection();
+        }
+
+        #endregion Public Constructors
+
+        #region Private Fields
 
         #endregion Private Fields
 
 
         #region Public Properties
 
-        
-        public bool IsConstant
-        {
-            get { return this.keys.Count <= 1; }
-        }
+        public bool IsConstant => Keys.Count <= 1;
 
-        
-        public CurveKeyCollection Keys
-        {
-            get { return this.keys; }
-        }
 
-        
-        public CurveLoopType PostLoop
-        {
-            get { return this.postLoop; }
-            set { this.postLoop = value; }
-        }
+        public CurveKeyCollection Keys { get; private set; }
 
-        
-        public CurveLoopType PreLoop
-        {
-            get { return this.preLoop; }
-            set { this.preLoop = value; }
-        }
+
+        public CurveLoopType PostLoop { get; set; }
+
+
+        public CurveLoopType PreLoop { get; set; }
 
         #endregion Public Properties
-
-
-        #region Public Constructors
-
-        public Curve()
-        {
-            this.keys = new CurveKeyCollection();
-        }
-
-        #endregion Public Constructors
 
 
         #region Public Methods
 
         public Curve Clone()
         {
-            Curve curve = new Curve();
+            var curve = new Curve();
 
-            curve.keys = this.keys.Clone();
-            curve.preLoop = this.preLoop;
-            curve.postLoop = this.postLoop;
+            curve.Keys = Keys.Clone();
+            curve.PreLoop = PreLoop;
+            curve.PostLoop = PostLoop;
 
             return curve;
         }
 
         public float Evaluate(float position)
         {
-            CurveKey first = keys[0];
-            CurveKey last = keys[keys.Count - 1];
+            var first = Keys[0];
+            var last = Keys[Keys.Count - 1];
 
             if (position < first.Position)
             {
-                switch (this.PreLoop)
+                switch (PreLoop)
                 {
                     case CurveLoopType.Constant:
                         //constant
@@ -112,31 +89,32 @@ namespace Reactor.Math
 
                     case CurveLoopType.Cycle:
                         //start -> end / start -> end
-                        int cycle = GetNumberOfCycle(position);
-                        float virtualPos = position - (cycle * (last.Position - first.Position));
+                        var cycle = GetNumberOfCycle(position);
+                        var virtualPos = position - cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
 
                     case CurveLoopType.CycleOffset:
                         //make the curve continue (with no step) so must up the curve each cycle of delta(value)
                         cycle = GetNumberOfCycle(position);
-                        virtualPos = position - (cycle * (last.Position - first.Position));
-                        return (GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value));
+                        virtualPos = position - cycle * (last.Position - first.Position);
+                        return GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value);
 
                     case CurveLoopType.Oscillate:
                         //go back on curve from end and target start 
                         // start-> end / end -> start
                         cycle = GetNumberOfCycle(position);
-                        if (0 == cycle % 2f)//if pair
-                            virtualPos = position - (cycle * (last.Position - first.Position));
+                        if (0 == cycle % 2f) //if pair
+                            virtualPos = position - cycle * (last.Position - first.Position);
                         else
-                            virtualPos = last.Position - position + first.Position + (cycle * (last.Position - first.Position));
+                            virtualPos = last.Position - position + first.Position +
+                                         cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
                 }
             }
             else if (position > last.Position)
             {
                 int cycle;
-                switch (this.PostLoop)
+                switch (PostLoop)
                 {
                     case CurveLoopType.Constant:
                         //constant
@@ -149,24 +127,25 @@ namespace Reactor.Math
                     case CurveLoopType.Cycle:
                         //start -> end / start -> end
                         cycle = GetNumberOfCycle(position);
-                        float virtualPos = position - (cycle * (last.Position - first.Position));
+                        var virtualPos = position - cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
 
                     case CurveLoopType.CycleOffset:
                         //make the curve continue (with no step) so must up the curve each cycle of delta(value)
                         cycle = GetNumberOfCycle(position);
-                        virtualPos = position - (cycle * (last.Position - first.Position));
-                        return (GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value));
+                        virtualPos = position - cycle * (last.Position - first.Position);
+                        return GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value);
 
                     case CurveLoopType.Oscillate:
                         //go back on curve from end and target start 
                         // start-> end / end -> start
                         cycle = GetNumberOfCycle(position);
-                        virtualPos = position - (cycle * (last.Position - first.Position));
-                        if (0 == cycle % 2f)//if pair
-                            virtualPos = position - (cycle * (last.Position - first.Position));
+                        virtualPos = position - cycle * (last.Position - first.Position);
+                        if (0 == cycle % 2f) //if pair
+                            virtualPos = position - cycle * (last.Position - first.Position);
                         else
-                            virtualPos = last.Position - position + first.Position + (cycle * (last.Position - first.Position));
+                            virtualPos = last.Position - position + first.Position +
+                                         cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
                 }
             }
@@ -175,16 +154,16 @@ namespace Reactor.Math
             return GetCurvePosition(position);
         }
 
-		public void ComputeTangents (CurveTangent tangentType )
-		{
-		    ComputeTangents(tangentType, tangentType);
-		}
-		
-		public void ComputeTangents(CurveTangent tangentInType, CurveTangent tangentOutType)
-		{
+        public void ComputeTangents(CurveTangent tangentType)
+        {
+            ComputeTangents(tangentType, tangentType);
+        }
+
+        public void ComputeTangents(CurveTangent tangentInType, CurveTangent tangentOutType)
+        {
             for (var i = 0; i < Keys.Count; i++)
                 ComputeTangent(i, tangentInType, tangentOutType);
-		}
+        }
 
         public void ComputeTangent(int keyIndex, CurveTangent tangentType)
         {
@@ -195,7 +174,7 @@ namespace Reactor.Math
         {
             // See http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.curvetangent.aspx
 
-            var key = keys[keyIndex];
+            var key = Keys[keyIndex];
 
             float p0, p, p1;
             p0 = p = p1 = key.Position;
@@ -203,16 +182,16 @@ namespace Reactor.Math
             float v0, v, v1;
             v0 = v = v1 = key.Value;
 
-            if ( keyIndex > 0 )
+            if (keyIndex > 0)
             {
-                p0 = keys[keyIndex - 1].Position;
-                v0 = keys[keyIndex - 1].Value;
+                p0 = Keys[keyIndex - 1].Position;
+                v0 = Keys[keyIndex - 1].Value;
             }
 
-            if (keyIndex < keys.Count-1)
+            if (keyIndex < Keys.Count - 1)
             {
-                p1 = keys[keyIndex + 1].Position;
-                v1 = keys[keyIndex + 1].Value;
+                p1 = Keys[keyIndex + 1].Position;
+                v1 = Keys[keyIndex + 1].Value;
             }
 
             switch (tangentInType)
@@ -250,14 +229,14 @@ namespace Reactor.Math
             }
         }
 
-	    #endregion Public Methods
+        #endregion Public Methods
 
 
         #region Private Methods
 
         private int GetNumberOfCycle(float position)
         {
-            float cycle = (position - keys[0].Position) / (keys[keys.Count - 1].Position - keys[0].Position);
+            var cycle = (position - Keys[0].Position) / (Keys[Keys.Count - 1].Position - Keys[0].Position);
             if (cycle < 0f)
                 cycle--;
             return (int)cycle;
@@ -266,33 +245,34 @@ namespace Reactor.Math
         private float GetCurvePosition(float position)
         {
             //only for position in curve
-            CurveKey prev = this.keys[0];
+            var prev = Keys[0];
             CurveKey next;
-            for (int i = 1; i < this.keys.Count; i++)
+            for (var i = 1; i < Keys.Count; i++)
             {
-                next = this.Keys[i];
+                next = Keys[i];
                 if (next.Position >= position)
                 {
                     if (prev.Continuity == CurveContinuity.Step)
                     {
-                        if (position >= 1f)
-                        {
-                            return next.Value;
-                        }
+                        if (position >= 1f) return next.Value;
                         return prev.Value;
                     }
-                    float t = (position - prev.Position) / (next.Position - prev.Position);//to have t in [0,1]
-                    float ts = t * t;
-                    float tss = ts * t;
+
+                    var t = (position - prev.Position) / (next.Position - prev.Position); //to have t in [0,1]
+                    var ts = t * t;
+                    var tss = ts * t;
                     //After a lot of search on internet I have found all about spline function
                     // and bezier (phi'sss ancien) but finaly use hermite curve 
                     //http://en.wikipedia.org/wiki/Cubic_Hermite_spline
                     //P(t) = (2*t^3 - 3t^2 + 1)*P0 + (t^3 - 2t^2 + t)m0 + (-2t^3 + 3t^2)P1 + (t^3-t^2)m1
                     //with P0.value = prev.value , m0 = prev.tangentOut, P1= next.value, m1 = next.TangentIn
-                    return (2 * tss - 3 * ts + 1f) * prev.Value + (tss - 2 * ts + t) * prev.TangentOut + (3 * ts - 2 * tss) * next.Value + (tss - ts) * next.TangentIn;
+                    return (2 * tss - 3 * ts + 1f) * prev.Value + (tss - 2 * ts + t) * prev.TangentOut +
+                           (3 * ts - 2 * tss) * next.Value + (tss - ts) * next.TangentIn;
                 }
+
                 prev = next;
             }
+
             return 0f;
         }
 

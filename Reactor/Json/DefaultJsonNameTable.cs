@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,7 +30,7 @@ using System;
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// The default JSON name table implementation.
+    ///     The default JSON name table implementation.
     /// </summary>
     public class DefaultJsonNameTable : JsonNameTable
     {
@@ -45,7 +47,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultJsonNameTable"/> class.
+        ///     Initializes a new instance of the <see cref="DefaultJsonNameTable" /> class.
         /// </summary>
         public DefaultJsonNameTable()
         {
@@ -53,7 +55,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Gets a string containing the same characters as the specified range of characters in the given array.
+        ///     Gets a string containing the same characters as the specified range of characters in the given array.
         /// </summary>
         /// <param name="key">The character array containing the name to find.</param>
         /// <param name="start">The zero-based index into the array specifying the first character of the name.</param>
@@ -61,18 +63,12 @@ namespace Newtonsoft.Json
         /// <returns>A string containing the same characters as the specified range of characters in the given array.</returns>
         public override string? Get(char[] key, int start, int length)
         {
-            if (length == 0)
-            {
-                return string.Empty;
-            }
+            if (length == 0) return string.Empty;
 
-            int hashCode = length + HashCodeRandomizer;
+            var hashCode = length + HashCodeRandomizer;
             hashCode += (hashCode << 7) ^ key[start];
-            int end = start + length;
-            for (int i = start + 1; i < end; i++)
-            {
-                hashCode += (hashCode << 7) ^ key[i];
-            }
+            var end = start + length;
+            for (var i = start + 1; i < end; i++) hashCode += (hashCode << 7) ^ key[i];
             hashCode -= hashCode >> 17;
             hashCode -= hashCode >> 11;
             hashCode -= hashCode >> 5;
@@ -81,109 +77,83 @@ namespace Newtonsoft.Json
             var index = hashCode & _mask;
             var entries = _entries;
 
-            for (Entry entry = entries[index]; entry != null; entry = entry.Next)
-            {
+            for (var entry = entries[index]; entry != null; entry = entry.Next)
                 if (entry.HashCode == hashCode && TextEquals(entry.Value, key, start, length))
-                {
                     return entry.Value;
-                }
-            }
 
             return null;
         }
 
         /// <summary>
-        /// Adds the specified string into name table.
+        ///     Adds the specified string into name table.
         /// </summary>
         /// <param name="key">The string to add.</param>
         /// <remarks>This method is not thread-safe.</remarks>
         /// <returns>The resolved string.</returns>
         public string Add(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            if (key == null) throw new ArgumentNullException(nameof(key));
 
-            int length = key.Length;
-            if (length == 0)
-            {
-                return string.Empty;
-            }
+            var length = key.Length;
+            if (length == 0) return string.Empty;
 
-            int hashCode = length + HashCodeRandomizer;
-            for (int i = 0; i < key.Length; i++)
-            {
-                hashCode += (hashCode << 7) ^ key[i];
-            }
+            var hashCode = length + HashCodeRandomizer;
+            for (var i = 0; i < key.Length; i++) hashCode += (hashCode << 7) ^ key[i];
             hashCode -= hashCode >> 17;
             hashCode -= hashCode >> 11;
             hashCode -= hashCode >> 5;
-            for (Entry entry = _entries[hashCode & _mask]; entry != null; entry = entry.Next)
-            {
+            for (var entry = _entries[hashCode & _mask]; entry != null; entry = entry.Next)
                 if (entry.HashCode == hashCode && entry.Value.Equals(key, StringComparison.Ordinal))
-                {
                     return entry.Value;
-                }
-            }
 
             return AddEntry(key, hashCode);
         }
 
         private string AddEntry(string str, int hashCode)
         {
-            int index = hashCode & _mask;
-            Entry entry = new Entry(str, hashCode, _entries[index]);
+            var index = hashCode & _mask;
+            var entry = new Entry(str, hashCode, _entries[index]);
             _entries[index] = entry;
-            if (_count++ == _mask)
-            {
-                Grow();
-            }
+            if (_count++ == _mask) Grow();
             return entry.Value;
         }
 
         private void Grow()
         {
-            Entry[] entries = _entries;
-            int newMask = (_mask * 2) + 1;
-            Entry[] newEntries = new Entry[newMask + 1];
+            var entries = _entries;
+            var newMask = _mask * 2 + 1;
+            var newEntries = new Entry[newMask + 1];
 
-            for (int i = 0; i < entries.Length; i++)
+            for (var i = 0; i < entries.Length; i++)
             {
                 Entry next;
-                for (Entry entry = entries[i]; entry != null; entry = next)
+                for (var entry = entries[i]; entry != null; entry = next)
                 {
-                    int index = entry.HashCode & newMask;
+                    var index = entry.HashCode & newMask;
                     next = entry.Next;
                     entry.Next = newEntries[index];
                     newEntries[index] = entry;
                 }
             }
+
             _entries = newEntries;
             _mask = newMask;
         }
 
         private static bool TextEquals(string str1, char[] str2, int str2Start, int str2Length)
         {
-            if (str1.Length != str2Length)
-            {
-                return false;
-            }
+            if (str1.Length != str2Length) return false;
 
-            for (int i = 0; i < str1.Length; i++)
-            {
+            for (var i = 0; i < str1.Length; i++)
                 if (str1[i] != str2[str2Start + i])
-                {
                     return false;
-                }
-            }
             return true;
         }
 
         private class Entry
         {
-            internal readonly string Value;
             internal readonly int HashCode;
+            internal readonly string Value;
             internal Entry Next;
 
             internal Entry(string value, int hashCode, Entry next)

@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,16 +22,18 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Globalization;
-using System.Diagnostics.CodeAnalysis;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 #endif
@@ -52,22 +55,24 @@ namespace Newtonsoft.Json.Utilities
 
         public static string FormatWith(this string format, IFormatProvider provider, object? arg0)
         {
-            return format.FormatWith(provider, new object?[] { arg0 });
+            return format.FormatWith(provider, new[] { arg0 });
         }
 
         public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1)
         {
-            return format.FormatWith(provider, new object?[] { arg0, arg1 });
+            return format.FormatWith(provider, new[] { arg0, arg1 });
         }
 
-        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1, object? arg2)
+        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1,
+            object? arg2)
         {
-            return format.FormatWith(provider, new object?[] { arg0, arg1, arg2 });
+            return format.FormatWith(provider, new[] { arg0, arg1, arg2 });
         }
 
-        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1, object? arg2, object? arg3)
+        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1,
+            object? arg2, object? arg3)
         {
-            return format.FormatWith(provider, new object?[] { arg0, arg1, arg2, arg3 });
+            return format.FormatWith(provider, new[] { arg0, arg1, arg2, arg3 });
         }
 
         private static string FormatWith(this string format, IFormatProvider provider, params object?[] args)
@@ -80,39 +85,29 @@ namespace Newtonsoft.Json.Utilities
         }
 
         /// <summary>
-        /// Determines whether the string is all white space. Empty string will return <c>false</c>.
+        ///     Determines whether the string is all white space. Empty string will return <c>false</c>.
         /// </summary>
         /// <param name="s">The string to test whether it is all white space.</param>
         /// <returns>
-        /// 	<c>true</c> if the string is all white space; otherwise, <c>false</c>.
+        ///     <c>true</c> if the string is all white space; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsWhiteSpace(string s)
         {
-            if (s == null)
-            {
-                throw new ArgumentNullException(nameof(s));
-            }
+            if (s == null) throw new ArgumentNullException(nameof(s));
 
-            if (s.Length == 0)
-            {
-                return false;
-            }
+            if (s.Length == 0) return false;
 
-            for (int i = 0; i < s.Length; i++)
-            {
+            for (var i = 0; i < s.Length; i++)
                 if (!char.IsWhiteSpace(s[i]))
-                {
                     return false;
-                }
-            }
 
             return true;
         }
 
         public static StringWriter CreateStringWriter(int capacity)
         {
-            StringBuilder sb = new StringBuilder(capacity);
-            StringWriter sw = new StringWriter(sb, CultureInfo.InvariantCulture);
+            var sb = new StringBuilder(capacity);
+            var sw = new StringWriter(sb, CultureInfo.InvariantCulture);
 
             return sw;
         }
@@ -127,47 +122,33 @@ namespace Newtonsoft.Json.Utilities
             buffer[5] = MathUtils.IntToHex(c & '\x000f');
         }
 
-        public static TSource ForgivingCaseSensitiveFind<TSource>(this IEnumerable<TSource> source, Func<TSource, string> valueSelector, string testValue)
+        public static TSource ForgivingCaseSensitiveFind<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, string> valueSelector, string testValue)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (valueSelector == null)
-            {
-                throw new ArgumentNullException(nameof(valueSelector));
-            }
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (valueSelector == null) throw new ArgumentNullException(nameof(valueSelector));
 
-            IEnumerable<TSource> caseInsensitiveResults = source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.OrdinalIgnoreCase));
-            if (caseInsensitiveResults.Count() <= 1)
-            {
-                return caseInsensitiveResults.SingleOrDefault();
-            }
-            else
-            {
-                // multiple results returned. now filter using case sensitivity
-                IEnumerable<TSource> caseSensitiveResults = source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.Ordinal));
-                return caseSensitiveResults.SingleOrDefault();
-            }
+            var caseInsensitiveResults = source.Where(s =>
+                string.Equals(valueSelector(s), testValue, StringComparison.OrdinalIgnoreCase));
+            if (caseInsensitiveResults.Count() <= 1) return caseInsensitiveResults.SingleOrDefault();
+
+            // multiple results returned. now filter using case sensitivity
+            var caseSensitiveResults =
+                source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.Ordinal));
+            return caseSensitiveResults.SingleOrDefault();
         }
 
         public static string ToCamelCase(string s)
         {
-            if (StringUtils.IsNullOrEmpty(s) || !char.IsUpper(s[0]))
+            if (IsNullOrEmpty(s) || !char.IsUpper(s[0])) return s;
+
+            var chars = s.ToCharArray();
+
+            for (var i = 0; i < chars.Length; i++)
             {
-                return s;
-            }
+                if (i == 1 && !char.IsUpper(chars[i])) break;
 
-            char[] chars = s.ToCharArray();
-
-            for (int i = 0; i < chars.Length; i++)
-            {
-                if (i == 1 && !char.IsUpper(chars[i]))
-                {
-                    break;
-                }
-
-                bool hasNext = (i + 1 < chars.Length);
+                var hasNext = i + 1 < chars.Length;
                 if (i > 0 && hasNext && !char.IsUpper(chars[i + 1]))
                 {
                     // if the next character is a space, which is not considered uppercase 
@@ -178,10 +159,7 @@ namespace Newtonsoft.Json.Utilities
                     // ends when if finds an uppercase letter followed by a lowercase letter.
                     // now a ' ' (space, (char)32) is considered not upper
                     // but in that case we still want our current character to become lowercase
-                    if (char.IsSeparator(chars[i + 1]))
-                    {
-                        chars[i] = ToLower(chars[i]);
-                    }
+                    if (char.IsSeparator(chars[i + 1])) chars[i] = ToLower(chars[i]);
 
                     break;
                 }
@@ -202,51 +180,40 @@ namespace Newtonsoft.Json.Utilities
             return c;
         }
 
-        public static string ToSnakeCase(string s) => ToSeparatedCase(s, '_');
-
-        public static string ToKebabCase(string s) => ToSeparatedCase(s, '-');
-
-        private enum SeparatedCaseState
+        public static string ToSnakeCase(string s)
         {
-            Start,
-            Lower,
-            Upper,
-            NewWord
+            return ToSeparatedCase(s, '_');
+        }
+
+        public static string ToKebabCase(string s)
+        {
+            return ToSeparatedCase(s, '-');
         }
 
         private static string ToSeparatedCase(string s, char separator)
         {
-            if (StringUtils.IsNullOrEmpty(s))
-            {
-                return s;
-            }
+            if (IsNullOrEmpty(s)) return s;
 
-            StringBuilder sb = new StringBuilder();
-            SeparatedCaseState state = SeparatedCaseState.Start;
+            var sb = new StringBuilder();
+            var state = SeparatedCaseState.Start;
 
-            for (int i = 0; i < s.Length; i++)
-            {
+            for (var i = 0; i < s.Length; i++)
                 if (s[i] == ' ')
                 {
-                    if (state != SeparatedCaseState.Start)
-                    {
-                        state = SeparatedCaseState.NewWord;
-                    }
+                    if (state != SeparatedCaseState.Start) state = SeparatedCaseState.NewWord;
                 }
                 else if (char.IsUpper(s[i]))
                 {
                     switch (state)
                     {
                         case SeparatedCaseState.Upper:
-                            bool hasNext = (i + 1 < s.Length);
+                            var hasNext = i + 1 < s.Length;
                             if (i > 0 && hasNext)
                             {
-                                char nextChar = s[i + 1];
-                                if (!char.IsUpper(nextChar) && nextChar != separator)
-                                {
-                                    sb.Append(separator);
-                                }
+                                var nextChar = s[i + 1];
+                                if (!char.IsUpper(nextChar) && nextChar != separator) sb.Append(separator);
                             }
+
                             break;
                         case SeparatedCaseState.Lower:
                         case SeparatedCaseState.NewWord:
@@ -271,15 +238,11 @@ namespace Newtonsoft.Json.Utilities
                 }
                 else
                 {
-                    if (state == SeparatedCaseState.NewWord)
-                    {
-                        sb.Append(separator);
-                    }
+                    if (state == SeparatedCaseState.NewWord) sb.Append(separator);
 
                     sb.Append(s[i]);
                     state = SeparatedCaseState.Lower;
                 }
-            }
 
             return sb.ToString();
         }
@@ -289,7 +252,7 @@ namespace Newtonsoft.Json.Utilities
 #if HAVE_UNICODE_SURROGATE_DETECTION
             return char.IsHighSurrogate(c);
 #else
-            return (c >= 55296 && c <= 56319);
+            return c >= 55296 && c <= 56319;
 #endif
         }
 
@@ -298,56 +261,44 @@ namespace Newtonsoft.Json.Utilities
 #if HAVE_UNICODE_SURROGATE_DETECTION
             return char.IsLowSurrogate(c);
 #else
-            return (c >= 56320 && c <= 57343);
+            return c >= 56320 && c <= 57343;
 #endif
         }
 
         public static bool StartsWith(this string source, char value)
         {
-            return (source.Length > 0 && source[0] == value);
+            return source.Length > 0 && source[0] == value;
         }
 
         public static bool EndsWith(this string source, char value)
         {
-            return (source.Length > 0 && source[source.Length - 1] == value);
+            return source.Length > 0 && source[source.Length - 1] == value;
         }
 
         public static string Trim(this string s, int start, int length)
         {
             // References: https://referencesource.microsoft.com/#mscorlib/system/string.cs,2691
             // https://referencesource.microsoft.com/#mscorlib/system/string.cs,1226
-            if (s == null)
-            {
-                throw new ArgumentNullException();
-            }
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(start));
-            }
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length));
-            }
-            int end = start + length - 1;
-            if (end >= s.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length));
-            }
+            if (s == null) throw new ArgumentNullException();
+            if (start < 0) throw new ArgumentOutOfRangeException(nameof(start));
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length));
+            var end = start + length - 1;
+            if (end >= s.Length) throw new ArgumentOutOfRangeException(nameof(length));
             for (; start < end; start++)
-            {
                 if (!char.IsWhiteSpace(s[start]))
-                {
                     break;
-                }
-            }
             for (; end >= start; end--)
-            {
                 if (!char.IsWhiteSpace(s[end]))
-                {
                     break;
-                }
-            }
             return s.Substring(start, end - start + 1);
+        }
+
+        private enum SeparatedCaseState
+        {
+            Start,
+            Lower,
+            Upper,
+            NewWord
         }
     }
 }

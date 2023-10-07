@@ -29,63 +29,61 @@ namespace Reactor.Types
 {
     public class RMaterial : IDisposable
     {
-
         //Needs to be set based on number of RMaterialLayer enum values!
         internal static int MAX_MATERIAL_LAYERS = 32;
 
         internal static RMaterial defaultMaterial = RMaterials.Instance.CreateMaterial("default");
 
-        [JsonIgnore]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("textures")]
-        public RTexture[] Textures { get; set; }
-
-        [JsonProperty("baseColor")]
-        public RColor Color { get; set; }
-
-        [JsonProperty("metallic")]
-        public float Metallic { get; set; }
-
-        [JsonProperty("roughness")]
-        public float Roughness { get; set; }
-
-        [JsonProperty("emissiveColor")]
-        public RColor EmissiveColor { get; set; }
-
-        [JsonProperty("specularPower")]
-        public float SpecularPower { get; set; }
-
-        [JsonProperty("shader")]
-        public RShader Shader { get; set; }
-
         internal RMaterial(string name)
         {
             Name = name;
             Textures = new RTexture[MAX_MATERIAL_LAYERS];
-            for (int i = 0; i < Textures.Length; i++)
-            {
-                Textures[i] = RTexture.defaultWhite;
-            }
+            for (var i = 0; i < Textures.Length; i++) Textures[i] = RTexture.defaultWhite;
             Metallic = 1;
             SpecularPower = 1;
             Shader = RShader.basicShader;
         }
 
+        [JsonIgnore] public int Id { get; set; }
+
+        [JsonProperty("name")] public string Name { get; set; }
+
+        [JsonProperty("textures")] public RTexture[] Textures { get; set; }
+
+        [JsonProperty("baseColor")] public RColor Color { get; set; }
+
+        [JsonProperty("metallic")] public float Metallic { get; set; }
+
+        [JsonProperty("roughness")] public float Roughness { get; set; }
+
+        [JsonProperty("emissiveColor")] public RColor EmissiveColor { get; set; }
+
+        [JsonProperty("specularPower")] public float SpecularPower { get; set; }
+
+        [JsonProperty("shader")] public RShader Shader { get; set; }
+
+
+        public void Dispose()
+        {
+            foreach (var texture in Textures)
+                texture.Dispose();
+
+            if (Shader != null)
+                Shader.Dispose();
+        }
+
         public RMaterial Clone(string name)
         {
-            RMaterial clone = RMaterials.Instance.CreateMaterial(name);
-            clone.Textures = this.Textures;
-            clone.Color = this.Color;
-            clone.Metallic = this.Metallic;
-            clone.Roughness = this.Roughness;
-            clone.SpecularPower = this.SpecularPower;
-            clone.Shader = this.Shader;
+            var clone = RMaterials.Instance.CreateMaterial(name);
+            clone.Textures = Textures;
+            clone.Color = Color;
+            clone.Metallic = Metallic;
+            clone.Roughness = Roughness;
+            clone.SpecularPower = SpecularPower;
+            clone.Shader = Shader;
             return clone;
         }
+
         public void SetTexture(int TextureLayer, RTexture texture)
         {
             Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] = texture;
@@ -98,39 +96,33 @@ namespace Reactor.Types
 
         public void SetTexture(int TextureLayer, uint TextureId)
         {
-            RTexture texture = RTextures.GetTexture(TextureId);
+            var texture = RTextures.GetTexture(TextureId);
             Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] = texture;
         }
+
         public RTexture GetTexture(RTextureLayer TextureLayer)
         {
             if (Textures[GetTextureLayerIndex(TextureLayer)] != null)
                 return Textures[GetTextureLayerIndex(TextureLayer)];
-            else
-                return null;
+            return null;
         }
 
         public RTexture GetTexture(int TextureLayer)
         {
-            if(Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] != null)
+            if (Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)] != null)
                 return Textures[GetTextureLayerIndex((RTextureLayer)TextureLayer)];
-            else
-                return null;
-
+            return null;
         }
 
         public void Apply()
         {
-            for(int i=0; i<Textures.Length; i++)
-            {
-                if(Textures[i]!=null)
+            for (var i = 0; i < Textures.Length; i++)
+                if (Textures[i] != null)
                 {
                     GL.ActiveTexture(i);
                     Textures[i].Bind();
                     Shader.SetSamplerValue(RTextureLayer.TEXTURE0 + i, Textures[i]);
                 }
-                
-            }
-            
         }
 
 
@@ -138,20 +130,9 @@ namespace Reactor.Types
         {
             return (int)layer;
         }
-
-
-        public void Dispose()
-        {
-            foreach (RTexture texture in Textures)
-                texture.Dispose();
-            
-            if (Shader != null)
-                Shader.Dispose();
-        }
-
-        
     }
-    public enum RMaterialColor : int
+
+    public enum RMaterialColor
     {
         BASE = 0,
         NORMAL = 1,

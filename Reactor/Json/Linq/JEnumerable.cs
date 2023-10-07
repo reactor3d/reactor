@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,35 +22,36 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json.Utilities;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 #endif
-using Newtonsoft.Json.Utilities;
-using System.Collections;
 
 namespace Newtonsoft.Json.Linq
 {
     /// <summary>
-    /// Represents a collection of <see cref="JToken"/> objects.
+    ///     Represents a collection of <see cref="JToken" /> objects.
     /// </summary>
     /// <typeparam name="T">The type of token.</typeparam>
     public readonly struct JEnumerable<T> : IJEnumerable<T>, IEquatable<JEnumerable<T>> where T : JToken
     {
         /// <summary>
-        /// An empty collection of <see cref="JToken"/> objects.
+        ///     An empty collection of <see cref="JToken" /> objects.
         /// </summary>
         public static readonly JEnumerable<T> Empty = new JEnumerable<T>(Enumerable.Empty<T>());
 
         private readonly IEnumerable<T> _enumerable;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JEnumerable{T}"/> struct.
+        ///     Initializes a new instance of the <see cref="JEnumerable{T}" /> struct.
         /// </summary>
         /// <param name="enumerable">The enumerable.</param>
         public JEnumerable(IEnumerable<T> enumerable)
@@ -60,10 +62,10 @@ namespace Newtonsoft.Json.Linq
         }
 
         /// <summary>
-        /// Returns an enumerator that can be used to iterate through the collection.
+        ///     Returns an enumerator that can be used to iterate through the collection.
         /// </summary>
         /// <returns>
-        /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
+        ///     A <see cref="IEnumerator{T}" /> that can be used to iterate through the collection.
         /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
@@ -76,28 +78,25 @@ namespace Newtonsoft.Json.Linq
         }
 
         /// <summary>
-        /// Gets the <see cref="IJEnumerable{T}"/> of <see cref="JToken"/> with the specified key.
+        ///     Gets the <see cref="IJEnumerable{T}" /> of <see cref="JToken" /> with the specified key.
         /// </summary>
         /// <value></value>
         public IJEnumerable<JToken> this[object key]
         {
             get
             {
-                if (_enumerable == null)
-                {
-                    return JEnumerable<JToken>.Empty;
-                }
+                if (_enumerable == null) return JEnumerable<JToken>.Empty;
 
                 return new JEnumerable<JToken>(_enumerable.Values<T, JToken>(key));
             }
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="JEnumerable{T}"/> is equal to this instance.
+        ///     Determines whether the specified <see cref="JEnumerable{T}" /> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="JEnumerable{T}"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="JEnumerable{T}" /> to compare with this instance.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified <see cref="JEnumerable{T}"/> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="JEnumerable{T}" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(JEnumerable<T> other)
         {
@@ -105,34 +104,28 @@ namespace Newtonsoft.Json.Linq
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to this instance.
+        ///     Determines whether the specified <see cref="Object" /> is equal to this instance.
         /// </summary>
-        /// <param name="obj">The <see cref="Object"/> to compare with this instance.</param>
+        /// <param name="obj">The <see cref="Object" /> to compare with this instance.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified <see cref="Object"/> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="Object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is JEnumerable<T> enumerable)
-            {
-                return Equals(enumerable);
-            }
+            if (obj is JEnumerable<T> enumerable) return Equals(enumerable);
 
             return false;
         }
 
         /// <summary>
-        /// Returns a hash code for this instance.
+        ///     Returns a hash code for this instance.
         /// </summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         public override int GetHashCode()
         {
-            if (_enumerable == null)
-            {
-                return 0;
-            }
+            if (_enumerable == null) return 0;
 
             return _enumerable.GetHashCode();
         }

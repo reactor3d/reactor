@@ -20,8 +20,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using System.Runtime.Serialization;
 
 namespace Reactor.Math
 {
@@ -29,50 +29,24 @@ namespace Reactor.Math
     {
         #region Private Fields
 
-        private CurveContinuity continuity;
-        private float position;
-        private float tangentIn;
-        private float tangentOut;
-        private float value;
-
         #endregion Private Fields
 
 
         #region Properties
 
-        
-        public CurveContinuity Continuity
-        {
-            get { return this.continuity; }
-            set { this.continuity = value; }
-        }
+        public CurveContinuity Continuity { get; set; }
 
-        
-        public float Position
-        {
-            get { return this.position; }
-        }
 
-        
-        public float TangentIn
-        {
-            get { return this.tangentIn; }
-            set { this.tangentIn = value; }
-        }
+        public float Position { get; }
 
-        
-        public float TangentOut
-        {
-            get { return this.tangentOut; }
-            set { this.tangentOut = value; }
-        }
 
-        
-        public float Value
-        {
-            get { return this.value; }
-            set { this.value = value; }
-        }
+        public float TangentIn { get; set; }
+
+
+        public float TangentOut { get; set; }
+
+
+        public float Value { get; set; }
 
         #endregion
 
@@ -82,22 +56,20 @@ namespace Reactor.Math
         public CurveKey(float position, float value)
             : this(position, value, 0, 0, CurveContinuity.Smooth)
         {
-
         }
 
         public CurveKey(float position, float value, float tangentIn, float tangentOut)
             : this(position, value, tangentIn, tangentOut, CurveContinuity.Smooth)
         {
-
         }
 
         public CurveKey(float position, float value, float tangentIn, float tangentOut, CurveContinuity continuity)
         {
-            this.position = position;
-            this.value = value;
-            this.tangentIn = tangentIn;
-            this.tangentOut = tangentOut;
-            this.continuity = continuity;
+            Position = position;
+            Value = value;
+            TangentIn = tangentIn;
+            TangentOut = tangentOut;
+            Continuity = continuity;
         }
 
         #endregion Constructors
@@ -112,44 +84,44 @@ namespace Reactor.Math
 
         public static bool operator ==(CurveKey a, CurveKey b)
         {
-            if (object.Equals(a, null))
-                return object.Equals(b, null);
+            if (Equals(a, null))
+                return Equals(b, null);
 
-            if (object.Equals(b, null))
-                return object.Equals(a, null);
+            if (Equals(b, null))
+                return Equals(a, null);
 
-            return (a.position == b.position)
-                && (a.value == b.value)
-                && (a.tangentIn == b.tangentIn)
-                && (a.tangentOut == b.tangentOut)
-                && (a.continuity == b.continuity);
+            return a.Position == b.Position
+                   && a.Value == b.Value
+                   && a.TangentIn == b.TangentIn
+                   && a.TangentOut == b.TangentOut
+                   && a.Continuity == b.Continuity;
         }
 
         public CurveKey Clone()
         {
-            return new CurveKey(this.position, this.value, this.tangentIn, this.tangentOut, this.continuity);
+            return new CurveKey(Position, Value, TangentIn, TangentOut, Continuity);
         }
 
         public int CompareTo(CurveKey other)
         {
-            return this.position.CompareTo(other.position);
+            return Position.CompareTo(other.Position);
         }
 
         public bool Equals(CurveKey other)
         {
-            return (this == other);
+            return this == other;
         }
 
         public override bool Equals(object obj)
         {
-            return (obj is CurveKey) ? ((CurveKey)obj) == this : false;
+            return obj is CurveKey ? (CurveKey)obj == this : false;
         }
 
         public override int GetHashCode()
         {
-            return this.position.GetHashCode() ^ this.value.GetHashCode() ^ this.tangentIn.GetHashCode() ^
-                this.tangentOut.GetHashCode() ^ this.continuity.GetHashCode();
-       } 
+            return Position.GetHashCode() ^ Value.GetHashCode() ^ TangentIn.GetHashCode() ^
+                   TangentOut.GetHashCode() ^ Continuity.GetHashCode();
+        }
 
         #endregion
     }

@@ -10,17 +10,16 @@
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid <see cref="float"/> AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters.
+    ///     A list of valid <see cref="float" /> AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters.
     /// </summary>
     public enum EffectSlotFloat
     {
         /// <summary>
-        /// Range [0.0f .. 1.0f]
-        /// Default: 1.0f
-        ///
-        /// This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes
-        /// the output.
+        ///     Range [0.0f .. 1.0f]
+        ///     Default: 1.0f
+        ///     This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes
+        ///     the output.
         /// </summary>
-        Gain = 0x0002,
+        Gain = 0x0002
     }
 }

@@ -26,17 +26,23 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the conversion.
         /// </returns>
-        public static implicit operator IntPtr(Window window) { return window.handle; }
-        
+        public static implicit operator IntPtr(Window window)
+        {
+            return window.handle;
+        }
+
         /// <summary>
-        ///     Performs an explicit conversion from <see cref="IntPtr"/> to <see cref="Window"/>.
+        ///     Performs an explicit conversion from <see cref="IntPtr" /> to <see cref="Window" />.
         /// </summary>
         /// <param name="handle">A pointer representing the window handle.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Window(IntPtr handle) => new Window(handle);
+        public static explicit operator Window(IntPtr handle)
+        {
+            return new Window(handle);
+        }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="Window"/> struct.
+        ///     Creates a new instance of the <see cref="Window" /> struct.
         /// </summary>
         /// <param name="handle">A pointer representing the window handle.</param>
         public Window(IntPtr handle)
@@ -50,7 +56,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
-        public override string ToString() { return handle.ToString(); }
+        public override string ToString()
+        {
+            return handle.ToString();
+        }
 
         /// <summary>
         ///     Determines whether the specified <see cref="Window" />, is equal to this instance.
@@ -59,7 +68,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Window" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(Window other) { return handle.Equals(other.handle); }
+        public bool Equals(Window other)
+        {
+            return handle.Equals(other.handle);
+        }
 
         /// <summary>
         ///     Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -90,7 +102,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
-        public override int GetHashCode() { return handle.GetHashCode(); }
+        public override int GetHashCode()
+        {
+            return handle.GetHashCode();
+        }
 
         /// <summary>
         ///     Implements the operator ==.
@@ -100,7 +115,10 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator ==(Window left, Window right) { return left.Equals(right); }
+        public static bool operator ==(Window left, Window right)
+        {
+            return left.Equals(right);
+        }
 
         /// <summary>
         ///     Implements the operator !=.
@@ -110,6 +128,9 @@ namespace Reactor.Platform.GLFW
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator !=(Window left, Window right) { return !left.Equals(right); }
+        public static bool operator !=(Window left, Window right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

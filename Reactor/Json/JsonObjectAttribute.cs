@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,31 +30,51 @@ using System;
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Instructs the <see cref="JsonSerializer"/> how to serialize the object.
+    ///     Instructs the <see cref="JsonSerializer" /> how to serialize the object.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
     public sealed class JsonObjectAttribute : JsonContainerAttribute
     {
-        private MemberSerialization _memberSerialization = MemberSerialization.OptOut;
-        internal MissingMemberHandling? _missingMemberHandling;
+        internal NullValueHandling? _itemNullValueHandling;
 
         // yuck. can't set nullable properties on an attribute in C#
         // have to use this approach to get an unset default state
         internal Required? _itemRequired;
-        internal NullValueHandling? _itemNullValueHandling;
+        internal MissingMemberHandling? _missingMemberHandling;
 
         /// <summary>
-        /// Gets or sets the member serialization.
+        ///     Initializes a new instance of the <see cref="JsonObjectAttribute" /> class.
         /// </summary>
-        /// <value>The member serialization.</value>
-        public MemberSerialization MemberSerialization
+        public JsonObjectAttribute()
         {
-            get => _memberSerialization;
-            set => _memberSerialization = value;
         }
 
         /// <summary>
-        /// Gets or sets the missing member handling used when deserializing this object.
+        ///     Initializes a new instance of the <see cref="JsonObjectAttribute" /> class with the specified member serialization.
+        /// </summary>
+        /// <param name="memberSerialization">The member serialization.</param>
+        public JsonObjectAttribute(MemberSerialization memberSerialization)
+        {
+            MemberSerialization = memberSerialization;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="JsonObjectAttribute" /> class with the specified container Id.
+        /// </summary>
+        /// <param name="id">The container Id.</param>
+        public JsonObjectAttribute(string id)
+            : base(id)
+        {
+        }
+
+        /// <summary>
+        ///     Gets or sets the member serialization.
+        /// </summary>
+        /// <value>The member serialization.</value>
+        public MemberSerialization MemberSerialization { get; set; } = MemberSerialization.OptOut;
+
+        /// <summary>
+        ///     Gets or sets the missing member handling used when deserializing this object.
         /// </summary>
         /// <value>The missing member handling.</value>
         public MissingMemberHandling MissingMemberHandling
@@ -62,7 +84,7 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Gets or sets how the object's properties with null values are handled during serialization and deserialization.
+        ///     Gets or sets how the object's properties with null values are handled during serialization and deserialization.
         /// </summary>
         /// <value>How the object's properties with null values are handled during serialization and deserialization.</value>
         public NullValueHandling ItemNullValueHandling
@@ -72,40 +94,15 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether the object's properties are required.
+        ///     Gets or sets a value that indicates whether the object's properties are required.
         /// </summary>
         /// <value>
-        /// 	A value indicating whether the object's properties are required.
+        ///     A value indicating whether the object's properties are required.
         /// </value>
         public Required ItemRequired
         {
             get => _itemRequired ?? default;
             set => _itemRequired = value;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class.
-        /// </summary>
-        public JsonObjectAttribute()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class with the specified member serialization.
-        /// </summary>
-        /// <param name="memberSerialization">The member serialization.</param>
-        public JsonObjectAttribute(MemberSerialization memberSerialization)
-        {
-            MemberSerialization = memberSerialization;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class with the specified container Id.
-        /// </summary>
-        /// <param name="id">The container Id.</param>
-        public JsonObjectAttribute(string id)
-            : base(id)
-        {
         }
     }
 }

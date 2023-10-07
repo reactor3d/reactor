@@ -11,28 +11,26 @@ using System.Collections.Generic;
 
 namespace NVorbis
 {
-    static class Huffman
+    internal static class Huffman
     {
-        const int MAX_TABLE_BITS = 10;
+        private const int MAX_TABLE_BITS = 10;
 
-        static internal List<HuffmanListNode> BuildPrefixedLinkedList(int[] values, int[] lengthList, int[] codeList, out int tableBits, out HuffmanListNode firstOverflowNode)
+        internal static List<HuffmanListNode> BuildPrefixedLinkedList(int[] values, int[] lengthList, int[] codeList,
+            out int tableBits, out HuffmanListNode firstOverflowNode)
         {
-            HuffmanListNode[] list = new HuffmanListNode[lengthList.Length];
+            var list = new HuffmanListNode[lengthList.Length];
 
             var maxLen = 0;
-            for (int i = 0; i < list.Length; i++)
+            for (var i = 0; i < list.Length; i++)
             {
                 list[i] = new HuffmanListNode
                 {
                     Value = values[i],
                     Length = lengthList[i] <= 0 ? 99999 : lengthList[i],
                     Bits = codeList[i],
-                    Mask = (1 << lengthList[i]) - 1,
+                    Mask = (1 << lengthList[i]) - 1
                 };
-                if (lengthList[i] > 0 && maxLen < lengthList[i])
-                {
-                    maxLen = lengthList[i];
-                }
+                if (lengthList[i] > 0 && maxLen < lengthList[i]) maxLen = lengthList[i];
             }
 
             Array.Sort(list, SortCallback);
@@ -41,8 +39,7 @@ namespace NVorbis
 
             var prefixList = new List<HuffmanListNode>(1 << tableBits);
             firstOverflowNode = null;
-            for (int i = 0; i < list.Length && list[i].Length < 99999; i++)
-            {
+            for (var i = 0; i < list.Length && list[i].Length < 99999; i++)
                 if (firstOverflowNode == null)
                 {
                     var itemBits = list[i].Length;
@@ -54,13 +51,10 @@ namespace NVorbis
                     {
                         var maxVal = 1 << (tableBits - itemBits);
                         var item = list[i];
-                        for (int j = 0; j < maxVal; j++)
+                        for (var j = 0; j < maxVal; j++)
                         {
                             var idx = (j << itemBits) | item.Bits;
-                            while (prefixList.Count <= idx)
-                            {
-                                prefixList.Add(null);
-                            }
+                            while (prefixList.Count <= idx) prefixList.Add(null);
                             prefixList[idx] = item;
                         }
                     }
@@ -69,35 +63,28 @@ namespace NVorbis
                 {
                     list[i - 1].Next = list[i];
                 }
-            }
 
-            while (prefixList.Count < 1 << tableBits)
-            {
-                prefixList.Add(null);
-            }
+            while (prefixList.Count < 1 << tableBits) prefixList.Add(null);
 
             return prefixList;
         }
 
-        static int SortCallback(HuffmanListNode i1, HuffmanListNode i2)
+        private static int SortCallback(HuffmanListNode i1, HuffmanListNode i2)
         {
             var len = i1.Length - i2.Length;
-            if (len == 0)
-            {
-                return i1.Bits - i2.Bits;
-            }
+            if (len == 0) return i1.Bits - i2.Bits;
             return len;
         }
     }
 
-    class HuffmanListNode
+    internal class HuffmanListNode
     {
-        internal int Value;
+        internal int Bits;
 
         internal int Length;
-        internal int Bits;
         internal int Mask;
 
         internal HuffmanListNode Next;
+        internal int Value;
     }
 }

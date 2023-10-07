@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,6 +30,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 
@@ -37,17 +40,10 @@ using System.Linq;
 
 namespace Newtonsoft.Json.Schema
 {
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     internal class JsonSchemaNode
     {
-        public string Id { get; }
-        public ReadOnlyCollection<JsonSchema> Schemas { get; }
-        public Dictionary<string, JsonSchemaNode> Properties { get; }
-        public Dictionary<string, JsonSchemaNode> PatternProperties { get; }
-        public List<JsonSchemaNode> Items { get; }
-        public JsonSchemaNode AdditionalProperties { get; set; }
-        public JsonSchemaNode AdditionalItems { get; set; }
-
         public JsonSchemaNode(JsonSchema schema)
         {
             Schemas = new ReadOnlyCollection<JsonSchema>(new[] { schema });
@@ -70,6 +66,14 @@ namespace Newtonsoft.Json.Schema
             Id = GetId(Schemas);
         }
 
+        public string Id { get; }
+        public ReadOnlyCollection<JsonSchema> Schemas { get; }
+        public Dictionary<string, JsonSchemaNode> Properties { get; }
+        public Dictionary<string, JsonSchemaNode> PatternProperties { get; }
+        public List<JsonSchemaNode> Items { get; }
+        public JsonSchemaNode AdditionalProperties { get; set; }
+        public JsonSchemaNode AdditionalItems { get; set; }
+
         public JsonSchemaNode Combine(JsonSchema schema)
         {
             return new JsonSchemaNode(this, schema);
@@ -81,7 +85,7 @@ namespace Newtonsoft.Json.Schema
 #if !HAVE_STRING_JOIN_WITH_ENUMERABLE
                     .ToArray()
 #endif
-                );
+            );
         }
     }
 }

@@ -25,36 +25,33 @@ using System;
 
 namespace Reactor.Types
 {
-
-        public class RGameTime
+    public class RGameTime
+    {
+        public RGameTime()
         {
-            public TimeSpan TotalGameTime { get; set; }
-
-            public TimeSpan ElapsedGameTime { get; set; }
-
-            public bool IsRunningSlowly { get; set; }
-
-            public RGameTime()
-            {
-                TotalGameTime = TimeSpan.Zero;
-                ElapsedGameTime = TimeSpan.Zero;
-                IsRunningSlowly = false;
-            }
-
-            public RGameTime(TimeSpan totalGameTime, TimeSpan elapsedGameTime)
-            {
-                TotalGameTime = totalGameTime;
-                ElapsedGameTime = elapsedGameTime;
-                IsRunningSlowly = false;
-            }
-
-            public RGameTime (TimeSpan totalRealTime, TimeSpan elapsedRealTime, bool isRunningSlowly)
-            {
-                TotalGameTime = totalRealTime;
-                ElapsedGameTime = elapsedRealTime;
-                IsRunningSlowly = isRunningSlowly;
-            }
+            TotalGameTime = TimeSpan.Zero;
+            ElapsedGameTime = TimeSpan.Zero;
+            IsRunningSlowly = false;
         }
 
-}
+        public RGameTime(TimeSpan totalGameTime, TimeSpan elapsedGameTime)
+        {
+            TotalGameTime = totalGameTime;
+            ElapsedGameTime = elapsedGameTime;
+            IsRunningSlowly = false;
+        }
 
+        public RGameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, bool isRunningSlowly)
+        {
+            TotalGameTime = totalRealTime;
+            ElapsedGameTime = elapsedRealTime;
+            IsRunningSlowly = isRunningSlowly;
+        }
+
+        public TimeSpan TotalGameTime { get; set; }
+
+        public TimeSpan ElapsedGameTime { get; set; }
+
+        public bool IsRunningSlowly { get; set; }
+    }
+}

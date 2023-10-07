@@ -20,31 +20,25 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Reactor.Math;
 
 namespace Reactor.Platform
 {
-
     public abstract class RenderControl : IDisposable
     {
         public IGraphicsContext Context { get; internal set; }
 
-        public abstract void Init();
+        public bool IsFullscreen { get; set; }
 
         public abstract void Dispose();
+
+        public abstract void Init();
 
         public event Action OnRender;
 
         public abstract void SwapBuffers();
 
         public abstract void MakeCurrent();
-
-        public bool IsFullscreen { get; set; }
     }
 }

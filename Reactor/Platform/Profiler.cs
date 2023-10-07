@@ -28,12 +28,13 @@ namespace Reactor.Platform
 {
     public static class Profiler
     {
-        static Process process = Process.GetCurrentProcess();
+        private static readonly Process process = Process.GetCurrentProcess();
 
         public static double GetVirtualMemory()
         {
             return process.VirtualMemorySize64 / 1024.0 / 1024.0;
         }
+
         public static double GetPhysicalMemory()
         {
             return process.WorkingSet64 / 1024.0 / 1024.0;
@@ -45,4 +46,3 @@ namespace Reactor.Platform
         }
     }
 }
-

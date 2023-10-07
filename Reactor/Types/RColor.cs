@@ -23,20 +23,21 @@
 
 using System;
 using System.Diagnostics;
-using System.Text;
+using System.Runtime.InteropServices;
 using Reactor.Math;
 
 namespace Reactor.Types
 {
     /// <summary>
-    /// Describes a 32-bit packed RColor.
+    ///     Describes a 32-bit packed RColor.
     /// </summary>
-
     [DebuggerDisplay("{DebugDisplayString,nq}")]
+    [StructLayout(LayoutKind.Sequential)]
     public struct RColor : IEquatable<RColor>
     {
         static RColor()
         {
+            // Colors are defined in ABGR format.
             TransparentBlack = new RColor(0);
             Transparent = new RColor(0);
             AliceBlue = new RColor(0xfffff8f0);
@@ -156,133 +157,172 @@ namespace Reactor.Types
             RosyBrown = new RColor(0xff8f8fbc);
             RoyalBlue = new RColor(0xffe16941);
             SaddleBrown = new RColor(0xff13458b);
-            Salmon= new RColor(0xff7280fa);
+            Salmon = new RColor(0xff7280fa);
             SandyBrown = new RColor(0xff60a4f4);
             SeaGreen = new RColor(0xff578b2e);
             SeaShell = new RColor(0xffeef5ff);
             Sienna = new RColor(0xff2d52a0);
-            Silver  = new RColor(0xffc0c0c0);
-            SkyBlue  = new RColor(0xffebce87);
-            SlateBlue= new RColor(0xffcd5a6a);
-            SlateGray= new RColor(0xff908070);
-            Snow= new RColor(0xfffafaff);
-            SpringGreen= new RColor(0xff7fff00);
-            SteelBlue= new RColor(0xffb48246);
-            Tan= new RColor(0xff8cb4d2);
-            Teal= new RColor(0xff808000);
-            Thistle= new RColor(0xffd8bfd8);
-            Tomato= new RColor(0xff4763ff);
-            Turquoise= new RColor(0xffd0e040);
-            Violet= new RColor(0xffee82ee);
-            Wheat= new RColor(0xffb3def5);
-            White= new RColor(uint.MaxValue);
-            WhiteSmoke= new RColor(0xfff5f5f5);
+            Silver = new RColor(0xffc0c0c0);
+            SkyBlue = new RColor(0xffebce87);
+            SlateBlue = new RColor(0xffcd5a6a);
+            SlateGray = new RColor(0xff908070);
+            Snow = new RColor(0xfffafaff);
+            SpringGreen = new RColor(0xff7fff00);
+            SteelBlue = new RColor(0xffb48246);
+            Tan = new RColor(0xff8cb4d2);
+            Teal = new RColor(0xff808000);
+            Thistle = new RColor(0xffd8bfd8);
+            Tomato = new RColor(0xff4763ff);
+            Turquoise = new RColor(0xffd0e040);
+            Violet = new RColor(0xffee82ee);
+            Wheat = new RColor(0xffb3def5);
+            White = new RColor(uint.MaxValue);
+            WhiteSmoke = new RColor(0xfff5f5f5);
             Yellow = new RColor(0xff00ffff);
             YellowGreen = new RColor(0xff32cd9a);
         }
-	// ARGB
-        private uint _packedValue;
-	  
+        // ARGB
+
+        /// <summary>
+        ///     Accepts an ABGR color packed value where the first byte is alpha channel. This can be represented by 0xAABBGGRR.
+        ///     If you want to create one from a web color, for example #FF0000 as Red (our favorite), it would be represented as
+        ///     0xFF0000FF. Because palindromes in math are awesome. Essentially it's backwards, flipped, #FF0000{AA} in this case
+        ///     FF or 255 or 1.0f.
+        /// </summary>
+        /// <param name="packedValue"></param>
         public RColor(uint packedValue)
         {
-            _packedValue = packedValue;
-			// ARGB
-			//_packedValue = (packedValue << 8) | ((packedValue & 0xff000000) >> 24);
-			// ABGR			
-			//_packedValue = (packedValue & 0xff00ff00) | ((packedValue & 0x000000ff) << 16) | ((packedValue & 0x00ff0000) >> 16);
+            PackedValue = packedValue;
+            //A = (byte)(packedValue >> 24);
+            //B = (byte)(packedValue >> 16);
+            //G = (byte)(packedValue >> 8);
+            //R = (byte)(packedValue);
+            //_packedValue = packedValue;
+            // ARGB
+            //_packedValue = (packedValue << 8) | ((packedValue & 0xff000000) >> 24);
+            // BGRA			
+            //_packedValue = (packedValue & 0xff00ff00) | ((packedValue & 0x000000ff) << 16) | ((packedValue & 0x00ff0000) >> 16);
         }
 
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+        public RColor(uint packedValue, RPixelFormat format)
+        {
+            PackedValue = 0;
+            switch (format)
+            {
+                case RPixelFormat.Bgr:
+                case RPixelFormat.Bgra:
+                    A = (byte)(packedValue >> 24);
+                    R = (byte)(packedValue >> 16);
+                    G = (byte)(packedValue >> 8);
+                    B = (byte)packedValue;
+                    break;
+                case RPixelFormat.Rgb:
+                case RPixelFormat.Rgba:
+                    A = (byte)(packedValue >> 24);
+                    B = (byte)(packedValue >> 16);
+                    G = (byte)(packedValue >> 8);
+                    R = (byte)packedValue;
+                    break;
+                default:
+                    A = (byte)(packedValue >> 24);
+                    B = (byte)(packedValue >> 16);
+                    G = (byte)(packedValue >> 8);
+                    R = (byte)packedValue;
+                    break;
+            }
+        }
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
-        /// <param name="RColor">A <see cref="Vector4"/> representing RColor.</param>
+        /// <param name="RColor">A <see cref="Vector4" /> representing RColor.</param>
         public RColor(Vector4 RColor)
         {
-            _packedValue = 0;
-			
-			R = (byte)MathHelper.Clamp(RColor.X * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)MathHelper.Clamp(RColor.Y * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)MathHelper.Clamp(RColor.Z * 255, Byte.MinValue, Byte.MaxValue);
-            A = (byte)MathHelper.Clamp(RColor.W * 255, Byte.MinValue, Byte.MaxValue);
+            PackedValue = 0;
+
+            R = (byte)MathHelper.Clamp(RColor.X * 255, byte.MinValue, byte.MaxValue);
+            G = (byte)MathHelper.Clamp(RColor.Y * 255, byte.MinValue, byte.MaxValue);
+            B = (byte)MathHelper.Clamp(RColor.Z * 255, byte.MinValue, byte.MaxValue);
+            A = (byte)MathHelper.Clamp(RColor.W * 255, byte.MinValue, byte.MaxValue);
         }
 
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
-        /// <param name="RColor">A <see cref="Vector3"/> representing RColor.</param>
+        /// <param name="RColor">A <see cref="Vector3" /> representing RColor.</param>
         public RColor(Vector3 RColor)
         {
-            _packedValue = 0;
+            PackedValue = 0;
 
-            R = (byte)MathHelper.Clamp(RColor.X * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)MathHelper.Clamp(RColor.Y * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)MathHelper.Clamp(RColor.Z * 255, Byte.MinValue, Byte.MaxValue);
+            R = (byte)MathHelper.Clamp(RColor.X * 255, byte.MinValue, byte.MaxValue);
+            G = (byte)MathHelper.Clamp(RColor.Y * 255, byte.MinValue, byte.MaxValue);
+            B = (byte)MathHelper.Clamp(RColor.Z * 255, byte.MinValue, byte.MaxValue);
             A = 255;
         }
-	
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
-        /// <param name="RColor">A <see cref="RColor"/> for RGB values of new <see cref="RColor"/> instance.</param>
+        /// <param name="RColor">A <see cref="RColor" /> for RGB values of new <see cref="RColor" /> instance.</param>
         /// <param name="alpha">Alpha component value.</param>
         public RColor(RColor RColor, int alpha)
         {
-            _packedValue = 0;
+            PackedValue = 0;
 
             R = RColor.R;
             G = RColor.G;
             B = RColor.B;
-            A = (byte)MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha, byte.MinValue, byte.MaxValue);
         }
-	
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
-        /// <param name="RColor">A <see cref="RColor"/> for RGB values of new <see cref="RColor"/> instance.</param>
+        /// <param name="RColor">A <see cref="RColor" /> for RGB values of new <see cref="RColor" /> instance.</param>
         /// <param name="alpha">Alpha component value.</param>
         public RColor(RColor RColor, float alpha)
         {
-            _packedValue = 0;
+            PackedValue = 0;
 
             R = RColor.R;
             G = RColor.G;
             B = RColor.B;
-            A = (byte)MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha * 255, byte.MinValue, byte.MaxValue);
         }
-	
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
         /// <param name="r">Red component value.</param>
         /// <param name="g">Green component value.</param>
         /// <param name="b">Blue component value</param>
         public RColor(float r, float g, float b)
         {
-            _packedValue = 0;
-			
-            R = (byte)MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
+            PackedValue = 0;
+
+            R = (byte)MathHelper.Clamp(r * 255, byte.MinValue, byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g * 255, byte.MinValue, byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b * 255, byte.MinValue, byte.MaxValue);
             A = 255;
         }
-	
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
         /// <param name="r">Red component value.</param>
         /// <param name="g">Green component value.</param>
         /// <param name="b">Blue component value</param>
         public RColor(int r, int g, int b)
         {
-            _packedValue = 0;
-            R = (byte)MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-            G = (byte)MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-            B = (byte)MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
-            A = (byte)255;
+            PackedValue = 0;
+            R = (byte)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
+            A = 255;
         }
 
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
         /// <param name="r">Red component value.</param>
         /// <param name="g">Green component value.</param>
@@ -290,15 +330,15 @@ namespace Reactor.Types
         /// <param name="alpha">Alpha component value.</param>
         public RColor(int r, int g, int b, int alpha)
         {
-            _packedValue = 0;
-            R = (byte)MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-            G = (byte)MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-            B = (byte)MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
-            A = (byte)MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+            PackedValue = 0;
+            R = (byte)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha, byte.MinValue, byte.MaxValue);
         }
-	
-	/// <summary>
-        /// Creates a new instance of <see cref="RColor"/> struct.
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="RColor" /> struct.
         /// </summary>
         /// <param name="r">Red component value.</param>
         /// <param name="g">Green component value.</param>
@@ -306,1546 +346,994 @@ namespace Reactor.Types
         /// <param name="alpha">Alpha component value.</param>
         public RColor(float r, float g, float b, float alpha)
         {
-            _packedValue = 0;
-			
-            R = (byte)MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
-            G = (byte)MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
-            B = (byte)MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
-            A = (byte)MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
+            PackedValue = 0;
+
+            R = (byte)MathHelper.Clamp(r * 255, byte.MinValue, byte.MaxValue);
+            G = (byte)MathHelper.Clamp(g * 255, byte.MinValue, byte.MaxValue);
+            B = (byte)MathHelper.Clamp(b * 255, byte.MinValue, byte.MaxValue);
+            A = (byte)MathHelper.Clamp(alpha * 255, byte.MinValue, byte.MaxValue);
         }
 
         /// <summary>
-        /// Gets or sets the blue component of <see cref="RColor"/>.
+        ///     Gets or sets the blue component of <see cref="RColor" />.
         /// </summary>
-        
+
         public byte B
         {
             get
             {
                 unchecked
                 {
-                    return (byte) (this._packedValue >> 16);
+                    return (byte)(PackedValue >> 16);
                 }
             }
-            set
-            {
-                this._packedValue = (this._packedValue & 0xff00ffff) | ((uint)value << 16);
-            }
+            set => PackedValue = (PackedValue & 0xff00ffff) | ((uint)value << 16);
         }
 
         /// <summary>
-        /// Gets or sets the green component of <see cref="RColor"/>.
+        ///     Gets or sets the green component of <see cref="RColor" />.
         /// </summary>
-        
+
         public byte G
         {
             get
             {
                 unchecked
                 {
-                    return (byte)(this._packedValue >> 8);
+                    return (byte)(PackedValue >> 8);
                 }
             }
-            set
-            {
-                this._packedValue = (this._packedValue & 0xffff00ff) | ((uint)value << 8);
-            }
+            set => PackedValue = (PackedValue & 0xffff00ff) | ((uint)value << 8);
         }
 
         /// <summary>
-        /// Gets or sets the red component of <see cref="RColor"/>.
+        ///     Gets or sets the red component of <see cref="RColor" />.
         /// </summary>
-        
+
         public byte R
         {
             get
             {
                 unchecked
                 {
-                    return (byte) this._packedValue;
+                    return (byte)PackedValue;
                 }
             }
-            set
-            {
-                this._packedValue = (this._packedValue & 0xffffff00) | value;
-            }
+            set => PackedValue = (PackedValue & 0xffffff00) | value;
         }
 
         /// <summary>
-        /// Gets or sets the alpha component of <see cref="RColor"/>.
+        ///     Gets or sets the alpha component of <see cref="RColor" />.
         /// </summary>
-        
+
         public byte A
         {
             get
             {
                 unchecked
                 {
-                    return (byte)(this._packedValue >> 24);
+                    return (byte)(PackedValue >> 24);
                 }
             }
-            set
-            {
-                this._packedValue = (this._packedValue & 0x00ffffff) | ((uint)value << 24);
-            }
+            set => PackedValue = (PackedValue & 0x00ffffff) | ((uint)value << 24);
         }
-		
-	/// <summary>
-        /// Compares whether two <see cref="RColor"/> instances are equal.
+
+        /// <summary>
+        ///     Compares whether two <see cref="RColor" /> instances are equal.
         /// </summary>
-        /// <param name="a"><see cref="RColor"/> instance on the left of the equal sign.</param>
-        /// <param name="b"><see cref="RColor"/> instance on the right of the equal sign.</param>
+        /// <param name="a"><see cref="RColor" /> instance on the left of the equal sign.</param>
+        /// <param name="b"><see cref="RColor" /> instance on the right of the equal sign.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public static bool operator ==(RColor a, RColor b)
         {
-            return (a.A == b.A &&
-                a.R == b.R &&
-                a.G == b.G &&
-                a.B == b.B);
+            return a.A == b.A &&
+                   a.R == b.R &&
+                   a.G == b.G &&
+                   a.B == b.B;
         }
-	
-	/// <summary>
-        /// Compares whether two <see cref="RColor"/> instances are not equal.
+
+        /// <summary>
+        ///     Compares whether two <see cref="RColor" /> instances are not equal.
         /// </summary>
-        /// <param name="a"><see cref="RColor"/> instance on the left of the not equal sign.</param>
-        /// <param name="b"><see cref="RColor"/> instance on the right of the not equal sign.</param>
-        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>	
+        /// <param name="a"><see cref="RColor" /> instance on the left of the not equal sign.</param>
+        /// <param name="b"><see cref="RColor" /> instance on the right of the not equal sign.</param>
+        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
         public static bool operator !=(RColor a, RColor b)
         {
             return !(a == b);
         }
 
         /// <summary>
-        /// Gets the hash code of this <see cref="RColor"/>.
+        ///     Gets the hash code of this <see cref="RColor" />.
         /// </summary>
-        /// <returns>Hash code of this <see cref="RColor"/>.</returns>
+        /// <returns>Hash code of this <see cref="RColor" />.</returns>
         public override int GetHashCode()
         {
-            return this._packedValue.GetHashCode();
+            return PackedValue.GetHashCode();
         }
-	
+
         /// <summary>
-        /// Compares whether current instance is equal to specified object.
+        ///     Compares whether current instance is equal to specified object.
         /// </summary>
-        /// <param name="obj">The <see cref="RColor"/> to compare.</param>
+        /// <param name="obj">The <see cref="RColor" /> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return ((obj is RColor) && this.Equals((RColor)obj));
+            return obj is RColor && Equals((RColor)obj);
         }
 
         #region RColor Bank
+
+        /// <summary>
+        ///     TransparentBlack RColor (R:0,G:0,B:0,A:0).
+        /// </summary>
+        public static RColor TransparentBlack { get; private set; }
+
+        /// <summary>
+        ///     Transparent RColor (R:0,G:0,B:0,A:0).
+        /// </summary>
+        public static RColor Transparent { get; private set; }
+
+        /// <summary>
+        ///     AliceBlue RColor (R:240,G:248,B:255,A:255).
+        /// </summary>
+        public static RColor AliceBlue { get; private set; }
+
+        /// <summary>
+        ///     AntiqueWhite RColor (R:250,G:235,B:215,A:255).
+        /// </summary>
+        public static RColor AntiqueWhite { get; private set; }
+
+        /// <summary>
+        ///     Aqua RColor (R:0,G:255,B:255,A:255).
+        /// </summary>
+        public static RColor Aqua { get; private set; }
+
+        /// <summary>
+        ///     Aquamarine RColor (R:127,G:255,B:212,A:255).
+        /// </summary>
+        public static RColor Aquamarine { get; private set; }
+
+        /// <summary>
+        ///     Azure RColor (R:240,G:255,B:255,A:255).
+        /// </summary>
+        public static RColor Azure { get; private set; }
+
+        /// <summary>
+        ///     Beige RColor (R:245,G:245,B:220,A:255).
+        /// </summary>
+        public static RColor Beige { get; private set; }
+
+        /// <summary>
+        ///     Bisque RColor (R:255,G:228,B:196,A:255).
+        /// </summary>
+        public static RColor Bisque { get; private set; }
+
+        /// <summary>
+        ///     Black RColor (R:0,G:0,B:0,A:255).
+        /// </summary>
+        public static RColor Black { get; private set; }
+
+        /// <summary>
+        ///     BlanchedAlmond RColor (R:255,G:235,B:205,A:255).
+        /// </summary>
+        public static RColor BlanchedAlmond { get; private set; }
+
+        /// <summary>
+        ///     Blue RColor (R:0,G:0,B:255,A:255).
+        /// </summary>
+        public static RColor Blue { get; private set; }
+
+        /// <summary>
+        ///     BlueViolet RColor (R:138,G:43,B:226,A:255).
+        /// </summary>
+        public static RColor BlueViolet { get; private set; }
+
+        /// <summary>
+        ///     Brown RColor (R:165,G:42,B:42,A:255).
+        /// </summary>
+        public static RColor Brown { get; private set; }
+
+        /// <summary>
+        ///     BurlyWood RColor (R:222,G:184,B:135,A:255).
+        /// </summary>
+        public static RColor BurlyWood { get; private set; }
+
+        /// <summary>
+        ///     CadetBlue RColor (R:95,G:158,B:160,A:255).
+        /// </summary>
+        public static RColor CadetBlue { get; private set; }
+
+        /// <summary>
+        ///     Chartreuse RColor (R:127,G:255,B:0,A:255).
+        /// </summary>
+        public static RColor Chartreuse { get; private set; }
+
+        /// <summary>
+        ///     Chocolate RColor (R:210,G:105,B:30,A:255).
+        /// </summary>
+        public static RColor Chocolate { get; private set; }
+
+        /// <summary>
+        ///     Coral RColor (R:255,G:127,B:80,A:255).
+        /// </summary>
+        public static RColor Coral { get; private set; }
+
+        /// <summary>
+        ///     CornflowerBlue RColor (R:100,G:149,B:237,A:255).
+        /// </summary>
+        public static RColor CornflowerBlue { get; private set; }
+
+        /// <summary>
+        ///     Cornsilk RColor (R:255,G:248,B:220,A:255).
+        /// </summary>
+        public static RColor Cornsilk { get; private set; }
+
+        /// <summary>
+        ///     Crimson RColor (R:220,G:20,B:60,A:255).
+        /// </summary>
+        public static RColor Crimson { get; private set; }
+
+        /// <summary>
+        ///     Cyan RColor (R:0,G:255,B:255,A:255).
+        /// </summary>
+        public static RColor Cyan { get; private set; }
+
+        /// <summary>
+        ///     DarkBlue RColor (R:0,G:0,B:139,A:255).
+        /// </summary>
+        public static RColor DarkBlue { get; private set; }
+
+        /// <summary>
+        ///     DarkCyan RColor (R:0,G:139,B:139,A:255).
+        /// </summary>
+        public static RColor DarkCyan { get; private set; }
+
+        /// <summary>
+        ///     DarkGoldenrod RColor (R:184,G:134,B:11,A:255).
+        /// </summary>
+        public static RColor DarkGoldenrod { get; private set; }
+
+        /// <summary>
+        ///     DarkGray RColor (R:169,G:169,B:169,A:255).
+        /// </summary>
+        public static RColor DarkGray { get; private set; }
+
+        /// <summary>
+        ///     DarkGreen RColor (R:0,G:100,B:0,A:255).
+        /// </summary>
+        public static RColor DarkGreen { get; private set; }
+
+        /// <summary>
+        ///     DarkKhaki RColor (R:189,G:183,B:107,A:255).
+        /// </summary>
+        public static RColor DarkKhaki { get; private set; }
+
+        /// <summary>
+        ///     DarkMagenta RColor (R:139,G:0,B:139,A:255).
+        /// </summary>
+        public static RColor DarkMagenta { get; private set; }
+
+        /// <summary>
+        ///     DarkOliveGreen RColor (R:85,G:107,B:47,A:255).
+        /// </summary>
+        public static RColor DarkOliveGreen { get; private set; }
+
         /// <summary>
-        /// TransparentBlack RColor (R:0,G:0,B:0,A:0).
-        /// </summary>
-        public static RColor TransparentBlack
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Transparent RColor (R:0,G:0,B:0,A:0).
-        /// </summary>
-        public static RColor Transparent
-        {
-            get;
-            private set;
-        }
-	
-	/// <summary>
-        /// AliceBlue RColor (R:240,G:248,B:255,A:255).
-        /// </summary>
-        public static RColor AliceBlue
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// AntiqueWhite RColor (R:250,G:235,B:215,A:255).
-        /// </summary>
-        public static RColor AntiqueWhite
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Aqua RColor (R:0,G:255,B:255,A:255).
-        /// </summary>
-	public static RColor Aqua
-        {
-            get;
-            private set;
-        }
-	
-	/// <summary>
-        /// Aquamarine RColor (R:127,G:255,B:212,A:255).
-        /// </summary>
-        public static RColor Aquamarine
-    {
-        get;
-        private set;
-    }
-        
-        /// <summary>
-        /// Azure RColor (R:240,G:255,B:255,A:255).
-        /// </summary>
-	public static RColor Azure
-        {
-            get;
-            private set;
-        }
-	
-	/// <summary>
-        /// Beige RColor (R:245,G:245,B:220,A:255).
-        /// </summary>
-        public static RColor Beige
-    {
-        get;
-        private set;
-    }
-        
-        /// <summary>
-        /// Bisque RColor (R:255,G:228,B:196,A:255).
-        /// </summary>
-        public static RColor Bisque
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Black RColor (R:0,G:0,B:0,A:255).
-        /// </summary>
-        public static RColor Black
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// BlanchedAlmond RColor (R:255,G:235,B:205,A:255).
-        /// </summary>
-        public static RColor BlanchedAlmond
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Blue RColor (R:0,G:0,B:255,A:255).
-        /// </summary>
-        public static RColor Blue
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// BlueViolet RColor (R:138,G:43,B:226,A:255).
-        /// </summary>
-        public static RColor BlueViolet
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Brown RColor (R:165,G:42,B:42,A:255).
-        /// </summary>
-        public static RColor Brown
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// BurlyWood RColor (R:222,G:184,B:135,A:255).
-        /// </summary>
-        public static RColor BurlyWood
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// CadetBlue RColor (R:95,G:158,B:160,A:255).
-        /// </summary>
-        public static RColor CadetBlue
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Chartreuse RColor (R:127,G:255,B:0,A:255).
-        /// </summary>
-        public static RColor Chartreuse
-        {
-            get;
-            private set;
-        }
-         
-        /// <summary>
-        /// Chocolate RColor (R:210,G:105,B:30,A:255).
-        /// </summary>
-        public static RColor Chocolate
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Coral RColor (R:255,G:127,B:80,A:255).
-        /// </summary>
-        public static RColor Coral
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// CornflowerBlue RColor (R:100,G:149,B:237,A:255).
-        /// </summary>
-        public static RColor CornflowerBlue
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// Cornsilk RColor (R:255,G:248,B:220,A:255).
-        /// </summary>
-	public static RColor Cornsilk
-        {
-            get;
-            private set;
-        }
-	
-	/// <summary>
-        /// Crimson RColor (R:220,G:20,B:60,A:255).
-        /// </summary>
-        public static RColor Crimson
-    {
-        get;
-        private set;
-    }
-        
-        /// <summary>
-        /// Cyan RColor (R:0,G:255,B:255,A:255).
-        /// </summary>
-        public static RColor Cyan
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// DarkBlue RColor (R:0,G:0,B:139,A:255).
-        /// </summary>
-	public static RColor DarkBlue
-        {
-            get;
-            private set;
-        }
-	
-	/// <summary>
-        /// DarkCyan RColor (R:0,G:139,B:139,A:255).
-        /// </summary>
-        public static RColor DarkCyan
-    {
-        get;
-        private set;
-    }
-        
-        /// <summary>
-        /// DarkGoldenrod RColor (R:184,G:134,B:11,A:255).
-        /// </summary>
-        public static RColor DarkGoldenrod
-        {
-            get;
-            private set;
-        }
-        
-        /// <summary>
-        /// DarkGray RColor (R:169,G:169,B:169,A:255).
-        /// </summary>
-	public static RColor DarkGray
-        {
-            get;
-            private set;
-        }
-	
-	/// <summary>
-        /// DarkGreen RColor (R:0,G:100,B:0,A:255).
-        /// </summary>
-        public static RColor DarkGreen
-    {
-        get;
-        private set;
-    }
-        
-        /// <summary>
-        /// DarkKhaki RColor (R:189,G:183,B:107,A:255).
-        /// </summary>
-        public static RColor DarkKhaki
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// DarkMagenta RColor (R:139,G:0,B:139,A:255).
-        /// </summary>
-        public static RColor DarkMagenta
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// DarkOliveGreen RColor (R:85,G:107,B:47,A:255).
+        ///     DarkOrange RColor (R:255,G:140,B:0,A:255).
         /// </summary>
-        public static RColor DarkOliveGreen
-        {
-            get;
-            private set;
-        }
-
+        public static RColor DarkOrange { get; private set; }
+
         /// <summary>
-        /// DarkOrange RColor (R:255,G:140,B:0,A:255).
+        ///     DarkOrchid RColor (R:153,G:50,B:204,A:255).
         /// </summary>
-        public static RColor DarkOrange
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkOrchid { get; private set; }
 
         /// <summary>
-        /// DarkOrchid RColor (R:153,G:50,B:204,A:255).
+        ///     DarkRed RColor (R:139,G:0,B:0,A:255).
         /// </summary>
-        public static RColor DarkOrchid
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkRed { get; private set; }
 
         /// <summary>
-        /// DarkRed RColor (R:139,G:0,B:0,A:255).
+        ///     DarkSalmon RColor (R:233,G:150,B:122,A:255).
         /// </summary>
-        public static RColor DarkRed
-        {
-            get;
-            private set;
-        }
-        
-	/// <summary>
-        /// DarkSalmon RColor (R:233,G:150,B:122,A:255).
+        public static RColor DarkSalmon { get; private set; }
+
+        /// <summary>
+        ///     DarkSeaGreen RColor (R:143,G:188,B:139,A:255).
         /// </summary>
-        public static RColor DarkSalmon
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkSeaGreen { get; private set; }
 
         /// <summary>
-        /// DarkSeaGreen RColor (R:143,G:188,B:139,A:255).
+        ///     DarkSlateBlue RColor (R:72,G:61,B:139,A:255).
         /// </summary>
-        public static RColor DarkSeaGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkSlateBlue { get; private set; }
 
         /// <summary>
-        /// DarkSlateBlue RColor (R:72,G:61,B:139,A:255).
+        ///     DarkSlateGray RColor (R:47,G:79,B:79,A:255).
         /// </summary>
-        public static RColor DarkSlateBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkSlateGray { get; private set; }
 
         /// <summary>
-        /// DarkSlateGray RColor (R:47,G:79,B:79,A:255).
+        ///     DarkTurquoise RColor (R:0,G:206,B:209,A:255).
         /// </summary>
-        public static RColor DarkSlateGray
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkTurquoise { get; private set; }
 
         /// <summary>
-        /// DarkTurquoise RColor (R:0,G:206,B:209,A:255).
+        ///     DarkViolet RColor (R:148,G:0,B:211,A:255).
         /// </summary>
-        public static RColor DarkTurquoise
-        {
-            get;
-            private set;
-        }
+        public static RColor DarkViolet { get; private set; }
 
         /// <summary>
-        /// DarkViolet RColor (R:148,G:0,B:211,A:255).
+        ///     DeepPink RColor (R:255,G:20,B:147,A:255).
         /// </summary>
-        public static RColor DarkViolet
-        {
-            get;
-            private set;
-        }
-         
+        public static RColor DeepPink { get; private set; }
+
         /// <summary>
-        /// DeepPink RColor (R:255,G:20,B:147,A:255).
+        ///     DeepSkyBlue RColor (R:0,G:191,B:255,A:255).
         /// </summary>
-        public static RColor DeepPink
-        {
-            get;
-            private set;
-        }
+        public static RColor DeepSkyBlue { get; private set; }
 
         /// <summary>
-        /// DeepSkyBlue RColor (R:0,G:191,B:255,A:255).
+        ///     DimGray RColor (R:105,G:105,B:105,A:255).
         /// </summary>
-        public static RColor DeepSkyBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor DimGray { get; private set; }
 
         /// <summary>
-        /// DimGray RColor (R:105,G:105,B:105,A:255).
+        ///     DodgerBlue RColor (R:30,G:144,B:255,A:255).
         /// </summary>
-        public static RColor DimGray
-        {
-            get;
-            private set;
-        }
+        public static RColor DodgerBlue { get; private set; }
 
         /// <summary>
-        /// DodgerBlue RColor (R:30,G:144,B:255,A:255).
+        ///     Firebrick RColor (R:178,G:34,B:34,A:255).
         /// </summary>
-        public static RColor DodgerBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor Firebrick { get; private set; }
 
         /// <summary>
-        /// Firebrick RColor (R:178,G:34,B:34,A:255).
+        ///     FloralWhite RColor (R:255,G:250,B:240,A:255).
         /// </summary>
-        public static RColor Firebrick
-        {
-            get;
-            private set;
-        }
+        public static RColor FloralWhite { get; private set; }
 
         /// <summary>
-        /// FloralWhite RColor (R:255,G:250,B:240,A:255).
+        ///     ForestGreen RColor (R:34,G:139,B:34,A:255).
         /// </summary>
-        public static RColor FloralWhite
-        {
-            get;
-            private set;
-        }
+        public static RColor ForestGreen { get; private set; }
 
         /// <summary>
-        /// ForestGreen RColor (R:34,G:139,B:34,A:255).
+        ///     Fuchsia RColor (R:255,G:0,B:255,A:255).
         /// </summary>
-        public static RColor ForestGreen
-        {
-            get;
-            private set;
-        }
-        
-	/// <summary>
-        /// Fuchsia RColor (R:255,G:0,B:255,A:255).
+        public static RColor Fuchsia { get; private set; }
+
+        /// <summary>
+        ///     Gainsboro RColor (R:220,G:220,B:220,A:255).
         /// </summary>
-        public static RColor Fuchsia
-        {
-            get;
-            private set;
-        }
+        public static RColor Gainsboro { get; private set; }
 
         /// <summary>
-        /// Gainsboro RColor (R:220,G:220,B:220,A:255).
+        ///     GhostWhite RColor (R:248,G:248,B:255,A:255).
         /// </summary>
-        public static RColor Gainsboro
-        {
-            get;
-            private set;
-        }
+        public static RColor GhostWhite { get; private set; }
 
         /// <summary>
-        /// GhostWhite RColor (R:248,G:248,B:255,A:255).
+        ///     Gold RColor (R:255,G:215,B:0,A:255).
         /// </summary>
-        public static RColor GhostWhite
-        {
-            get;
-            private set;
-        }
+        public static RColor Gold { get; private set; }
+
         /// <summary>
-        /// Gold RColor (R:255,G:215,B:0,A:255).
+        ///     Goldenrod RColor (R:218,G:165,B:32,A:255).
         /// </summary>
-        public static RColor Gold
-        {
-            get;
-            private set;
-        }
+        public static RColor Goldenrod { get; private set; }
 
         /// <summary>
-        /// Goldenrod RColor (R:218,G:165,B:32,A:255).
+        ///     Gray RColor (R:128,G:128,B:128,A:255).
         /// </summary>
-        public static RColor Goldenrod
-        {
-            get;
-            private set;
-        }
+        public static RColor Gray { get; private set; }
 
         /// <summary>
-        /// Gray RColor (R:128,G:128,B:128,A:255).
+        ///     Green RColor (R:0,G:128,B:0,A:255).
         /// </summary>
-        public static RColor Gray
-        {
-            get;
-            private set;
-        }
+        public static RColor Green { get; private set; }
 
         /// <summary>
-        /// Green RColor (R:0,G:128,B:0,A:255).
+        ///     GreenYellow RColor (R:173,G:255,B:47,A:255).
         /// </summary>
-        public static RColor Green
-        {
-            get;
-            private set;
-        }
+        public static RColor GreenYellow { get; private set; }
 
         /// <summary>
-        /// GreenYellow RColor (R:173,G:255,B:47,A:255).
+        ///     Honeydew RColor (R:240,G:255,B:240,A:255).
         /// </summary>
-        public static RColor GreenYellow
-        {
-            get;
-            private set;
-        }
+        public static RColor Honeydew { get; private set; }
 
         /// <summary>
-        /// Honeydew RColor (R:240,G:255,B:240,A:255).
+        ///     HotPink RColor (R:255,G:105,B:180,A:255).
         /// </summary>
-        public static RColor Honeydew
-        {
-            get;
-            private set;
-        }
+        public static RColor HotPink { get; private set; }
 
         /// <summary>
-        /// HotPink RColor (R:255,G:105,B:180,A:255).
+        ///     IndianRed RColor (R:205,G:92,B:92,A:255).
         /// </summary>
-        public static RColor HotPink
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor IndianRed { get; private set; }
+
         /// <summary>
-        /// IndianRed RColor (R:205,G:92,B:92,A:255).
+        ///     Indigo RColor (R:75,G:0,B:130,A:255).
         /// </summary>
-        public static RColor IndianRed
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Indigo { get; private set; }
+
         /// <summary>
-        /// Indigo RColor (R:75,G:0,B:130,A:255).
+        ///     Ivory RColor (R:255,G:255,B:240,A:255).
         /// </summary>
-        public static RColor Indigo
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Ivory { get; private set; }
+
         /// <summary>
-        /// Ivory RColor (R:255,G:255,B:240,A:255).
+        ///     Khaki RColor (R:240,G:230,B:140,A:255).
         /// </summary>
-        public static RColor Ivory
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Khaki { get; private set; }
+
         /// <summary>
-        /// Khaki RColor (R:240,G:230,B:140,A:255).
+        ///     Lavender RColor (R:230,G:230,B:250,A:255).
         /// </summary>
-        public static RColor Khaki
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Lavender { get; private set; }
+
         /// <summary>
-        /// Lavender RColor (R:230,G:230,B:250,A:255).
+        ///     LavenderBlush RColor (R:255,G:240,B:245,A:255).
         /// </summary>
-        public static RColor Lavender
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor LavenderBlush { get; private set; }
+
         /// <summary>
-        /// LavenderBlush RColor (R:255,G:240,B:245,A:255).
+        ///     LawnGreen RColor (R:124,G:252,B:0,A:255).
         /// </summary>
-        public static RColor LavenderBlush
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor LawnGreen { get; private set; }
+
         /// <summary>
-        /// LawnGreen RColor (R:124,G:252,B:0,A:255).
+        ///     LemonChiffon RColor (R:255,G:250,B:205,A:255).
         /// </summary>
-        public static RColor LawnGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor LemonChiffon { get; private set; }
 
         /// <summary>
-        /// LemonChiffon RColor (R:255,G:250,B:205,A:255).
+        ///     LightBlue RColor (R:173,G:216,B:230,A:255).
         /// </summary>
-        public static RColor LemonChiffon
-        {
-            get;
-            private set;
-        }
+        public static RColor LightBlue { get; private set; }
 
         /// <summary>
-        /// LightBlue RColor (R:173,G:216,B:230,A:255).
+        ///     LightCoral RColor (R:240,G:128,B:128,A:255).
         /// </summary>
-        public static RColor LightBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor LightCoral { get; private set; }
 
         /// <summary>
-        /// LightCoral RColor (R:240,G:128,B:128,A:255).
+        ///     LightCyan RColor (R:224,G:255,B:255,A:255).
         /// </summary>
-        public static RColor LightCoral
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor LightCyan { get; private set; }
+
         /// <summary>
-        /// LightCyan RColor (R:224,G:255,B:255,A:255).
+        ///     LightGoldenrodYellow RColor (R:250,G:250,B:210,A:255).
         /// </summary>
-        public static RColor LightCyan
-        {
-            get;
-            private set;
-        }
+        public static RColor LightGoldenrodYellow { get; private set; }
 
         /// <summary>
-        /// LightGoldenrodYellow RColor (R:250,G:250,B:210,A:255).
+        ///     LightGray RColor (R:211,G:211,B:211,A:255).
         /// </summary>
-        public static RColor LightGoldenrodYellow
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor LightGray { get; private set; }
+
         /// <summary>
-        /// LightGray RColor (R:211,G:211,B:211,A:255).
+        ///     LightGreen RColor (R:144,G:238,B:144,A:255).
         /// </summary>
-        public static RColor LightGray
-        {
-            get;
-            private set;
-        }
+        public static RColor LightGreen { get; private set; }
 
         /// <summary>
-        /// LightGreen RColor (R:144,G:238,B:144,A:255).
+        ///     LightPink RColor (R:255,G:182,B:193,A:255).
         /// </summary>
-        public static RColor LightGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor LightPink { get; private set; }
 
         /// <summary>
-        /// LightPink RColor (R:255,G:182,B:193,A:255).
+        ///     LightSalmon RColor (R:255,G:160,B:122,A:255).
         /// </summary>
-        public static RColor LightPink
-        {
-            get;
-            private set;
-        }
+        public static RColor LightSalmon { get; private set; }
 
         /// <summary>
-        /// LightSalmon RColor (R:255,G:160,B:122,A:255).
+        ///     LightSeaGreen RColor (R:32,G:178,B:170,A:255).
         /// </summary>
-        public static RColor LightSalmon
-        {
-            get;
-            private set;
-        }
+        public static RColor LightSeaGreen { get; private set; }
 
         /// <summary>
-        /// LightSeaGreen RColor (R:32,G:178,B:170,A:255).
+        ///     LightSkyBlue RColor (R:135,G:206,B:250,A:255).
         /// </summary>
-        public static RColor LightSeaGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor LightSkyBlue { get; private set; }
 
         /// <summary>
-        /// LightSkyBlue RColor (R:135,G:206,B:250,A:255).
+        ///     LightSlateGray RColor (R:119,G:136,B:153,A:255).
         /// </summary>
-        public static RColor LightSkyBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor LightSlateGray { get; private set; }
 
         /// <summary>
-        /// LightSlateGray RColor (R:119,G:136,B:153,A:255).
+        ///     LightSteelBlue RColor (R:176,G:196,B:222,A:255).
         /// </summary>
-        public static RColor LightSlateGray
-        {
-            get;
-            private set;
-        }
+        public static RColor LightSteelBlue { get; private set; }
 
         /// <summary>
-        /// LightSteelBlue RColor (R:176,G:196,B:222,A:255).
+        ///     LightYellow RColor (R:255,G:255,B:224,A:255).
         /// </summary>
-        public static RColor LightSteelBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor LightYellow { get; private set; }
 
         /// <summary>
-        /// LightYellow RColor (R:255,G:255,B:224,A:255).
+        ///     Lime RColor (R:0,G:255,B:0,A:255).
         /// </summary>
-        public static RColor LightYellow
-        {
-            get;
-            private set;
-        }
+        public static RColor Lime { get; private set; }
 
         /// <summary>
-        /// Lime RColor (R:0,G:255,B:0,A:255).
+        ///     LimeGreen RColor (R:50,G:205,B:50,A:255).
         /// </summary>
-        public static RColor Lime
-        {
-            get;
-            private set;
-        }
+        public static RColor LimeGreen { get; private set; }
 
         /// <summary>
-        /// LimeGreen RColor (R:50,G:205,B:50,A:255).
+        ///     Linen RColor (R:250,G:240,B:230,A:255).
         /// </summary>
-        public static RColor LimeGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor Linen { get; private set; }
 
         /// <summary>
-        /// Linen RColor (R:250,G:240,B:230,A:255).
+        ///     Magenta RColor (R:255,G:0,B:255,A:255).
         /// </summary>
-        public static RColor Linen
-        {
-            get;
-            private set;
-        }
+        public static RColor Magenta { get; private set; }
 
         /// <summary>
-        /// Magenta RColor (R:255,G:0,B:255,A:255).
+        ///     Maroon RColor (R:128,G:0,B:0,A:255).
         /// </summary>
-        public static RColor Magenta
-        {
-            get;
-            private set;
-        }
+        public static RColor Maroon { get; private set; }
 
         /// <summary>
-        /// Maroon RColor (R:128,G:0,B:0,A:255).
+        ///     MediumAquamarine RColor (R:102,G:205,B:170,A:255).
         /// </summary>
-        public static RColor Maroon
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumAquamarine { get; private set; }
 
         /// <summary>
-        /// MediumAquamarine RColor (R:102,G:205,B:170,A:255).
+        ///     MediumBlue RColor (R:0,G:0,B:205,A:255).
         /// </summary>
-        public static RColor MediumAquamarine
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumBlue { get; private set; }
 
         /// <summary>
-        /// MediumBlue RColor (R:0,G:0,B:205,A:255).
+        ///     MediumOrchid RColor (R:186,G:85,B:211,A:255).
         /// </summary>
-        public static RColor MediumBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumOrchid { get; private set; }
 
         /// <summary>
-        /// MediumOrchid RColor (R:186,G:85,B:211,A:255).
+        ///     MediumPurple RColor (R:147,G:112,B:219,A:255).
         /// </summary>
-        public static RColor MediumOrchid
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumPurple { get; private set; }
 
         /// <summary>
-        /// MediumPurple RColor (R:147,G:112,B:219,A:255).
+        ///     MediumSeaGreen RColor (R:60,G:179,B:113,A:255).
         /// </summary>
-        public static RColor MediumPurple
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumSeaGreen { get; private set; }
 
         /// <summary>
-        /// MediumSeaGreen RColor (R:60,G:179,B:113,A:255).
+        ///     MediumSlateBlue RColor (R:123,G:104,B:238,A:255).
         /// </summary>
-        public static RColor MediumSeaGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumSlateBlue { get; private set; }
 
         /// <summary>
-        /// MediumSlateBlue RColor (R:123,G:104,B:238,A:255).
+        ///     MediumSpringGreen RColor (R:0,G:250,B:154,A:255).
         /// </summary>
-        public static RColor MediumSlateBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumSpringGreen { get; private set; }
 
         /// <summary>
-        /// MediumSpringGreen RColor (R:0,G:250,B:154,A:255).
+        ///     MediumTurquoise RColor (R:72,G:209,B:204,A:255).
         /// </summary>
-        public static RColor MediumSpringGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumTurquoise { get; private set; }
 
         /// <summary>
-        /// MediumTurquoise RColor (R:72,G:209,B:204,A:255).
+        ///     MediumVioletRed RColor (R:199,G:21,B:133,A:255).
         /// </summary>
-        public static RColor MediumTurquoise
-        {
-            get;
-            private set;
-        }
+        public static RColor MediumVioletRed { get; private set; }
 
         /// <summary>
-        /// MediumVioletRed RColor (R:199,G:21,B:133,A:255).
+        ///     MidnightBlue RColor (R:25,G:25,B:112,A:255).
         /// </summary>
-        public static RColor MediumVioletRed
-        {
-            get;
-            private set;
-        }
+        public static RColor MidnightBlue { get; private set; }
 
         /// <summary>
-        /// MidnightBlue RColor (R:25,G:25,B:112,A:255).
+        ///     MintCream RColor (R:245,G:255,B:250,A:255).
         /// </summary>
-        public static RColor MidnightBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor MintCream { get; private set; }
 
         /// <summary>
-        /// MintCream RColor (R:245,G:255,B:250,A:255).
+        ///     MistyRose RColor (R:255,G:228,B:225,A:255).
         /// </summary>
-        public static RColor MintCream
-        {
-            get;
-            private set;
-        }
+        public static RColor MistyRose { get; private set; }
 
         /// <summary>
-        /// MistyRose RColor (R:255,G:228,B:225,A:255).
+        ///     Moccasin RColor (R:255,G:228,B:181,A:255).
         /// </summary>
-        public static RColor MistyRose
-        {
-            get;
-            private set;
-        }
+        public static RColor Moccasin { get; private set; }
 
         /// <summary>
-        /// Moccasin RColor (R:255,G:228,B:181,A:255).
+        ///     NavajoWhite RColor (R:255,G:222,B:173,A:255).
         /// </summary>
-        public static RColor Moccasin
-        {
-            get;
-            private set;
-        }
+        public static RColor NavajoWhite { get; private set; }
 
         /// <summary>
-        /// NavajoWhite RColor (R:255,G:222,B:173,A:255).
+        ///     Navy RColor (R:0,G:0,B:128,A:255).
         /// </summary>
-        public static RColor NavajoWhite
-        {
-            get;
-            private set;
-        }
+        public static RColor Navy { get; private set; }
 
         /// <summary>
-        /// Navy RColor (R:0,G:0,B:128,A:255).
+        ///     OldLace RColor (R:253,G:245,B:230,A:255).
         /// </summary>
-        public static RColor Navy
-        {
-            get;
-            private set;
-        }
+        public static RColor OldLace { get; private set; }
 
         /// <summary>
-        /// OldLace RColor (R:253,G:245,B:230,A:255).
+        ///     Olive RColor (R:128,G:128,B:0,A:255).
         /// </summary>
-        public static RColor OldLace
-        {
-            get;
-            private set;
-        }
+        public static RColor Olive { get; private set; }
 
         /// <summary>
-        /// Olive RColor (R:128,G:128,B:0,A:255).
+        ///     OliveDrab RColor (R:107,G:142,B:35,A:255).
         /// </summary>
-        public static RColor Olive
-        {
-            get;
-            private set;
-        }
+        public static RColor OliveDrab { get; private set; }
 
         /// <summary>
-        /// OliveDrab RColor (R:107,G:142,B:35,A:255).
+        ///     Orange RColor (R:255,G:165,B:0,A:255).
         /// </summary>
-        public static RColor OliveDrab
-        {
-            get;
-            private set;
-        }
+        public static RColor Orange { get; private set; }
 
         /// <summary>
-        /// Orange RColor (R:255,G:165,B:0,A:255).
+        ///     OrangeRed RColor (R:255,G:69,B:0,A:255).
         /// </summary>
-        public static RColor Orange
-        {
-            get;
-            private set;
-        }
+        public static RColor OrangeRed { get; private set; }
 
         /// <summary>
-        /// OrangeRed RColor (R:255,G:69,B:0,A:255).
+        ///     Orchid RColor (R:218,G:112,B:214,A:255).
         /// </summary>
-        public static RColor OrangeRed
-        {
-            get;
-            private set;
-        }
+        public static RColor Orchid { get; private set; }
 
         /// <summary>
-        /// Orchid RColor (R:218,G:112,B:214,A:255).
+        ///     PaleGoldenrod RColor (R:238,G:232,B:170,A:255).
         /// </summary>
-        public static RColor Orchid
-        {
-            get;
-            private set;
-        }
+        public static RColor PaleGoldenrod { get; private set; }
 
         /// <summary>
-        /// PaleGoldenrod RColor (R:238,G:232,B:170,A:255).
+        ///     PaleGreen RColor (R:152,G:251,B:152,A:255).
         /// </summary>
-        public static RColor PaleGoldenrod
-        {
-            get;
-            private set;
-        }
+        public static RColor PaleGreen { get; private set; }
 
         /// <summary>
-        /// PaleGreen RColor (R:152,G:251,B:152,A:255).
+        ///     PaleTurquoise RColor (R:175,G:238,B:238,A:255).
         /// </summary>
-        public static RColor PaleGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor PaleTurquoise { get; private set; }
 
         /// <summary>
-        /// PaleTurquoise RColor (R:175,G:238,B:238,A:255).
+        ///     PaleVioletRed RColor (R:219,G:112,B:147,A:255).
         /// </summary>
-        public static RColor PaleTurquoise
-        {
-            get;
-            private set;
-        }
+        public static RColor PaleVioletRed { get; private set; }
+
         /// <summary>
-        /// PaleVioletRed RColor (R:219,G:112,B:147,A:255).
+        ///     PapayaWhip RColor (R:255,G:239,B:213,A:255).
         /// </summary>
-        public static RColor PaleVioletRed
-        {
-            get;
-            private set;
-        }
+        public static RColor PapayaWhip { get; private set; }
 
         /// <summary>
-        /// PapayaWhip RColor (R:255,G:239,B:213,A:255).
+        ///     PeachPuff RColor (R:255,G:218,B:185,A:255).
         /// </summary>
-        public static RColor PapayaWhip
-        {
-            get;
-            private set;
-        }
+        public static RColor PeachPuff { get; private set; }
 
         /// <summary>
-        /// PeachPuff RColor (R:255,G:218,B:185,A:255).
+        ///     Peru RColor (R:205,G:133,B:63,A:255).
         /// </summary>
-        public static RColor PeachPuff
-        {
-            get;
-            private set;
-        }
+        public static RColor Peru { get; private set; }
 
         /// <summary>
-        /// Peru RColor (R:205,G:133,B:63,A:255).
+        ///     Pink RColor (R:255,G:192,B:203,A:255).
         /// </summary>
-        public static RColor Peru
-        {
-            get;
-            private set;
-        }
+        public static RColor Pink { get; private set; }
 
         /// <summary>
-        /// Pink RColor (R:255,G:192,B:203,A:255).
+        ///     Plum RColor (R:221,G:160,B:221,A:255).
         /// </summary>
-        public static RColor Pink
-        {
-            get;
-            private set;
-        }
+        public static RColor Plum { get; private set; }
 
         /// <summary>
-        /// Plum RColor (R:221,G:160,B:221,A:255).
+        ///     PowderBlue RColor (R:176,G:224,B:230,A:255).
         /// </summary>
-        public static RColor Plum
-        {
-            get;
-            private set;
-        }
+        public static RColor PowderBlue { get; private set; }
 
         /// <summary>
-        /// PowderBlue RColor (R:176,G:224,B:230,A:255).
+        ///     Purple RColor (R:128,G:0,B:128,A:255).
         /// </summary>
-        public static RColor PowderBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor Purple { get; private set; }
 
         /// <summary>
-        ///  Purple RColor (R:128,G:0,B:128,A:255).
+        ///     Red RColor (R:255,G:0,B:0,A:255).
         /// </summary>
-        public static RColor Purple
-        {
-            get;
-            private set;
-        }
+        public static RColor Red { get; private set; }
 
         /// <summary>
-        /// Red RColor (R:255,G:0,B:0,A:255).
+        ///     RosyBrown RColor (R:188,G:143,B:143,A:255).
         /// </summary>
-        public static RColor Red
-        {
-            get;
-            private set;
-        }
+        public static RColor RosyBrown { get; private set; }
 
         /// <summary>
-        /// RosyBrown RColor (R:188,G:143,B:143,A:255).
+        ///     RoyalBlue RColor (R:65,G:105,B:225,A:255).
         /// </summary>
-        public static RColor RosyBrown
-        {
-            get;
-            private set;
-        }
+        public static RColor RoyalBlue { get; private set; }
 
         /// <summary>
-        /// RoyalBlue RColor (R:65,G:105,B:225,A:255).
+        ///     SaddleBrown RColor (R:139,G:69,B:19,A:255).
         /// </summary>
-        public static RColor RoyalBlue
-        {
-            get;
-            private set;
-        }
+        public static RColor SaddleBrown { get; private set; }
 
-    	/// <summary>
-        /// SaddleBrown RColor (R:139,G:69,B:19,A:255).
+        /// <summary>
+        ///     Salmon RColor (R:250,G:128,B:114,A:255).
         /// </summary>
-        public static RColor SaddleBrown
-        {
-            get;
-            private set;
-        }
-    	 
+        public static RColor Salmon { get; private set; }
+
         /// <summary>
-        /// Salmon RColor (R:250,G:128,B:114,A:255).
+        ///     SandyBrown RColor (R:244,G:164,B:96,A:255).
         /// </summary>
-        public static RColor Salmon
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor SandyBrown { get; private set; }
+
         /// <summary>
-        /// SandyBrown RColor (R:244,G:164,B:96,A:255).
+        ///     SeaGreen RColor (R:46,G:139,B:87,A:255).
         /// </summary>
-        public static RColor SandyBrown
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor SeaGreen { get; private set; }
+
         /// <summary>
-        /// SeaGreen RColor (R:46,G:139,B:87,A:255).
+        ///     SeaShell RColor (R:255,G:245,B:238,A:255).
         /// </summary>
-        public static RColor SeaGreen
-        {
-            get;
-            private set;
-        }
-        
-    	/// <summary>
-        /// SeaShell RColor (R:255,G:245,B:238,A:255).
+        public static RColor SeaShell { get; private set; }
+
+        /// <summary>
+        ///     Sienna RColor (R:160,G:82,B:45,A:255).
         /// </summary>
-        public static RColor SeaShell
-        {
-            get;
-            private set;
-        }
-        
-    	/// <summary>
-        /// Sienna RColor (R:160,G:82,B:45,A:255).
+        public static RColor Sienna { get; private set; }
+
+        /// <summary>
+        ///     Silver RColor (R:192,G:192,B:192,A:255).
         /// </summary>
-        public static RColor Sienna
-        {
-            get;
-            private set;
-        }
-        
-    	/// <summary>
-        /// Silver RColor (R:192,G:192,B:192,A:255).
+        public static RColor Silver { get; private set; }
+
+        /// <summary>
+        ///     SkyBlue RColor (R:135,G:206,B:235,A:255).
         /// </summary>
-        public static RColor Silver
-        {
-            get;
-            private set;
-        }
-        
-       /// <summary>
-       /// SkyBlue RColor (R:135,G:206,B:235,A:255).
-       /// </summary>
-       public static RColor SkyBlue
-        {
-            get;
-            private set;
-        }
-       
+        public static RColor SkyBlue { get; private set; }
+
         /// <summary>
-        /// SlateBlue RColor (R:106,G:90,B:205,A:255).
+        ///     SlateBlue RColor (R:106,G:90,B:205,A:255).
         /// </summary>
-        public static RColor SlateBlue
-       {
-           get;
-           private set;
-       }
-      
+        public static RColor SlateBlue { get; private set; }
+
         /// <summary>
-        /// SlateGray RColor (R:112,G:128,B:144,A:255).
+        ///     SlateGray RColor (R:112,G:128,B:144,A:255).
         /// </summary>
-        public static RColor SlateGray
-        {
-            get;
-            private set;
-        }
-      
+        public static RColor SlateGray { get; private set; }
+
         /// <summary>
-        /// Snow RColor (R:255,G:250,B:250,A:255).
+        ///     Snow RColor (R:255,G:250,B:250,A:255).
         /// </summary>
-        public static RColor Snow
-        {
-            get;
-            private set;
-        }
-      
+        public static RColor Snow { get; private set; }
+
         /// <summary>
-        /// SpringGreen RColor (R:0,G:255,B:127,A:255).
+        ///     SpringGreen RColor (R:0,G:255,B:127,A:255).
         /// </summary>
-        public static RColor SpringGreen
-        {
-            get;
-            private set;
-        }
-      
+        public static RColor SpringGreen { get; private set; }
+
         /// <summary>
-        /// SteelBlue RColor (R:70,G:130,B:180,A:255).
+        ///     SteelBlue RColor (R:70,G:130,B:180,A:255).
         /// </summary>
-        public static RColor SteelBlue
-        {
-            get;
-            private set;
-        }
-      
+        public static RColor SteelBlue { get; private set; }
+
         /// <summary>
-        /// Tan RColor (R:210,G:180,B:140,A:255).
+        ///     Tan RColor (R:210,G:180,B:140,A:255).
         /// </summary>
-        public static RColor Tan
-        {
-            get;
-            private set;
-        }
-       
+        public static RColor Tan { get; private set; }
+
         /// <summary>
-        /// Teal RColor (R:0,G:128,B:128,A:255).
+        ///     Teal RColor (R:0,G:128,B:128,A:255).
         /// </summary>
-        public static RColor Teal
-        {
-            get;
-            private set;
-        }
-       
+        public static RColor Teal { get; private set; }
+
         /// <summary>
-        /// Thistle RColor (R:216,G:191,B:216,A:255).
+        ///     Thistle RColor (R:216,G:191,B:216,A:255).
         /// </summary>
-        public static RColor Thistle
-        {
-            get;
-            private set;
-        }
-       
+        public static RColor Thistle { get; private set; }
+
         /// <summary>
-        /// Tomato RColor (R:255,G:99,B:71,A:255).
+        ///     Tomato RColor (R:255,G:99,B:71,A:255).
         /// </summary>
-        public static RColor Tomato
-        {
-            get;
-            private set;
-        }
-        
-    	/// <summary>
-        /// Turquoise RColor (R:64,G:224,B:208,A:255).
+        public static RColor Tomato { get; private set; }
+
+        /// <summary>
+        ///     Turquoise RColor (R:64,G:224,B:208,A:255).
         /// </summary>
-        public static RColor Turquoise
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Turquoise { get; private set; }
+
         /// <summary>
-        /// Violet RColor (R:238,G:130,B:238,A:255).
+        ///     Violet RColor (R:238,G:130,B:238,A:255).
         /// </summary>
-        public static RColor Violet
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Violet { get; private set; }
+
         /// <summary>
-        /// Wheat RColor (R:245,G:222,B:179,A:255).
+        ///     Wheat RColor (R:245,G:222,B:179,A:255).
         /// </summary>
-	public static RColor Wheat
-        {
-            get;
-            private set;
-        }
-	
+        public static RColor Wheat { get; private set; }
+
         /// <summary>
-        /// White RColor (R:255,G:255,B:255,A:255).
+        ///     White RColor (R:255,G:255,B:255,A:255).
         /// </summary>
-        public static RColor White
-    {
-        get;
-        private set;
-    }
-       
+        public static RColor White { get; private set; }
+
         /// <summary>
-        /// WhiteSmoke RColor (R:245,G:245,B:245,A:255).
+        ///     WhiteSmoke RColor (R:245,G:245,B:245,A:255).
         /// </summary>
-        public static RColor WhiteSmoke
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor WhiteSmoke { get; private set; }
+
         /// <summary>
-        /// Yellow RColor (R:255,G:255,B:0,A:255).
+        ///     Yellow RColor (R:255,G:255,B:0,A:255).
         /// </summary>
-        public static RColor Yellow
-        {
-            get;
-            private set;
-        }
-        
+        public static RColor Yellow { get; private set; }
+
         /// <summary>
-        /// YellowGreen RColor (R:154,G:205,B:50,A:255).
+        ///     YellowGreen RColor (R:154,G:205,B:50,A:255).
         /// </summary>
-        public static RColor YellowGreen
-        {
-            get;
-            private set;
-        }
+        public static RColor YellowGreen { get; private set; }
+
         #endregion
 
         /// <summary>
-        /// Performs linear interpolation of <see cref="RColor"/>.
+        ///     Performs linear interpolation of <see cref="RColor" />.
         /// </summary>
-        /// <param name="value1">Source <see cref="RColor"/>.</param>
-        /// <param name="value2">Destination <see cref="RColor"/>.</param>
+        /// <param name="value1">Source <see cref="RColor" />.</param>
+        /// <param name="value2">Destination <see cref="RColor" />.</param>
         /// <param name="amount">Interpolation factor.</param>
-        /// <returns>Interpolated <see cref="RColor"/>.</returns>
-        public static RColor Lerp(RColor value1, RColor value2, Single amount)
+        /// <returns>Interpolated <see cref="RColor" />.</returns>
+        public static RColor Lerp(RColor value1, RColor value2, float amount)
         {
             amount = MathHelper.Clamp(amount, 0, 1);
-            return new RColor(   
+            return new RColor(
                 (int)MathHelper.Lerp(value1.R, value2.R, amount),
                 (int)MathHelper.Lerp(value1.G, value2.G, amount),
                 (int)MathHelper.Lerp(value1.B, value2.B, amount),
-                (int)MathHelper.Lerp(value1.A, value2.A, amount) );
-        }
-		
-	/// <summary>
-        /// Multiply <see cref="RColor"/> by value.
-        /// </summary>
-        /// <param name="value">Source <see cref="RColor"/>.</param>
-        /// <param name="scale">Multiplicator.</param>
-        /// <returns>Multiplication result.</returns>
-	public static RColor Multiply(RColor value, float scale)
-	{
-	    return new RColor((int)(value.R * scale), (int)(value.G * scale), (int)(value.B * scale), (int)(value.A * scale));
-	}
-	
-	/// <summary>
-        /// Multiply <see cref="RColor"/> by value.
-        /// </summary>
-        /// <param name="value">Source <see cref="RColor"/>.</param>
-        /// <param name="scale">Multiplicator.</param>
-        /// <returns>Multiplication result.</returns>
-	public static RColor operator *(RColor value, float scale)
-        {
-            return new RColor((int)(value.R * scale), (int)(value.G * scale), (int)(value.B * scale), (int)(value.A * scale));
+                (int)MathHelper.Lerp(value1.A, value2.A, amount));
         }
 
-    /// <summary>
-    /// Gets a three-component <see cref="Vector3"/> representation for this object.
-    /// </summary>
-    /// <returns>A three-component <see cref="Vector3"/> representation for this object.</returns>
+        /// <summary>
+        ///     Multiply <see cref="RColor" /> by value.
+        /// </summary>
+        /// <param name="value">Source <see cref="RColor" />.</param>
+        /// <param name="scale">Multiplicator.</param>
+        /// <returns>Multiplication result.</returns>
+        public static RColor Multiply(RColor value, float scale)
+        {
+            return new RColor((int)(value.R * scale), (int)(value.G * scale), (int)(value.B * scale),
+                (int)(value.A * scale));
+        }
+
+        /// <summary>
+        ///     Multiply <see cref="RColor" /> by value.
+        /// </summary>
+        /// <param name="value">Source <see cref="RColor" />.</param>
+        /// <param name="scale">Multiplicator.</param>
+        /// <returns>Multiplication result.</returns>
+        public static RColor operator *(RColor value, float scale)
+        {
+            return new RColor((int)(value.R * scale), (int)(value.G * scale), (int)(value.B * scale),
+                (int)(value.A * scale));
+        }
+
+        /// <summary>
+        ///     Gets a three-component <see cref="Vector3" /> representation for this object.
+        /// </summary>
+        /// <returns>A three-component <see cref="Vector3" /> representation for this object.</returns>
         public Vector3 ToVector3()
         {
             return new Vector3(R / 255.0f, G / 255.0f, B / 255.0f);
         }
 
         /// <summary>
-        /// Gets a four-component <see cref="Vector4"/> representation for this object.
+        ///     Gets a four-component <see cref="Vector4" /> representation for this object.
         /// </summary>
-        /// <returns>A four-component <see cref="Vector4"/> representation for this object.</returns>
+        /// <returns>A four-component <see cref="Vector4" /> representation for this object.</returns>
         public Vector4 ToVector4()
         {
             return new Vector4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
         }
-	
-	/// <summary>
-        /// Gets or sets packed value of this <see cref="RColor"/>.
+
+        /// <summary>
+        ///     Gets or sets packed value of this <see cref="RColor" />.
         /// </summary>
         [CLSCompliant(false)]
-        public UInt32 PackedValue
-        {
-            get { return _packedValue; }
-            set { _packedValue = value; }
-        }
+        public uint PackedValue { get; set; }
 
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    this.R.ToString(), "  ",
-                    this.G.ToString(), "  ",
-                    this.B.ToString(), "  ",
-                    this.A.ToString()
-                );
-            }
-        }
+        internal string DebugDisplayString =>
+            string.Concat(
+                R.ToString(), "  ",
+                G.ToString(), "  ",
+                B.ToString(), "  ",
+                A.ToString()
+            );
 
 
         /// <summary>
-        /// Returns a <see cref="String"/> representation of this <see cref="RColor"/> in the format:
-        /// {R:[red] G:[green] B:[blue] A:[alpha]}
+        ///     Returns a <see cref="String" /> representation of this <see cref="RColor" /> in the format:
+        ///     {R:[red] G:[green] B:[blue] A:[alpha]}
         /// </summary>
-        /// <returns><see cref="String"/> representation of this <see cref="RColor"/>.</returns>
-	    public override string ToString ()
-	    {
-            return String.Format("RColor(R:{0} G:{1} B:{2} A:{3})", R, G, B, A);
-	    }
-	
-	    /// <summary>
-        /// Translate a non-premultipled alpha <see cref="RColor"/> to a <see cref="RColor"/> that contains premultiplied alpha.
+        /// <returns><see cref="String" /> representation of this <see cref="RColor" />.</returns>
+        public override string ToString()
+        {
+            return string.Format("RColor(R:{0} G:{1} B:{2} A:{3})", R, G, B, A);
+        }
+
+        /// <summary>
+        ///     Translate a non-premultipled alpha <see cref="RColor" /> to a <see cref="RColor" /> that contains premultiplied
+        ///     alpha.
         /// </summary>
-        /// <param name="vector">A <see cref="Vector4"/> representing RColor.</param>
-        /// <returns>A <see cref="RColor"/> which contains premultiplied alpha data.</returns>
+        /// <param name="vector">A <see cref="Vector4" /> representing RColor.</param>
+        /// <returns>A <see cref="RColor" /> which contains premultiplied alpha data.</returns>
         public static RColor FromNonPremultiplied(Vector4 vector)
         {
             return new RColor(vector.X * vector.W, vector.Y * vector.W, vector.Z * vector.W, vector.W);
         }
+
         /// <summary>
-        /// Translate a non-premultipled alpha <see cref="RColor"/> to a <see cref="RColor"/> that contains premultiplied alpha.
+        ///     Translate a non-premultipled alpha <see cref="RColor" /> to a <see cref="RColor" /> that contains premultiplied
+        ///     alpha.
         /// </summary>
-        /// <param name="values">An array of <see cref="float"/> representing RColor NonPreMultiplied</param>
-        /// <returns>A <see cref="RColor"/> which contains premultiplied alpha data.</returns>
+        /// <param name="values">An array of <see cref="float" /> representing RColor NonPreMultiplied</param>
+        /// <returns>A <see cref="RColor" /> which contains premultiplied alpha data.</returns>
         public static RColor FromArray(float[] values)
         {
             return FromNonPremultiplied(new Vector4(values[0], values[1], values[2], values[3]));
         }
 
         /// <summary>
-        /// Translate a non-premultipled alpha <see cref="RColor"/> to a <see cref="RColor"/> that contains premultiplied alpha.
+        ///     Translate a non-premultipled alpha <see cref="RColor" /> to a <see cref="RColor" /> that contains premultiplied
+        ///     alpha.
         /// </summary>
         /// <param name="r">Red component value.</param>
         /// <param name="g">Green component value.</param>
         /// <param name="b">Blue component value.</param>
         /// <param name="a">Alpha component value.</param>
-        /// <returns>A <see cref="RColor"/> which contains premultiplied alpha data.</returns>
+        /// <returns>A <see cref="RColor" /> which contains premultiplied alpha data.</returns>
         public static RColor FromNonPremultiplied(int r, int g, int b, int a)
         {
-            return new RColor((byte)(r * a / 255),(byte)(g * a / 255), (byte)(b * a / 255), a);
+            return new RColor((byte)(r * a / 255), (byte)(g * a / 255), (byte)(b * a / 255), a);
         }
 
+        public static RColor FromARGB(uint argb)
+        {
+            byte[] values = BitConverter.GetBytes(argb);
+            return new RColor(values[1], values[2], values[3], values[0]);
+        }
+        public static RColor FromRGBA(uint rgba)
+        {
+            byte[] values = BitConverter.GetBytes(rgba);
+            return new RColor(values[0], values[1], values[2], values[3]);
+        }
+        public static RColor FromABGR(uint abgr)
+        {
+            byte[] values = BitConverter.GetBytes(abgr);
+            return new RColor(values[3], values[2], values[1], values[0]);
+        }
+        public static RColor FromBGRA(uint bgra)
+        {
+            byte[] values = BitConverter.GetBytes(bgra);
+            return new RColor(values[2], values[1], values[0], values[3]);
+        }
+
+        public static RColor FromRGB(uint rgb)
+        {
+            byte[] values = BitConverter.GetBytes(rgb);
+            return new RColor(values[2], values[1], values[0], 255);
+        }
+        
         #region IEquatable<RColor> Members
-	
-	/// <summary>
-        /// Compares whether current instance is equal to specified <see cref="RColor"/>.
+
+        /// <summary>
+        ///     Compares whether current instance is equal to specified <see cref="RColor" />.
         /// </summary>
-        /// <param name="other">The <see cref="RColor"/> to compare.</param>
+        /// <param name="other">The <see cref="RColor" /> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(RColor other)
         {
-	    return this.PackedValue == other.PackedValue;
+            return PackedValue == other.PackedValue;
         }
 
         #endregion

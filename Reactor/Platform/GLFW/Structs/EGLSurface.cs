@@ -26,7 +26,10 @@ namespace Reactor.Platform.GLFW
 	    /// <returns>
 	    ///     The result of the conversion.
 	    /// </returns>
-	    public static implicit operator IntPtr(EGLSurface surface) { return surface.handle; }
+	    public static implicit operator IntPtr(EGLSurface surface)
+        {
+            return surface.handle;
+        }
 
 	    /// <summary>
 	    ///     Returns a <see cref="System.String" /> that represents this instance.
@@ -34,7 +37,10 @@ namespace Reactor.Platform.GLFW
 	    /// <returns>
 	    ///     A <see cref="System.String" /> that represents this instance.
 	    /// </returns>
-	    public override string ToString() { return handle.ToString(); }
+	    public override string ToString()
+        {
+            return handle.ToString();
+        }
 
 	    /// <summary>
 	    ///     Determines whether the specified <see cref="EGLSurface" />, is equal to this instance.
@@ -43,7 +49,10 @@ namespace Reactor.Platform.GLFW
 	    /// <returns>
 	    ///     <c>true</c> if the specified <see cref="EGLSurface" /> is equal to this instance; otherwise, <c>false</c>.
 	    /// </returns>
-	    public bool Equals(EGLSurface other) { return handle.Equals(other.handle); }
+	    public bool Equals(EGLSurface other)
+        {
+            return handle.Equals(other.handle);
+        }
 
 	    /// <summary>
 	    ///     Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -65,7 +74,10 @@ namespace Reactor.Platform.GLFW
 	    /// <returns>
 	    ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
 	    /// </returns>
-	    public override int GetHashCode() { return handle.GetHashCode(); }
+	    public override int GetHashCode()
+        {
+            return handle.GetHashCode();
+        }
 
 	    /// <summary>
 	    ///     Implements the operator ==.
@@ -75,7 +87,10 @@ namespace Reactor.Platform.GLFW
 	    /// <returns>
 	    ///     The result of the operator.
 	    /// </returns>
-	    public static bool operator ==(EGLSurface left, EGLSurface right) { return left.Equals(right); }
+	    public static bool operator ==(EGLSurface left, EGLSurface right)
+        {
+            return left.Equals(right);
+        }
 
 	    /// <summary>
 	    ///     Implements the operator !=.
@@ -85,6 +100,9 @@ namespace Reactor.Platform.GLFW
 	    /// <returns>
 	    ///     The result of the operator.
 	    /// </returns>
-	    public static bool operator !=(EGLSurface left, EGLSurface right) { return !left.Equals(right); }
+	    public static bool operator !=(EGLSurface left, EGLSurface right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

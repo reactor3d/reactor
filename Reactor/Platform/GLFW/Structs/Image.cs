@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace Reactor.Platform.GLFW
@@ -37,6 +38,29 @@ namespace Reactor.Platform.GLFW
             Pixels = pixels;
         }
 
-        // TODO: Implement manual load of bmp
+        public Image(Bitmap bitmap)
+        {
+            Width = bitmap.Width;
+            Height = bitmap.Height;
+            var d = new byte[Width * Height * 4];
+            var offset = 0;
+            for (var y = 0; y < Height; y++)
+            for (var x = 0; x < Width; x++)
+            {
+                d[offset] = bitmap.GetPixel(x, y).R;
+                d[offset + 1] = bitmap.GetPixel(x, y).G;
+                d[offset + 2] = bitmap.GetPixel(x, y).B;
+                d[offset + 3] = bitmap.GetPixel(x, y).A;
+                offset += 4;
+            }
+
+            unsafe
+            {
+                fixed (byte* ptr = &d[0])
+                {
+                    Pixels = new IntPtr(ptr);
+                }
+            }
+        }
     }
 }

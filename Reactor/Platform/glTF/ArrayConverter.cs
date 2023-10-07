@@ -6,21 +6,24 @@ using Newtonsoft.Json;
 
 namespace Reactor.Platform.glTF
 {
-    class ArrayConverter : JsonConverter
+    internal class ArrayConverter : JsonConverter
     {
+        public override bool CanWrite => false;
+
         private static bool IsEnum(Type t)
         {
-            #if NET35
+#if NET35
             return t.IsEnum;
-            #else
+#else
             return t.GetTypeInfo().IsEnum;
-            #endif
+#endif
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             if (objectType == typeof(bool[])) return ReadImpl<bool>(reader);
-            if (objectType == typeof(int[])) return ReadImpl<long>(reader).Select((v) => (int)v).ToArray();
+            if (objectType == typeof(int[])) return ReadImpl<long>(reader).Select(v => (int)v).ToArray();
             if (objectType == typeof(string[])) return ReadImpl<string>(reader);
             if (objectType == typeof(float[])) return ReadFloats(reader);
             if (objectType == typeof(object[])) return ReadImpl<object>(reader);
@@ -28,17 +31,18 @@ namespace Reactor.Platform.glTF
             if (objectType.IsArray && IsEnum(objectType.GetElementType()))
             {
                 var elementType = objectType.GetElementType();
-                var rawValues = ReadImpl<long>(reader).Select((v) => (int)v).ToArray();
+                var rawValues = ReadImpl<long>(reader).Select(v => (int)v).ToArray();
 
                 var resultArray = Array.CreateInstance(elementType, rawValues.Length);
 
-                for (int i = 0; i < rawValues.Length; ++i)
+                for (var i = 0; i < rawValues.Length; ++i)
                 {
                     var enumerator = Enum.GetValues(elementType).GetEnumerator();
                     do
                     {
                         enumerator.MoveNext();
                     } while ((int)enumerator.Current != rawValues[i]);
+
                     resultArray.SetValue(enumerator.Current, i);
                 }
 
@@ -50,10 +54,7 @@ namespace Reactor.Platform.glTF
 
         private t_array[] ReadImpl<t_array>(JsonReader reader)
         {
-            if (reader.TokenType != JsonToken.StartArray)
-            {
-                return new[] { (t_array)reader.Value };
-            }
+            if (reader.TokenType != JsonToken.StartArray) return new[] { (t_array)reader.Value };
 
             reader.Read();
             var values = new List<t_array>();
@@ -69,9 +70,7 @@ namespace Reactor.Platform.glTF
         private object ReadFloats(JsonReader reader)
         {
             if (reader.TokenType != JsonToken.StartArray)
-            {
                 return new[] { SingleValueToFloat(reader.TokenType, reader.Value) };
-            }
 
             reader.Read();
             var values = new List<float>();
@@ -100,11 +99,6 @@ namespace Reactor.Platform.glTF
         public override bool CanConvert(Type type)
         {
             return true;
-        }
-
-        public override bool CanWrite
-        {
-            get { return false; }
         }
 
         public override void WriteJson(JsonWriter w, object o, JsonSerializer s)

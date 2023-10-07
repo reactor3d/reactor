@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,57 +22,57 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
-using System.Runtime.Serialization;
-
-#nullable disable
 
 namespace Newtonsoft.Json.Schema
 {
     /// <summary>
-    /// <para>
-    /// Returns detailed information about the schema exception.
-    /// </para>
-    /// <note type="caution">
-    /// JSON Schema validation has been moved to its own package. See <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
-    /// </note>
+    ///     <para>
+    ///         Returns detailed information about the schema exception.
+    ///     </para>
+    ///     <note type="caution">
+    ///         JSON Schema validation has been moved to its own package. See
+    ///         <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
+    ///     </note>
     /// </summary>
 #if HAVE_BINARY_EXCEPTION_SERIALIZATION
     [Serializable]
 #endif
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     public class JsonSchemaException : JsonException
     {
         /// <summary>
-        /// Gets the line number indicating where the error occurred.
+        ///     Gets the line number indicating where the error occurred.
         /// </summary>
         /// <value>The line number indicating where the error occurred.</value>
         public int LineNumber { get; }
 
         /// <summary>
-        /// Gets the line position indicating where the error occurred.
+        ///     Gets the line position indicating where the error occurred.
         /// </summary>
         /// <value>The line position indicating where the error occurred.</value>
         public int LinePosition { get; }
 
         /// <summary>
-        /// Gets the path to the JSON where the error occurred.
+        ///     Gets the path to the JSON where the error occurred.
         /// </summary>
         /// <value>The path to the JSON where the error occurred.</value>
         public string Path { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonSchemaException"/> class.
+        ///     Initializes a new instance of the <see cref="JsonSchemaException" /> class.
         /// </summary>
         public JsonSchemaException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonSchemaException"/> class
-        /// with a specified error message.
+        ///     Initializes a new instance of the <see cref="JsonSchemaException" /> class
+        ///     with a specified error message.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         public JsonSchemaException(string message)
@@ -80,11 +81,14 @@ namespace Newtonsoft.Json.Schema
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonSchemaException"/> class
-        /// with a specified error message and a reference to the inner exception that is the cause of this exception.
+        ///     Initializes a new instance of the <see cref="JsonSchemaException" /> class
+        ///     with a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception, or <c>null</c> if no inner exception is specified.</param>
+        /// <param name="innerException">
+        ///     The exception that is the cause of the current exception, or <c>null</c> if no inner
+        ///     exception is specified.
+        /// </param>
         public JsonSchemaException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -104,7 +108,8 @@ namespace Newtonsoft.Json.Schema
         }
 #endif
 
-        internal JsonSchemaException(string message, Exception innerException, string path, int lineNumber, int linePosition)
+        internal JsonSchemaException(string message, Exception innerException, string path, int lineNumber,
+            int linePosition)
             : base(message, innerException)
         {
             Path = path;

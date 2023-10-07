@@ -20,13 +20,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Types;
-using System;
+
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Reactor.Types;
 
 namespace Reactor
 {
@@ -34,50 +31,39 @@ namespace Reactor
     {
         internal static Dictionary<string, RMaterial> materials = new Dictionary<string, RMaterial>();
 
-        public RMaterials()
-        {
-
-        }
         public RMaterial CreateMaterial(string name)
         {
             if (!materials.ContainsKey(name))
             {
-                RMaterial material = new RMaterial(name);
+                var material = new RMaterial(name);
                 material.Id = materials.Count;
                 materials.Add(name, material);
                 return material;
-            } else
-            {
-                return materials[name];
             }
+
+            return materials[name];
         }
 
         public RMaterial GetMaterial(string name)
         {
             if (!materials.ContainsKey(name))
-            {
                 return materials[name];
-            } else
-            {
-                return null;
-            }
+            return null;
         }
 
         public void DeleteMaterial(string name)
         {
-            if (!materials.ContainsKey(name))
-            {
-                materials.Remove(name);
-            }
+            if (!materials.ContainsKey(name)) materials.Remove(name);
         }
 
         public MemoryStream SaveMaterial(RMaterial material)
         {
-            return RFileSystem.Instance.Save<RMaterial>(material);
+            return RFileSystem.Instance.Save(material);
         }
+
         public RMaterial LoadMaterial(string name, MemoryStream stream)
         {
-            RMaterial material = RFileSystem.Instance.Load<RMaterial>(stream);
+            var material = RFileSystem.Instance.Load<RMaterial>(stream);
             material.Id = materials.Count + 1;
             materials.Add(name, material);
             return material;

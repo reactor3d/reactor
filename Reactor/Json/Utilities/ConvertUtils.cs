@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,25 +22,23 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using Newtonsoft.Json.Serialization;
 #if !HAVE_GUID_TRY_PARSE
-using System.Text;
 using System.Text.RegularExpressions;
 #endif
-using System.Reflection;
-using System.Diagnostics.CodeAnalysis;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
+
 #if HAVE_ADO_NET
 using System.Data.SqlTypes;
 #endif
@@ -94,14 +93,14 @@ namespace Newtonsoft.Json.Utilities
 
     internal class TypeInformation
     {
-        public Type Type { get; }
-        public PrimitiveTypeCode TypeCode { get; }
-
         public TypeInformation(Type type, PrimitiveTypeCode typeCode)
         {
             Type = type;
             TypeCode = typeCode;
         }
+
+        public Type Type { get; }
+        public PrimitiveTypeCode TypeCode { get; }
     }
 
     internal enum ParseResult
@@ -198,7 +197,7 @@ namespace Newtonsoft.Json.Utilities
 
         public static PrimitiveTypeCode GetTypeCode(Type t, out bool isEnum)
         {
-            if (TypeCodeMap.TryGetValue(t, out PrimitiveTypeCode typeCode))
+            if (TypeCodeMap.TryGetValue(t, out var typeCode))
             {
                 isEnum = false;
                 return typeCode;
@@ -213,10 +212,11 @@ namespace Newtonsoft.Json.Utilities
             // performance?
             if (ReflectionUtils.IsNullableType(t))
             {
-                Type nonNullable = Nullable.GetUnderlyingType(t);
+                var nonNullable = Nullable.GetUnderlyingType(t);
                 if (nonNullable.IsEnum())
                 {
-                    Type nullableUnderlyingType = typeof(Nullable<>).MakeGenericType(Enum.GetUnderlyingType(nonNullable));
+                    var nullableUnderlyingType =
+                        typeof(Nullable<>).MakeGenericType(Enum.GetUnderlyingType(nonNullable));
                     isEnum = true;
                     return GetTypeCode(nullableUnderlyingType);
                 }
@@ -239,9 +239,10 @@ namespace Newtonsoft.Json.Utilities
 #if HAVE_ICONVERTIBLE
             return typeof(IConvertible).IsAssignableFrom(t);
 #else
-            return (
-                t == typeof(bool) || t == typeof(byte) || t == typeof(char) || t == typeof(DateTime) || t == typeof(decimal) || t == typeof(double) || t == typeof(short) || t == typeof(int) ||
-                t == typeof(long) || t == typeof(sbyte) || t == typeof(float) || t == typeof(string) || t == typeof(ushort) || t == typeof(uint) || t == typeof(ulong) || t.IsEnum());
+            return t == typeof(bool) || t == typeof(byte) || t == typeof(char) || t == typeof(DateTime) ||
+                   t == typeof(decimal) || t == typeof(double) || t == typeof(short) || t == typeof(int) ||
+                   t == typeof(long) || t == typeof(sbyte) || t == typeof(float) || t == typeof(string) ||
+                   t == typeof(ushort) || t == typeof(uint) || t == typeof(ulong) || t.IsEnum();
 #endif
         }
 
@@ -259,17 +260,14 @@ namespace Newtonsoft.Json.Utilities
 
         private static Func<object?, object?>? CreateCastConverter(StructMultiKey<Type, Type> t)
         {
-            Type initialType = t.Value1;
-            Type targetType = t.Value2;
-            MethodInfo castMethodInfo = targetType.GetMethod("op_Implicit", new[] { initialType })
-                ?? targetType.GetMethod("op_Explicit", new[] { initialType });
+            var initialType = t.Value1;
+            var targetType = t.Value2;
+            var castMethodInfo = targetType.GetMethod("op_Implicit", new[] { initialType })
+                                 ?? targetType.GetMethod("op_Explicit", new[] { initialType });
 
-            if (castMethodInfo == null)
-            {
-                return null;
-            }
+            if (castMethodInfo == null) return null;
 
-            MethodCall<object?, object?> call = Serialization.JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(castMethodInfo);
+            var call = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(castMethodInfo);
 
             return o => call(null, o);
         }
@@ -358,7 +356,8 @@ namespace Newtonsoft.Json.Utilities
         }
 #endif
 
-#region TryConvert
+        #region TryConvert
+
         internal enum ConvertResult
         {
             Success = 0,
@@ -369,16 +368,22 @@ namespace Newtonsoft.Json.Utilities
 
         public static object Convert(object initialValue, CultureInfo culture, Type targetType)
         {
-            switch (TryConvertInternal(initialValue, culture, targetType, out object? value))
+            switch (TryConvertInternal(initialValue, culture, targetType, out var value))
             {
                 case ConvertResult.Success:
                     return value!;
                 case ConvertResult.CannotConvertNull:
-                    throw new Exception("Can not convert null {0} into non-nullable {1}.".FormatWith(CultureInfo.InvariantCulture, initialValue.GetType(), targetType));
+                    throw new Exception(
+                        "Can not convert null {0} into non-nullable {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            initialValue.GetType(), targetType));
                 case ConvertResult.NotInstantiableType:
-                    throw new ArgumentException("Target type {0} is not a value type or a non-abstract class.".FormatWith(CultureInfo.InvariantCulture, targetType), nameof(targetType));
+                    throw new ArgumentException(
+                        "Target type {0} is not a value type or a non-abstract class.".FormatWith(
+                            CultureInfo.InvariantCulture, targetType), nameof(targetType));
                 case ConvertResult.NoValidConversion:
-                    throw new InvalidOperationException("Can not convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, initialValue.GetType(), targetType));
+                    throw new InvalidOperationException(
+                        "Can not convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            initialValue.GetType(), targetType));
                 default:
                     throw new InvalidOperationException("Unexpected conversion result.");
             }
@@ -389,9 +394,7 @@ namespace Newtonsoft.Json.Utilities
             try
             {
                 if (TryConvertInternal(initialValue, culture, targetType, out value) == ConvertResult.Success)
-                {
                     return true;
-                }
 
                 value = null;
                 return false;
@@ -403,19 +406,14 @@ namespace Newtonsoft.Json.Utilities
             }
         }
 
-        private static ConvertResult TryConvertInternal(object? initialValue, CultureInfo culture, Type targetType, out object? value)
+        private static ConvertResult TryConvertInternal(object? initialValue, CultureInfo culture, Type targetType,
+            out object? value)
         {
-            if (initialValue == null)
-            {
-                throw new ArgumentNullException(nameof(initialValue));
-            }
+            if (initialValue == null) throw new ArgumentNullException(nameof(initialValue));
 
-            if (ReflectionUtils.IsNullableType(targetType))
-            {
-                targetType = Nullable.GetUnderlyingType(targetType);
-            }
+            if (ReflectionUtils.IsNullableType(targetType)) targetType = Nullable.GetUnderlyingType(targetType);
 
-            Type initialType = initialValue.GetType();
+            var initialType = initialValue.GetType();
 
             if (targetType == initialType)
             {
@@ -433,7 +431,8 @@ namespace Newtonsoft.Json.Utilities
                         value = Enum.Parse(targetType, initialValue.ToString(), true);
                         return ConvertResult.Success;
                     }
-                    else if (IsInteger(initialValue))
+
+                    if (IsInteger(initialValue))
                     {
                         value = Enum.ToObject(targetType, initialValue);
                         return ConvertResult.Success;
@@ -471,31 +470,37 @@ namespace Newtonsoft.Json.Utilities
                     value = new Guid(s);
                     return ConvertResult.Success;
                 }
+
                 if (targetType == typeof(Uri))
                 {
                     value = new Uri(s, UriKind.RelativeOrAbsolute);
                     return ConvertResult.Success;
                 }
+
                 if (targetType == typeof(TimeSpan))
                 {
                     value = ParseTimeSpan(s);
                     return ConvertResult.Success;
                 }
+
                 if (targetType == typeof(byte[]))
                 {
                     value = System.Convert.FromBase64String(s);
                     return ConvertResult.Success;
                 }
+
                 if (targetType == typeof(Version))
                 {
-                    if (VersionTryParse(s, out Version? result))
+                    if (VersionTryParse(s, out var result))
                     {
                         value = result;
                         return ConvertResult.Success;
                     }
+
                     value = null;
                     return ConvertResult.NoValidConversion;
                 }
+
                 if (typeof(Type).IsAssignableFrom(targetType))
                 {
                     value = Type.GetType(s, true);
@@ -559,70 +564,57 @@ namespace Newtonsoft.Json.Utilities
             value = null;
             return ConvertResult.NoValidConversion;
         }
-#endregion
 
-#region ConvertOrCast
+        #endregion
+
+        #region ConvertOrCast
+
         /// <summary>
-        /// Converts the value to the specified type. If the value is unable to be converted, the
-        /// value is checked whether it assignable to the specified type.
+        ///     Converts the value to the specified type. If the value is unable to be converted, the
+        ///     value is checked whether it assignable to the specified type.
         /// </summary>
         /// <param name="initialValue">The value to convert.</param>
         /// <param name="culture">The culture to use when converting.</param>
         /// <param name="targetType">The type to convert or cast the value to.</param>
         /// <returns>
-        /// The converted type. If conversion was unsuccessful, the initial value
-        /// is returned if assignable to the target type.
+        ///     The converted type. If conversion was unsuccessful, the initial value
+        ///     is returned if assignable to the target type.
         /// </returns>
         public static object? ConvertOrCast(object? initialValue, CultureInfo culture, Type targetType)
         {
-            if (targetType == typeof(object))
-            {
-                return initialValue;
-            }
+            if (targetType == typeof(object)) return initialValue;
 
-            if (initialValue == null && ReflectionUtils.IsNullable(targetType))
-            {
-                return null;
-            }
+            if (initialValue == null && ReflectionUtils.IsNullable(targetType)) return null;
 
-            if (TryConvert(initialValue, culture, targetType, out object? convertedValue))
-            {
-                return convertedValue;
-            }
+            if (TryConvert(initialValue, culture, targetType, out var convertedValue)) return convertedValue;
 
             return EnsureTypeAssignable(initialValue, ReflectionUtils.GetObjectType(initialValue)!, targetType);
         }
-#endregion
+
+        #endregion
 
         private static object? EnsureTypeAssignable(object? value, Type initialType, Type targetType)
         {
             if (value != null)
             {
-                Type valueType = value.GetType();
+                var valueType = value.GetType();
 
-                if (targetType.IsAssignableFrom(valueType))
-                {
-                    return value;
-                }
+                if (targetType.IsAssignableFrom(valueType)) return value;
 
-                Func<object?, object?>? castConverter = CastConverters.Get(new StructMultiKey<Type, Type>(valueType, targetType));
-                if (castConverter != null)
-                {
-                    return castConverter(value);
-                }
+                var castConverter = CastConverters.Get(new StructMultiKey<Type, Type>(valueType, targetType));
+                if (castConverter != null) return castConverter(value);
             }
             else
             {
-                if (ReflectionUtils.IsNullable(targetType))
-                {
-                    return null;
-                }
+                if (ReflectionUtils.IsNullable(targetType)) return null;
             }
 
-            throw new ArgumentException("Could not cast or convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, initialType?.ToString() ?? "{null}", targetType));
+            throw new ArgumentException(
+                "Could not cast or convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture,
+                    initialType?.ToString() ?? "{null}", targetType));
         }
 
-        public static bool VersionTryParse(string input, [NotNullWhen(true)]out Version? result)
+        public static bool VersionTryParse(string input, [NotNullWhen(true)] out Version? result)
         {
 #if HAVE_VERSION_TRY_PARSE
             return Version.TryParse(input, out result);
@@ -663,26 +655,20 @@ namespace Newtonsoft.Json.Utilities
         {
             value = 0;
 
-            if (length == 0)
-            {
-                return ParseResult.Invalid;
-            }
+            if (length == 0) return ParseResult.Invalid;
 
-            bool isNegative = (chars[start] == '-');
+            var isNegative = chars[start] == '-';
 
             if (isNegative)
             {
                 // text just a negative sign
-                if (length == 1)
-                {
-                    return ParseResult.Invalid;
-                }
+                if (length == 1) return ParseResult.Invalid;
 
                 start++;
                 length--;
             }
 
-            int end = start + length;
+            var end = start + length;
 
             // Int32.MaxValue and MinValue are 10 chars
             // Or is 10 chars and start is greater than two
@@ -690,29 +676,23 @@ namespace Newtonsoft.Json.Utilities
             if (length > 10 || (length == 10 && chars[start] - '0' > 2))
             {
                 // invalid result takes precedence over overflow
-                for (int i = start; i < end; i++)
+                for (var i = start; i < end; i++)
                 {
-                    int c = chars[i] - '0';
+                    var c = chars[i] - '0';
 
-                    if (c < 0 || c > 9)
-                    {
-                        return ParseResult.Invalid;
-                    }
+                    if (c < 0 || c > 9) return ParseResult.Invalid;
                 }
 
                 return ParseResult.Overflow;
             }
 
-            for (int i = start; i < end; i++)
+            for (var i = start; i < end; i++)
             {
-                int c = chars[i] - '0';
+                var c = chars[i] - '0';
 
-                if (c < 0 || c > 9)
-                {
-                    return ParseResult.Invalid;
-                }
+                if (c < 0 || c > 9) return ParseResult.Invalid;
 
-                int newValue = (10 * value) - c;
+                var newValue = 10 * value - c;
 
                 // overflow has caused the number to loop around
                 if (newValue > value)
@@ -725,10 +705,7 @@ namespace Newtonsoft.Json.Utilities
                     {
                         c = chars[i] - '0';
 
-                        if (c < 0 || c > 9)
-                        {
-                            return ParseResult.Invalid;
-                        }
+                        if (c < 0 || c > 9) return ParseResult.Invalid;
                     }
 
                     return ParseResult.Overflow;
@@ -742,10 +719,7 @@ namespace Newtonsoft.Json.Utilities
             if (!isNegative)
             {
                 // negative integer can be one bigger than positive
-                if (value == int.MinValue)
-                {
-                    return ParseResult.Overflow;
-                }
+                if (value == int.MinValue) return ParseResult.Overflow;
 
                 value = -value;
             }
@@ -757,54 +731,42 @@ namespace Newtonsoft.Json.Utilities
         {
             value = 0;
 
-            if (length == 0)
-            {
-                return ParseResult.Invalid;
-            }
+            if (length == 0) return ParseResult.Invalid;
 
-            bool isNegative = (chars[start] == '-');
+            var isNegative = chars[start] == '-';
 
             if (isNegative)
             {
                 // text just a negative sign
-                if (length == 1)
-                {
-                    return ParseResult.Invalid;
-                }
+                if (length == 1) return ParseResult.Invalid;
 
                 start++;
                 length--;
             }
 
-            int end = start + length;
+            var end = start + length;
 
             // Int64.MaxValue and MinValue are 19 chars
             if (length > 19)
             {
                 // invalid result takes precedence over overflow
-                for (int i = start; i < end; i++)
+                for (var i = start; i < end; i++)
                 {
-                    int c = chars[i] - '0';
+                    var c = chars[i] - '0';
 
-                    if (c < 0 || c > 9)
-                    {
-                        return ParseResult.Invalid;
-                    }
+                    if (c < 0 || c > 9) return ParseResult.Invalid;
                 }
 
                 return ParseResult.Overflow;
             }
 
-            for (int i = start; i < end; i++)
+            for (var i = start; i < end; i++)
             {
-                int c = chars[i] - '0';
+                var c = chars[i] - '0';
 
-                if (c < 0 || c > 9)
-                {
-                    return ParseResult.Invalid;
-                }
+                if (c < 0 || c > 9) return ParseResult.Invalid;
 
-                long newValue = (10 * value) - c;
+                var newValue = 10 * value - c;
 
                 // overflow has caused the number to loop around
                 if (newValue > value)
@@ -817,10 +779,7 @@ namespace Newtonsoft.Json.Utilities
                     {
                         c = chars[i] - '0';
 
-                        if (c < 0 || c > 9)
-                        {
-                            return ParseResult.Invalid;
-                        }
+                        if (c < 0 || c > 9) return ParseResult.Invalid;
                     }
 
                     return ParseResult.Overflow;
@@ -834,10 +793,7 @@ namespace Newtonsoft.Json.Utilities
             if (!isNegative)
             {
                 // negative integer can be one bigger than positive
-                if (value == long.MinValue)
-                {
-                    return ParseResult.Overflow;
-                }
+                if (value == long.MinValue) return ParseResult.Overflow;
 
                 value = -value;
             }
@@ -1282,82 +1238,57 @@ namespace Newtonsoft.Json.Utilities
             const ulong decimalMaxValueLo9 = 354395033UL;
             const char decimalMaxValueLo1 = '5';
 
-            if (length == 0)
-            {
-                return ParseResult.Invalid;
-            }
+            if (length == 0) return ParseResult.Invalid;
 
-            bool isNegative = (chars[start] == '-');
+            var isNegative = chars[start] == '-';
             if (isNegative)
             {
                 // text just a negative sign
-                if (length == 1)
-                {
-                    return ParseResult.Invalid;
-                }
+                if (length == 1) return ParseResult.Invalid;
 
                 start++;
                 length--;
             }
 
-            int i = start;
-            int end = start + length;
-            int numDecimalStart = end;
-            int numDecimalEnd = end;
-            int exponent = 0;
-            ulong hi19 = 0UL;
-            ulong lo10 = 0UL;
-            int mantissaDigits = 0;
-            int exponentFromMantissa = 0;
+            var i = start;
+            var end = start + length;
+            var numDecimalStart = end;
+            var numDecimalEnd = end;
+            var exponent = 0;
+            var hi19 = 0UL;
+            var lo10 = 0UL;
+            var mantissaDigits = 0;
+            var exponentFromMantissa = 0;
             char? digit29 = null;
             bool? storeOnly28Digits = null;
             for (; i < end; i++)
             {
-                char c = chars[i];
+                var c = chars[i];
                 switch (c)
                 {
                     case '.':
-                        if (i == start)
-                        {
-                            return ParseResult.Invalid;
-                        }
-                        if (i + 1 == end)
-                        {
-                            return ParseResult.Invalid;
-                        }
+                        if (i == start) return ParseResult.Invalid;
+                        if (i + 1 == end) return ParseResult.Invalid;
 
                         if (numDecimalStart != end)
-                        {
                             // multiple decimal points
                             return ParseResult.Invalid;
-                        }
 
                         numDecimalStart = i + 1;
                         break;
                     case 'e':
                     case 'E':
-                        if (i == start)
-                        {
-                            return ParseResult.Invalid;
-                        }
+                        if (i == start) return ParseResult.Invalid;
                         if (i == numDecimalStart)
-                        {
                             // E follows decimal point		
                             return ParseResult.Invalid;
-                        }
                         i++;
-                        if (i == end)
-                        {
-                            return ParseResult.Invalid;
-                        }
+                        if (i == end) return ParseResult.Invalid;
 
-                        if (numDecimalStart < end)
-                        {
-                            numDecimalEnd = i - 1;
-                        }
+                        if (numDecimalStart < end) numDecimalEnd = i - 1;
 
                         c = chars[i];
-                        bool exponentNegative = false;
+                        var exponentNegative = false;
                         switch (c)
                         {
                             case '-':
@@ -1373,29 +1304,17 @@ namespace Newtonsoft.Json.Utilities
                         for (; i < end; i++)
                         {
                             c = chars[i];
-                            if (c < '0' || c > '9')
-                            {
-                                return ParseResult.Invalid;
-                            }
+                            if (c < '0' || c > '9') return ParseResult.Invalid;
 
-                            int newExponent = (10 * exponent) + (c - '0');
+                            var newExponent = 10 * exponent + (c - '0');
                             // stops updating exponent when overflowing
-                            if (exponent < newExponent)
-                            {
-                                exponent = newExponent;
-                            }
+                            if (exponent < newExponent) exponent = newExponent;
                         }
 
-                        if (exponentNegative)
-                        {
-                            exponent = -exponent;
-                        }
+                        if (exponentNegative) exponent = -exponent;
                         break;
                     default:
-                        if (c < '0' || c > '9')
-                        {
-                            return ParseResult.Invalid;
-                        }
+                        if (c < '0' || c > '9') return ParseResult.Invalid;
 
                         if (i == start && c == '0')
                         {
@@ -1403,39 +1322,34 @@ namespace Newtonsoft.Json.Utilities
                             if (i != end)
                             {
                                 c = chars[i];
-                                if (c == '.')
-                                {
-                                    goto case '.';
-                                }
-                                if (c == 'e' || c == 'E')
-                                {
-                                    goto case 'E';
-                                }
+                                if (c == '.') goto case '.';
+                                if (c == 'e' || c == 'E') goto case 'E';
 
                                 return ParseResult.Invalid;
                             }
                         }
 
-                        if (mantissaDigits < 29 && (mantissaDigits != 28 || !(storeOnly28Digits ?? (storeOnly28Digits = (hi19 > decimalMaxValueHi19 || (hi19 == decimalMaxValueHi19 && (lo10 > decimalMaxValueLo9 || (lo10 == decimalMaxValueLo9 && c > decimalMaxValueLo1))))).GetValueOrDefault())))
+                        if (mantissaDigits < 29 && (mantissaDigits != 28 || !(storeOnly28Digits ??
+                                                                              (storeOnly28Digits =
+                                                                                  hi19 > decimalMaxValueHi19 ||
+                                                                                  (hi19 == decimalMaxValueHi19 &&
+                                                                                      (lo10 > decimalMaxValueLo9 ||
+                                                                                          (lo10 == decimalMaxValueLo9 &&
+                                                                                              c > decimalMaxValueLo1))))
+                                                                              .GetValueOrDefault())))
                         {
                             if (mantissaDigits < 19)
-                            {
-                                hi19 = (hi19 * 10UL) + (ulong)(c - '0');
-                            }
+                                hi19 = hi19 * 10UL + (ulong)(c - '0');
                             else
-                            {
-                                lo10 = (lo10 * 10UL) + (ulong)(c - '0');
-                            }
+                                lo10 = lo10 * 10UL + (ulong)(c - '0');
                             ++mantissaDigits;
                         }
                         else
                         {
-                            if (!digit29.HasValue)
-                            {
-                                digit29 = c;
-                            }
+                            if (!digit29.HasValue) digit29 = c;
                             ++exponentFromMantissa;
                         }
+
                         break;
                 }
             }
@@ -1443,38 +1357,29 @@ namespace Newtonsoft.Json.Utilities
             exponent += exponentFromMantissa;
 
             // correct the decimal point
-            exponent -= (numDecimalEnd - numDecimalStart);
+            exponent -= numDecimalEnd - numDecimalStart;
 
             if (mantissaDigits <= 19)
-            {
                 value = hi19;
-            }
             else
-            {
-                value = (hi19 / new decimal(1, 0, 0, false, (byte)(mantissaDigits - 19))) + lo10;
-            }
+                value = hi19 / new decimal(1, 0, 0, false, (byte)(mantissaDigits - 19)) + lo10;
 
             if (exponent > 0)
             {
                 mantissaDigits += exponent;
-                if (mantissaDigits > 29)
-                {
-                    return ParseResult.Overflow;
-                }
+                if (mantissaDigits > 29) return ParseResult.Overflow;
                 if (mantissaDigits == 29)
                 {
                     if (exponent > 1)
                     {
                         value /= new decimal(1, 0, 0, false, (byte)(exponent - 1));
-                        if (value > decimalMaxValueHi28)
-                        {
-                            return ParseResult.Overflow;
-                        }
+                        if (value > decimalMaxValueHi28) return ParseResult.Overflow;
                     }
                     else if (value == decimalMaxValueHi28 && digit29 > decimalMaxValueLo1)
                     {
                         return ParseResult.Overflow;
                     }
+
                     value *= 10M;
                 }
                 else
@@ -1484,10 +1389,7 @@ namespace Newtonsoft.Json.Utilities
             }
             else
             {
-                if (digit29 >= '5' && exponent >= -28)
-                {
-                    ++value;
-                }
+                if (digit29 >= '5' && exponent >= -28) ++value;
                 if (exponent < 0)
                 {
                     if (mantissaDigits + exponent + 28 <= 0)
@@ -1495,9 +1397,10 @@ namespace Newtonsoft.Json.Utilities
                         value = isNegative ? -0M : 0M;
                         return ParseResult.Success;
                     }
+
                     if (exponent >= -28)
                     {
-                        value *= new decimal(1, 0, 0, false, (byte)(-exponent));
+                        value *= new decimal(1, 0, 0, false, (byte)-exponent);
                     }
                     else
                     {
@@ -1507,10 +1410,7 @@ namespace Newtonsoft.Json.Utilities
                 }
             }
 
-            if (isNegative)
-            {
-                value = -value;
-            }
+            if (isNegative) value = -value;
 
             return ParseResult.Success;
         }
@@ -1519,13 +1419,10 @@ namespace Newtonsoft.Json.Utilities
         {
             // GUID has to have format 00000000-0000-0000-0000-000000000000
 #if !HAVE_GUID_TRY_PARSE
-            if (s == null)
-            {
-                throw new ArgumentNullException("s");
-            }
+            if (s == null) throw new ArgumentNullException("s");
 
-            Regex format = new Regex("^[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}$");
-            Match match = format.Match(s);
+            var format = new Regex("^[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}$");
+            var match = format.Match(s);
             if (match.Success)
             {
                 g = new Guid(s);
@@ -1543,9 +1440,9 @@ namespace Newtonsoft.Json.Utilities
         {
             value = 0;
 
-            for (int i = start; i < end; i++)
+            for (var i = start; i < end; i++)
             {
-                char ch = text[i];
+                var ch = text[i];
                 int chValue;
 
                 if (ch <= 57 && ch >= 48)

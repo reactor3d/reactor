@@ -1,5 +1,4 @@
-﻿
-// Author:
+﻿// Author:
 //       Gabriel Reiser <gabe@reisergames.com>
 //
 // Copyright (c) 2010-2016 Reiser Games, LLC.
@@ -23,20 +22,16 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Timers;
-using Reactor.Platform.OpenGL;
-using Reactor.Math;
 using Reactor.Platform;
+using Reactor.Platform.OpenGL;
 using Reactor.Types;
 using Reactor.Types.States;
-#if WINDOWS
-using System.Windows.Forms;
-#endif
+using Image = Reactor.Platform.GLFW.Image;
 
 namespace Reactor
 {
@@ -44,26 +39,26 @@ namespace Reactor
     {
         private RDisplayModes _supportedDisplayModes;
         private RenderControl _renderControl;
-        private Stopwatch _stopWatch;
-        private Timer _fpsTimer;
-        public RScene Scene { get { return RScene.Instance; } }
-        public RTextures Textures { get { return RTextures.Instance; } }
-        public RMaterials Materials { get { return RMaterials.Instance; } }
-        public RInput Input { get { return RInput.Instance; } }
-        public RViewport Viewport { get { return _viewport; } }
-        public RFileSystem FileSystem { get { return RFileSystem.Instance; } }
-        public RScreen Screen { get { return RScreen.Instance; } }
+        private readonly Stopwatch _stopWatch;
+        private readonly Timer _fpsTimer;
+        public RScene Scene => RScene.Instance;
+        public RTextures Textures => RTextures.Instance;
+        public RMaterials Materials => RMaterials.Instance;
+        public RInput Input => RInput.Instance;
+        public RViewport Viewport => _viewport;
+        public RFileSystem FileSystem => RFileSystem.Instance;
+        public RScreen Screen => RScreen.Instance;
         private RFrameBuffer hdrFrameBuffer;
         private RShader hdrShader;
-        public RAtmosphere Atmosphere { get { return RAtmosphere.Instance; } }
+        public RAtmosphere Atmosphere => RAtmosphere.Instance;
         internal RViewport _viewport;
         internal static RGame RGame;
         internal static string RootPath;
         internal static RCamera camera;
         internal static bool showFps = true;
 
-        private float _lastFps = 0;
-        private float _fps = 0;
+        private float _lastFps;
+        private float _fps;
         private TimeSpan lastFrameTime;
 
         public REngine()
@@ -71,7 +66,7 @@ namespace Reactor
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RLog.Info("Engine startup sequence activated.");
 
-            
+
             _stopWatch = new Stopwatch();
             _fpsTimer = new Timer();
 
@@ -79,22 +74,17 @@ namespace Reactor
             _fpsTimer.Elapsed += _fpsTimer_Tick;
             _fpsTimer.Start();
 
-            _viewport = new RViewport(0,0,800,600);
+            _viewport = new RViewport(0, 0, 800, 600);
             camera = new RCamera(_viewport.AspectRatio);
             lastFrameTime = new TimeSpan();
-            
-
-
         }
 
-        void _fpsTimer_Tick(object sender, ElapsedEventArgs e)
+        private void _fpsTimer_Tick(object sender, ElapsedEventArgs e)
         {
-            _lastFps = (float)System.Math.Ceiling((_fps / (lastFrameTime.TotalMilliseconds)) * 1000.0f);
+            _lastFps = (float)System.Math.Ceiling(_fps / lastFrameTime.TotalMilliseconds * 1000.0f);
             _fps = 0;
             lastFrameTime = _stopWatch.Elapsed;
             _stopWatch.Restart();
-
-
         }
 
         ~REngine()
@@ -106,63 +96,50 @@ namespace Reactor
 
         private void StartClock()
         {
-            if (!_stopWatch.IsRunning){
-                _stopWatch.Start();
-            } 
+            if (!_stopWatch.IsRunning) _stopWatch.Start();
         }
+
         internal void Tick(float t)
         {
             _fps += t;
         }
+
         public float GetFPS()
         {
-            return _fps;
+            return _lastFps;
         }
+
         public double GetRenderTime()
         {
             return lastFrameTime.TotalMilliseconds;
         }
-        public double GetTotalTime() 
+
+        public double GetTotalTime()
         {
             return RGame.GameTime.TotalGameTime.TotalMilliseconds;
         }
+
         public double GetElapsedTime()
         {
             return RGame.GameTime.ElapsedGameTime.TotalMilliseconds;
         }
-        
+
         public static void CheckGLError()
         {
-            ErrorCode error = GL.GetError();
+            var error = GL.GetError();
             if (error != ErrorCode.NoError)
             {
-                
-                StackTrace trace = new StackTrace(true);
-                StackFrame[] frames = trace.GetFrames();
+                var trace = new StackTrace(true);
+                var frames = trace.GetFrames();
                 RLog.Error("Stack Trace:");
-                foreach(StackFrame f in frames)
-                {
-                    RLog.Error(f.ToString());
-                }
-                throw new EngineGLException("GL.GetError() returned " + error.ToString());
+                foreach (var f in frames) RLog.Error(f.ToString());
+                throw new EngineGLException("GL.GetError() returned " + error);
+            }
+        }
 
-            }
-               
-        }
-        public RDisplayMode CurrentDisplayMode
-        {
-            get
-            {
-                return RGame.GameWindow.Mode;
-            }
-        }
-        public RDisplayModes SupportedDisplayModes
-        {
-            get
-            {
-                return RGame.GameWindow.SupportedModes();
-            }
-        }
+        public RDisplayMode CurrentDisplayMode => RGame.GameWindow.Mode;
+        public RDisplayModes SupportedDisplayModes => RGame.GameWindow.SupportedModes();
+
         public bool IsWideScreen
         {
             get
@@ -179,57 +156,62 @@ namespace Reactor
             {
                 var aspect = CurrentDisplayMode.AspectRatio;
                 const float limit = 5.3333333f;
-                return (aspect > limit);
+                return aspect > limit;
             }
         }
+
         public void SetDebug(bool value)
         {
             RLog.Enabled = value;
         }
+
         public void SetDebug(bool value, string logPath)
         {
             RLog.Enabled = value;
             RLog.LogPath = logPath;
         }
+
         public void SetShowFPS(bool value)
         {
             showFps = value;
         }
-        public void InitHDR() 
+
+        public void InitHDR()
         {
-            
-            hdrFrameBuffer = new RFrameBuffer((int)_viewport.Width, (int)_viewport.Height, false, RSurfaceFormat.Vector4, RDepthFormat.Depth32Stencil8);
+            hdrFrameBuffer = new RFrameBuffer((int)_viewport.Width, (int)_viewport.Height, false,
+                RSurfaceFormat.Vector4, RDepthFormat.Depth32Stencil8);
             hdrShader = new RShader();
             hdrShader.Load(RShaderResources.HDRVert, RShaderResources.HDRFrag);
-
-            
         }
+
         public void BeginHDR()
         {
             hdrFrameBuffer.Bind();
             _viewport.Bind();
-           
         }
+
         public void EndHDR()
         {
-
             hdrFrameBuffer.Unbind();
             hdrShader.Bind();
-            hdrShader.SetSamplerValue(RTextureLayer.TEXTURE0, hdrFrameBuffer);
+            hdrShader.SetSamplerValue(RTextureLayer.TEXTURE0, hdrFrameBuffer.ColorBuffers[0]);
             hdrShader.Unbind();
-
         }
+
         public void DrawHDR()
         {
             Screen.Begin();
             Screen.RenderFullscreenQuad(hdrShader);
             Screen.End();
         }
+
         public void SetClearColor(RColor color)
         {
             var c = color.ToVector4();
             GL.ClearColor(c.X, c.Y, c.Z, c.W);
+            CheckGLError();
         }
+
         public void Clear()
         {
             Clear(true);
@@ -237,45 +219,52 @@ namespace Reactor
 
         public void Clear(bool depth = true)
         {
-
             Clear(depth, true);
-            
         }
+
         public void Clear(bool depth = false, bool stencil = false)
         {
-
-            ClearBufferMask mask = ClearBufferMask.ColorBufferBit;
+            var mask = ClearBufferMask.ColorBufferBit;
             if (depth)
                 mask |= ClearBufferMask.DepthBufferBit;
             if (stencil)
                 mask |= ClearBufferMask.StencilBufferBit;
             GL.Clear(mask);
-
+            CheckGLError();
             Atmosphere.Update();
 
             CheckGLError();
         }
+
         internal void Reset()
         {
             StartClock();
-            GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
-            GL.Enable(EnableCap.CullFace);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            CheckGLError();
+            GL.Disable(EnableCap.CullFace);
+            CheckGLError();
             GL.FrontFace(FrontFaceDirection.Ccw);
+            CheckGLError();
             GL.Enable(EnableCap.DepthTest);
+            CheckGLError();
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+            CheckGLError();
             RBlendState.Opaque.PlatformApplyState();
+            CheckGLError();
             _viewport.Bind();
-            
+            CheckGLError();
         }
 
         public void Present()
         {
-            
             Tick(1);
-            if(showFps)
+            if (showFps && GetFPS() > 0)
                 Screen.RenderFPS(GetFPS());
-            GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
+
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            CheckGLError();
             _renderControl.SwapBuffers();
+            CheckGLError();
         }
 
         /*
@@ -298,7 +287,7 @@ namespace Reactor
             }
 
         }*/
-        #if WINDOWS
+#if WINDOWS
         public bool InitForm(IntPtr handle)
         {
             try
@@ -321,27 +310,28 @@ namespace Reactor
             }
 
         }
-        #endif
-        void PrintExtensions() {
+#endif
+        private void PrintExtensions()
+        {
             var extensions = GL.GetString(StringName.Extensions).Split(' ');
-            foreach(var extension in extensions) {
-                if(extension.StartsWith("GL_EXT")) {
+            foreach (var extension in extensions)
+                if (extension.StartsWith("GL_EXT"))
                     RLog.Debug(extension);
-                }
-
-            }
         }
+
         [STAThread]
         public bool InitGameWindow(int width, int height, RWindowStyle windowStyle, string title = "Reactor")
         {
-            RDisplayMode mode = new RDisplayMode(width, height, -1);
+            var mode = new RDisplayMode(width, height, -1);
             return InitGameWindow(mode, windowStyle, title);
         }
+
         [STAThread]
         public bool InitGameWindow(RDisplayMode displayMode, string title = "Reactor")
         {
             return InitGameWindow(displayMode, RWindowStyle.Normal, title);
         }
+
         [STAThread]
         public bool InitGameWindow(RDisplayMode displayMode, RWindowStyle windowStyle, string title = "Reactor")
         {
@@ -349,29 +339,30 @@ namespace Reactor
             {
                 RGame.GameWindow.Title = title;
 
-                GameWindowRenderControl control = new GameWindowRenderControl(displayMode, windowStyle, title);
+                var control = new GameWindowRenderControl(displayMode, windowStyle, title);
+
                 control.GameWindow = RGame.GameWindow;
-                control.GameWindow.ClientSize = new Size(displayMode.Width, displayMode.Height);
-                control.GameWindow.WindowStyle = windowStyle;
-                control.GameWindow.Position = new System.Drawing.Point(0, 0);
                 _renderControl = control;
 
                 RLog.Info(GetGLInfo());
-                CheckGLError ();
+                CheckGLError();
                 RLog.Info("Game Window Renderer Initialized.");
                 //PrintExtensions();
                 CheckGLError();
-
-                RShader.InitShaders ();
+                Input.Init();
+                RShader.InitShaders();
                 CheckGLError();
                 Screen.Init();
                 CheckGLError();
                 return true;
-            } catch(Exception e) {
+            }
+            catch (Exception e)
+            {
                 RLog.Error(e);
                 return false;
             }
         }
+
         [STAThread]
         public bool Init()
         {
@@ -383,7 +374,9 @@ namespace Reactor
                 RLog.Info("Dummy Non-Renderer Initialized.");
                 PrintExtensions();
                 return true;
-            } catch(Exception e) {
+            }
+            catch (Exception e)
+            {
                 RLog.Error(e);
                 return false;
             }
@@ -393,16 +386,16 @@ namespace Reactor
         {
             try
             {
-                var images = new Platform.GLFW.Image[] { new Platform.GLFW.Image(icon.Width, icon.Height, icon.Handle) };
-                
+                var images = new[] { new Image(icon.Width, icon.Height, icon.Handle) };
+
                 RGame.GameWindow.SetIcons(images);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 RLog.Error(e);
             }
-            
         }
+
         public bool ToggleFullscreen(RDisplayMode displayMode)
         {
             try
@@ -419,12 +412,13 @@ namespace Reactor
                     {
                         RGame.GameWindow.SetMode(displayMode, true);
                         _renderControl.IsFullscreen = true;
-                        RLog.Info(String.Format("Fullscreen mode activated : {0}", displayMode));
+                        RLog.Info(string.Format("Fullscreen mode activated : {0}", displayMode));
                     }
                 }
+
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 RLog.Error("Error attempting to go fullscreen.");
                 RLog.Error(e);
@@ -457,7 +451,8 @@ namespace Reactor
             try
             {
                 RLog.Info("Shutting down the engine.");
-                hdrFrameBuffer.Dispose();
+                if (hdrFrameBuffer != null)
+                    hdrFrameBuffer.Dispose();
                 _renderControl.Dispose();
                 RLog.Info("Shutdown complete.\r\n\r\n\r\n\r\n");
                 return true;
@@ -468,16 +463,17 @@ namespace Reactor
                 RLog.Error(e);
                 return false;
             }
-
         }
 
-        internal static string GetGLInfo() {
+        internal static string GetGLInfo()
+        {
             var version = GL.GetString(StringName.Version);
             var vendor = GL.GetString(StringName.Vendor);
             var renderer = GL.GetString(StringName.Renderer);
             var glslVersion = GL.GetString(StringName.ShadingLanguageVersion);
 
-            return String.Format("Using OpenGL version {0} from {1}, renderer {2}, GLSL version {3}", version, vendor, renderer, glslVersion);
+            return string.Format("Using OpenGL version {0} from {1}, renderer {2}, GLSL version {3}", version, vendor,
+                renderer, glslVersion);
         }
     }
 
@@ -494,12 +490,10 @@ namespace Reactor
         public ReactorException(string message, Exception baseException)
             : base(message, baseException)
         {
-
         }
 
         public ReactorException(string message) : base(message)
         {
-
         }
     }
 
@@ -540,7 +534,7 @@ namespace Reactor
                 case RBlend.InverseSourceAlpha:
                     return BlendingFactorSrc.OneMinusSrcAlpha;
                 case RBlend.InverseSourceColor:
-                    return BlendingFactorSrc.OneMinusConstantColor;
+                    return BlendingFactorSrc.OneMinusSrcColor;
                 case RBlend.One:
                     return BlendingFactorSrc.One;
                 case RBlend.SourceAlpha:
@@ -554,7 +548,6 @@ namespace Reactor
                 default:
                     return BlendingFactorSrc.One;
             }
-
         }
 
         public static BlendingFactorDest GetBlendFactorDest(this RBlend blend)
@@ -574,14 +567,13 @@ namespace Reactor
                 case RBlend.SourceAlpha:
                     return BlendingFactorDest.SrcAlpha;
                 case RBlend.SourceColor:
-                    return BlendingFactorDest.SrcColor;
+                    throw new Exception("Invalid Enum for Dest");
 
                 case RBlend.Zero:
                     return BlendingFactorDest.Zero;
                 default:
                     return BlendingFactorDest.One;
             }
-
         }
     }
 }

@@ -10,18 +10,30 @@ using System;
 
 namespace NVorbis
 {
-    class RingBuffer
+    internal class RingBuffer
     {
-        float[] _buffer;
-        int _start;
-        int _end;
-        int _bufLen;
+        private float[] _buffer;
+        private int _bufLen;
+        private int _end;
+        private int _start;
+
+        internal int Channels;
 
         internal RingBuffer(int size)
         {
             _buffer = new float[size];
             _start = _end = 0;
             _bufLen = size;
+        }
+
+        internal int Length
+        {
+            get
+            {
+                var temp = _end - _start;
+                if (temp < 0) temp += _bufLen;
+                return temp;
+            }
         }
 
         internal void EnsureSize(int size)
@@ -33,10 +45,7 @@ namespace NVorbis
             {
                 var temp = new float[size];
                 Array.Copy(_buffer, _start, temp, 0, _bufLen - _start);
-                if (_end < _start)
-                {
-                    Array.Copy(_buffer, 0, temp, _bufLen - _start, _end);
-                }
+                if (_end < _start) Array.Copy(_buffer, 0, temp, _bufLen - _start, _end);
                 var end = Length;
                 _start = 0;
                 _end = end;
@@ -45,8 +54,6 @@ namespace NVorbis
                 _bufLen = size;
             }
         }
-
-        internal int Channels;
 
         internal void CopyTo(float[] buffer, int index, int count)
         {
@@ -62,10 +69,7 @@ namespace NVorbis
             var cnt = Math.Min(count, _bufLen - start);
             Array.Copy(_buffer, start, buffer, index, cnt);
 
-            if (cnt < count)
-            {
-                Array.Copy(_buffer, 0, buffer, index + cnt, count - cnt);
-            }
+            if (cnt < count) Array.Copy(_buffer, 0, buffer, index + cnt, count - cnt);
         }
 
         internal void RemoveItems(int count)
@@ -89,24 +93,11 @@ namespace NVorbis
             _start = _end = 0;
         }
 
-        internal int Length
-        {
-            get
-            {
-                var temp = _end - _start;
-                if (temp < 0) temp += _bufLen;
-                return temp;
-            }
-        }
-
         internal void Write(int channel, int index, int start, int switchPoint, int end, float[] pcm, float[] window)
         {
             // this is the index of the first sample to merge
             var idx = (index + start) * Channels + channel + _start;
-            while (idx >= _bufLen)
-            {
-                idx -= _bufLen;
-            }
+            while (idx >= _bufLen) idx -= _bufLen;
 
             // blech...  gotta fix the first packet's pointers
             if (idx < 0)
@@ -117,30 +108,19 @@ namespace NVorbis
 
             // go through and do the overlap
             for (; idx < _bufLen && start < switchPoint; idx += Channels, ++start)
-            {
                 _buffer[idx] += pcm[start] * window[start];
-            }
             if (idx >= _bufLen)
             {
                 idx -= _bufLen;
-                for (; start < switchPoint; idx += Channels, ++start)
-                {
-                    _buffer[idx] += pcm[start] * window[start];
-                }
+                for (; start < switchPoint; idx += Channels, ++start) _buffer[idx] += pcm[start] * window[start];
             }
 
             // go through and write the rest
-            for (; idx < _bufLen && start < end; idx += Channels, ++start)
-            {
-                _buffer[idx] = pcm[start] * window[start];
-            }
+            for (; idx < _bufLen && start < end; idx += Channels, ++start) _buffer[idx] = pcm[start] * window[start];
             if (idx >= _bufLen)
             {
                 idx -= _bufLen;
-                for (; start < end; idx += Channels, ++start)
-                {
-                    _buffer[idx] = pcm[start] * window[start];
-                }
+                for (; start < end; idx += Channels, ++start) _buffer[idx] = pcm[start] * window[start];
             }
 
             // finally, make sure the buffer end is set correctly

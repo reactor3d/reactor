@@ -10,18 +10,18 @@
 namespace Reactor.Audio.OpenAL
 {
     /// <summary>
-    /// Defines the known OpenAL versions.
+    ///     Defines the known OpenAL versions.
     /// </summary>
     internal enum AlcVersion
     {
         /// <summary>
-        /// OpenAL 1.0.
+        ///     OpenAL 1.0.
         /// </summary>
         Alc10,
 
         /// <summary>
-        /// OpenAL 1.1.
+        ///     OpenAL 1.1.
         /// </summary>
-        Alc11,
+        Alc11
     }
 }

@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,19 +22,17 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
 using System.Reflection;
 using Newtonsoft.Json.Utilities;
-using System.Collections;
-using System.Diagnostics;
 #if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 
@@ -42,18 +41,18 @@ using System.Linq;
 namespace Newtonsoft.Json.Serialization
 {
     /// <summary>
-    /// Contract details for a <see cref="System.Type"/> used by the <see cref="JsonSerializer"/>.
+    ///     Contract details for a <see cref="System.Type" /> used by the <see cref="JsonSerializer" />.
     /// </summary>
     public class JsonArrayContract : JsonContainerContract
     {
         /// <summary>
-        /// Gets the <see cref="System.Type"/> of the collection items.
+        ///     Gets the <see cref="System.Type" /> of the collection items.
         /// </summary>
-        /// <value>The <see cref="System.Type"/> of the collection items.</value>
+        /// <value>The <see cref="System.Type" /> of the collection items.</value>
         public Type? CollectionItemType { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the collection type is a multidimensional array.
+        ///     Gets a value indicating whether the collection type is a multidimensional array.
         /// </summary>
         /// <value><c>true</c> if the collection type is a multidimensional array; otherwise, <c>false</c>.</value>
         public bool IsMultidimensionalArray { get; }
@@ -78,16 +77,17 @@ namespace Newtonsoft.Json.Serialization
             get
             {
                 if (_parameterizedCreator == null && _parameterizedConstructor != null)
-                {
-                    _parameterizedCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(_parameterizedConstructor);
-                }
+                    _parameterizedCreator =
+                        JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(
+                            _parameterizedConstructor);
 
                 return _parameterizedCreator;
             }
         }
 
         /// <summary>
-        /// Gets or sets the function used to create the object. When set this function will override <see cref="JsonContract.DefaultCreator"/>.
+        ///     Gets or sets the function used to create the object. When set this function will override
+        ///     <see cref="JsonContract.DefaultCreator" />.
         /// </summary>
         /// <value>The function used to create the object.</value>
         public ObjectConstructor<object>? OverrideCreator
@@ -102,15 +102,16 @@ namespace Newtonsoft.Json.Serialization
         }
 
         /// <summary>
-        /// Gets a value indicating whether the creator has a parameter with the collection values.
+        ///     Gets a value indicating whether the creator has a parameter with the collection values.
         /// </summary>
         /// <value><c>true</c> if the creator has a parameter with the collection values; otherwise, <c>false</c>.</value>
         public bool HasParameterizedCreator { get; set; }
 
-        internal bool HasParameterizedCreatorInternal => (HasParameterizedCreator || _parameterizedCreator != null || _parameterizedConstructor != null);
+        internal bool HasParameterizedCreatorInternal => HasParameterizedCreator || _parameterizedCreator != null ||
+                                                         _parameterizedConstructor != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonArrayContract"/> class.
+        ///     Initializes a new instance of the <see cref="JsonArrayContract" /> class.
         /// </summary>
         /// <param name="underlyingType">The underlying type for the contract.</param>
         public JsonArrayContract(Type underlyingType)
@@ -120,7 +121,8 @@ namespace Newtonsoft.Json.Serialization
 
             // netcoreapp3.0 uses EmptyPartition for empty enumerable. Treat as an empty array.
             IsArray = CreatedType.IsArray ||
-                (NonNullableUnderlyingType.IsGenericType() && NonNullableUnderlyingType.GetGenericTypeDefinition().FullName == "System.Linq.EmptyPartition`1");
+                      (NonNullableUnderlyingType.IsGenericType() &&
+                       NonNullableUnderlyingType.GetGenericTypeDefinition().FullName == "System.Linq.EmptyPartition`1");
 
             bool canDeserialize;
 
@@ -132,41 +134,35 @@ namespace Newtonsoft.Json.Serialization
                 _genericCollectionDefinitionType = typeof(List<>).MakeGenericType(CollectionItemType);
 
                 canDeserialize = true;
-                IsMultidimensionalArray = (CreatedType.IsArray && UnderlyingType.GetArrayRank() > 1);
+                IsMultidimensionalArray = CreatedType.IsArray && UnderlyingType.GetArrayRank() > 1;
             }
             else if (typeof(IList).IsAssignableFrom(NonNullableUnderlyingType))
             {
-                if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>), out _genericCollectionDefinitionType))
-                {
+                if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>),
+                        out _genericCollectionDefinitionType))
                     CollectionItemType = _genericCollectionDefinitionType.GetGenericArguments()[0];
-                }
                 else
-                {
                     CollectionItemType = ReflectionUtils.GetCollectionItemType(NonNullableUnderlyingType);
-                }
 
-                if (NonNullableUnderlyingType == typeof(IList))
-                {
-                    CreatedType = typeof(List<object>);
-                }
+                if (NonNullableUnderlyingType == typeof(IList)) CreatedType = typeof(List<object>);
 
                 if (CollectionItemType != null)
-                {
-                    _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType, CollectionItemType);
-                }
+                    _parameterizedConstructor =
+                        CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType,
+                            CollectionItemType);
 
-                IsReadOnlyOrFixedSize = ReflectionUtils.InheritsGenericDefinition(NonNullableUnderlyingType, typeof(ReadOnlyCollection<>));
+                IsReadOnlyOrFixedSize =
+                    ReflectionUtils.InheritsGenericDefinition(NonNullableUnderlyingType, typeof(ReadOnlyCollection<>));
                 canDeserialize = true;
             }
-            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>), out _genericCollectionDefinitionType))
+            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>),
+                         out _genericCollectionDefinitionType))
             {
                 CollectionItemType = _genericCollectionDefinitionType.GetGenericArguments()[0];
 
                 if (ReflectionUtils.IsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>))
                     || ReflectionUtils.IsGenericDefinition(NonNullableUnderlyingType, typeof(IList<>)))
-                {
                     CreatedType = typeof(List<>).MakeGenericType(CollectionItemType);
-                }
 
 #if HAVE_ISET
                 if (ReflectionUtils.IsGenericDefinition(NonNullableUnderlyingType, typeof(ISet<>)))
@@ -175,7 +171,9 @@ namespace Newtonsoft.Json.Serialization
                 }
 #endif
 
-                _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType, CollectionItemType);
+                _parameterizedConstructor =
+                    CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType,
+                        CollectionItemType);
                 canDeserialize = true;
                 ShouldCreateWrapper = true;
             }
@@ -191,7 +189,8 @@ namespace Newtonsoft.Json.Serialization
                 }
 
                 _genericCollectionDefinitionType = typeof(List<>).MakeGenericType(CollectionItemType);
-                _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(CreatedType, CollectionItemType);
+                _parameterizedConstructor =
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           CollectionUtils.ResolveEnumerableCollectionConstructor(CreatedType, CollectionItemType);
 
 #if HAVE_FSHARP_TYPES
                 StoreFSharpListCreatorIfNecessary(NonNullableUnderlyingType);
@@ -201,22 +200,24 @@ namespace Newtonsoft.Json.Serialization
                 canDeserialize = HasParameterizedCreatorInternal;
             }
 #endif
-            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(IEnumerable<>), out tempCollectionType))
+            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(IEnumerable<>),
+                         out tempCollectionType))
             {
                 CollectionItemType = tempCollectionType.GetGenericArguments()[0];
 
                 if (ReflectionUtils.IsGenericDefinition(UnderlyingType, typeof(IEnumerable<>)))
-                {
                     CreatedType = typeof(List<>).MakeGenericType(CollectionItemType);
-                }
 
-                _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType, CollectionItemType);
+                _parameterizedConstructor =
+                    CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType,
+                        CollectionItemType);
 
 #if HAVE_FSHARP_TYPES
                 StoreFSharpListCreatorIfNecessary(NonNullableUnderlyingType);
 #endif
 
-                if (NonNullableUnderlyingType.IsGenericType() && NonNullableUnderlyingType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                if (NonNullableUnderlyingType.IsGenericType() &&
+                    NonNullableUnderlyingType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                 {
                     _genericCollectionDefinitionType = tempCollectionType;
 
@@ -257,10 +258,10 @@ namespace Newtonsoft.Json.Serialization
 
             if (CollectionItemType != null &&
                 ImmutableCollectionsUtils.TryBuildImmutableForArrayContract(
-                NonNullableUnderlyingType,
-                CollectionItemType,
-                out Type? immutableCreatedType,
-                out ObjectConstructor<object>? immutableParameterizedCreator))
+                    NonNullableUnderlyingType,
+                    CollectionItemType,
+                    out var immutableCreatedType,
+                    out var immutableParameterizedCreator))
             {
                 CreatedType = immutableCreatedType;
                 _parameterizedCreator = immutableParameterizedCreator;
@@ -281,16 +282,14 @@ namespace Newtonsoft.Json.Serialization
 
                 if (ReflectionUtils.InheritsGenericDefinition(_genericCollectionDefinitionType, typeof(List<>))
                     || _genericCollectionDefinitionType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                {
                     constructorArgument = typeof(ICollection<>).MakeGenericType(CollectionItemType);
-                }
                 else
-                {
                     constructorArgument = _genericCollectionDefinitionType;
-                }
 
-                ConstructorInfo genericWrapperConstructor = _genericWrapperType.GetConstructor(new[] { constructorArgument });
-                _genericWrapperCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(genericWrapperConstructor);
+                var genericWrapperConstructor = _genericWrapperType.GetConstructor(new[] { constructorArgument });
+                _genericWrapperCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(
+                        genericWrapperConstructor);
             }
 
             return (IWrappedCollection)_genericWrapperCreator(list);
@@ -301,12 +300,13 @@ namespace Newtonsoft.Json.Serialization
             if (_genericTemporaryCollectionCreator == null)
             {
                 // multidimensional array will also have array instances in it
-                Type collectionItemType = (IsMultidimensionalArray || CollectionItemType == null)
+                var collectionItemType = IsMultidimensionalArray || CollectionItemType == null
                     ? typeof(object)
                     : CollectionItemType;
 
-                Type temporaryListType = typeof(List<>).MakeGenericType(collectionItemType);
-                _genericTemporaryCollectionCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(temporaryListType);
+                var temporaryListType = typeof(List<>).MakeGenericType(collectionItemType);
+                _genericTemporaryCollectionCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(temporaryListType);
             }
 
             return (IList)_genericTemporaryCollectionCreator();

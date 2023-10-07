@@ -16,19 +16,16 @@ namespace NVorbis
 {
     public class VorbisReader : IDisposable
     {
-        int _streamIdx;
+        private IContainerReader _containerReader;
+        private List<VorbisStreamDecoder> _decoders;
+        private readonly List<int> _serials;
 
-        IContainerReader _containerReader;
-        List<VorbisStreamDecoder> _decoders;
-        List<int> _serials;
-
-        VorbisReader()
+        private VorbisReader()
         {
             ClipSamples = true;
 
             _decoders = new List<VorbisStreamDecoder>();
             _serials = new List<int>();
-
         }
 
         public VorbisReader(string fileName)
@@ -52,6 +49,7 @@ namespace NVorbis
                 bufferedStream.Close();
                 throw new InvalidDataException("Could not determine container type!");
             }
+
             _containerReader = oggContainer;
 
             if (_decoders.Count == 0) throw new InvalidDataException("No Vorbis data found!");
@@ -60,10 +58,7 @@ namespace NVorbis
         public VorbisReader(IContainerReader containerReader)
             : this()
         {
-            if (!LoadContainer(containerReader))
-            {
-                throw new InvalidDataException("Container did not initialize!");
-            }
+            if (!LoadContainer(containerReader)) throw new InvalidDataException("Container did not initialize!");
             _containerReader = containerReader;
 
             if (_decoders.Count == 0) throw new InvalidDataException("No Vorbis data found!");
@@ -77,7 +72,33 @@ namespace NVorbis
             if (ea.IgnoreStream) throw new InvalidDataException("No Vorbis data found!");
         }
 
-        bool LoadContainer(IContainerReader containerReader)
+        private VorbisStreamDecoder ActiveDecoder
+        {
+            get
+            {
+                if (_decoders == null) throw new ObjectDisposedException("VorbisReader");
+                return _decoders[StreamIndex];
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_decoders != null)
+            {
+                foreach (var decoder in _decoders) decoder.Dispose();
+                _decoders.Clear();
+                _decoders = null;
+            }
+
+            if (_containerReader != null)
+            {
+                _containerReader.NewStream -= NewStream;
+                _containerReader.Dispose();
+                _containerReader = null;
+            }
+        }
+
+        private bool LoadContainer(IContainerReader containerReader)
         {
             containerReader.NewStream += NewStream;
             if (!containerReader.Init())
@@ -85,10 +106,11 @@ namespace NVorbis
                 containerReader.NewStream -= NewStream;
                 return false;
             }
+
             return true;
         }
 
-        void NewStream(object sender, NewStreamEventArgs ea)
+        private void NewStream(object sender, NewStreamEventArgs ea)
         {
             var packetProvider = ea.PacketProvider;
             var decoder = new VorbisStreamDecoder(packetProvider);
@@ -104,89 +126,61 @@ namespace NVorbis
             }
         }
 
-        public void Dispose()
-        {
-            if (_decoders != null)
-            {
-                foreach (var decoder in _decoders)
-                {
-                    decoder.Dispose();
-                }
-                _decoders.Clear();
-                _decoders = null;
-            }
-
-            if (_containerReader != null)
-            {
-                _containerReader.NewStream -= NewStream;
-                _containerReader.Dispose();
-                _containerReader = null;
-            }
-        }
-
-        VorbisStreamDecoder ActiveDecoder
-        {
-            get
-            {
-                if (_decoders == null) throw new ObjectDisposedException("VorbisReader");
-                return _decoders[_streamIdx];
-            }
-        }
-
         #region Public Interface
 
         /// <summary>
-        /// Gets the number of channels in the current selected Vorbis stream
+        ///     Gets the number of channels in the current selected Vorbis stream
         /// </summary>
-        public int Channels { get { return ActiveDecoder._channels; } }
+        public int Channels => ActiveDecoder._channels;
 
         /// <summary>
-        /// Gets the sample rate of the current selected Vorbis stream
+        ///     Gets the sample rate of the current selected Vorbis stream
         /// </summary>
-        public int SampleRate { get { return ActiveDecoder._sampleRate; } }
+        public int SampleRate => ActiveDecoder._sampleRate;
 
         /// <summary>
-        /// Gets the encoder's upper bitrate of the current selected Vorbis stream
+        ///     Gets the encoder's upper bitrate of the current selected Vorbis stream
         /// </summary>
-        public int UpperBitrate { get { return ActiveDecoder._upperBitrate; } }
+        public int UpperBitrate => ActiveDecoder._upperBitrate;
 
         /// <summary>
-        /// Gets the encoder's nominal bitrate of the current selected Vorbis stream
+        ///     Gets the encoder's nominal bitrate of the current selected Vorbis stream
         /// </summary>
-        public int NominalBitrate { get { return ActiveDecoder._nominalBitrate; } }
+        public int NominalBitrate => ActiveDecoder._nominalBitrate;
 
         /// <summary>
-        /// Gets the encoder's lower bitrate of the current selected Vorbis stream
+        ///     Gets the encoder's lower bitrate of the current selected Vorbis stream
         /// </summary>
-        public int LowerBitrate { get { return ActiveDecoder._lowerBitrate; } }
+        public int LowerBitrate => ActiveDecoder._lowerBitrate;
 
         /// <summary>
-        /// Gets the encoder's vendor string for the current selected Vorbis stream
+        ///     Gets the encoder's vendor string for the current selected Vorbis stream
         /// </summary>
-        public string Vendor { get { return ActiveDecoder._vendor; } }
+        public string Vendor => ActiveDecoder._vendor;
 
         /// <summary>
-        /// Gets the comments in the current selected Vorbis stream
+        ///     Gets the comments in the current selected Vorbis stream
         /// </summary>
-        public string[] Comments { get { return ActiveDecoder._comments; } }
+        public string[] Comments => ActiveDecoder._comments;
 
         /// <summary>
-        /// Gets whether the previous short sample count was due to a parameter change in the stream.
+        ///     Gets whether the previous short sample count was due to a parameter change in the stream.
         /// </summary>
-        public bool IsParameterChange { get { return ActiveDecoder.IsParameterChange; } }
+        public bool IsParameterChange => ActiveDecoder.IsParameterChange;
 
         /// <summary>
-        /// Gets the number of bits read that are related to framing and transport alone
+        ///     Gets the number of bits read that are related to framing and transport alone
         /// </summary>
-        public long ContainerOverheadBits { get { return ActiveDecoder.ContainerBits; } }
+        public long ContainerOverheadBits => ActiveDecoder.ContainerBits;
 
         /// <summary>
-        /// Gets or sets whether to automatically apply clipping to samples returned by <see cref="VorbisReader.ReadSamples"/>.
+        ///     Gets or sets whether to automatically apply clipping to samples returned by <see cref="VorbisReader.ReadSamples" />
+        ///     .
         /// </summary>
         public bool ClipSamples { get; set; }
 
         /// <summary>
-        /// Gets stats from each decoder stream available
+        ///     Gets stats from each decoder stream available
         /// </summary>
         public IVorbisStreamStatus[] Stats
         {
@@ -194,15 +188,12 @@ namespace NVorbis
         }
 
         /// <summary>
-        /// Gets the currently-selected stream's index
+        ///     Gets the currently-selected stream's index
         /// </summary>
-        public int StreamIndex
-        {
-            get { return _streamIdx; }
-        }
+        public int StreamIndex { get; private set; }
 
         /// <summary>
-        /// Reads decoded samples from the current logical stream
+        ///     Reads decoded samples from the current logical stream
         /// </summary>
         /// <param name="buffer">The buffer to write the samples to</param>
         /// <param name="offset">The offset into the buffer to write the samples to</param>
@@ -217,18 +208,16 @@ namespace NVorbis
 
             if (ClipSamples)
             {
-                var decoder = _decoders[_streamIdx];
-                for (int i = 0; i < count; i++, offset++)
-                {
+                var decoder = _decoders[StreamIndex];
+                for (var i = 0; i < count; i++, offset++)
                     buffer[offset] = Utils.ClipValue(buffer[offset], ref decoder._clipped);
-                }
             }
 
             return count;
         }
 
         /// <summary>
-        /// Clears the parameter change flag so further samples can be requested.
+        ///     Clears the parameter change flag so further samples can be requested.
         /// </summary>
         public void ClearParameterChange()
         {
@@ -236,15 +225,12 @@ namespace NVorbis
         }
 
         /// <summary>
-        /// Returns the number of logical streams found so far in the physical container
+        ///     Returns the number of logical streams found so far in the physical container
         /// </summary>
-        public int StreamCount
-        {
-            get { return _decoders.Count; }
-        }
+        public int StreamCount => _decoders.Count;
 
         /// <summary>
-        /// Searches for the next stream in a concatenated file
+        ///     Searches for the next stream in a concatenated file
         /// </summary>
         /// <returns><c>True</c> if a new stream was found, otherwise <c>false</c>.</returns>
         public bool FindNextStream()
@@ -254,58 +240,48 @@ namespace NVorbis
         }
 
         /// <summary>
-        /// Switches to an alternate logical stream.
+        ///     Switches to an alternate logical stream.
         /// </summary>
         /// <param name="index">The logical stream index to switch to</param>
-        /// <returns><c>True</c> if the properties of the logical stream differ from those of the one previously being decoded. Otherwise, <c>False</c>.</returns>
+        /// <returns>
+        ///     <c>True</c> if the properties of the logical stream differ from those of the one previously being decoded.
+        ///     Otherwise, <c>False</c>.
+        /// </returns>
         public bool SwitchStreams(int index)
         {
             if (index < 0 || index >= StreamCount) throw new ArgumentOutOfRangeException("index");
 
             if (_decoders == null) throw new ObjectDisposedException("VorbisReader");
 
-            if (_streamIdx == index) return false;
+            if (StreamIndex == index) return false;
 
-            var curDecoder = _decoders[_streamIdx];
-            _streamIdx = index;
-            var newDecoder = _decoders[_streamIdx];
+            var curDecoder = _decoders[StreamIndex];
+            StreamIndex = index;
+            var newDecoder = _decoders[StreamIndex];
 
             return curDecoder._channels != newDecoder._channels || curDecoder._sampleRate != newDecoder._sampleRate;
         }
 
         /// <summary>
-        /// Gets or Sets the current timestamp of the decoder.  Is the timestamp before the next sample to be decoded
+        ///     Gets or Sets the current timestamp of the decoder.  Is the timestamp before the next sample to be decoded
         /// </summary>
         public TimeSpan DecodedTime
         {
-            get
-            {
-                return TimeSpan.FromSeconds((double)ActiveDecoder.CurrentPosition / SampleRate);
-            }
-            set
-            {
-                ActiveDecoder.SeekTo((long)(value.TotalSeconds * SampleRate));
-            }
-
+            get => TimeSpan.FromSeconds((double)ActiveDecoder.CurrentPosition / SampleRate);
+            set => ActiveDecoder.SeekTo((long)(value.TotalSeconds * SampleRate));
         }
 
         /// <summary>
-        /// Gets or Sets the current position of the next sample to be decoded.
+        ///     Gets or Sets the current position of the next sample to be decoded.
         /// </summary>
         public long DecodedPosition
         {
-            get 
-            {
-                return ActiveDecoder.CurrentPosition;
-            }
-            set
-            {
-                ActiveDecoder.SeekTo(value);
-            }
+            get => ActiveDecoder.CurrentPosition;
+            set => ActiveDecoder.SeekTo(value);
         }
 
         /// <summary>
-        /// Gets the total length of the current logical stream
+        ///     Gets the total length of the current logical stream
         /// </summary>
         public TimeSpan TotalTime
         {
@@ -313,13 +289,8 @@ namespace NVorbis
             {
                 var decoder = ActiveDecoder;
                 if (decoder.CanSeek)
-                {
                     return TimeSpan.FromSeconds((double)decoder.GetLastGranulePos() / decoder._sampleRate);
-                }
-                else
-                {
-                    return TimeSpan.MaxValue;
-                }
+                return TimeSpan.MaxValue;
             }
         }
 
@@ -329,16 +300,11 @@ namespace NVorbis
             {
                 var decoder = ActiveDecoder;
                 if (decoder.CanSeek)
-                {
                     return decoder.GetLastGranulePos();
-                }
-                else
-                {
-                    return long.MaxValue;
-                }
+                return long.MaxValue;
             }
         }
-        
+
         #endregion
     }
 }

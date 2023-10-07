@@ -20,12 +20,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reactor.Utilities
 {
@@ -33,10 +30,7 @@ namespace Reactor.Utilities
     {
         public static bool IsValueType(Type targetType)
         {
-            if (targetType == null)
-            {
-                throw new NullReferenceException("Must supply the targetType parameter");
-            }
+            if (targetType == null) throw new NullReferenceException("Must supply the targetType parameter");
 #if WINRT
 			return targetType.GetTypeInfo().IsValueType;
 #else
@@ -46,10 +40,7 @@ namespace Reactor.Utilities
 
         public static Type GetBaseType(Type targetType)
         {
-            if (targetType == null)
-            {
-                throw new NullReferenceException("Must supply the targetType parameter");
-            }
+            if (targetType == null) throw new NullReferenceException("Must supply the targetType parameter");
 #if WINRT
 			var type = targetType.GetTypeInfo().BaseType;
 #else
@@ -59,14 +50,11 @@ namespace Reactor.Utilities
         }
 
         /// <summary>
-        /// Returns true if the given type represents a class that is not abstract
+        ///     Returns true if the given type represents a class that is not abstract
         /// </summary>
         public static bool IsConcreteClass(Type t)
         {
-            if (t == null)
-            {
-                throw new NullReferenceException("Must supply the t (type) parameter");
-            }
+            if (t == null) throw new NullReferenceException("Must supply the t (type) parameter");
 #if WINRT
 			var ti = t.GetTypeInfo();
 			if (ti.IsClass && !ti.IsAbstract)
@@ -80,10 +68,7 @@ namespace Reactor.Utilities
 
         public static MethodInfo GetPropertyGetMethod(PropertyInfo property)
         {
-            if (property == null)
-            {
-                throw new NullReferenceException("Must supply the property parameter");
-            }
+            if (property == null) throw new NullReferenceException("Must supply the property parameter");
 
 #if WINRT
             return property.GetMethod;
@@ -94,10 +79,7 @@ namespace Reactor.Utilities
 
         public static MethodInfo GetPropertySetMethod(PropertyInfo property)
         {
-            if (property == null)
-            {
-                throw new NullReferenceException("Must supply the property parameter");
-            }
+            if (property == null) throw new NullReferenceException("Must supply the property parameter");
 
 #if WINRT
             return property.SetMethod;
@@ -108,14 +90,8 @@ namespace Reactor.Utilities
 
         public static Attribute GetCustomAttribute(MemberInfo member, Type memberType)
         {
-            if (member == null)
-            {
-                throw new NullReferenceException("Must supply the member parameter");
-            }
-            if (memberType == null)
-            {
-                throw new NullReferenceException("Must supply the memberType parameter");
-            }
+            if (member == null) throw new NullReferenceException("Must supply the member parameter");
+            if (memberType == null) throw new NullReferenceException("Must supply the memberType parameter");
 #if WINRT
 			return member.GetCustomAttribute(memberType);
 #else
@@ -124,14 +100,11 @@ namespace Reactor.Utilities
         }
 
         /// <summary>
-        /// Returns true if the get and set methods of the given property exist and are public
+        ///     Returns true if the get and set methods of the given property exist and are public
         /// </summary>
         public static bool PropertyIsPublic(PropertyInfo property)
         {
-            if (property == null)
-            {
-                throw new NullReferenceException("Must supply the property parameter");
-            }
+            if (property == null) throw new NullReferenceException("Must supply the property parameter");
 
             var getMethod = GetPropertyGetMethod(property);
             if (getMethod == null || !getMethod.IsPublic)
@@ -145,7 +118,7 @@ namespace Reactor.Utilities
         }
 
         /// <summary>
-        /// Returns true if the given type can be assigned the given value
+        ///     Returns true if the given type can be assigned the given value
         /// </summary>
         public static bool IsAssignableFrom(Type type, object value)
         {
@@ -158,7 +131,7 @@ namespace Reactor.Utilities
         }
 
         /// <summary>
-        /// Returns true if the given type can be assigned a value with the given object type
+        ///     Returns true if the given type can be assigned a value with the given object type
         /// </summary>
         public static bool IsAssignableFromType(Type type, Type objectType)
         {
@@ -175,6 +148,5 @@ namespace Reactor.Utilities
 #endif
             return false;
         }
-
     }
 }

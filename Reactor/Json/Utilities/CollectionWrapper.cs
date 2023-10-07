@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,15 +22,17 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Globalization;
+using System.Threading;
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 
@@ -44,8 +47,8 @@ namespace Newtonsoft.Json.Utilities
 
     internal class CollectionWrapper<T> : ICollection<T>, IWrappedCollection
     {
-        private readonly IList? _list;
         private readonly ICollection<T>? _genericCollection;
+        private readonly IList? _list;
         private object? _syncRoot;
 
         public CollectionWrapper(IList list)
@@ -53,13 +56,9 @@ namespace Newtonsoft.Json.Utilities
             ValidationUtils.ArgumentNotNull(list, nameof(list));
 
             if (list is ICollection<T> collection)
-            {
                 _genericCollection = collection;
-            }
             else
-            {
                 _list = list;
-            }
         }
 
         public CollectionWrapper(ICollection<T> list)
@@ -72,49 +71,32 @@ namespace Newtonsoft.Json.Utilities
         public virtual void Add(T item)
         {
             if (_genericCollection != null)
-            {
                 _genericCollection.Add(item);
-            }
             else
-            {
                 _list!.Add(item);
-            }
         }
 
         public virtual void Clear()
         {
             if (_genericCollection != null)
-            {
                 _genericCollection.Clear();
-            }
             else
-            {
                 _list!.Clear();
-            }
         }
 
         public virtual bool Contains(T item)
         {
             if (_genericCollection != null)
-            {
                 return _genericCollection.Contains(item);
-            }
-            else
-            {
-                return _list!.Contains(item);
-            }
+            return _list!.Contains(item);
         }
 
         public virtual void CopyTo(T[] array, int arrayIndex)
         {
             if (_genericCollection != null)
-            {
                 _genericCollection.CopyTo(array, arrayIndex);
-            }
             else
-            {
                 _list!.CopyTo(array, arrayIndex);
-            }
         }
 
         public virtual int Count
@@ -122,13 +104,8 @@ namespace Newtonsoft.Json.Utilities
             get
             {
                 if (_genericCollection != null)
-                {
                     return _genericCollection.Count;
-                }
-                else
-                {
-                    return _list!.Count;
-                }
+                return _list!.Count;
             }
         }
 
@@ -137,13 +114,8 @@ namespace Newtonsoft.Json.Utilities
             get
             {
                 if (_genericCollection != null)
-                {
                     return _genericCollection.IsReadOnly;
-                }
-                else
-                {
-                    return _list!.IsReadOnly;
-                }
+                return _list!.IsReadOnly;
             }
         }
 
@@ -153,17 +125,12 @@ namespace Newtonsoft.Json.Utilities
             {
                 return _genericCollection.Remove(item);
             }
-            else
-            {
-                bool contains = _list!.Contains(item);
 
-                if (contains)
-                {
-                    _list!.Remove(item);
-                }
+            var contains = _list!.Contains(item);
 
-                return contains;
-            }
+            if (contains) _list!.Remove(item);
+
+            return contains;
         }
 
         public virtual IEnumerator<T> GetEnumerator()
@@ -181,15 +148,12 @@ namespace Newtonsoft.Json.Utilities
             VerifyValueType(value);
             Add((T)value);
 
-            return (Count - 1);
+            return Count - 1;
         }
 
         bool IList.Contains(object value)
         {
-            if (IsCompatibleObject(value))
-            {
-                return Contains((T)value);
-            }
+            if (IsCompatibleObject(value)) return Contains((T)value);
 
             return false;
         }
@@ -197,14 +161,9 @@ namespace Newtonsoft.Json.Utilities
         int IList.IndexOf(object value)
         {
             if (_genericCollection != null)
-            {
                 throw new InvalidOperationException("Wrapped ICollection<T> does not support IndexOf.");
-            }
 
-            if (IsCompatibleObject(value))
-            {
-                return _list!.IndexOf((T)value);
-            }
+            if (IsCompatibleObject(value)) return _list!.IndexOf((T)value);
 
             return -1;
         }
@@ -212,9 +171,7 @@ namespace Newtonsoft.Json.Utilities
         void IList.RemoveAt(int index)
         {
             if (_genericCollection != null)
-            {
                 throw new InvalidOperationException("Wrapped ICollection<T> does not support RemoveAt.");
-            }
 
             _list!.RemoveAt(index);
         }
@@ -222,9 +179,7 @@ namespace Newtonsoft.Json.Utilities
         void IList.Insert(int index, object value)
         {
             if (_genericCollection != null)
-            {
                 throw new InvalidOperationException("Wrapped ICollection<T> does not support Insert.");
-            }
 
             VerifyValueType(value);
             _list!.Insert(index, (T)value);
@@ -235,23 +190,15 @@ namespace Newtonsoft.Json.Utilities
             get
             {
                 if (_genericCollection != null)
-                {
                     // ICollection<T> only has IsReadOnly
                     return _genericCollection.IsReadOnly;
-                }
-                else
-                {
-                    return _list!.IsFixedSize;
-                }
+                return _list!.IsFixedSize;
             }
         }
 
         void IList.Remove(object value)
         {
-            if (IsCompatibleObject(value))
-            {
-                Remove((T)value);
-            }
+            if (IsCompatibleObject(value)) Remove((T)value);
         }
 
         object IList.this[int index]
@@ -259,18 +206,14 @@ namespace Newtonsoft.Json.Utilities
             get
             {
                 if (_genericCollection != null)
-                {
                     throw new InvalidOperationException("Wrapped ICollection<T> does not support indexer.");
-                }
 
                 return _list![index];
             }
             set
             {
                 if (_genericCollection != null)
-                {
                     throw new InvalidOperationException("Wrapped ICollection<T> does not support indexer.");
-                }
 
                 VerifyValueType(value);
                 _list![index] = (T)value;
@@ -288,33 +231,29 @@ namespace Newtonsoft.Json.Utilities
         {
             get
             {
-                if (_syncRoot == null)
-                {
-                    Interlocked.CompareExchange(ref _syncRoot, new object(), null);
-                }
+                if (_syncRoot == null) Interlocked.CompareExchange(ref _syncRoot, new object(), null);
 
                 return _syncRoot;
             }
         }
 
+        public object UnderlyingCollection => (object)_genericCollection! ?? _list!;
+
         private static void VerifyValueType(object value)
         {
             if (!IsCompatibleObject(value))
-            {
-                throw new ArgumentException("The value '{0}' is not of type '{1}' and cannot be used in this generic collection.".FormatWith(CultureInfo.InvariantCulture, value, typeof(T)), nameof(value));
-            }
+                throw new ArgumentException(
+                    "The value '{0}' is not of type '{1}' and cannot be used in this generic collection.".FormatWith(
+                        CultureInfo.InvariantCulture, value, typeof(T)), nameof(value));
         }
 
         private static bool IsCompatibleObject(object value)
         {
-            if (!(value is T) && (value != null || (typeof(T).IsValueType() && !ReflectionUtils.IsNullableType(typeof(T)))))
-            {
+            if (!(value is T) &&
+                (value != null || (typeof(T).IsValueType() && !ReflectionUtils.IsNullableType(typeof(T)))))
                 return false;
-            }
 
             return true;
         }
-
-        public object UnderlyingCollection => (object)_genericCollection! ?? _list!;
     }
 }

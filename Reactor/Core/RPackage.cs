@@ -20,40 +20,62 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.IO.Compression;
 using System.Threading.Tasks;
+
 namespace Reactor.Core
 {
-    public class RPackage
+    public class RPackage : IDisposable
     {
-        ZipArchive file;
-        public RPackage()
+        private readonly ZipArchive file;
+
+        private RPackage()
         {
-            file = new ZipArchive(Stream.Null);
+        }
+
+        public void Dispose()
+        {
+            if (file != null)
+                file.Dispose();
         }
 
         public RPackage(string filename)
         {
+            file = ZipFile.Open(filename, ZipArchiveMode.Read);
+        }
+
+        internal RPackage(string filename, bool create)
+        {
+            if (create)
+            {
+                file = ZipFile.Open(filename, ZipArchiveMode.Create);
+                return;
+            }
+
             file = ZipFile.Open(filename, ZipArchiveMode.Update);
         }
 
+        public static RPackage Create(string filename)
+        {
+            return new RPackage(filename, true);
+        }
         public async Task<MemoryStream> GetEntry(string name)
         {
-            if(ContainsEntry(name))
+            if (ContainsEntry(name))
             {
-                ZipArchiveEntry entry = file.GetEntry(name);
-                MemoryStream m = new MemoryStream();
+                var entry = file.GetEntry(name);
+                var m = new MemoryStream();
                 using (var s = entry.Open())
                 {
                     await s.CopyToAsync(m);
                     return m;
                 }
             }
+
             return null;
         }
 
@@ -68,32 +90,27 @@ namespace Reactor.Core
 
         public async Task<bool> AddDirectory(string directory)
         {
-            return false;
+            var entry = file.CreateEntry(directory);
+            return true;
         }
 
         public async Task<bool> RemoveEntry(string name)
         {
-            var entry =  GetEntry(name);
+            var entry = GetEntry(name).Result;
             if (entry != null)
             {
                 entry.Dispose();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool ContainsEntry(string name)
         {
-            foreach(var entry in file.Entries)
-            {
+            foreach (var entry in file.Entries)
                 if (entry.FullName == name)
-                {
                     return true;
-                }
-            }
 
             return false;
         }
@@ -101,12 +118,9 @@ namespace Reactor.Core
         public List<string> GetEntries()
         {
             var names = new List<string>();
-            foreach (var entry in file.Entries)
-            {
-                names.Add(entry.FullName);
-            }
+            foreach (var entry in file.Entries) names.Add(entry.FullName);
             return names;
         }
-
+        
     }
 }

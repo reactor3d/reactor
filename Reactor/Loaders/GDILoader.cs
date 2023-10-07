@@ -20,181 +20,232 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System.IO;
-using Reactor.Types;
-using SD=System.Drawing;
-using SI=System.Drawing.Imaging;
 
+using System;
+using System.IO;
+using Reactor.Math;
+using Reactor.Platform.OpenGL;
+using Reactor.Types;
+using Reactor.Utilities;
+using SD = System.Drawing;
+using SI = System.Drawing.Imaging;
 
 #region --- License ---
+
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing details.
  */
+
 #endregion
 
 // TODO: Find paint program that can properly export 8/16-bit Textures and make sure they are loaded correctly.
 
-using System;
-using Reactor.Platform.OpenGL;
-
 namespace Reactor
 {
-    static class ImageGDI
+    internal static class ImageGDI
     {
-        public static void LoadFromData( byte[] data, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type)
+        public static void LoadFromData(byte[] data, out uint texturehandle, out TextureTarget dimension,
+            out RPixelFormat format, out PixelType type, out Rectangle bounds)
         {
-
-            dimension = (TextureTarget) 0;
+            dimension = TextureTarget.Texture2D;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
-            MemoryStream stream = new MemoryStream(data);
-            SD.Bitmap b = new SD.Bitmap(stream);
-            LoadFromBitmap(ref b, out texturehandle, out dimension, out format, out type);
+            var stream = new MemoryStream(data);
+            var b = new SD.Bitmap(stream);
+            GL.GenTextures(1, Allocator.UInt32_1);
+            texturehandle = Allocator.UInt32_1[0];
+            GL.BindTexture(dimension, texturehandle);
+            var width = b.Width;
+            var height = b.Height;
+            var d = new RColor[width * height];
+            var i = 0;
+            for (var y = 0; y < b.Height; y++)
+            for (var x = 0; x < b.Width; x++)
+            {
+                var color = b.GetPixel(x, y);
+                d[i] = new RColor(color.R, color.G, color.B, color.A);
+                i++;
+            }
+
+            bounds = new Rectangle(0, 0, b.Width, b.Height);
+            format = RPixelFormat.Rgba;
+            type = PixelType.UnsignedByte;
+            REngine.CheckGLError();
+            unsafe
+            {
+                fixed (RColor* ptr = &d[0])
+                {
+                    var p = new IntPtr(ptr);
+                    GL.TexImage2D(dimension, 0, PixelInternalFormat.Rgba, width, height, 0, (PixelFormat)format, type,
+                        p);
+                }
+            }
+
+            REngine.CheckGLError();
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            //LoadFromBitmap(ref b, out texturehandle, out dimension, out format, out type, out bounds);
         }
 
-        public static void LoadFromDisk( string filename, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type )
+        public static void LoadFromDisk(string filename, out uint texturehandle, out TextureTarget dimension,
+            out RPixelFormat format, out PixelType type, out Rectangle bounds)
         {
-            dimension = (TextureTarget) 0;
+            dimension = 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
-            SD.Bitmap b = new SD.Bitmap(filename);
-            LoadFromBitmap(ref b, out texturehandle, out dimension, out format, out type);
+            var b = new SD.Bitmap(filename);
+            LoadFromBitmap(ref b, out texturehandle, out dimension, out format, out type, out bounds);
         }
-        public static void LoadFromBitmap( ref SD.Bitmap bitmap, out uint texturehandle, out TextureTarget dimension, out RPixelFormat format, out PixelType type )
+
+        public static void LoadFromBitmap(ref SD.Bitmap bitmap, out uint texturehandle, out TextureTarget dimension,
+            out RPixelFormat format, out PixelType type, out Rectangle bounds)
         {
-            dimension = (TextureTarget) 0;
+            dimension = 0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
-            ErrorCode GLError = ErrorCode.NoError;
+            var GLError = ErrorCode.NoError;
 
             SD.Bitmap CurrentBitmap = null;
 
             try // Exceptions will be thrown if any Problem occurs while working on the file. 
             {
                 CurrentBitmap = bitmap;
-                if ( TextureLoaderParameters.FlipImages )
-                    CurrentBitmap.RotateFlip( SD.RotateFlipType.RotateNoneFlipY );
+                if (TextureLoaderParameters.FlipImages)
+                    CurrentBitmap.RotateFlip(SD.RotateFlipType.RotateNoneFlipY);
 
-                if ( CurrentBitmap.Height > 1 )
+                if (CurrentBitmap.Height > 1)
                     dimension = TextureTarget.Texture2D;
                 else
                     dimension = TextureTarget.Texture1D;
-                uint[] handles = new uint[]{0};
-                GL.GenTextures( 1, handles );
-                texturehandle = handles[0];
-                GL.BindTexture( dimension, texturehandle );
+
+                GL.GenTextures(1, Allocator.UInt32_1);
+                texturehandle = Allocator.UInt32_1[0];
+                GL.BindTexture(dimension, texturehandle);
 
                 #region Load Texture
+
                 PixelInternalFormat pif;
                 PixelFormat pf;
                 PixelType pt;
-
-
-                switch ( CurrentBitmap.PixelFormat )
+                switch (CurrentBitmap.PixelFormat)
                 {
-                    case System.Drawing.Imaging.PixelFormat.Format8bppIndexed: // misses glColorTable setup
+                    case SI.PixelFormat.Format8bppIndexed: // misses glColorTable setup
                         pif = PixelInternalFormat.R8;
                         pf = PixelFormat.Red;
                         pt = PixelType.UnsignedByte;
                         break;
-                    case System.Drawing.Imaging.PixelFormat.Format16bppArgb1555:
-                    case System.Drawing.Imaging.PixelFormat.Format16bppRgb555: // does not work
+                    case SI.PixelFormat.Format16bppArgb1555:
+                    case SI.PixelFormat.Format16bppRgb555: // does not work
                         pif = PixelInternalFormat.Rgb5A1;
-                        pf = PixelFormat.Bgr;
+                        pf = PixelFormat.Rgb;
                         pt = PixelType.UnsignedShort5551Ext;
                         break;
-                        /*  case System.Drawing.Imaging.PixelFormat.Format16bppRgb565:
-                    pif = Reactor.Graphics.OpenGL.PixelInternalFormat.R5G6B5IccSgix;
-                    pf = Reactor.Graphics.OpenGL.PixelFormat.R5G6B5IccSgix;
-                    pt = Reactor.Graphics.OpenGL.PixelType.UnsignedByte;
-                    break;
+                    /*  case System.Drawing.Imaging.PixelFormat.Format16bppRgb565:
+                pif = Reactor.Graphics.OpenGL.PixelInternalFormat.R5G6B5IccSgix;
+                pf = Reactor.Graphics.OpenGL.PixelFormat.R5G6B5IccSgix;
+                pt = Reactor.Graphics.OpenGL.PixelType.UnsignedByte;
+                break;
 */
-                    case System.Drawing.Imaging.PixelFormat.Format24bppRgb: // works
-                        pif = PixelInternalFormat.Rgb;
-                        pf = PixelFormat.Bgr;
+                    case SI.PixelFormat.Format24bppRgb:
+                        pif = PixelInternalFormat.Rgba;
+                        pf = PixelFormat.Rgba;
                         pt = PixelType.UnsignedByte;
                         break;
-                    case System.Drawing.Imaging.PixelFormat.Format32bppRgb: // has alpha too? wtf?
-                    case System.Drawing.Imaging.PixelFormat.Canonical:
-                    case System.Drawing.Imaging.PixelFormat.Format32bppArgb: // works
-                    pif = PixelInternalFormat.Rgba;
-                        pf = PixelFormat.Bgra;
+                    case SI.PixelFormat.Format32bppRgb:
+                        pif = PixelInternalFormat.Rgba;
+                        pf = PixelFormat.Rgba;
+                        pt = PixelType.UnsignedByte;
+                        break;
+                    case SI.PixelFormat.Canonical:
+                    case SI.PixelFormat.Format32bppArgb:
+                        pif = PixelInternalFormat.Rgba;
+                        pf = PixelFormat.Rgba;
                         pt = PixelType.UnsignedByte;
                         break;
                     default:
-                        throw new ArgumentException( "ERROR: Unsupported Pixel Format " + CurrentBitmap.PixelFormat );
+                        throw new ArgumentException("ERROR: Unsupported Pixel Format " + CurrentBitmap.PixelFormat);
                 }
+
                 format = (RPixelFormat)pf;
                 type = pt;
-                SI.BitmapData Data = CurrentBitmap.LockBits( new System.Drawing.Rectangle( 0, 0, CurrentBitmap.Width, CurrentBitmap.Height ), SI.ImageLockMode.ReadOnly, CurrentBitmap.PixelFormat );
-                
-                if ( Data.Height > 1 )
-                { // image is 2D
-                    if (TextureLoaderParameters.BuildMipmapsForUncompressed)
-                    {
-                        throw new Exception("Cannot build mipmaps, Glu is deprecated.");
-                        //  Glu.Build2DMipmap(dimension, (int)pif, Data.Width, Data.Height, pf, pt, Data.Scan0);
-                    }
-                    else
-                        GL.TexImage2D(dimension, 0, pif, Data.Width, Data.Height, TextureLoaderParameters.Border, pf, pt, Data.Scan0);
-                } else
-                { // image is 1D
-                    if (TextureLoaderParameters.BuildMipmapsForUncompressed)
-                    {
-                        throw new Exception("Cannot build mipmaps, Glu is deprecated.");
-                        //  Glu.Build1DMipmap(dimension, (int)pif, Data.Width, pf, pt, Data.Scan0);
-                    }
-                    else
-                        GL.TexImage1D(dimension, 0, pif, Data.Width, TextureLoaderParameters.Border, pf, pt, Data.Scan0);
+                var width = CurrentBitmap.Width;
+                var data = new RColor[CurrentBitmap.Width * CurrentBitmap.Height];
+                for (var y = 0; y < CurrentBitmap.Height; ++y)
+                for (var x = 0; x < CurrentBitmap.Width; ++x)
+                {
+                    var color = CurrentBitmap.GetPixel(x, y);
+                    data[x + width * y] = new RColor(color.R, color.G, color.B, color.A);
                 }
+
+                //SI.BitmapData Data = CurrentBitmap.LockBits( new System.Drawing.Rectangle( 0, 0, CurrentBitmap.Width, CurrentBitmap.Height ), SI.ImageLockMode.ReadOnly, CurrentBitmap.PixelFormat );
+
+                if (CurrentBitmap.Height > 1)
+                    // image is 2D
+                    unsafe
+                    {
+                        fixed (RColor* ptr = &data[0])
+                        {
+                            var p = new IntPtr(ptr);
+                            GL.TexImage2D(dimension, 0, pif, CurrentBitmap.Width, CurrentBitmap.Height, 0, pf, pt, p);
+                        }
+                    }
+                else
+                    // image is 1D
+                    unsafe
+                    {
+                        fixed (RColor* ptr = &data[0])
+                        {
+                            var p = new IntPtr(ptr);
+                            GL.TexImage1D(dimension, 0, pif, CurrentBitmap.Width, TextureLoaderParameters.Border, pf,
+                                pt, p);
+                        }
+                    }
 
                 //GL.Finish( );
                 REngine.CheckGLError();
-                GLError = GL.GetError( );
-                if ( GLError != ErrorCode.NoError )
-                {
-                    throw new ArgumentException( "Error building TexImage. GL Error: " + GLError );
-                }
+                GLError = GL.GetError();
+                if (GLError != ErrorCode.NoError)
+                    throw new ArgumentException("Error building TexImage. GL Error: " + GLError);
 
-                CurrentBitmap.UnlockBits( Data );
+                //CurrentBitmap.UnlockBits( Data );
+
                 #endregion Load Texture
+
                 Setup(dimension);
 
-
-                return; // success
-            } catch ( Exception e )
+                bounds = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            }
+            catch (Exception e)
             {
-                dimension = (TextureTarget) 0;
+                dimension = 0;
                 texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
-                throw new ArgumentException( "Texture Loading Error: Failed to read data.\n" + e );
+                throw new ArgumentException("Texture Loading Error: Failed to read data.\n" + e);
                 // return; // failure
-            } finally
+            }
+            finally
             {
                 CurrentBitmap = null;
             }
         }
 
-        static void Setup(TextureTarget dimension)
+        private static void Setup(TextureTarget target)
         {
             #region Set Texture Parameters
-            GL.GenerateMipmap(GetMipmapTargetForTextureTarget(dimension));
-            GL.TexParameteri( dimension, TextureParameterName.TextureMinFilter, (int) TextureLoaderParameters.MinificationFilter );
-            GL.TexParameteri( dimension, TextureParameterName.TextureMagFilter, (int) TextureLoaderParameters.MagnificationFilter );
 
-            GL.TexParameteri( dimension, TextureParameterName.TextureWrapS, (int) TextureLoaderParameters.WrapModeS );
-            GL.TexParameteri( dimension, TextureParameterName.TextureWrapT, (int) TextureLoaderParameters.WrapModeT );
+            GL.TexParameteri(target, TextureParameterName.TextureMinFilter,
+                (int)TextureLoaderParameters.MinificationFilter);
+            GL.TexParameteri(target, TextureParameterName.TextureMagFilter,
+                (int)TextureLoaderParameters.MagnificationFilter);
+            REngine.CheckGLError();
+            GL.TexParameteri(target, TextureParameterName.TextureWrapS, (int)TextureLoaderParameters.WrapModeS);
+            GL.TexParameteri(target, TextureParameterName.TextureWrapT, (int)TextureLoaderParameters.WrapModeT);
 
-            float maxAniso=GL.GetFloat(GetPName.MaxTextureMaxAnisotropyExt);
-            GL.TexParameterf(TextureTarget.Texture2D, TextureParameterName.MaxAnisotropyExt, maxAniso);
+            //float maxAniso=GL.GetFloat(GetPName.MaxTextureMaxAnisotropyExt);
+            //GL.TexParameterf(target, TextureParameterName.MaxAnisotropyExt, maxAniso);
+            REngine.CheckGLError();
 
-            ErrorCode GLError = GL.GetError( );
-            if ( GLError != ErrorCode.NoError )
-            {
-                RLog.Info( "Error setting Texture Parameters. GL Error: " + GLError );
-            }
             #endregion Set Texture Parameters
         }
 
-        static GenerateMipmapTarget GetMipmapTargetForTextureTarget(TextureTarget target)
+        private static GenerateMipmapTarget GetMipmapTargetForTextureTarget(TextureTarget target)
         {
             switch (target)
             {
@@ -226,6 +277,5 @@ namespace Reactor
                     return GenerateMipmapTarget.Texture2D;
             }
         }
-
     }
 }

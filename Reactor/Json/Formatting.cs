@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,22 +22,24 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 namespace Newtonsoft.Json
 {
     /// <summary>
-    /// Specifies formatting options for the <see cref="JsonTextWriter"/>.
+    ///     Specifies formatting options for the <see cref="JsonTextWriter" />.
     /// </summary>
     public enum Formatting
     {
         /// <summary>
-        /// No special formatting is applied. This is the default.
+        ///     No special formatting is applied. This is the default.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Causes child objects to be indented according to the <see cref="JsonTextWriter.Indentation"/> and <see cref="JsonTextWriter.IndentChar"/> settings.
+        ///     Causes child objects to be indented according to the <see cref="JsonTextWriter.Indentation" /> and
+        ///     <see cref="JsonTextWriter.IndentChar" /> settings.
         /// </summary>
         Indented = 1
     }

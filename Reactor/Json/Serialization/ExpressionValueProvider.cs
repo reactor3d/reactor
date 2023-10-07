@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,24 +22,22 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 #if !(NET20 || NET35)
 
 using System;
-using System.Collections.Generic;
-#if !HAVE_LINQ
-using Newtonsoft.Json.Utilities.LinqBridge;
-#endif
-using System.Text;
+using System.Globalization;
 using System.Reflection;
 using Newtonsoft.Json.Utilities;
-using System.Globalization;
+#if !HAVE_LINQ
+#endif
 
 namespace Newtonsoft.Json.Serialization
 {
     /// <summary>
-    /// Get and set values for a <see cref="MemberInfo"/> using dynamic methods.
+    ///     Get and set values for a <see cref="MemberInfo" /> using dynamic methods.
     /// </summary>
     public class ExpressionValueProvider : IValueProvider
     {
@@ -47,7 +46,7 @@ namespace Newtonsoft.Json.Serialization
         private Action<object, object?>? _setter;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpressionValueProvider"/> class.
+        ///     Initializes a new instance of the <see cref="ExpressionValueProvider" /> class.
         /// </summary>
         /// <param name="memberInfo">The member info.</param>
         public ExpressionValueProvider(MemberInfo memberInfo)
@@ -57,7 +56,7 @@ namespace Newtonsoft.Json.Serialization
         }
 
         /// <summary>
-        /// Sets the value.
+        ///     Sets the value.
         /// </summary>
         /// <param name="target">The target to set the value on.</param>
         /// <param name="value">The value to set on the target.</param>
@@ -66,9 +65,7 @@ namespace Newtonsoft.Json.Serialization
             try
             {
                 if (_setter == null)
-                {
                     _setter = ExpressionReflectionDelegateFactory.Instance.CreateSet<object>(_memberInfo);
-                }
 
 #if DEBUG
                 // dynamic method doesn't check whether the type is 'legal' to set
@@ -76,13 +73,15 @@ namespace Newtonsoft.Json.Serialization
                 if (value == null)
                 {
                     if (!ReflectionUtils.IsNullable(ReflectionUtils.GetMemberUnderlyingType(_memberInfo)))
-                    {
-                        throw new JsonSerializationException("Incompatible value. Cannot set {0} to null.".FormatWith(CultureInfo.InvariantCulture, _memberInfo));
-                    }
+                        throw new JsonSerializationException(
+                            "Incompatible value. Cannot set {0} to null.".FormatWith(CultureInfo.InvariantCulture,
+                                _memberInfo));
                 }
                 else if (!ReflectionUtils.GetMemberUnderlyingType(_memberInfo).IsAssignableFrom(value.GetType()))
                 {
-                    throw new JsonSerializationException("Incompatible value. Cannot set {0} to type {1}.".FormatWith(CultureInfo.InvariantCulture, _memberInfo, value.GetType()));
+                    throw new JsonSerializationException(
+                        "Incompatible value. Cannot set {0} to type {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            _memberInfo, value.GetType()));
                 }
 #endif
 
@@ -90,12 +89,14 @@ namespace Newtonsoft.Json.Serialization
             }
             catch (Exception ex)
             {
-                throw new JsonSerializationException("Error setting value to '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name, target.GetType()), ex);
+                throw new JsonSerializationException(
+                    "Error setting value to '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name,
+                        target.GetType()), ex);
             }
         }
 
         /// <summary>
-        /// Gets the value.
+        ///     Gets the value.
         /// </summary>
         /// <param name="target">The target to get the value from.</param>
         /// <returns>The value.</returns>
@@ -104,15 +105,15 @@ namespace Newtonsoft.Json.Serialization
             try
             {
                 if (_getter == null)
-                {
                     _getter = ExpressionReflectionDelegateFactory.Instance.CreateGet<object>(_memberInfo);
-                }
 
                 return _getter(target);
             }
             catch (Exception ex)
             {
-                throw new JsonSerializationException("Error getting value from '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name, target.GetType()), ex);
+                throw new JsonSerializationException(
+                    "Error getting value from '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                        _memberInfo.Name, target.GetType()), ex);
             }
         }
     }

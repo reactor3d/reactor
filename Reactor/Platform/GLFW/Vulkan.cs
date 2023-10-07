@@ -7,11 +7,11 @@ using JetBrains.Annotations;
 
 namespace Reactor.Platform.GLFW
 {
-	/// <summary>
-	///     Implements the Vulkan specific functions of GLFW.
-	///     <para>See http://www.glfw.org/docs/latest/vulkan_guide.html for detailed documentation.</para>
-	/// </summary>
-	[SuppressUnmanagedCodeSecurity]
+    /// <summary>
+    ///     Implements the Vulkan specific functions of GLFW.
+    ///     <para>See http://www.glfw.org/docs/latest/vulkan_guide.html for detailed documentation.</para>
+    /// </summary>
+    [SuppressUnmanagedCodeSecurity]
     public static class Vulkan
     {
         #region Properties

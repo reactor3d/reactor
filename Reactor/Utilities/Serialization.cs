@@ -25,22 +25,18 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-
 namespace Reactor.Utilities
 {
     public class Serialization
     {
-
-        public static T ReadStruct<T>(ref Stream input)
+        public static T ReadStruct<T>(Stream input)
         {
-            byte[] buffer = new byte[Marshal.SizeOf(typeof(T))];
+            var buffer = new byte[Marshal.SizeOf(typeof(T))];
 
             if (input.Read(buffer, 0, buffer.Length) != buffer.Length)
-            {
                 throw new IOException("Premature end of input stream while reading data.");
-            }
 
-            GCHandle gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            var gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
 
             try
             {
@@ -53,16 +49,17 @@ namespace Reactor.Utilities
             }
         }
 
-        /// <summary>Write a struct to a <see cref="Stream"/>.</summary>
-        /// <typeparam name="T">The type of the struct to read.
-        /// The packing used must match that used to write the struct.</typeparam>
+        /// <summary>Write a struct to a <see cref="Stream" />.</summary>
+        /// <typeparam name="T">
+        ///     The type of the struct to read.
+        ///     The packing used must match that used to write the struct.
+        /// </typeparam>
         /// <param name="output">The stream to which to write the struct.</param>
         /// <param name="data">The struct to write.</param>
-
-        public static void WriteStruct<T>(ref Stream output, T data)
+        public static void WriteStruct<T>(Stream output, T data)
         {
-            byte[] buffer = new byte[Marshal.SizeOf(typeof(T))];
-            GCHandle gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            var buffer = new byte[Marshal.SizeOf(typeof(T))];
+            var gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
 
             try
             {
@@ -75,21 +72,19 @@ namespace Reactor.Utilities
                 gcHandle.Free();
             }
         }
+
         public static byte[] WriteString(string str)
         {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            var bytes = new byte[str.Length * sizeof(char)];
+            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
 
         public static string ReadString(byte[] bytes)
         {
-            char[] chars = new char[bytes.Length / sizeof(char)];
-            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            var chars = new char[bytes.Length / sizeof(char)];
+            Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
         }
-        
-
     }
 }
-

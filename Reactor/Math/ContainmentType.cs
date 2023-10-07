@@ -1,5 +1,4 @@
-﻿
-// Author:
+﻿// Author:
 //       Gabriel Reiser <gabe@reisergames.com>
 //
 // Copyright (c) 2010-2016 Reiser Games, LLC.
@@ -21,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 namespace Reactor.Math
 {
     public enum ContainmentType
@@ -30,4 +30,3 @@ namespace Reactor.Math
         Intersects
     }
 }
-

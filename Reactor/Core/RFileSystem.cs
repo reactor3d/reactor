@@ -20,102 +20,109 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using Reactor.Types;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Collections.Generic;
-using System.IO.Compression;
-using Reactor.Core;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Reactor.Core;
+using Reactor.Types;
 using Reactor.Utilities;
 
 namespace Reactor
 {
     public class RFileSystem : RSingleton<RFileSystem>
     {
-        private List<RPackage> packages = new List<RPackage>();
+        private readonly List<RPackage> packages = new List<RPackage>();
 
-        public string GetFilePath(string relativeFilename)
-        {
-            return Path.GetFullPath(AssemblyDirectory+relativeFilename);
-        }
-
-        public Stream GetFile(string relativeFilename)
-        {
-            string absolutePath = GetFilePath(relativeFilename);
-            if(File.Exists(absolutePath))
-            {
-                return File.Open(absolutePath, FileMode.Open);
-            }
-            else
-            {
-                //Search the packages for the file...
-                foreach(var package in packages)
-                {
-                    if(package.ContainsEntry(relativeFilename))
-                    {
-                        var result = package.GetEntry(relativeFilename).Result;
-                        return result;
-                    }
-                }
-                return null;
-            }
-        }
         public string AssemblyDirectory
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
+                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                var path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
             }
         }
 
+        public string GetFilePath(string relativeFilename)
+        {
+            return Path.GetFullPath(AssemblyDirectory + relativeFilename);
+        }
+
+        public Stream GetFile(string relativeFilename)
+        {
+            var absolutePath = GetFilePath(relativeFilename);
+            if (File.Exists(absolutePath))
+            {
+                return File.Open(absolutePath, FileMode.Open);
+            }
+
+            //Search the packages for the file...
+            foreach (var package in packages)
+                if (package.ContainsEntry(relativeFilename))
+                {
+                    var result = package.GetEntry(relativeFilename).Result;
+                    return result;
+                }
+
+            return null;
+        }
+        
+        public byte[] GetFileBytes(string relativeFilename)
+        {
+            var absolutePath = GetFilePath(relativeFilename);
+            if (File.Exists(absolutePath))
+                using (var s = File.Open(absolutePath, FileMode.Open))
+                    using (var reader = new BinaryReader(s))
+                        return reader.ReadBytes((int)s.Length);
+            return null;
+        }
+
         public bool LoadPackage(string relativeFilename)
         {
-            string fullFilename = GetFilePath(relativeFilename);
-            if(File.Exists(fullFilename))
+            var fullFilename = GetFilePath(relativeFilename);
+            if (File.Exists(fullFilename))
             {
-                RPackage package = new RPackage(fullFilename);
+                var package = new RPackage(fullFilename);
                 packages.Add(package);
                 return true;
             }
+
             return false;
         }
 
         public MemoryStream GetPackageContent(string name)
         {
-            foreach(var package in packages)
-            {
+            foreach (var package in packages)
                 if (package.ContainsEntry(name))
                     return package.GetEntry(name).Result;
-            }
-            RLog.Error(String.Format("Entry {0} not found in any loaded packages"));
+            RLog.Error(string.Format("Entry {0} not found in any loaded packages"));
             return null;
         }
-        internal System.IO.MemoryStream Save<T>(T data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            return Task.Run<System.IO.MemoryStream>(() =>
-            {
-                System.IO.MemoryStream stream = new System.IO.MemoryStream();
 
-                byte[] d = Serialization.WriteString(json);
+        internal MemoryStream Save<T>(T data)
+        {
+            var json = JsonConvert.SerializeObject(data);
+            return Task.Run(() =>
+            {
+                var stream = new MemoryStream();
+
+                var d = Serialization.WriteString(json);
                 stream.WriteAsync(d, 0, d.Length);
                 return stream;
             }).Result;
         }
-        internal T Load<T>(System.IO.MemoryStream stream)
+
+        internal T Load<T>(MemoryStream stream)
         {
             return Task<T>.Factory.StartNew(() =>
             {
                 return JsonConvert.DeserializeObject<T>(Serialization.ReadString(stream.ToArray()));
             }).Result;
         }
-        
     }
 }
-

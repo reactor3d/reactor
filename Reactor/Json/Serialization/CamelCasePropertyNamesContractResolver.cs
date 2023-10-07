@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,17 +22,17 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Newtonsoft.Json.Utilities;
 
 namespace Newtonsoft.Json.Serialization
 {
     /// <summary>
-    /// Resolves member mappings for a type, camel casing property names.
+    ///     Resolves member mappings for a type, camel casing property names.
     /// </summary>
     public class CamelCasePropertyNamesContractResolver : DefaultContractResolver
     {
@@ -40,7 +41,7 @@ namespace Newtonsoft.Json.Serialization
         private static Dictionary<StructMultiKey<Type, Type>, JsonContract>? _contractCache;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CamelCasePropertyNamesContractResolver"/> class.
+        ///     Initializes a new instance of the <see cref="CamelCasePropertyNamesContractResolver" /> class.
         /// </summary>
         public CamelCasePropertyNamesContractResolver()
         {
@@ -52,21 +53,18 @@ namespace Newtonsoft.Json.Serialization
         }
 
         /// <summary>
-        /// Resolves the contract for a given type.
+        ///     Resolves the contract for a given type.
         /// </summary>
         /// <param name="type">The type to resolve a contract for.</param>
         /// <returns>The contract for a given type.</returns>
         public override JsonContract ResolveContract(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            if (type == null) throw new ArgumentNullException(nameof(type));
 
             // for backwards compadibility the CamelCasePropertyNamesContractResolver shares contracts between instances
-            StructMultiKey<Type, Type> key = new StructMultiKey<Type, Type>(GetType(), type);
-            Dictionary<StructMultiKey<Type, Type>, JsonContract>? cache = _contractCache;
-            if (cache == null || !cache.TryGetValue(key, out JsonContract contract))
+            var key = new StructMultiKey<Type, Type>(GetType(), type);
+            var cache = _contractCache;
+            if (cache == null || !cache.TryGetValue(key, out var contract))
             {
                 contract = CreateContract(type);
 
@@ -74,7 +72,7 @@ namespace Newtonsoft.Json.Serialization
                 lock (TypeContractCacheLock)
                 {
                     cache = _contractCache;
-                    Dictionary<StructMultiKey<Type, Type>, JsonContract> updatedCache = (cache != null)
+                    var updatedCache = cache != null
                         ? new Dictionary<StructMultiKey<Type, Type>, JsonContract>(cache)
                         : new Dictionary<StructMultiKey<Type, Type>, JsonContract>();
                     updatedCache[key] = contract;

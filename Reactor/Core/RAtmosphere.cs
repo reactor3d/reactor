@@ -20,29 +20,25 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Reactor.Platform.OpenGL;
+
 using Reactor.Math;
+using Reactor.Platform.OpenGL;
 using Reactor.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reactor
 {
     public class RAtmosphere : RSingleton<RAtmosphere>
     {
+        private RColor globalAmbientLight;
+
+        private RColor globalSunLight;
+        private RTexture2D[] lensFlares;
         private RMeshBuilder sky;
 
         private RShader skybox;
-
-        private RColor globalSunLight;
-        private RColor globalAmbientLight;
         private Vector3 sunDir;
-        private RTexture2D[] lensFlares;
-        
-        public void CreateSkyBox(RTexture3D skyBoxTexture)
+
+        public void CreateSkyBox(RTextureCube skyBoxTexture)
         {
             skybox = new RShader();
             skybox.Load(@"
@@ -75,19 +71,19 @@ void main()
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
             sky.Matrix = Matrix.Identity;
             sky.DepthWrite = false;
-            RMaterial skyBoxMaterial = new RMaterial("skybox");
+            var skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skybox;
             skyBoxMaterial.SetTexture(RTextureLayer.TEXTURE0, skyBoxTexture);
             sky.Material = skyBoxMaterial;
         }
 
-        public void CreateSkyBox(RShader skyBoxShader, RTexture3D skyBoxTexture)
+        public void CreateSkyBox(RShader skyBoxShader, RTextureCube skyBoxTexture)
         {
             sky = RScene.Instance.CreateMeshBuilder("skybox");
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
             sky.Matrix = Matrix.Identity;
             sky.DepthWrite = false;
-            RMaterial skyBoxMaterial = new RMaterial("skybox");
+            var skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skyBoxShader;
             skyBoxMaterial.SetTexture(RTextureLayer.TEXTURE0, skyBoxTexture);
             sky.Material = skyBoxMaterial;
@@ -99,14 +95,14 @@ void main()
             sky.CreateBox(Vector3.Zero, Vector3.One, true);
             sky.Matrix = Matrix.Identity;
             sky.DepthWrite = false;
-            RMaterial skyBoxMaterial = new RMaterial("skybox");
+            var skyBoxMaterial = new RMaterial("skybox");
             skyBoxMaterial.Shader = skyBoxShader;
             sky.Material = skyBoxMaterial;
         }
 
         internal void Update()
         {
-            if(sky != null)
+            if (sky != null)
             {
                 sky.Position = REngine.Instance.GetCamera().Position;
                 sky.Scale = Vector3.One;
@@ -120,7 +116,6 @@ void main()
 
             sky.Render();
             GL.Enable(EnableCap.DepthTest);
-
         }
     }
 }

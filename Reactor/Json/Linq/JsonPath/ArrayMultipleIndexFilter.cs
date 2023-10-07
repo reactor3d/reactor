@@ -11,19 +11,15 @@ namespace Newtonsoft.Json.Linq.JsonPath
             Indexes = indexes;
         }
 
-        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current, bool errorWhenNoMatch)
+        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current,
+            bool errorWhenNoMatch)
         {
-            foreach (JToken t in current)
+            foreach (var t in current)
+            foreach (var i in Indexes)
             {
-                foreach (int i in Indexes)
-                {
-                    JToken? v = GetTokenIndex(t, errorWhenNoMatch, i);
+                var v = GetTokenIndex(t, errorWhenNoMatch, i);
 
-                    if (v != null)
-                    {
-                        yield return v;
-                    }
-                }
+                if (v != null) yield return v;
             }
         }
     }
