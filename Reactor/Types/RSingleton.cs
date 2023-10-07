@@ -25,7 +25,7 @@ using System;
 
 namespace Reactor.Types
 {
-    public abstract class RSingleton<T> where T : class, new()
+    public abstract class RSingleton<T> where T : class, IDisposable, new()
     {
         public static T Instance { get; } = new T();
 
